@@ -1,0 +1,10 @@
+<p>character-form works!</p>
+<div>
+
+  <li *ngFor="let bodyPart of renderService.bodyParts">
+  {{bodyPart}} <input [(ngModel)]="data[bodyPart]" (change)="update()">
+
+  </li>
+  <textarea style="height: 100px">
+{{render}}</textarea>
+</div>

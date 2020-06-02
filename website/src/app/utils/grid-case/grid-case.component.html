@@ -1,0 +1,8 @@
+<p>grid-case works!</p>
+<div class="gridCase">
+  <span *ngIf="solution">{{solution}}</span>
+  <input *ngIf="!solution" [(ngModel)]="writableValue" class="inputCase"/>- {{writableValue}}-
+  <div class="possibiliteDiv " >
+    <div class="gridCase" *ngFor="let pos of possibilites" (click)="onSelectPossi(pos)">{{pos}}</div>
+  </div>
+</div>

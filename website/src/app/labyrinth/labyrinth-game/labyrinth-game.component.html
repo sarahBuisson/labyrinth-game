@@ -1,0 +1,16 @@
+<p>labyrinth-game works!</p>
+{{this.currentParty ? this.currentParty.player : "no party"}}
+{{this.currentLevelProxy}}
+<div>
+  {{log(currentLevelProxy)}}
+
+  <div *ngFor="let row of currentLevelProxy.contentArray ">
+
+
+    <app-zone *ngFor="let levelCaseInput of row" [levelCase]="levelCaseInput">
+  </app-zone>
+  </div>
+</div>
+
+
+{{this.map}}
