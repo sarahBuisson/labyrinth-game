@@ -24,15 +24,7 @@ class LevelBoard<T : Any>(width: Int, height: Int, factory: (x: Int, y: Int, boa
 }
 
 fun generateComposite(size: Int): LevelBoard<CompositeZone> {
-    val factory = { x: Int, y: Int, b: Board<CompositeZone> ->
-        CompositeZone(
-                x,
-                y
-        )
-    }
-    val board = LevelBoard<CompositeZone>(
-            10, 10, factory
-    )
+    val board = generateEmptyBoard(size)
     //
     drawLab(board)
     chooseStartExit(board)
@@ -47,15 +39,7 @@ fun generateComposite(size: Int): LevelBoard<CompositeZone> {
 
 
 fun generateCompositeMapLabWithKey(size: Int): LevelBoard<CompositeZone> {
-    val factory = { x: Int, y: Int, b: Board<CompositeZone> ->
-        CompositeZone(
-                x,
-                y
-        )
-    }
-    val board = LevelBoard<CompositeZone>(
-            10, 10, factory
-    )
+    val board = generateEmptyBoard(size)
     //When
     drawLab(board)
     chooseStartExit(board)
@@ -67,6 +51,25 @@ fun generateCompositeMapLabWithKey(size: Int): LevelBoard<CompositeZone> {
             .init(board.toList(), board.start, board.exit, 10, 0)
             .fillLab()
     return board
+}
+
+fun generateEmptyBoard(size: Int): LevelBoard<CompositeZone> {
+    val factory = { x: Int, y: Int, b: Board<CompositeZone> ->
+        CompositeZone(
+                x,
+                y
+        )
+    }
+    val board = LevelBoard<CompositeZone>(
+            size, size, factory
+    )
+    return board
+}
+
+fun <T : BoardZone> connectAllZoneOfBoard(board: Board<T>): Board<T> {
+    board.toList().forEach { board.getNeigbours(it).forEach { nei->nei.connectTo(it) } }
+
+    return board;
 }
 
 

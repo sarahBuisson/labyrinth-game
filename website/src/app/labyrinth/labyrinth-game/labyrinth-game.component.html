@@ -4,12 +4,7 @@
 <div>
   {{log(currentLevelProxy)}}
 
-  <div *ngFor="let row of currentLevelProxy.contentArray ">
-
-
-    <app-zone *ngFor="let levelCaseInput of row" [levelCase]="levelCaseInput">
-  </app-zone>
-  </div>
+<app-level-view [currentLevelProxy]="currentLevelProxy"></app-level-view>
 </div>
 
 

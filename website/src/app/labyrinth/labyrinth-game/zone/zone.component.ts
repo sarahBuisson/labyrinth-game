@@ -1,17 +1,64 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.service";
+import {AsciiDecorService} from "../../ascii-decor.service";
 
 @Component({
   selector: 'app-zone',
   templateUrl: './zone.component.html',
   styleUrls: ['./zone.component.css'],
-  inputs:["levelCase"]
 })
 export class ZoneComponent implements OnInit {
 
-  levelCase:any
-  constructor() { }
+  @Input()
+  label: string
+  private _levelCase: any
+
+
+  get levelCase(): any {
+    return this._levelCase;
+  }
+
+  @Input()
+  set levelCase(val) {
+    this._levelCase = val;
+    this.leftDoor = this.doorAt("LEFT")
+    this.rightDoor = this.doorAt("RIGHT")
+    this.topDoor = this.doorAt("TOP")
+    this.bottomDoor = this.doorAt("BOTTOM")
+  }
+
+  leftDoor: any
+  rightDoor: any
+  topDoor: any
+  bottomDoor: any
+
+  constructor(private asciiDecorService: AsciiDecorService) {
+  }
 
   ngOnInit(): void {
   }
 
+  levelContent() {
+    return (this.levelCase ? this.levelCase.contentArray : []).filter(it => !this.isDoor(it))
+  }
+
+  private isDoor(it) {
+    return it.destination !== undefined
+  }
+
+  doorAt(direction: string) {
+    let destination = this.levelCase.connectionsMap[direction]
+    if (destination) {
+      return this.levelCase.contentArray.filter(it => it.destination && it.destination.x === destination.x && it.destination.y === destination.y)[0]
+    }
+  }
+
+  renderSide(direction: string) {
+    let door = this.doorAt(direction);
+    return this.asciiDecorService.renderSide(direction, door)
+  }
+
+  renderCorner(dir1: string, dir2: string) {
+    return this.asciiDecorService.renderCorner(dir1, dir2)
+  }
 }

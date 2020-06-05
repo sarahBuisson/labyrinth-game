@@ -1,7 +1,7 @@
 <p>character-form works!</p>
 <div>
 
-  <li *ngFor="let bodyPart of renderService.bodyParts">
+  <li *ngFor="let bodyPart of renderService.bodyPartsKey">
   {{bodyPart}} <input [(ngModel)]="data[bodyPart]" (change)="update()">
 
   </li>

@@ -1,0 +1,8 @@
+<div class="levelRender">
+  <div [ngClass]="'levelRowRender'" *ngFor="let row of currentLevelProxy.contentArray ">
+    <app-zone *ngFor="let levelCaseInput of row" [levelCase]="levelCaseInput"
+              label="{{isStart(levelCaseInput)?'start':isExit(levelCaseInput)?'exit':''}}"
+    >
+    </app-zone>
+  </div>
+</div>

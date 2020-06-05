@@ -1,22 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ZoneComponent } from './zone.component';
+import { LevelViewComponent } from './level-view.component';
 
-describe('ZoneComponent', () => {
-  let component: ZoneComponent;
-  let fixture: ComponentFixture<ZoneComponent>;
+describe('LevelViewComponent', () => {
+  let component: LevelViewComponent;
+  let fixture: ComponentFixture<LevelViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ZoneComponent ]
+      declarations: [ LevelViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ZoneComponent);
+    fixture = TestBed.createComponent(LevelViewComponent);
     component = fixture.componentInstance;
-    component.levelCase = {contentArray: []}
     fixture.detectChanges();
   });
 

@@ -4,6 +4,7 @@ function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod) {
   let newkotlinInstance = {};
   Object.getOwnPropertyNames(kotlinInstance).forEach(
     (oldName) => {
+      newkotlinInstance[oldName] = kotlinInstance[oldName]
       let propertyclassName = get(kotlinInstance, oldName + '.__proto__.constructor.name');
       let newName
       if (Number.isInteger(oldName)) {
@@ -13,32 +14,26 @@ function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod) {
 
         newName = oldName.replace(/\_\S*\$/, "").replace(/\_\d/, "");
 
-        if (propertyclassName === 'ArrayList') {
+        if (propertyclassName === 'ArrayList' && !Array.isArray(kotlinInstance[oldName])) {
           newName += "Array"
         }
-        if (propertyclassName == ("HashMap") || propertyclassName == ("LinkedHashMap")) {
+        if (propertyclassName === "HashMap" || propertyclassName == "LinkedHashMap") {
           newName += "Map"
+        }
+        if (propertyclassName === 'Function') {
+          newName += "Function"
         }
       }
       let isNewNameAlreadyUsed = Object.getOwnPropertyDescriptor(newkotlinInstance, newName);
       if (!kotlinInstance.__proto__) {
         //TODO : most of the time it's inner object of stdlib class
-        //  console.log(propertyclassName)
+        newkotlinInstance[newName] = kotlinInstance[oldName]
       }
-      if (!isNewNameAlreadyUsed && !get(kotlinInstance, '__proto__.' + newName)) {
+      if (!get(kotlinInstance, '__proto__.' + newName)) {
         try {
-
-          if (maxDeep >= 0 || propertyclassName === 'ArrayList' || propertyclassName == ("HashMap") || propertyclassName == ("LinkedHashMap")) {
-
-
-            newkotlinInstance[newName] = kotlinProxy(kotlinInstance[oldName], maxDeep - 1, autoProxyMethod)
-            /*  console.log("in array")
-              console.log(kotlinInstance[oldName])
-              console.log( get(kotlinInstance[oldName], oldName + '.__proto__.constructor.name'))
-              console.log(newkotlinInstance[newName] )
-*/
+          if (maxDeep >= 0) {
+            newkotlinInstance[newName] = kotlinProxyToJsView(kotlinInstance[oldName], maxDeep - 1, autoProxyMethod)
           } else {
-            console.log("keep same" + newName + " => " + oldName + " " + propertyclassName)
             newkotlinInstance[newName] = kotlinInstance[oldName]
           }
         } catch (e) {
@@ -52,69 +47,65 @@ function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod) {
   return newkotlinInstance;
 }
 
-export function kotlinProxy(kotlinInstance, maxDeep = undefined, autoProxyMethod = true) {
-  if (kotlinInstance === undefined || kotlinInstance === null) {
+export function kotlinProxyToJsView(kotlinInstance, maxDeep = undefined, autoProxyMethod = true) {
+  if (maxDeep && maxDeep < 0) {
     return kotlinInstance
-  } else if (typeof kotlinInstance === 'function') {
-
-    return (...args) => {
-
-      const retourMethod = kotlinInstance.apply(null, args)
-      if (autoProxyMethod)
-        return kotlinProxy(retourMethod, maxDeep - 1, autoProxyMethod);
-      else return retourMethod;
-
-    }
+  } else if (kotlinInstance === undefined || kotlinInstance === null) {
+    return kotlinInstance
   } else if (typeof kotlinInstance !== 'object') {
     return kotlinInstance
   } else if (Array.isArray(kotlinInstance)) {
     return kotlinInstance.map((item) => {
-      return kotlinProxy(item, maxDeep, autoProxyMethod)
+      return kotlinProxyToJsView(item, maxDeep, autoProxyMethod)
     })
 
   } else {
     let className = get(kotlinInstance, '__proto__.constructor.name');
+    if (className === "Function") {
 
-    if (className === 'ArrayList') {
+      return (...args) => {
+        const retourMethod = kotlinInstance.apply(null, args)
+        if (autoProxyMethod) {
+          return kotlinProxyToJsView(retourMethod, maxDeep - 1, autoProxyMethod);
+        } else {
+          return retourMethod;
+        }
+      }
+
+    }else if (className === 'ArrayList') {
       let arrayName = Object.getOwnPropertyNames(kotlinInstance)
         .filter((itemArray) => {
           return itemArray.startsWith("array")
         })[0];
       return kotlinInstance[arrayName].map((item) => {
         if (maxDeep >= 0) {
-          return kotlinProxy(item, maxDeep - 1, autoProxyMethod)
+          return kotlinProxyToJsView(item, maxDeep - 1, autoProxyMethod)
         } else {
           return item;
 
         }
       })
-    } else if  ( className==("HashMap")|| className==("LinkedHashMap")) {
+    } else if (className === "HashMap" || className == "LinkedHashMap") {
 
-    console.log("MAPPPP")
       let newkotlinInstance = {};
       let protoMap = instanceWithSimplifiedField(kotlinInstance, 0, false);
-      console.log("protoMap")
-      console.log(protoMap)
       if (protoMap.internalMap) {
-        protoMap = kotlinProxy(protoMap.internalMap, 0, false)
+        protoMap = kotlinProxyToJsView(protoMap.internalMap, 0, false)
         if (protoMap.backingMap) {
           Object.values(protoMap.backingMap)
             .forEach((protoEntry) => {
-              protoEntry = kotlinProxy(protoEntry, maxDeep, false)
-
-              newkotlinInstance[protoEntry.key.name] = protoEntry._value;
+              protoEntry = kotlinProxyToJsView(protoEntry, maxDeep, false)
+              //keep the $
+              newkotlinInstance[protoEntry.key.name$] = protoEntry._value;
 
             })
-          console.log("New map")
-          console.log(newkotlinInstance)
         }
       }
       return newkotlinInstance
-    }
-    else{
+    } else {
 
       let newkotlinInstance = instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod);
-
+      newkotlinInstance.className = className;
       return newkotlinInstance
     }
   }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ServiceLabService} from "../service-lab.service";
-import {kotlinProxy} from "../../utils/util";
+import {kotlinProxyToJsView} from "../../utils/util";
 
 // @ts-ignore
 import gameRules from 'gameRules';
@@ -30,19 +30,17 @@ export class LabyrinthGameComponent implements OnInit {
   getCurrentParty(): any {
 
     this.labService.getCurrentParty().subscribe((c) => {
-        console.log("getCurrentParty")
-        console.log(c)
-        this.currentParty = kotlinProxy(c, 0)
+        this.currentParty = kotlinProxyToJsView(c, 0)
         console.log(this.currentParty)
         if (this.currentParty) {
           this.currentLevel = this.currentParty.level
-          this.currentLevelProxy = kotlinProxy(this.currentParty.level,6)
-
-          this.map = (kotlinProxy(gameRules.fr.perso.labyrinth.board, false).labyrinthTreeToString(this.currentParty.level))
+          this.currentLevelProxy = kotlinProxyToJsView(this.currentParty.level,6)
+          this.map = (kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board, false).labyrinthTreeToStringFunction(this.currentParty.level))
 
         }
       }
     )
     return this.currentParty
   }
+
 }

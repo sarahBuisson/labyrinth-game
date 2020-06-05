@@ -4,20 +4,35 @@ import {Observable, of} from 'rxjs';
 import {Router} from "@angular/router";
 // @ts-ignore
 import gameRules from 'gameRules';
-import {kotlinProxy} from '../utils/util.js'
+import {kotlinProxyToJsView} from '../utils/util.js'
+
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceLabService {
 
-  constructor(private router:Router) {
+  constructor(private router: Router) {
+    this.generate(3,false)
   }
 
   currentParty: any
 
-  generate(size): void {
-    let party = kotlinProxy(gameRules.fr.perso.labyrinth.board.algorithm.composite, 0, true).initPartieComposite(size);
-    this.currentParty=party
+  generate(size, reroute=true): void {
+    let composite = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board.algorithm.composite, 0, false);
+
+    console.log(composite)
+    let party = {level: composite.generateCompositeFunction(size)}
+    this.currentParty = party
+    if(reroute)
+    this.router.navigateByUrl('/labyrinthGame');
+  }
+
+  generateEmpty(size): void {
+    let composite = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board.algorithm.composite, 0, false);
+
+    console.log(composite)
+    let party = {level: composite.connectAllZoneOfBoard(composite.generateEmptyBoardFunction(size))}
+    this.currentParty = party
     this.router.navigateByUrl('/labyrinthGame');
   }
 

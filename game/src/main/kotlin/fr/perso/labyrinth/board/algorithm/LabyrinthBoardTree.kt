@@ -4,6 +4,7 @@ import fr.perso.labyrinth.ConnectedZone
 import fr.perso.labyrinth.board.*
 import fr.perso.labyrinth.board.algorithm.composite.LevelBoard
 import fr.perso.labyrinth.board.algorithm.dataMap.distanceMap
+import org.jeasy.rules.api.Rule
 import org.jeasy.rules.core.RulesImpl
 import org.jeasy.rules.api.Rules
 import org.jeasy.rules.core.DefaultRulesEngine
@@ -14,7 +15,7 @@ class DrawLabFacts<T : BoardZone>(val board: Board<T>)
 class DrawLabCaseFacts<T : BoardZone>(val zone: BoardZone, val board: Board<T>)
 
 
-val ruleConnectEndCaseToAFreeNeighboor = LambdaRule<DrawLabCaseFacts<BoardZone>>({ facts ->
+fun <T : BoardZone> ruleConnectEndCaseToAFreeNeighboor() = LambdaRule<DrawLabCaseFacts<T>>({ facts ->
     facts.zone.connections.size == 1
 
 
@@ -29,7 +30,7 @@ val ruleConnectEndCaseToAFreeNeighboor = LambdaRule<DrawLabCaseFacts<BoardZone>>
 });
 
 
-val ruleAddCrossToAFreeNeighboor = LambdaRule<DrawLabCaseFacts<BoardZone>>({ facts ->
+fun <T : BoardZone> ruleAddCrossToAFreeNeighboor() = LambdaRule<DrawLabCaseFacts<T>>({ facts ->
     true
 
 
@@ -44,7 +45,7 @@ val ruleAddCrossToAFreeNeighboor = LambdaRule<DrawLabCaseFacts<BoardZone>>({ fac
 });
 
 
-val ruleConnectUnconnectedCaseToAnyConnectedNei = LambdaRule<DrawLabCaseFacts<BoardZone>>({ facts ->
+fun <T : BoardZone> ruleConnectUnconnectedCaseToAnyConnectedNei() = LambdaRule<DrawLabCaseFacts<T>>({ facts ->
     facts.zone.connections.size == 0
 
 
@@ -58,7 +59,7 @@ val ruleConnectUnconnectedCaseToAnyConnectedNei = LambdaRule<DrawLabCaseFacts<Bo
 });
 
 
-val ruleConnectUnconnectedCaseToBestConnectedNei = LambdaRule<DrawLabCaseFacts<BoardZone>>({ facts ->
+fun <T : BoardZone>ruleConnectUnconnectedCaseToBestConnectedNei() = LambdaRule<DrawLabCaseFacts<T>>({ facts ->
     facts.zone.connections.size == 0
 
 
@@ -76,6 +77,8 @@ fun <T> runBookD(fact: T, rules: Rules<T>) {
     DefaultRulesEngine<T>().fire(rules, fact)
 }
 
+
+
 fun <T : BoardZone> drawLab(board: Board<T>): Board<T> {
 
     val start = board.toList().random()
@@ -84,16 +87,17 @@ fun <T : BoardZone> drawLab(board: Board<T>): Board<T> {
     val firstC = board.getNeigboursMap(start).entries.random()
     start.connectZone(firstC.value!!, firstC.key);
     var countFreeCase = board.toList().size;
-    val rules = RulesImpl(setOf(
-            ruleConnectEndCaseToAFreeNeighboor,
-            ruleConnectUnconnectedCaseToBestConnectedNei
-    ))
+    val rules1:Set<Rule<DrawLabCaseFacts<T>>> = setOf(
+            ruleConnectEndCaseToAFreeNeighboor(),
+            ruleConnectUnconnectedCaseToBestConnectedNei()
+    )
+    val rules = RulesImpl(rules1)
     do {
         for (case in board.toList().shuffled()) {
             val facts = DrawLabCaseFacts(case, board)
-            runBookD(facts, rules as Rules<DrawLabCaseFacts<T>>)
-
-
+            println(rules)
+            println(facts)
+            runBookD(facts, rules)
         }
         val previousCount = countFreeCase
         countFreeCase = board.toList().count { it.connections.size == 0 }
@@ -101,8 +105,8 @@ fun <T : BoardZone> drawLab(board: Board<T>): Board<T> {
         println(labyrinthTreeToString(board))
     } while (countFreeCase < previousCount)
 
-    complexiteMergeCulDeSac(board)
-    complexiteMergeCulDeSac(board)
+    complexiteMergeImpasse(board)
+    complexiteMergeImpasse(board)
 
     println(labyrinthTreeToString(board))
     return board
@@ -123,36 +127,36 @@ fun <T> chooseStartExit(board: LevelBoard<T>)
 
 
 /*
-* merge two cul de sac corridor connected into one cul de sac
+* merge two impass corridor connected into one cul de sac
 * */
-fun <T : BoardZone> complexiteMergeCulDeSac(board: Board<T>) {
+fun <T : BoardZone> complexiteMergeImpasse(board: Board<T>) {
     val culDeSac = board.toList().filter { it.connected.size == 1 }
 
-    culDeSac.shuffled().forEach { currentCulDeSac ->
+    culDeSac.shuffled().forEach { currentImpass ->
 
-       //if is still a culDeSac
+       //if is still an impass
 
-        if(currentCulDeSac.connected.size==1) {
-            val nearestCulDeSacs = board.getNeigbours(currentCulDeSac).filter { nei ->
+        if(currentImpass.connected.size==1) {
+            val nearestImpasses = board.getNeigbours(currentImpass).filter { nei ->
                 nei.connected.size == 1//are cul de sac
-                        && !nei.connected.contains(currentCulDeSac)//are not already linked to the current cul de sac
+                        && !nei.connected.contains(currentImpass)//are not already linked to the current cul de sac
             }
-            if (nearestCulDeSacs.size > 0) {
-                val corridors = nearestCulDeSacs.map { culDeSac -> followCorridor(culDeSac) }.filter { it.isNotEmpty() }
+            if (nearestImpasses.size > 0) {
+                val corridors = nearestImpasses.map { impass -> followCorridor(impass) }.filter { it.isNotEmpty() }
                 if (corridors.isNotEmpty()) {
                     val corridorToMerge = corridors.maxBy { it.size }!!
 
                     val unconnect = corridorToMerge.last().connected.find { it.connected.size > 2 }!!
-                    currentCulDeSac.connectTo(corridorToMerge.first())
+                    currentImpass.connectTo(corridorToMerge.first())
                     corridorToMerge.last().unconnectTo(unconnect)
                 } else {
-                    println("no merge because too short $currentCulDeSac")
-                    println(nearestCulDeSacs.map { it.toString() }.joinToString("\n"))
-                    println(nearestCulDeSacs.map { culDeSac -> followCorridor(culDeSac) }.map { it.toString() }.joinToString("\n"))
+                    println("no merge because too short $currentImpass")
+                    println(nearestImpasses.map { it.toString() }.joinToString("\n"))
+                    println(nearestImpasses.map { impass -> followCorridor(impass) }.map { it.toString() }.joinToString("\n"))
 
                 }
             } else {
-                println("no merge because no near $currentCulDeSac")
+                println("no merge because no near $currentImpass")
 
             }
         }

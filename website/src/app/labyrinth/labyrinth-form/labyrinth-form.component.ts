@@ -19,4 +19,7 @@ export class LabyrinthFormComponent implements OnInit {
   play():void{
     this.labService.generate(this.size);
   }
+  emptyBoard():void{
+    this.labService.generateEmpty(this.size);
+  }
 }

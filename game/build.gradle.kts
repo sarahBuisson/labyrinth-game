@@ -69,10 +69,12 @@ kotlin {
         }
 
         js().compilations["test"].defaultSourceSet {
-
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
                 implementation("io.github.microutils:kotlin-logging-js:" + extt["kotlin_logging_version"])
+
+                implementation("org.jetbrains.kotlin:kotlin-test-js")
+
             }
         }
         metadata().compilations["main"].defaultSourceSet {

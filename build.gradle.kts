@@ -10,9 +10,8 @@ plugins {
     id("maven-publish")
     jacoco
     id("net.akehurst.kotlin.kt2ts") version("1.5.0") apply(false)
-
-
 }
+
 allprojects {
     this.group = rootGroup
     this.version = rootVersion
@@ -44,6 +43,7 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 

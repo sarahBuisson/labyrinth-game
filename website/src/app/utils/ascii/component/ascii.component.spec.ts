@@ -1,22 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ZoneComponent } from './zone.component';
+import { AsciiComponent } from './ascii.component';
 
-describe('ZoneComponent', () => {
-  let component: ZoneComponent;
-  let fixture: ComponentFixture<ZoneComponent>;
+describe('AsciiComponent', () => {
+  let component: AsciiComponent;
+  let fixture: ComponentFixture<AsciiComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ZoneComponent ]
+      declarations: [ AsciiComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ZoneComponent);
+    fixture = TestBed.createComponent(AsciiComponent);
     component = fixture.componentInstance;
-    component.levelCase = {contentArray: []}
     fixture.detectChanges();
   });
 

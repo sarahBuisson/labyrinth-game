@@ -10,6 +10,8 @@ import { CharacterFormComponent } from './characterEditor/character-form/charact
 import { LabyrinthFormComponent } from './labyrinth/labyrinth-form/labyrinth-form.component';
 import { LabyrinthGameComponent } from './labyrinth/labyrinth-game/labyrinth-game.component';
 import { ZoneComponent } from './labyrinth/labyrinth-game/zone/zone.component';
+import { AsciiComponent } from './utils/ascii/component/ascii.component';
+import { LevelViewComponent } from './labyrinth/labyrinth-game/level-view/level-view.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { ZoneComponent } from './labyrinth/labyrinth-game/zone/zone.component';
     CharacterFormComponent,
     LabyrinthFormComponent,
     LabyrinthGameComponent,
-    ZoneComponent
+    ZoneComponent,
+    AsciiComponent,
+    LevelViewComponent
   ],
   imports: [
     BrowserModule,
