@@ -27,7 +27,7 @@ jobs:
       - name: Build front
         run: |
           cd website
-          yarn run buildDev
+          ng build
       - name: extract build version
         run: |
           gradle generatePomFileForKotlinMultiplatformPublication
