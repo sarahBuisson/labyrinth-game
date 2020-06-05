@@ -26,7 +26,6 @@ jobs:
           yarn install
       - name: Build front
         run: |
-          cd website
           ng build
       - name: extract build version
         run: |
