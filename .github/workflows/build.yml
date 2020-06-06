@@ -24,6 +24,7 @@ jobs:
         run: |
           cd website
           yarn install
+          npm install -g @angular/cli
           ng build
       - name: extract build version
         run: |
