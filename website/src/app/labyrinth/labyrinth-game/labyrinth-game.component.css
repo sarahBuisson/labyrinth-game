@@ -1,0 +1,4 @@
+.toolbar {
+  display: grid;
+  grid-template-columns: 50% 30px 1fr;
+}

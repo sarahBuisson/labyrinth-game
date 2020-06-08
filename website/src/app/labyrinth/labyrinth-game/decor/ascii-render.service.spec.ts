@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AsciiDecorService } from './ascii-decor.service';
+import { AsciiRenderService } from './ascii-render.service';
 
-describe('AsciiDecorService', () => {
-  let service: AsciiDecorService;
+describe('AsciiRenderService', () => {
+  let service: AsciiRenderService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AsciiDecorService);
+    service = TestBed.inject(AsciiRenderService);
   });
 
   it('should be created', () => {

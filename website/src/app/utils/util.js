@@ -1,5 +1,9 @@
 import get from 'lodash/get';
 
+function standardizeName(oldName) {
+  return oldName.replace(/\_\S*\$/, "").replace(/\_\d/, "");
+}
+
 function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod) {
   let newkotlinInstance = {};
   Object.getOwnPropertyNames(kotlinInstance).forEach(
@@ -12,7 +16,7 @@ function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod) {
       } else {
 
 
-        newName = oldName.replace(/\_\S*\$/, "").replace(/\_\d/, "");
+        newName = standardizeName(oldName);
 
         if (propertyclassName === 'ArrayList' && !Array.isArray(kotlinInstance[oldName])) {
           newName += "Array"
@@ -72,7 +76,7 @@ export function kotlinProxyToJsView(kotlinInstance, maxDeep = undefined, autoPro
         }
       }
 
-    }else if (className === 'ArrayList') {
+    } else if (className === 'ArrayList') {
       let arrayName = Object.getOwnPropertyNames(kotlinInstance)
         .filter((itemArray) => {
           return itemArray.startsWith("array")
@@ -124,3 +128,29 @@ export function printProxyModel(obj, indentation = "") {
   })
 }
 
+export function getJsViewFromKotlin(instance, ...path) {
+
+  return kotlinProxyToJsView(getFromKotlin(instance, ...path), 0, false)
+}
+
+export function getFromKotlin(instance, ...path) {
+  if (path.length == 0) {
+    return instance;
+  } else {
+    let propertyclassName = get(instance, '__proto__.constructor.name');
+    if (propertyclassName === 'ArrayList') {
+      return getFromKotlin(kotlinProxyToJsView(instance, 0, false), ...path);
+    } else if (propertyclassName === "HashMap" || propertyclassName == "LinkedHashMap") {
+      return getFromKotlin(kotlinProxyToJsView(instance, 0, false), ...path);
+    } else {
+      let field = Object.keys(instance).find(fieldName => {
+        return standardizeName(fieldName) == path[0] //don't use ===, here
+      })
+      if (instance[field]) {
+        return getFromKotlin(instance[field], ...path.slice(1))
+      } else {
+        return instance[field]
+      }
+    }
+  }
+}

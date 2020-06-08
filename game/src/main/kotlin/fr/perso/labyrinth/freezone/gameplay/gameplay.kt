@@ -3,6 +3,7 @@ package fr.perso.labyrinth.freezone.gameplay
 import fr.perso.labyrinth.GeoZone
 import fr.perso.labyrinth.freezone.generation.*
 import fr.perso.labyrinth.freezone.model.*
+import mu.KotlinLogging
 import org.jeasy.rules.api.Rule
 import org.jeasy.rules.core.RulesImpl
 import org.jeasy.rules.core.DefaultRulesEngine
@@ -15,13 +16,13 @@ data class Player(
 )
 
 
-class Partie<LevelType>(val player: Player, val level:LevelType)
+class Partie<LevelType>(val player: Player, val level: LevelType)
 
 
 fun initLab(size: Int = 5): Partie<*> {
     val lab = createLab(size)
     LabFiller<FreeZone>()
-            .init(lab, lab.first(),lab.last(), size, 0)
+            .init(lab, lab.first(), lab.last(), size, 0)
             .fillLab();
     return Partie(Player(lab.first()), lab)
 }
@@ -37,43 +38,54 @@ fun initPartie(size: Int = 5): Partie<List<FreeZone>> {
 
 fun initPartieExit(size: Int = 5): Partie<List<FreeZone>> {
     val lab = createLab(size)
-    val keyToDoorArray= mutableListOf<Array<String>>()
-    val objetDiversArray= mutableListOf<String>()
+    val keyToDoorArray = mutableListOf<Array<String>>()
+    val objetDiversArray = mutableListOf<String>()
 
-    for (i in 0..size){
+    for (i in 0..size) {
 
-        keyToDoorArray.add(arrayOf(""+i.toChar(),""+i.toChar().toUpperCase()))
-        objetDiversArray.add(""+(size+i).toChar())
+        keyToDoorArray.add(arrayOf("" + i.toChar(), "" + i.toChar().toUpperCase()))
+        objetDiversArray.add("" + (size + i).toChar())
 
     }
     LabFillerExit<FreeZone>(keyToDoorArray.toTypedArray(), objetDiversArray.toTypedArray())
-            .init(lab, lab.first(), lab.random(), size,size/2).fillLab();
+            .init(lab, lab.first(), lab.random(), size, size / 2).fillLab();
     return Partie(Player(lab.first()), lab)
 }
-
 
 
 class Interaction<Qui, Quoi, Comment, Univers>(val qui: Qui, val quoi: Quoi, val comment: Comment, val univers: Univers)
 
 
-class MoveRule :
+abstract class MoveRule(evaluateL: (Interaction<Player, Any, Any, Partie<*>>) -> kotlin.Boolean, executeL: (Interaction<Player, Any, Any, Partie<*>>) -> kotlin.Unit={}) :
         LambdaRule<Interaction<Player, Any, Any, Partie<*>>>(
                 { interaction ->
-                    interaction.quoi is DoorObjectZone && interaction.quoi.key == null && interaction.qui.location.content.contains(interaction.quoi)
+                    interaction.quoi is DoorObjectZone
+                            && interaction.qui.location.content.contains(interaction.quoi)
+                            && evaluateL(interaction)
+
                 },
                 { interaction ->
-                    interaction.qui.location = (interaction.quoi as DoorObjectZone).destination as GeoZone
+                    val doorObjectZone = interaction.quoi as DoorObjectZone
+                    interaction.qui.location = doorObjectZone.destination as GeoZone
+                    executeL(interaction)
                 })
 
 
-class MoveClosedDoorRule :
-        LambdaRule<Interaction<Player, Any, Any, Partie<*>>>(
+class MoveOpenDoorRule :
+        MoveRule(
                 { interaction ->
-                    MoveRule().evaluate(interaction)
-                            && interaction.qui.inventory.contains((interaction.quoi as DoorObjectZone).key)
+                    (interaction.quoi as DoorObjectZone).key == null
+                })
+
+class MoveClosedDoorRule :
+        MoveRule(
+                { interaction ->
+                    interaction.qui.inventory.contains((interaction.quoi as DoorObjectZone).key)
                 },
                 { interaction ->
-                    MoveRule().execute(interaction)
+                    val doorObjectZone = interaction.quoi as DoorObjectZone
+                    interaction.qui.inventory.remove(doorObjectZone.key);
+                    doorObjectZone.key = null;
                 })
 
 
@@ -81,7 +93,7 @@ class TakeObjectRule :
         LambdaRule<Interaction<Player, Any, Any, Partie<*>>>(
                 { interaction ->
                     interaction.quoi is KeyObjectZone &&
-                    interaction.qui.location.content.contains(interaction.quoi)
+                            interaction.qui.location.content.contains(interaction.quoi)
                 },
                 { interaction ->
                     interaction.qui.location.content.remove(interaction.quoi as KeyObjectZone)
@@ -102,7 +114,7 @@ class ExchangeObjectRule :
                 })
 
 
-val ruleBook = RulesImpl(setOf(MoveRule(), MoveClosedDoorRule(), TakeObjectRule(), ExchangeObjectRule()))
+val ruleBook = RulesImpl(setOf(MoveOpenDoorRule(), MoveClosedDoorRule(), TakeObjectRule(), ExchangeObjectRule()))
 
 
 fun playerInteractWith(partie: Partie<*>, obj: ObjectZone): Partie<*> {
@@ -111,10 +123,13 @@ fun playerInteractWith(partie: Partie<*>, obj: ObjectZone): Partie<*> {
                 ruleBook,
                 Interaction(partie.player, obj as Any, "" as Any, partie)
         )
-    }catch (e:Exception){
+    } catch (e: Exception) {
         println(e)
         println(e.cause)
     }
     return Partie(partie.player, partie.level)
 
 }
+
+
+private val LOGGER = KotlinLogging.logger {}

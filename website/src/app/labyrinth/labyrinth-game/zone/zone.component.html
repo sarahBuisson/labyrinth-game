@@ -1,24 +1,29 @@
 <div class="zone">
 
-  <div class="corner top left"><app-ascii content="{{renderCorner('TOP','LEFT')}}"></app-ascii>
+  <div class="corner top left">
+    <app-ascii content="{{renderCorner('TOP','LEFT')}}"></app-ascii>
   </div>
-  <div class="side top"><app-ascii content="{{renderSide('TOP')}}"></app-ascii></div>
-  <div class="corner top right"><app-ascii content="{{renderCorner('TOP','RIGHT')}}"></app-ascii>
+  <div class="side top">
+    <app-ascii content="{{renderSide('TOP')}}"></app-ascii>
   </div>
-  <div class="side left"><app-ascii content="{{renderSide('LEFT')}}"></app-ascii></div>
+  <div class="corner top right">
+    <app-ascii content="{{renderCorner('TOP','RIGHT')}}"></app-ascii>
+  </div>
+  <div class="side left">
+    <app-ascii content="{{renderSide('LEFT')}}"></app-ascii>
+  </div>
   <div class="zoneContent">
-
-    <span *ngIf="label">{{label}}</span>
-        <span *ngFor="let co of this.levelContent()">
-        - {{co.name}}
-      </span>
+    <ng-content></ng-content>
   </div>
-  <div class="side right"><app-ascii content="{{renderSide('RIGHT')}}"></app-ascii>
+  <div class="side right">
+    <app-ascii content="{{renderSide('RIGHT')}}"></app-ascii>
   </div>
   <div class="corner bottom left">
     <app-ascii content="{{renderCorner('BOTTOM','LEFT')}}"></app-ascii>
   </div>
-  <div class="side bottom"><app-ascii content="{{renderSide('BOTTOM')}}"></app-ascii></div>
+  <div class="side bottom">
+    <app-ascii content="{{renderSide('BOTTOM')}}"></app-ascii>
+  </div>
   <div class="corner  bottom right">
     <app-ascii content="{{renderCorner('BOTTOM','RIGHT')}}"></app-ascii>
   </div>

@@ -1,11 +1,30 @@
 <p>labyrinth-game works!</p>
-{{this.currentParty ? this.currentParty.player : "no party"}}
-{{this.currentLevelProxy}}
 <div>
-  {{log(currentLevelProxy)}}
+  <app-level-view [currentPartieProxy]="currentPartyProxy"
+                  [renderService]="fullViewRenderService"
+                  rangeArroundPlayer="{{1}}" class="level"
+                  [characterRenderData]="currentCharacterRenderData"
+  ></app-level-view>
+  <div class="toolbar">
+    <div class="gameplay">
+      <div>
 
-<app-level-view [currentLevelProxy]="currentLevelProxy"></app-level-view>
+        <button (click)="move('TOP')" (keyup.arrowUp)="move('TOP')">T</button>
+      </div>
+      <div>
+        <button (click)="move('LEFT')" (keyup.arrowLeft)="move('LEFT')"><-</button>
+        <button (click)="move('BOTTOM')" (keyup.arrowBottom)="move('BOTTOM')">B</button>
+        <button (click)="move('RIGHT')" (keyup.arrowRight)="move('RIGHT')">-></button>
+        <button (click)="take()" (keyup.enter)="take()">Prendre</button>
+      </div>
+    </div>
+    <div class="character">
+      <pre>{{fullViewRenderService.renderPlayer(this.currentCharacterRenderData)}}</pre>
+    </div>
+    <div><span *ngFor="let item of this.currentPartyProxy.player.inventoryArray">{{item.name}}</span></div>
+  </div>
+  <app-map-view [currentPartieProxy]="currentPartyProxy"
+                [renderService]="mapRenderService"
+                class="map"
+  ></app-map-view>
 </div>
-
-
-{{this.map}}

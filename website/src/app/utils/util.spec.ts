@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 // @ts-ignore
 import gameRules from 'gameRules';
-import {kotlinProxyToJsView} from '../utils/util.js'
+import {getFromKotlin, getJsViewFromKotlin, kotlinProxyToJsView} from '../utils/util.js'
 
 describe('test kotlin to JsView', () => {
 
@@ -33,12 +33,34 @@ describe('test kotlin to JsView', () => {
     let composite = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board.algorithm.composite, 0, false);
     let partie = composite.initPartieCompositeFunction(3);
     let partieView = kotlinProxyToJsView(partie, 7, true);
-    console.log(partieView)
-    console.log("partie.level")
-    console.log(partieView.level)
-    console.log(partieView.level.contentArray)
+
     expect(partieView.level.contentArray[0][0].connectionsMap).toBeDefined();
   });
+
+  it('should get array, method and map of partie', () => {
+    let composite = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board.algorithm.composite, 0, false);
+    let partie = composite.initPartieCompositeFunction(3);
+
+    let zone =getFromKotlin(partie,"level","content",0,0)
+    expect(zone).toBeDefined()
+    expect(zone.connectionsMap).not.toBeDefined()
+
+
+
+   });
+
+
+  it('should get proxyarray, method and map of partie', () => {
+    let composite = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board.algorithm.composite, 0, false);
+    let partie = composite.initPartieCompositeFunction(3);
+
+
+    let zone2 =getJsViewFromKotlin(partie,"level","content",0,0)
+    expect(zone2).toBeDefined()
+    expect(zone2.connectionsMap).toBeDefined()
+
+   });
+
 
   it('call without proxy', () => {
     let composite = gameRules.fr.perso.labyrinth.board.algorithm.composite

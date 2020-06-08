@@ -33,4 +33,10 @@ describe('ServiceLabService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should play', () => {
+ let partie = service.generate(5,false)
+    service.take()
+    service.move("RIGHT")
+  });
 });

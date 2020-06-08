@@ -4,6 +4,9 @@ import {kotlinProxyToJsView} from "../../utils/util";
 
 // @ts-ignore
 import gameRules from 'gameRules';
+import {AsciiRenderService} from "./decor/ascii-render.service";
+import {MapAsciiRenderService} from "./decor/map-ascii-render.service";
+import {FullsizeAsciiRenderService} from "./decor/fullsize-ascii-render.service";
 
 @Component({
   selector: 'app-labyrinth-game',
@@ -13,34 +16,51 @@ import gameRules from 'gameRules';
 export class LabyrinthGameComponent implements OnInit {
   currentParty: any
   currentLevel: any
-  currentLevelProxy: any
-  map: any
+  currentPartyProxy: any
+  currentCharacterRenderData: CharacterData
 
-  constructor(private labService: ServiceLabService) {
+  constructor(private labService: ServiceLabService,
+              public fullViewRenderService: FullsizeAsciiRenderService,
+              public mapRenderService: MapAsciiRenderService) {
   }
 
   ngOnInit(): void {
-    this.getCurrentParty()
+    this.subscribeCurrentParty()
+    this.subscribeCharacterData()
   }
 
   log(data): void {
     console.log(data)
   }
 
-  getCurrentParty(): any {
-
-    this.labService.getCurrentParty().subscribe((c) => {
-        this.currentParty = kotlinProxyToJsView(c, 0)
-        console.log(this.currentParty)
-        if (this.currentParty) {
-          this.currentLevel = this.currentParty.level
-          this.currentLevelProxy = kotlinProxyToJsView(this.currentParty.level,6)
-          this.map = (kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board, false).labyrinthTreeToStringFunction(this.currentParty.level))
-
+  subscribeCurrentParty(): any {
+    this.labService.getCurrentParty()
+      .subscribe((c) => {
+          this.currentParty = kotlinProxyToJsView(c, 0)
+          console.log(this.currentParty)
+          if (this.currentParty) {
+            this.currentLevel = this.currentParty.level
+            this.currentPartyProxy = kotlinProxyToJsView(this.currentParty, 7)
+          }
         }
-      }
-    )
+      )
     return this.currentParty
   }
 
+  subscribeCharacterData(): any {
+    this.labService.getCurrentCharaRenderData()
+      .subscribe((c) => {
+          this.currentCharacterRenderData = c;
+        }
+      )
+    return this.currentCharacterRenderData
+  }
+
+  move(direction: string) {
+    this.labService.move(this.currentParty, direction);
+  }
+
+  take() {
+    this.labService.take(this.currentParty);
+  }
 }

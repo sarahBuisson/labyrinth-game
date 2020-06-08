@@ -30,7 +30,6 @@ describe('LabyrinthGameComponent', () => {
     component = fixture.componentInstance;
     component.currentParty={}
     component.currentLevel={}
-    component.currentLevelProxy={}
     fixture.detectChanges();
     router.initialNavigation();
   }));
@@ -42,4 +41,6 @@ describe('LabyrinthGameComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
 });

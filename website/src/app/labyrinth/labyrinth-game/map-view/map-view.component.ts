@@ -1,37 +1,31 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CharacterRenderData} from "../../../characterEditor/character-render.service";
 
 @Component({
-  selector: 'app-level-view',
-  templateUrl: './level-view.component.html',
-  styleUrls: ['./level-view.component.css']
+  selector: 'app-map-view',
+  templateUrl: './map-view.component.html',
+  styleUrls: ['./map-view.component.css']
 })
-export class LevelViewComponent implements OnInit {
+export class MapViewComponent implements OnInit {
 
   @Input()
   currentPartieProxy: any
 
   @Input()
-  renderService: any
-
-  constructor() {
-  }
+  renderService:any
+  constructor() { }
 
   @Input()
-  rangeArroundPlayer: number = -1;
-
-  @Input()
-  characterRenderData: CharacterRenderData;
+  rangeArroundPlayer:number=-1;
 
   ngOnInit(): void {
   }
 
-  isStart(levelCase) {
+  isStart(levelCase){
     let start = this.currentPartieProxy.level.start;
-    return start.x === levelCase.x && start.y === levelCase.y
+    return start.x===levelCase.x && start.y===levelCase.y
   }
 
-  isExit(levelCase) {
+  isExit(levelCase){
     let exit = this.currentPartieProxy.level.exit;
     return exit.x === levelCase.x && exit.y === levelCase.y
   }
@@ -42,7 +36,7 @@ export class LevelViewComponent implements OnInit {
   }
 
   isCaseShowable(levelCase) {
-    if (this.rangeArroundPlayer < 0)
+    if(this.rangeArroundPlayer < 0 )
       return true
     let location = this.currentPartieProxy.player.location;
     return (Math.abs(location.x - levelCase.x) <= this.rangeArroundPlayer

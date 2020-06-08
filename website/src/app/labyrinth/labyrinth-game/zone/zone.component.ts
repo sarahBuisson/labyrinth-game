@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.service";
-import {AsciiDecorService} from "../../ascii-decor.service";
+import {AsciiRenderService} from "../decor/ascii-render.service";
 
 @Component({
   selector: 'app-zone',
@@ -11,6 +11,12 @@ export class ZoneComponent implements OnInit {
 
   @Input()
   label: string
+  @Input()
+  renderService:AsciiRenderService
+
+  @Input()
+  hasPlayer: boolean;
+
   private _levelCase: any
 
 
@@ -31,11 +37,12 @@ export class ZoneComponent implements OnInit {
   rightDoor: any
   topDoor: any
   bottomDoor: any
-
-  constructor(private asciiDecorService: AsciiDecorService) {
+  constructor() {
   }
 
   ngOnInit(): void {
+
+
   }
 
   levelContent() {
@@ -55,10 +62,10 @@ export class ZoneComponent implements OnInit {
 
   renderSide(direction: string) {
     let door = this.doorAt(direction);
-    return this.asciiDecorService.renderSide(direction, door)
+    return this.renderService.renderSide(direction, door)
   }
 
   renderCorner(dir1: string, dir2: string) {
-    return this.asciiDecorService.renderCorner(dir1, dir2)
+    return this.renderService.renderCorner(dir1, dir2)
   }
 }

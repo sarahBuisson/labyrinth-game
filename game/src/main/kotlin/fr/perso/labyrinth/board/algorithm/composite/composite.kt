@@ -15,7 +15,6 @@ import fr.perso.labyrinth.freezone.model.ObjectZone
 class CompositeZone(x: Int, y: Int) : GeoZone, ConnectedZone, BoardZone, BoardZoneImpl(x, y) {
 
     override val content: MutableList<ObjectZone> = mutableListOf<ObjectZone>()
-
 }
 
 class LevelBoard<T : Any>(width: Int, height: Int, factory: (x: Int, y: Int, board: Board<T>) -> T) : Board<T>(width, height, factory) {
@@ -75,6 +74,11 @@ fun <T : BoardZone> connectAllZoneOfBoard(board: Board<T>): Board<T> {
 
 fun initPartieComposite(size: Int = 5): Partie<LevelBoard<CompositeZone>> {
     var lab = generateComposite(size)
+    return Partie(Player(lab.start), lab)
+}
+
+fun initPartieCompositeLabWithKey(size: Int = 5): Partie<LevelBoard<CompositeZone>> {
+    var lab = generateCompositeMapLabWithKey(size)
     return Partie(Player(lab.start), lab)
 }
 

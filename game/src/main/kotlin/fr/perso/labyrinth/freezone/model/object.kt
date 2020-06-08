@@ -10,7 +10,7 @@ open class ObjectZone(open var name: String) {
 
     override fun equals(other: Any?): Boolean {
         if (other is ObjectZone)
-            return name.equals(other.name)
+            return name == other.name
         return false
     }
 }

@@ -2,12 +2,12 @@ import {Injectable} from '@angular/core';
 import {AsciiGeneratorService} from "../utils/ascii/ascii-generator.service";
 
 
-export class CharacterData {
-  eye: String
-  hair: String
-  torso: String
-  hat: String
-  leg: String
+export class CharacterRenderData {
+  eye: String="'";
+  hair: String="(";
+  torso: String= "M";
+  hat: String= "_--_";
+  leg: String= "d";
 }
 
 export class TemplateAnimation {
@@ -17,7 +17,7 @@ export class TemplateAnimation {
 @Injectable({
   providedIn: 'root'
 })
-export class RenderService {
+export class CharacterRenderService {
 
   constructor(private asciiGeneratorService: AsciiGeneratorService) {
     this.bodyPartsKey = Object.keys(this.defaultData)
@@ -30,10 +30,10 @@ export class RenderService {
   templateLeft: String =
     "${hat}\n" +
     "${hair}${eye}${eye} ${hairReversed}${hairReversed}\n" +
-    "/${torso}\\\n" +
+    "/${torso} \\\n" +
     " ${leg}${leg} \n";
   templateRight: String
-  defaultData: CharacterData = Object.assign(new CharacterData(), {
+  defaultData: CharacterRenderData = Object.assign(new CharacterRenderData(), {
     eye: "'",
     hair: "(",
     torso: "M",
@@ -42,7 +42,7 @@ export class RenderService {
   })
 
 
-  render(data: CharacterData) {
+  render(data: CharacterRenderData) {
     return this.asciiGeneratorService.templateString(this.templateRight, {...data, ...this.asciiGeneratorService.reverseData(data)})
 
   }

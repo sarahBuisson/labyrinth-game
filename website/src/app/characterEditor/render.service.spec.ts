@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RenderService } from './render.service';
+import { CharacterRenderService } from './character-render.service';
 
 describe('RenderService', () => {
-  let service: RenderService;
+  let service: CharacterRenderService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(RenderService);
+    service = TestBed.inject(CharacterRenderService);
   });
 
   it('should be created', () => {

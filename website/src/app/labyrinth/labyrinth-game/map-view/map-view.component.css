@@ -1,0 +1,8 @@
+.levelRowRender{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 30px);
+  grid-column-gap: 10px;
+  margin-bottom: 10px;
+}
+
+.levelRender{ overflow-x: scroll;}

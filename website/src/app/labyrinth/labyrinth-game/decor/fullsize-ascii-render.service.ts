@@ -1,22 +1,21 @@
 import {Injectable} from '@angular/core';
-import {AsciiGeneratorService} from "../utils/ascii/ascii-generator.service";
+import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.service";
+import {AsciiRenderService} from "./ascii-render.service";
+import {ServiceLabService} from "../../service-lab.service";
+import {CharacterRenderService, CharacterRenderData} from "../../../characterEditor/character-render.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AsciiDecorService {
+export class FullsizeAsciiRenderService extends AsciiRenderService {
 
-  constructor(private  asciiGeneratorService: AsciiGeneratorService) {
+  constructor(protected asciiGeneratorService: AsciiGeneratorService, private serviceLabService: ServiceLabService, private characterRenderService: CharacterRenderService) {
+    super(asciiGeneratorService);
     this.partsKeys = Object.keys(this.defaultData)
     this.rightDoorTemplate = this.asciiGeneratorService.reverseTemplate(this.leftDoorTemplate, this.partsKeys)
-this.rightWallTemplate=  this.asciiGeneratorService.reverseTemplate(this.leftWallTemplate, this.partsKeys)
-
-    console.log("this.rightDoorTemplate")
-    console.log(this.rightDoorTemplate)
+    this.rightWallTemplate = this.asciiGeneratorService.reverseTemplate(this.leftWallTemplate, this.partsKeys)
   }
 
-  doorSize = 1
-  sideWidth = 7
   defaultData = {
     name: "#",
     closedBottom: "-----",
@@ -26,7 +25,7 @@ this.rightWallTemplate=  this.asciiGeneratorService.reverseTemplate(this.leftWal
   }
   partsKeys = []
   topDoorTemplate = "-------------------\n" +
-    "\n"+
+    "\n" +
     "    \\¨¨¨¨¨¨¨¨¨/\n" +
     "     \\   ${name}   /\n" +
     "______\\${closedTop}/______"
@@ -34,7 +33,7 @@ this.rightWallTemplate=  this.asciiGeneratorService.reverseTemplate(this.leftWal
   bottomDoorTemplate = "¨¨¨¨¨¨/${closedBottom}\\¨¨¨¨¨¨\n" +
     "     /   ${name}   \\\n" +
     "    /_________\\\n" +
-    "\n"+
+    "\n" +
     "-------------------"
   leftDoorTemplate = " |   |\n" +
     " ||\\ |\n" +
@@ -53,7 +52,7 @@ this.rightWallTemplate=  this.asciiGeneratorService.reverseTemplate(this.leftWal
     " |   |\n" +
     " |   |\n" +
     " |   |";
-  rightWallTemplate ;
+  rightWallTemplate;
 
   topWallTemplate = "-------------------\n" +
     " \n" +
@@ -78,38 +77,16 @@ this.rightWallTemplate=  this.asciiGeneratorService.reverseTemplate(this.leftWal
   leftTopCornerTemplate = " +----\n" +
     " |\\   \n" +
     " | \\  \n" +
-    " |  \\ \n"+
+    " |  \\ \n" +
     " |   \\"
   rightTopCornerTemplate = this.asciiGeneratorService.reverseTemplate(this.leftTopCornerTemplate, this.partsKeys)
 
 
-  renderSide(direction: string, door: any) {
-    let templateName = direction.toLowerCase() + (door ? "Door" : "Wall") + "Template";
-
-    let data:any = {...this.defaultData, name: door&&door.name!="door" ? door.name : " "};
-    data.nameReversed=data.name
-    data.closedLeftReversed= data.closedLeft;
-    if(door&&door.name=="door"){
-      data.closedTop= data.closedTop.replace(/./g," ")
-      data.closedBottom= data.closedBottom.replace(/./g," ")
-      data.closedLeft= data.closedLeft.replace(/./g," ")
-      data.closedLeftReversed= data.closedLeft;
-    }
-   console.log(door)
-   console.log(data)
-    return this.asciiGeneratorService.templateString(this[templateName], data)
+  renderPlayer(characterData) {
+    return this.characterRenderService.render(characterData)
   }
 
-  renderCorner(dir1: string, dir2: string) {
-    let templateName = dir2.toLowerCase() + this.capitalize(dir1.toLowerCase()) + "CornerTemplate";
-    let data = this.defaultData
-    return this.asciiGeneratorService.templateString(this[templateName], data)
-
+  renderCenter(zone, party): String {
+    return "\n\n"+zone.contentArray.filter(it=>it.className!=="DoorObjectZone").map((it) => "["+it.name+"]");
   }
-
-  capitalize(s) {
-    if (typeof s !== 'string') return ''
-    return s.charAt(0).toUpperCase() + s.slice(1)
-  }
-
 }

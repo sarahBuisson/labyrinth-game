@@ -12,6 +12,7 @@ import { LabyrinthGameComponent } from './labyrinth/labyrinth-game/labyrinth-gam
 import { ZoneComponent } from './labyrinth/labyrinth-game/zone/zone.component';
 import { AsciiComponent } from './utils/ascii/component/ascii.component';
 import { LevelViewComponent } from './labyrinth/labyrinth-game/level-view/level-view.component';
+import {MapViewComponent} from "./labyrinth/labyrinth-game/map-view/map-view.component";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { LevelViewComponent } from './labyrinth/labyrinth-game/level-view/level-
     LabyrinthGameComponent,
     ZoneComponent,
     AsciiComponent,
-    LevelViewComponent
+    LevelViewComponent,
+    MapViewComponent,
   ],
   imports: [
     BrowserModule,

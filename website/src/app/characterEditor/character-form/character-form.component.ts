@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {RenderService, CharacterData} from "../render.service";
+import {CharacterRenderService, CharacterRenderData} from "../character-render.service";
+import {ServiceLabService} from "../../labyrinth/service-lab.service";
+
+
 
 
 @Component({
@@ -10,17 +13,12 @@ import {RenderService, CharacterData} from "../render.service";
 export class CharacterFormComponent implements OnInit {
 
 
-  data: CharacterData = Object.assign(new CharacterData(), {
-    eye: "'",
-    hair: "(",
-    torso: "M",
-    hat: "_--_",
-    leg: "d"
-  })
+  data: CharacterRenderData = new CharacterRenderData()
 
   render: String = ""
 
-  constructor(public  renderService: RenderService) {
+  constructor(public renderService: CharacterRenderService,
+              private serviceLab:ServiceLabService) {
 
   }
 
@@ -31,6 +29,7 @@ export class CharacterFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.update()
+    this.serviceLab.saveCharacter(this.data)
   }
 
 }
