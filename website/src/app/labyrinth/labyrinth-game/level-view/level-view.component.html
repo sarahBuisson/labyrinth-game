@@ -1,15 +1,19 @@
 <div class="levelRender">
-  <div [ngClass]="'levelRowRender'" *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
+
+
+
+  <div [ngClass]="'levelRowRender'" *ngFor="let row of fieldOfView; let x = index ">
 
     <ng-container *ngFor="let levelCaseInput of row; let y = index">
-      <ng-container   *ngIf="isCaseShowable(levelCaseInput)">
+      <ng-container>
         <app-zone
           [renderService]="renderService"
           [levelCase]="levelCaseInput"
           label="{{isStart(levelCaseInput)?'start':isExit(levelCaseInput)?'exit':''}}"
           [hasPlayer]="hasPlayer(levelCaseInput)"
         >
-          <app-ascii *ngIf="hasPlayer(levelCaseInput)" [content]="renderService.renderPlayer(this.characterRenderData)">
+          <app-ascii *ngIf="hasPlayer(levelCaseInput)"
+                     [content]="renderService.renderPlayer(this.characterRenderData)">
 
           </app-ascii>
 
@@ -19,6 +23,7 @@
 
       </ng-container>
     </ng-container>
+
 
   </div>
 </div>

@@ -1,0 +1,10 @@
+.title pre {
+  margin-left: auto;
+  margin-right: auto;
+  width: min-content;
+}
+
+.menuBar {
+  display: flex;
+  justify-content: space-around;
+}

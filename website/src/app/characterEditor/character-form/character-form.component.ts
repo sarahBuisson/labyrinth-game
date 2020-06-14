@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CharacterRenderService, CharacterRenderData} from "../character-render.service";
-import {ServiceLabService} from "../../labyrinth/service-lab.service";
+import {ServiceLabService} from "../../labyrinth/service/service-lab.service";
 
 
 

@@ -54,7 +54,7 @@ export class ZoneComponent implements OnInit {
   }
 
   doorAt(direction: string) {
-    let destination = this.levelCase.connectionsMap[direction]
+    let destination = this.levelCase.connectionsMap?this.levelCase.connectionsMap[direction]:undefined
     if (destination) {
       return this.levelCase.contentArray.filter(it => it.destination && it.destination.x === destination.x && it.destination.y === destination.y)[0]
     }

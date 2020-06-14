@@ -1,0 +1,21 @@
+.modalScreen{
+  position: absolute;
+  top:0;
+  left:0;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr min-content 1fr;
+  grid-template-rows: 1fr min-content 1fr;
+}
+
+.behindModal{
+  background: grey;
+  opacity:0.4
+}
+
+
+.backgroundModal{
+  background: white;
+  text-align: center;
+}

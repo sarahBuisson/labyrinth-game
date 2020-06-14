@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ServiceLabService} from "../service-lab.service";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ServiceLabService} from "../service/service-lab.service";
 import {kotlinProxyToJsView} from "../../utils/util";
 
 // @ts-ignore
@@ -7,6 +7,7 @@ import gameRules from 'gameRules';
 import {AsciiRenderService} from "./decor/ascii-render.service";
 import {MapAsciiRenderService} from "./decor/map-ascii-render.service";
 import {FullsizeAsciiRenderService} from "./decor/fullsize-ascii-render.service";
+import {LevelViewComponent} from "./level-view/level-view.component";
 
 @Component({
   selector: 'app-labyrinth-game',
@@ -18,6 +19,7 @@ export class LabyrinthGameComponent implements OnInit {
   currentLevel: any
   currentPartyProxy: any
   currentCharacterRenderData: CharacterData
+  @ViewChild('level-view') levelView:LevelViewComponent;
 
   constructor(private labService: ServiceLabService,
               public fullViewRenderService: FullsizeAsciiRenderService,

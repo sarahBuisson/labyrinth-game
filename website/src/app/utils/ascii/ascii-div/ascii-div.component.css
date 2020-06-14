@@ -1,0 +1,37 @@
+.asciiArt{
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0;
+  color:gray;
+}
+
+.asciiArt input {
+  border: none;
+  font-family: monospace;
+  white-space: pre;
+  width: auto
+}
+
+.asciiDecor{
+  color:lightgray;
+}
+.asciiHighlight{
+  color:black;
+}
+.asciiHighlight{
+  color:black;
+}
+
+.container{display: inline-block;}
+.grid{
+  display: grid;
+  grid-template-columns: 1em min-content 1em;
+  grid-template-rows: 1em min-content 1em;
+  width: min-content;
+  height: min-content;
+  text-align: center;
+}
+.content{
+  overflow: hidden;
+}

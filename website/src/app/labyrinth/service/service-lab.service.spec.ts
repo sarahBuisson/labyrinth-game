@@ -5,8 +5,8 @@ import {TestBed, fakeAsync, tick} from '@angular/core/testing';
 import {RouterTestingModule} from "@angular/router/testing";
 import {Router} from "@angular/router";
 import { Routes } from "@angular/router";
-import {LabyrinthFormComponent} from "./labyrinth-form/labyrinth-form.component";
-import {LabyrinthGameComponent} from "./labyrinth-game/labyrinth-game.component";
+import {LabyrinthFormComponent} from "../labyrinth-form/labyrinth-form.component";
+import {LabyrinthGameComponent} from "../labyrinth-game/labyrinth-game.component";
 
 describe('ServiceLabService', () => {
   let location: Location;

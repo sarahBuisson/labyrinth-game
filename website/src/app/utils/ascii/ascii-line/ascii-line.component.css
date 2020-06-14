@@ -1,0 +1,13 @@
+.asciiArt{
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0;
+}
+.container{
+  display: grid;
+  grid-template-columns: min-content min-content min-content;
+  grid-template-rows: 1em min-content 1em;
+  width: min-content;
+  text-align: center;
+}

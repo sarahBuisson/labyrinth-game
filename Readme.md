@@ -12,3 +12,11 @@ cd website
 npm i;
 ng serve
 ```
+
+
+TODO : website:
+default ascii component
+-bouton
+-auto ascii box
+
+redefine package dir

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {CharacterRenderData} from "../../../characterEditor/character-render.service";
 
 @Component({
@@ -6,7 +6,7 @@ import {CharacterRenderData} from "../../../characterEditor/character-render.ser
   templateUrl: './level-view.component.html',
   styleUrls: ['./level-view.component.css']
 })
-export class LevelViewComponent implements OnInit {
+export class LevelViewComponent implements OnInit, OnChanges {
 
   @Input()
   currentPartieProxy: any
@@ -15,15 +15,52 @@ export class LevelViewComponent implements OnInit {
   renderService: any
 
   constructor() {
+
   }
+
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    this.updateFieldOfView();
+    }
 
   @Input()
   rangeArroundPlayer: number = -1;
 
   @Input()
   characterRenderData: CharacterRenderData;
+  fieldOfView: Array<Array<any>>;
 
   ngOnInit(): void {
+    this.updateFieldOfView();
+  }
+
+  public updateFieldOfView() {
+    if (this.rangeArroundPlayer === -1) {
+      this.fieldOfView = this.currentPartieProxy.level.contentArray;
+    } else {
+      this.fieldOfView = new Array();
+      let location = this.currentPartieProxy.player.location;
+      console.log("location")
+      console.log(location)
+
+      for (let dy = -this.rangeArroundPlayer; dy <= this.rangeArroundPlayer; dy++) {
+        this.fieldOfView[this.rangeArroundPlayer + dy] = new Array();
+          for (let dx = -this.rangeArroundPlayer; dx <= this.rangeArroundPlayer; dx++) {
+
+          console.log(location)
+          let x: number = 0 + location.x + dx;
+          let y: number = 0 + location.y + dy;
+          let ix = 0 + this.rangeArroundPlayer + dx;
+          let iy = 0 + this.rangeArroundPlayer + dy;
+          console.log("t" + ix + " " + iy)
+          console.log("s" + x + " " + y)
+          if (this.currentPartieProxy.level.contentArray[y] && this.currentPartieProxy.level.contentArray[y][x]) {
+            this.fieldOfView[this.rangeArroundPlayer + dy][this.rangeArroundPlayer + dx] = this.currentPartieProxy.level.contentArray[y][x]
+          } else {
+            this.fieldOfView[this.rangeArroundPlayer + dy][this.rangeArroundPlayer + dx] = {contentArray:[],connections:{}}
+          }
+        }
+      }
+    }
   }
 
   isStart(levelCase) {
@@ -42,10 +79,15 @@ export class LevelViewComponent implements OnInit {
   }
 
   isCaseShowable(levelCase) {
+    if (!levelCase)
+      return false
     if (this.rangeArroundPlayer < 0)
       return true
     let location = this.currentPartieProxy.player.location;
     return (Math.abs(location.x - levelCase.x) <= this.rangeArroundPlayer
       && Math.abs(location.y - levelCase.y) <= this.rangeArroundPlayer);
   }
+
+
+
 }

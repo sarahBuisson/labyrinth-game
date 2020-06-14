@@ -1,0 +1,20 @@
+<div class="container">
+
+  <ascii-div (click)="clickNew()">NEW</ascii-div>
+  <ascii-div>LOAD</ascii-div>
+  <ascii-div (click)="saveHighScore();highScoreModal.show()">HIGHSCORE</ascii-div>
+  <app-ascii-modal #highScoreModal (click)="this.highScoreModal.hide()">
+    <div>
+    <ascii-div width="20"
+      hoverClass="asciiHighlight"
+    >Highscore</ascii-div>
+    <ascii-div width="40" [height]="highscores?highscores.length*5:0">
+      <div *ngFor="let score of highscores">
+      <ascii-div width="30" >{{score.player.name}} : {{score.score}}</ascii-div>
+      </div>
+    </ascii-div>
+    </div>
+  </app-ascii-modal>
+
+  <app-ascii-modal #loadingModal (click)="this.loadingModal.hide()">Loading</app-ascii-modal>
+</div>

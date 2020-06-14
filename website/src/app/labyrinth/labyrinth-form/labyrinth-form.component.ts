@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ServiceLabService} from "../service-lab.service";
+import {ServiceLabService} from "../service/service-lab.service";
 
 @Component({
   selector: 'app-labyrinth-form',

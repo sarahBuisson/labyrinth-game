@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.service";
 import {AsciiRenderService} from "./ascii-render.service";
-import {ServiceLabService} from "../../service-lab.service";
+import {ServiceLabService} from "../../service/service-lab.service";
 import {CharacterRenderService, CharacterRenderData} from "../../../characterEditor/character-render.service";
 
 @Injectable({

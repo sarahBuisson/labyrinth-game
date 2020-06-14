@@ -4,10 +4,10 @@ import {Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {Router} from "@angular/router";
 // @ts-ignore
 import gameRules from 'gameRules';
-import {getFromKotlin, getJsViewFromKotlin, kotlinProxyToJsView} from '../utils/util.js'
-import {CharacterFormComponent} from "../characterEditor/character-form/character-form.component";
+import {getFromKotlin, getJsViewFromKotlin, kotlinProxyToJsView} from '../../utils/util.js'
+import {CharacterFormComponent} from "../../characterEditor/character-form/character-form.component";
 
-import { CharacterRenderData} from "../characterEditor/character-render.service";
+import { CharacterRenderData} from "../../characterEditor/character-render.service";
 let composite = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board.algorithm.composite, 0, false);
 
 @Injectable({
