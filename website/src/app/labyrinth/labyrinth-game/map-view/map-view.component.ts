@@ -1,4 +1,20 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {asciiStringToGridObject} from "../../../utils/ascii/ascii-div/ascii-div.component";
+
+let mapBorderTemplate = "" +
+  "   ____________\n" +
+  " / \\           \\.\n" +
+  "|   |          |.\n" +
+  " \\_ |          |.\n" +
+  "    |          |.\n" +
+  "    |          |.\n" +
+  "    |          |.\n" +
+  "    |          |.\n" +
+  "    |          |.\n" +
+  "    |   _______|___\n" +
+  "    |  /          /.\n" +
+  "    \\_/__________/."
+let mapBorderData = asciiStringToGridObject(mapBorderTemplate, 9, 6, 6, 3)
 
 @Component({
   selector: 'app-map-view',
@@ -11,21 +27,25 @@ export class MapViewComponent implements OnInit {
   currentPartieProxy: any
 
   @Input()
-  renderService:any
-  constructor() { }
+  renderService: any
+
+  constructor() {
+  }
 
   @Input()
-  rangeArroundPlayer:number=-1;
+  rangeArroundPlayer: number = -1;
+
+  borderData = mapBorderData
 
   ngOnInit(): void {
   }
 
-  isStart(levelCase){
+  isStart(levelCase) {
     let start = this.currentPartieProxy.level.start;
-    return start.x===levelCase.x && start.y===levelCase.y
+    return start.x === levelCase.x && start.y === levelCase.y
   }
 
-  isExit(levelCase){
+  isExit(levelCase) {
     let exit = this.currentPartieProxy.level.exit;
     return exit.x === levelCase.x && exit.y === levelCase.y
   }
@@ -36,7 +56,7 @@ export class MapViewComponent implements OnInit {
   }
 
   isCaseShowable(levelCase) {
-    if(this.rangeArroundPlayer < 0 )
+    if (this.rangeArroundPlayer < 0)
       return true
     let location = this.currentPartieProxy.player.location;
     return (Math.abs(location.x - levelCase.x) <= this.rangeArroundPlayer

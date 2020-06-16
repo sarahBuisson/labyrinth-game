@@ -1,9 +1,9 @@
-<ascii-div width="100" height="10">
+<ascii-div xRepeat="100" yRepeat="10">
   <div class="grid">
     <span>
     Labyrinth Size:
     </span>
-    <ascii-div [width]="20">
+    <ascii-div [xRepeat]="20">
       <input [(ngModel)]="size"></ascii-div>
   </div>
   <ascii-div (click)="play()">play</ascii-div>

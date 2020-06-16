@@ -1,9 +1,16 @@
 <div>
+
+  <div class="mainArea">
   <app-level-view [currentPartieProxy]="currentPartyProxy"
                   [renderService]="fullViewRenderService"
                   [rangeArroundPlayer]="1" class="level"
                   [characterRenderData]="currentCharacterRenderData"
   ></app-level-view>
+    <app-map-view [currentPartieProxy]="currentPartyProxy"
+                  [renderService]="mapRenderService"
+                  class="map"
+    ></app-map-view>
+  </div>
   <div class="toolbar">
     <div class="gameplay">
       <div>
@@ -22,8 +29,5 @@
     </div>
     <div><span *ngFor="let item of this.currentPartyProxy.player.inventoryArray">{{item.name}}</span></div>
   </div>
-  <app-map-view [currentPartieProxy]="currentPartyProxy"
-                [renderService]="mapRenderService"
-                class="map"
-  ></app-map-view>
+
 </div>

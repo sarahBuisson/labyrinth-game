@@ -2,7 +2,6 @@
   display: block;
   font-family: monospace;
   white-space: pre;
-  margin: 1em 0;
   color:gray;
 }
 
@@ -24,14 +23,18 @@
 }
 
 .container{display: inline-block;}
+
 .grid{
   display: grid;
-  grid-template-columns: 1em min-content 1em;
-  grid-template-rows: 1em min-content 1em;
+  grid-template-columns: min-content repeat(auto-fill, min-content) min-content;
+  grid-template-rows: min-content repeat(auto-fill, min-content) min-content;
   width: min-content;
   height: min-content;
-  text-align: center;
 }
 .content{
-  overflow: hidden;
+  grid-row-start: 2;
+  grid-row-end: -2;
+  grid-column-start: 2;
+  grid-column-end: -2;
+
 }

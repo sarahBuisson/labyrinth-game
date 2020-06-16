@@ -1,17 +1,22 @@
 <div class="container asciiArt">
-<div class="grid">
-  <span>+</span>
-  <span>{{horrizLine}}</span>
-  <span>+</span>
-  <span>{{vertiLine}}</span>
+<div class="grid" [ngStyle]="{ 'grid-template-columns': 'min-content repeat('+xRepeat+', min-content) min-content',
+  'grid-template-rows': 'min-content repeat('+yRepeat+', min-content) min-content'}">
+  <span>{{topLeftTemplate}}</span>
+  <span *ngFor="let i of counter(xRepeat)" (click)="this.onClick('TOP',i)">{{topTemplate}}</span>
+  <span>{{topRightTemplate}}</span>
+  <ng-container *ngFor="let i of counter(yRepeat)">
+    <span class="leftSide" (click)="this.onClick('LEFT',i)">{{leftTemplate}}</span>
+
+    <span class="rightSide" (click)="this.onClick('RIGHT',i)">{{rightTemplate}}</span>
+  </ng-container>
+
   <span #contentDiv class="content">
     <ng-content></ng-content>
   </span>
-  <span>{{vertiLine}}</span>
 
-  <span>+</span>
-  <span>{{horrizLine}}</span>
-  <span>+</span>
+  <span>{{bottomLeftTemplate}}</span>
+  <span *ngFor="let i of counter(xRepeat)" (click)="this.onClick('BOTTOM',i)">{{bottomTemplate}}</span>
+  <span>{{bottomRightTemplate}}</span>
 </div>
 </div>
 

@@ -5,7 +5,7 @@
   <div [ngClass]="'levelRowRender'" *ngFor="let row of fieldOfView; let x = index ">
 
     <ng-container *ngFor="let levelCaseInput of row; let y = index">
-      <ng-container>
+      <ng-container *ngIf="levelCaseInput.contentArray.length>0">
         <app-zone
           [renderService]="renderService"
           [levelCase]="levelCaseInput"
@@ -21,6 +21,9 @@
           </app-ascii>
         </app-zone>
 
+      </ng-container>
+      <ng-container *ngIf="levelCaseInput.contentArray.length===0">
+        <app-ascii [content]="'####'"></app-ascii>
       </ng-container>
     </ng-container>
 

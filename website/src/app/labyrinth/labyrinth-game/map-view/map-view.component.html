@@ -1,4 +1,9 @@
-<div class="levelRender">
+<ascii-div
+  [borderDatas]="borderData"
+[yRepeat]="currentPartieProxy.level.contentArray.length+1"
+[xRepeat]="currentPartieProxy.level.contentArray[0].length"
+  class="levelRender">
+  <div>Map</div>
   <div [ngClass]="'levelRowRender'" *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
 
     <ng-container *ngFor="let levelCaseInput of row; let y = index">
@@ -15,4 +20,4 @@
     </ng-container>
 
   </div>
-</div>
+</ascii-div>

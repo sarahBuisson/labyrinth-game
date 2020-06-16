@@ -5,14 +5,34 @@
   <ascii-div (click)="saveHighScore();highScoreModal.show()">HIGHSCORE</ascii-div>
   <app-ascii-modal #highScoreModal (click)="this.highScoreModal.hide()">
     <div>
-    <ascii-div width="20"
-      hoverClass="asciiHighlight"
-    >Highscore</ascii-div>
-    <ascii-div width="40" [height]="highscores?highscores.length*5:0">
-      <div *ngFor="let score of highscores">
-      <ascii-div width="30" >{{score.player.name}} : {{score.score}}</ascii-div>
-      </div>
-    </ascii-div>
+      <ascii-div xRepeat="20"
+                 hoverClass="asciiHighlight"
+      >Highscore
+      </ascii-div>
+      <ascii-div xRepeat="40" [yRepeat]="highscores?highscores.length*5:0"
+
+                 topLeftTemplate="/¨\
+\_/"
+                 topRightTemplate="\\\n  !"
+                 topTemplate="--"
+                 leftTemplate="  !"
+                 rightTemplate="  !"
+
+                 bottomTemplate="Vv"
+                 bottomLeftTemplate="\"
+                 bottomRightTemplate="/"
+      >
+
+
+        <div *ngFor="let score of highscores">
+          <ascii-div xRepeat="30"
+
+
+          >
+
+            {{score.player.name}} : {{score.score}}</ascii-div>
+        </div>
+      </ascii-div>
     </div>
   </app-ascii-modal>
 
