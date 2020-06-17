@@ -22,7 +22,7 @@ jobs:
           cd website
           npm install
           npm install -g @angular/cli
-          ng build --base-href /labyrinth-game/
+          ng build --prod --output-path docs --base-href /labyrinth-game/
       - name: extract build version
         run: |
           gradle generatePomFileForKotlinMultiplatformPublication
