@@ -11,14 +11,14 @@
           [levelCase]="levelCaseInput"
           label="{{isStart(levelCaseInput)?'start':isExit(levelCaseInput)?'exit':''}}"
           [hasPlayer]="hasPlayer(levelCaseInput)"
+
         >
           <app-ascii *ngIf="hasPlayer(levelCaseInput)"
                      [content]="renderService.renderPlayer(this.characterRenderData)">
 
           </app-ascii>
+<span></span>
 
-          <app-ascii [content]="renderService.renderCenter(levelCaseInput,currentPartieProxy)">
-          </app-ascii>
         </app-zone>
 
       </ng-container>

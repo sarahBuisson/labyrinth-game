@@ -1,23 +1,31 @@
 <ascii-div
   [borderDatas]="borderData"
-[yRepeat]="currentPartieProxy.level.contentArray.length+1"
-[xRepeat]="currentPartieProxy.level.contentArray[0].length"
+  [yRepeat]="currentPartieProxy.level.contentArray.length+2"
+  [xRepeat]="currentPartieProxy.level.contentArray[0].length+2"
   class="levelRender">
-  <div>Map</div>
-  <div [ngClass]="'levelRowRender'" *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
+  <div>
+    <div>Map</div>
+    <div [ngClass]="'levelRowRender'" *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
 
-    <ng-container *ngFor="let levelCaseInput of row; let y = index">
-      <ng-container   *ngIf="isCaseShowable(levelCaseInput)">
-        <app-zone
-          [renderService]="renderService"
-          [levelCase]="levelCaseInput"
-        >
-          <app-ascii [content]="renderService.renderCenter(levelCaseInput, currentPartieProxy)">
-          </app-ascii>
-        </app-zone>
+      <ng-container *ngFor="let levelCaseInput of row; let y = index">
+        <ng-container *ngIf="isCaseShowable(levelCaseInput)">
 
+
+          <ascii-div
+            topTemplate="{{renderService.renderSide('TOP',gameplayLabService.doorAt(levelCaseInput,'TOP'))}}"
+            bottomTemplate="{{renderService.renderSide('BOTTOM',gameplayLabService.doorAt(levelCaseInput,'BOTTOM'))}}"
+            leftTemplate="{{renderService.renderSide('LEFT',gameplayLabService.doorAt(levelCaseInput,'LEFT'))}}"
+            rightTemplate="{{renderService.renderSide('RIGHT',gameplayLabService.doorAt(levelCaseInput,'RIGHT'))}}"
+            topLeftTemplate=" "
+            bottomLeftTemplate=" "
+            topRightTemplate=" "
+            bottomRightTemplate=" "
+          >{{renderService.renderCenter(levelCaseInput, currentPartieProxy)}}</ascii-div>
+        </ng-container>
       </ng-container>
-    </ng-container>
 
+    </div>
+    <div> @ = You are here</div>
+    <div> € = Exit</div>
   </div>
 </ascii-div>

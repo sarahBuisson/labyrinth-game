@@ -1,5 +1,5 @@
 
-import { ServiceLabService } from './service-lab.service';
+import { GenerateLabService } from './generate-lab.service';
 import {Location} from "@angular/common";
 import {TestBed, fakeAsync, tick} from '@angular/core/testing';
 import {RouterTestingModule} from "@angular/router/testing";
@@ -11,7 +11,7 @@ import {LabyrinthGameComponent} from "../labyrinth-game/labyrinth-game.component
 describe('ServiceLabService', () => {
   let location: Location;
   let router: Router;
-  let service: ServiceLabService;
+  let service: GenerateLabService;
 
   beforeEach(() => {
      const routes: Routes = [
@@ -26,7 +26,7 @@ describe('ServiceLabService', () => {
   }).compileComponents();
     router = TestBed.get(Router);
     location = TestBed.get(Location);
-    service = TestBed.get(ServiceLabService);
+    service = TestBed.get(GenerateLabService);
     router.initialNavigation();
   });
 

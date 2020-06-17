@@ -11,9 +11,12 @@
     [topRightTemplate]="renderCorner('TOP','RIGHT')"
     [bottomLeftTemplate]="renderCorner('BOTTOM','LEFT')"
     [bottomRightTemplate]="renderCorner('BOTTOM','RIGHT')"
+    [onClick]="manageClick"
+    class="asciiDecor"
   >
 
     <ng-content></ng-content>
+    <span *ngFor="let obj of gameplayLabService.levelContent(levelCase)" (click)="takeObj(obj)" class="asciiArt asciiHighlight">[{{obj.name}}]</span>
   </ascii-div>
 
 </div>

@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {LabyrinthGameComponent} from './labyrinth-game.component';
 import {RouterTestingModule} from "@angular/router/testing";
-import {ServiceLabService} from "../service/service-lab.service";
+import {GenerateLabService} from "../service/generate-lab.service";
 import {Router, Routes} from "@angular/router";
 import {LabyrinthFormComponent} from "../labyrinth-form/labyrinth-form.component";
 import {Location} from "@angular/common";

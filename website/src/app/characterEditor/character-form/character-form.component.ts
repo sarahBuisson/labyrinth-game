@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CharacterRenderService, CharacterRenderData} from "../character-render.service";
-import {ServiceLabService} from "../../labyrinth/service/service-lab.service";
+import {GenerateLabService} from "../../labyrinth/service/generate-lab.service";
+import {DataStorageService} from "../../labyrinth/service/data-storage.service";
 
 
 
@@ -18,7 +19,7 @@ export class CharacterFormComponent implements OnInit {
   render: String = ""
 
   constructor(public renderService: CharacterRenderService,
-              private serviceLab:ServiceLabService) {
+              private dataStorage:DataStorageService) {
 
   }
 
@@ -29,7 +30,7 @@ export class CharacterFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.update()
-    this.serviceLab.saveCharacter(this.data)
+    this.dataStorage.saveCharacter(this.data)
   }
 
 }

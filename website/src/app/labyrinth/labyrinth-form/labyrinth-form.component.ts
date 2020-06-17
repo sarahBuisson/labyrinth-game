@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ServiceLabService} from "../service/service-lab.service";
+import {GenerateLabService} from "../service/generate-lab.service";
 
 @Component({
   selector: 'app-labyrinth-form',
@@ -11,7 +11,7 @@ export class LabyrinthFormComponent implements OnInit {
 
   size:Number=5
 
-  constructor(private labService:ServiceLabService) { }
+  constructor(private labService:GenerateLabService) { }
 
   ngOnInit(): void {
   }

@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {asciiStringToGridObject} from "../../../utils/ascii/ascii-div/ascii-div.component";
+import {GameplayLabService} from "../../service/gameplay-lab.service";
 
 let mapBorderTemplate = "" +
   "   ____________\n" +
@@ -14,7 +15,7 @@ let mapBorderTemplate = "" +
   "    |   _______|___\n" +
   "    |  /          /.\n" +
   "    \\_/__________/."
-let mapBorderData = asciiStringToGridObject(mapBorderTemplate, 9, 6, 6, 3)
+let mapBorderData = asciiStringToGridObject(mapBorderTemplate, 9, 3, 6, 3)
 
 @Component({
   selector: 'app-map-view',
@@ -23,19 +24,21 @@ let mapBorderData = asciiStringToGridObject(mapBorderTemplate, 9, 6, 6, 3)
 })
 export class MapViewComponent implements OnInit {
 
+
   @Input()
   currentPartieProxy: any
 
   @Input()
   renderService: any
 
-  constructor() {
-  }
 
   @Input()
   rangeArroundPlayer: number = -1;
 
   borderData = mapBorderData
+
+  constructor(public gameplayLabService: GameplayLabService) {
+  }
 
   ngOnInit(): void {
   }

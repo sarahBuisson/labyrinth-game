@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.service";
 import {AsciiRenderService} from "../decor/ascii-render.service";
+import {GenerateLabService} from "../../service/generate-lab.service";
+import {GameplayLabService} from "../../service/gameplay-lab.service";
 
 @Component({
   selector: 'app-zone',
@@ -12,7 +14,7 @@ export class ZoneComponent implements OnInit {
   @Input()
   label: string
   @Input()
-  renderService:AsciiRenderService
+  renderService: AsciiRenderService
 
   @Input()
   hasPlayer: boolean;
@@ -27,17 +29,18 @@ export class ZoneComponent implements OnInit {
   @Input()
   set levelCase(val) {
     this._levelCase = val;
-    this.leftDoor = this.doorAt("LEFT")
-    this.rightDoor = this.doorAt("RIGHT")
-    this.topDoor = this.doorAt("TOP")
-    this.bottomDoor = this.doorAt("BOTTOM")
+    this.leftDoor = this.gameplayLabService.doorAt(this._levelCase,"LEFT")
+    this.rightDoor = this.gameplayLabService.doorAt(this._levelCase,"RIGHT")
+    this.topDoor = this.gameplayLabService.doorAt(this._levelCase,"TOP")
+    this.bottomDoor = this.gameplayLabService.doorAt(this._levelCase,"BOTTOM")
   }
 
   leftDoor: any
   rightDoor: any
   topDoor: any
   bottomDoor: any
-  constructor() {
+
+  constructor(private serviceLabService: GenerateLabService, public gameplayLabService: GameplayLabService) {
   }
 
   ngOnInit(): void {
@@ -45,23 +48,16 @@ export class ZoneComponent implements OnInit {
 
   }
 
-  levelContent() {
-    return (this.levelCase ? this.levelCase.contentArray : []).filter(it => !this.isDoor(it))
+  manageClick: any = (direction) => {
+    this.gameplayLabService.move(direction)
+  }
+  takeObj: any = (obj) => {
+    this.gameplayLabService.take(obj)
   }
 
-  private isDoor(it) {
-    return it.destination !== undefined
-  }
-
-  doorAt(direction: string) {
-    let destination = this.levelCase.connectionsMap?this.levelCase.connectionsMap[direction]:undefined
-    if (destination) {
-      return this.levelCase.contentArray.filter(it => it.destination && it.destination.x === destination.x && it.destination.y === destination.y)[0]
-    }
-  }
 
   renderSide(direction: string) {
-    let door = this.doorAt(direction);
+    let door = this.gameplayLabService.doorAt(this._levelCase, direction);
     return this.renderService.renderSide(direction, door)
   }
 

@@ -39,20 +39,15 @@ export class LevelViewComponent implements OnInit, OnChanges {
     } else {
       this.fieldOfView = new Array();
       let location = this.currentPartieProxy.player.location;
-      console.log("location")
-      console.log(location)
 
       for (let dy = -this.rangeArroundPlayer; dy <= this.rangeArroundPlayer; dy++) {
         this.fieldOfView[this.rangeArroundPlayer + dy] = new Array();
           for (let dx = -this.rangeArroundPlayer; dx <= this.rangeArroundPlayer; dx++) {
 
-          console.log(location)
           let x: number = 0 + location.x + dx;
           let y: number = 0 + location.y + dy;
           let ix = 0 + this.rangeArroundPlayer + dx;
           let iy = 0 + this.rangeArroundPlayer + dy;
-          console.log("t" + ix + " " + iy)
-          console.log("s" + x + " " + y)
           if (this.currentPartieProxy.level.contentArray[y] && this.currentPartieProxy.level.contentArray[y][x]) {
             this.fieldOfView[this.rangeArroundPlayer + dy][this.rangeArroundPlayer + dx] = this.currentPartieProxy.level.contentArray[y][x]
           } else {

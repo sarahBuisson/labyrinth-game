@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ServiceLabService} from "../service/service-lab.service";
+import {GenerateLabService} from "../service/generate-lab.service";
 import {kotlinProxyToJsView} from "../../utils/util";
 
 // @ts-ignore
@@ -8,6 +8,8 @@ import {AsciiRenderService} from "./decor/ascii-render.service";
 import {MapAsciiRenderService} from "./decor/map-ascii-render.service";
 import {FullsizeAsciiRenderService} from "./decor/fullsize-ascii-render.service";
 import {LevelViewComponent} from "./level-view/level-view.component";
+import {DataStorageService} from "../service/data-storage.service";
+import {GameplayLabService} from "../service/gameplay-lab.service";
 
 @Component({
   selector: 'app-labyrinth-game',
@@ -21,7 +23,9 @@ export class LabyrinthGameComponent implements OnInit {
   currentCharacterRenderData: CharacterData
   @ViewChild('level-view') levelView:LevelViewComponent;
 
-  constructor(private labService: ServiceLabService,
+  constructor(private labService: GenerateLabService,
+              private dataStorageService:DataStorageService,
+              private gameplayLabService:GameplayLabService,
               public fullViewRenderService: FullsizeAsciiRenderService,
               public mapRenderService: MapAsciiRenderService) {
   }
@@ -36,7 +40,7 @@ export class LabyrinthGameComponent implements OnInit {
   }
 
   subscribeCurrentParty(): any {
-    this.labService.getCurrentParty()
+    this.dataStorageService.getCurrentParty()
       .subscribe((c) => {
           this.currentParty = kotlinProxyToJsView(c, 0)
           console.log(this.currentParty)
@@ -50,7 +54,7 @@ export class LabyrinthGameComponent implements OnInit {
   }
 
   subscribeCharacterData(): any {
-    this.labService.getCurrentCharaRenderData()
+    this.dataStorageService.getCurrentCharaRenderData()
       .subscribe((c) => {
           this.currentCharacterRenderData = c;
         }
@@ -59,10 +63,10 @@ export class LabyrinthGameComponent implements OnInit {
   }
 
   move(direction: string) {
-    this.labService.move(this.currentParty, direction);
+    this.gameplayLabService.move(direction);
   }
 
   take() {
-    this.labService.take(this.currentParty);
+    this.gameplayLabService.takeAll();
   }
 }

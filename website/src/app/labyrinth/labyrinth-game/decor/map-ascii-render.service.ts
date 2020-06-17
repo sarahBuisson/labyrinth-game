@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AsciiRenderService} from "./ascii-render.service";
 import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.service";
 import {CharacterRenderData} from "../../../characterEditor/character-render.service";
@@ -6,21 +6,21 @@ import {CharacterRenderData} from "../../../characterEditor/character-render.ser
 @Injectable({
   providedIn: 'root'
 })
-export class MapAsciiRenderService extends AsciiRenderService{
+export class MapAsciiRenderService extends AsciiRenderService {
 
   constructor(asciiGeneratorService: AsciiGeneratorService) {
 
-    let directions=["top","bottom","left","right"]
+    let directions = ["top", "bottom", "left", "right"]
     super(asciiGeneratorService);
-    directions.forEach((dir)=>{
+    directions.forEach((dir) => {
 
-      this[dir+"DoorTemplate"]="${name}";
-      this[dir+"WallTemplate"]=" ";
+      this[dir + "DoorTemplate"] = "${name}";
+      this[dir + "WallTemplate"] = " ";
 
     })
-    this.leftBottomCornerTemplate=" ";
-    this.rightBottomCornerTemplate=" ";
-    this.leftTopCornerTemplate=" ";
+    this.leftBottomCornerTemplate = " ";
+    this.rightBottomCornerTemplate = " ";
+    this.leftTopCornerTemplate = " ";
     this.rightTopCornerTemplate = " ";
   }
 
@@ -29,32 +29,38 @@ export class MapAsciiRenderService extends AsciiRenderService{
   }
 
   renderCenter(zone, party): String {
+    console.log(zone.x)
+    console.log(party.level.exit.x)
+    console.log (zone.x===party.level.exit.x &&zone.y===party.level.exit.y )
+    let content = zone.contentArray.filter(it => !it.destination)
     if (party.player.location.x === zone.x && party.player.location.y === zone.y)
       return "@";
-    else if (zone.contentArray.length > 0) {
-      if (zone.contentArray.filter(it=>it.name === "start").length>0)
+    else if (zone.x===party.level.exit.x &&zone.y===party.level.exit.y ) {
+      console.log("Exit !")
+      return "€"
+    }
+    else if (content.length > 0) {
+      if (content.filter(it => it.name === "start").length > 0)
         return "$"
-      else if (zone.contentArray.filter(it=>it.name === "exit").length>0)
-        return "€"
+
       else
-        return zone.contentArray.name
-    } else return "#"
+        return content[0].name
+    } else return "+"
   }
 
   renderSide(direction: string, door: any) {
     let templateName = direction.toLowerCase() + (door ? "Door" : "Wall") + "Template";
 
     let doorName;
-    if(!door)
-      doorName=" "
-    else if(door.name!="door"){
-      doorName=door.name;
-    }
-    else{
-      if(direction=='TOP'||direction=="BOTTOM")
-        doorName="|"
-        else
-        doorName="-"
+    if (!door)
+      doorName = " "
+    else if (door.name != "door") {
+      doorName = door.name;
+    } else {
+      if (direction == 'TOP' || direction == "BOTTOM")
+        doorName = "|"
+      else
+        doorName = "-"
     }
 
     let data: any = {...this.defaultData, name: doorName};

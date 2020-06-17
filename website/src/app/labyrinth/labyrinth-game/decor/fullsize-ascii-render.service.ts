@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.service";
 import {AsciiRenderService} from "./ascii-render.service";
-import {ServiceLabService} from "../../service/service-lab.service";
+import {GenerateLabService} from "../../service/generate-lab.service";
 import {CharacterRenderService, CharacterRenderData} from "../../../characterEditor/character-render.service";
 
 @Injectable({
@@ -9,7 +9,7 @@ import {CharacterRenderService, CharacterRenderData} from "../../../characterEdi
 })
 export class FullsizeAsciiRenderService extends AsciiRenderService {
 
-  constructor(protected asciiGeneratorService: AsciiGeneratorService, private serviceLabService: ServiceLabService, private characterRenderService: CharacterRenderService) {
+  constructor(protected asciiGeneratorService: AsciiGeneratorService, private serviceLabService: GenerateLabService, private characterRenderService: CharacterRenderService) {
     super(asciiGeneratorService);
     this.partsKeys = Object.keys(this.defaultData)
     this.rightDoorTemplate = this.asciiGeneratorService.reverseTemplate(this.leftDoorTemplate, this.partsKeys)

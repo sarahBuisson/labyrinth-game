@@ -7,7 +7,7 @@ import {AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnInit, V
 })
 export class AsciiDivComponent implements OnInit {
   @Input()
-  xRepeat: number = 10
+  xRepeat: number = 1
   @Input()
   yRepeat: number = 1
 
@@ -44,12 +44,11 @@ export class AsciiDivComponent implements OnInit {
     }
   }
 
-
   counter(size) {
     let array = new Array()
-    for (let i = 0; i < size; i++)
+    for (let i = 0; i < size; i++) {
       array.push(i)
-    console.log(array)
+    }
     return array;
   }
 
