@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 import {CharacterFormComponent} from "./characterEditor/character-form/character-form.component";
 import {LabyrinthFormComponent} from "./labyrinth/labyrinth-form/labyrinth-form.component";
 import {LabyrinthGameComponent} from "./labyrinth/labyrinth-game/labyrinth-game.component";
 import {MenuComponent} from "./labyrinth/menu/menu.component";
 
+import {APP_BASE_HREF} from '@angular/common';
 
 const routes: Routes = [  { path: 'character', component: CharacterFormComponent },
   { path: 'newLabyrinth', component: LabyrinthFormComponent },
@@ -15,6 +16,9 @@ const routes: Routes = [  { path: 'character', component: CharacterFormComponent
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+
+  providers: [{provide: APP_BASE_HREF, useValue : '/labyrinth-game' }]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
