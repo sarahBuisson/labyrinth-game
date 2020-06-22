@@ -16,9 +16,7 @@ const routes: Routes = [  { path: 'character', component: CharacterFormComponent
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-
-  providers: [{provide: APP_BASE_HREF, useValue : '/labyrinth-game' }]
+  exports: [RouterModule]
 })
 export class AppRoutingModule {
 }
