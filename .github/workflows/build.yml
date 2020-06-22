@@ -23,6 +23,8 @@ jobs:
           npm install
           npm install -g @angular/cli
           ng build --prod --output-path docs --base-href /labyrinth-game --deploy-url /labyrinth-game
+          ls
+          ls dist
       - name: extract build version
         run: |
           gradle generatePomFileForKotlinMultiplatformPublication
@@ -34,6 +36,6 @@ jobs:
         uses: crazy-max/ghaction-github-pages@v1
         with:
           target_branch: gh-pages
-          build_dir: website/dist/website-angular
+          build_dir: website/dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
