@@ -22,7 +22,7 @@ jobs:
           cd website
           npm install
           npm install -g @angular/cli
-          ng build --base-href /labyrinth-game/ --deploy-url /labyrinth-game/
+          ng build --prod --base-href /labyrinth-game/ --deploy-url /labyrinth-game/
           ls
           ls dist
       - name: extract build version
