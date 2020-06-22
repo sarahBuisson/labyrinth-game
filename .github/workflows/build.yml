@@ -24,18 +24,17 @@ jobs:
           npm install -g @angular/cli
           npm install -g angular-cli-ghpages
           ng build --prod --base-href ./labyrinth-game/ --deploy-url /labyrinth-game/
-          ngh --dir=dist/website-angular
       - name: extract build version
         run: |
           gradle generatePomFileForKotlinMultiplatformPublication
           echo "::set-env name=BUILD_VERSION::$(mvn help:evaluate -Dexpression=project.version -q -f M3/build/publications/kotlinMultiplatform/pom-default.xml -DforceStdout)"
           echo "::set-env name=BUILD_ARTIFACT_ID::$(mvn help:evaluate -Dexpression=project.artifactId -q -f M3/build/publications/kotlinMultiplatform/pom-default.xml -DforceStdout)"
           echo "::set-env name=BUILD_GROUP_ID::$(mvn help:evaluate -Dexpression=project.groupId -q -f M3/build/publications/kotlinMultiplatform/pom-default.xml -DforceStdout)"
-     # - name: Deploy
-     #   if: success()
-     #   uses: crazy-max/ghaction-github-pages@v1
-     #   with:
-     #     target_branch: gh-pages
-     #     build_dir: website/dist/website-angular
-     #   env:
-     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v1
+        with:
+          target_branch: gh-pages
+          build_dir: website/dist/website-angular
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
