@@ -20,10 +20,8 @@ jobs:
       - name: Build front load dep
         run: |
           cd website
-          npm install
           npm install -g @angular/cli
           npm install -g angular-cli-ghpages
-          ng add angular-cli-ghpages
           npm install
           ls node_modules
           ng build --prod --base-href /labyrinth-game/
