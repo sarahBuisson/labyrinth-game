@@ -25,7 +25,7 @@ jobs:
           yarn install
           ls node_modules
           ng build --prod --base-href /labyrinth-game/
-          cp website/docs/website-angular/index.html website/docs/website-angular/404.html
+          cp website/docs/index.html website/docs/404.html
       - name: extract build version
         run: |
           gradle generatePomFileForKotlinMultiplatformPublication
