@@ -23,8 +23,8 @@ jobs:
           npm install -g @angular/cli
           npm install -g angular-cli-ghpages
           yarn install
-          ls
           ng build --prod --base-href /labyrinth-game/
+          ls
           cp website/dist/website-angular/index.html website/dist/website-angular/404.html
       - name: extract build version
         run: |
