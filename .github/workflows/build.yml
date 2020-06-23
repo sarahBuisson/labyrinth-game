@@ -25,6 +25,7 @@ jobs:
           npm install
           ls node_modules
           ng build --prod --base-href /labyrinth-game/
+          cp website/dist/website-angular/index.html website/dist/website-angular/404.html
       - name: extract build version
         run: |
           gradle generatePomFileForKotlinMultiplatformPublication
