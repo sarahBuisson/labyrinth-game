@@ -23,9 +23,9 @@ jobs:
           npm install -g @angular/cli
           npm install -g angular-cli-ghpages
           yarn install
-          ls node_modules
+          ls
           ng build --prod --base-href /labyrinth-game/
-          cp website/docs/index.html website/docs/404.html
+          cp website/dist/website-angular/index.html website/dist/website-angular/404.html
       - name: extract build version
         run: |
           gradle generatePomFileForKotlinMultiplatformPublication
