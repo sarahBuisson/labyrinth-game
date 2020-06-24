@@ -54,6 +54,12 @@ export class ZoneComponent implements OnInit {
   takeObj: any = (obj) => {
     this.gameplayLabService.take(obj)
   }
+  clickOnZone: any = (e) => {
+console.log("CCCCC")
+    if(this.gameplayLabService.moveAtCase(this.levelCase)){
+      e.preventDefault();
+    }
+  };
 
 
   renderSide(direction: string) {

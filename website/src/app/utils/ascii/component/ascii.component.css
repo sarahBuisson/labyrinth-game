@@ -1,3 +1,9 @@
 pre {
   margin: 0px
 }
+.asciiHighlight{
+  color:black;
+}
+.asciiArt .asciiHighlight{
+  color:black;
+}

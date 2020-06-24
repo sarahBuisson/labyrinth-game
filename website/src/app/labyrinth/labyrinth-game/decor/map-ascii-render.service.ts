@@ -29,14 +29,10 @@ export class MapAsciiRenderService extends AsciiRenderService {
   }
 
   renderCenter(zone, party): String {
-    console.log(zone.x)
-    console.log(party.level.exit.x)
-    console.log (zone.x===party.level.exit.x &&zone.y===party.level.exit.y )
     let content = zone.contentArray.filter(it => !it.destination)
     if (party.player.location.x === zone.x && party.player.location.y === zone.y)
       return "@";
     else if (zone.x===party.level.exit.x &&zone.y===party.level.exit.y ) {
-      console.log("Exit !")
       return "€"
     }
     else if (content.length > 0) {

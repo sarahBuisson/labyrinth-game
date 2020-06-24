@@ -4,6 +4,7 @@ import {getJsViewFromKotlin, kotlinProxyToJsView} from "../../utils/util";
 // @ts-ignore
 import gameRules from "gameRules";
 import {DataStorageService} from "./data-storage.service";
+import findKey from 'lodash/findKey';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,7 @@ export class GameplayLabService {
       if (door) {
         this.play(door)
       }
+      return true;
     }
   }
 
@@ -37,9 +39,10 @@ export class GameplayLabService {
       .forEach((it) => this.play(it))
 
   }
+
   takeAll() {
-    getJsViewFromKotlin(this.currentParty, "player" , "location", "content")
-      .filter(it => it.destination===undefined)
+    getJsViewFromKotlin(this.currentParty, "player", "location", "content")
+      .filter(it => it.destination === undefined)
       .forEach((it) => this.play(it))
   }
 
@@ -69,4 +72,17 @@ export class GameplayLabService {
   }
 
 
+  moveAtCase(levelCase: any) {
+    let connections = getJsViewFromKotlin(this.currentParty, "player", "location", "connections")
+    let direction = findKey(connections, (it) => {
+      console.log("it");
+      console.log(it);
+    return it && it.x === levelCase.x && it.y === levelCase.y})
+console.log(levelCase)
+console.log(connections)
+console.log(direction)
+    if (direction) {
+      return this.move(direction)
+    }
+  }
 }

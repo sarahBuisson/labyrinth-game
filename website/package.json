@@ -55,11 +55,7 @@
     "kotlinx-serialization-kotlinx-serialization-runtime": "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.20.0"
   },
   "jarDependencies": {
-    "easy-rules-kotlin-easy-rules-core": "https://packagecloud.io/sarahBuisson/snapshot/packages/java/org.jeasy/easy-rules-core-npm-3.2.4-snapshot.jar/artifacts/easy-rules-core-npm-3.2.4-snapshot.jar/download",
-    "easy-rules-kotlin-easy-rules-api": "https://packagecloud.io/sarahBuisson/snapshot/packages/java/org.jeasy/easy-rules-api-npm-3.2.4-snapshot.jar/artifacts/easy-rules-api-npm-3.2.4-snapshot.jar/download",
-    "easy-rules-core": "https://packagecloud.io/sarahBuisson/snapshot/packages/java/org.jeasy/easy-rules-core-npm-3.2.4-snapshot.jar/artifacts/easy-rules-core-npm-3.2.4-snapshot.jar/download",
-    "easy-rules-api": "https://packagecloud.io/sarahBuisson/snapshot/packages/java/org.jeasy/easy-rules-api-npm-3.2.4-snapshot.jar/artifacts/easy-rules-api-npm-3.2.4-snapshot.jar/download",
-    "gameRules": "../game/build/libs/game-npm-0.0.5-SNAPSHOT.jar"
+     "gameRules": "../game/build/libs/game-npm-0.0.5-SNAPSHOT.jar"
   },
   "installJarConfig": {
     "additionalMavenRepositories": [
@@ -67,7 +63,8 @@
       "http://mvnrepository.com/artifact/",
       "https://packagecloud.io/sarahBuisson/snapshot/maven2/",
       "https://packagecloud.io/sarahBuisson/sarahbuisson/maven2/"
-    ]
+    ],
+    "useMavenLocalRepository": true
   },
   "bin": {
     "angular-cli-ghpages": "angular-cli-ghpages",

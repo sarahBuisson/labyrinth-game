@@ -1,7 +1,6 @@
 <div class="levelRender">
 
 
-
   <div [ngClass]="'levelRowRender'" *ngFor="let row of fieldOfView; let x = index ">
 
     <ng-container *ngFor="let levelCaseInput of row; let y = index">
@@ -14,11 +13,15 @@
 
         >
           <app-ascii *ngIf="hasPlayer(levelCaseInput)"
-                     [content]="renderService.renderPlayer(this.characterRenderData)">
+                     [content]="renderService.renderPlayer(this.characterRenderData)"
+                     [asciiClass]="'asciiHighlight'">
 
           </app-ascii>
-<span></span>
+          <app-ascii *ngIf="levelCaseInput.x===currentPartieProxy.level.exit.x && levelCaseInput.y===currentPartieProxy.level.exit.y"
+                     [content]="'EXIT'"
+                     [asciiClass]="'asciiHighlight'">
 
+          </app-ascii>
         </app-zone>
 
       </ng-container>

@@ -4,6 +4,9 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
+import {mu} from "kotlin-logging";
+
+mu.KotlinLoggingConfiguration.LOG_LEVEL = mu.KotlinLoggingLevel.ERROR;
 if (environment.production) {
   enableProdMode();
 }

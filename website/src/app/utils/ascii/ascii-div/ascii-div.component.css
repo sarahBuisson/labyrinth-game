@@ -15,12 +15,7 @@
 .asciiDecor{
   color:lightgray;
 }
-.asciiHighlight{
-  color:black;
-}
-.asciiArt .asciiHighlight{
-  color:black;
-}
+
 
 .container{display: inline-block;}
 

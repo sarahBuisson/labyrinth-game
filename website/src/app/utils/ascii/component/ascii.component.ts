@@ -9,6 +9,8 @@ export class AsciiComponent implements OnInit {
   @Input()
   content: any
 
+  @Input()
+  asciiClass:string
   constructor() {
   }
 

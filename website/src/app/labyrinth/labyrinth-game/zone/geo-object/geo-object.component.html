@@ -1,0 +1,11 @@
+<div [ngSwitch]="object.name">
+  <div *ngSwitchCase="'exit'">
+    {{exit}}
+  </div>
+  <div *ngSwitchCase="'start'">
+    {{start}}
+  </div>
+  <div *ngSwitchDefault>
+    [{{object.name}}]
+  </div>
+</div>
