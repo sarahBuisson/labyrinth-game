@@ -190,6 +190,7 @@ open class LabFiller<TZone>
 
             val key = generateKey(listOfKey)
 
+
             affectKeyToDoor(door, key)
 
             keyZone.content.add(key)

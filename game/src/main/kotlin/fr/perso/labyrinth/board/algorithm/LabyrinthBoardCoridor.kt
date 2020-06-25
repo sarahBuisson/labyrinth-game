@@ -163,9 +163,6 @@ fun drawLabyrinth(board: Board<ZoneOfCoridor>): MutableList<List<ZoneOfCoridor>>
 
     solution = complexifyRandomlyCoridor(solution, board)
 
-
-
-
     coridors.add(solution)
     println(labyrinthToString(board, coridors))
 

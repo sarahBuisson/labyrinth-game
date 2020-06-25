@@ -79,39 +79,6 @@ fun <T> runBookD(fact: T, rules: Rules<T>) {
 
 
 
-fun <T : BoardZone> drawLab(board: Board<T>): Board<T> {
-
-    val start = board.toList().random()
-
-
-    val firstC = board.getNeigboursMap(start).entries.random()
-    start.connectZone(firstC.value!!, firstC.key);
-    var countFreeCase = board.toList().size;
-    val rules1:Set<Rule<DrawLabCaseFacts<T>>> = setOf(
-            ruleConnectEndCaseToAFreeNeighboor(),
-            ruleConnectUnconnectedCaseToBestConnectedNei()
-    )
-    val rules = RulesImpl(rules1)
-    do {
-        for (case in board.toList().shuffled()) {
-            val facts = DrawLabCaseFacts(case, board)
-            println(rules)
-            println(facts)
-            runBookD(facts, rules)
-        }
-        val previousCount = countFreeCase
-        countFreeCase = board.toList().count { it.connections.size == 0 }
-        println(countFreeCase)
-        println(labyrinthTreeToString(board))
-    } while (countFreeCase < previousCount)
-
-    complexiteMergeImpasse(board)
-    complexiteMergeImpasse(board)
-
-    println(labyrinthTreeToString(board))
-    return board
-}
-
 fun <T> chooseStartExit(board: LevelBoard<T>)
         where T : BoardZone, T : Point {
 

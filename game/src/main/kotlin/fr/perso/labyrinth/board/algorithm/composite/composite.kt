@@ -6,7 +6,7 @@ import fr.perso.labyrinth.board.Board
 import fr.perso.labyrinth.board.BoardZone
 import fr.perso.labyrinth.board.BoardZoneImpl
 import fr.perso.labyrinth.board.algorithm.chooseStartExit
-import fr.perso.labyrinth.board.algorithm.drawLab
+import fr.perso.labyrinth.board.algorithm.labyrinth.generation.drawLab
 import fr.perso.labyrinth.freezone.gameplay.Partie
 import fr.perso.labyrinth.freezone.gameplay.Player
 import fr.perso.labyrinth.freezone.generation.*

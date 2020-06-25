@@ -15,6 +15,8 @@ fun createCorridor(size: Int): List<FreeZone> {
 }
 
 fun createLab(size: Int): List<FreeZone> {
+
+
     val lab = mutableListOf<FreeZone>()
     val solution = createCorridor(size);
     lab.addAll(solution)
