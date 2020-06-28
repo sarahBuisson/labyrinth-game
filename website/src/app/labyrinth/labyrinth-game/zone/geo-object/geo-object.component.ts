@@ -21,7 +21,11 @@ export class GeoObjectComponent implements OnInit {
     "  +¨¨¨¨¨¨¨¨\n" +
     "  |\n" +
     "  |";
-
+ get title():string{
+   if(this.object.name.length==1)
+   return "key "+this.object.name;
+   else return this.object.name
+ }
   constructor() {
   }
 

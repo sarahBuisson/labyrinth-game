@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {asciiStringToGridObject} from "../../../utils/ascii/ascii-div/ascii-div.component";
+import {asciiStringToGridObject} from "../../../utils/ascii/ascii-hard-div/ascii-hard-div.component";
 import {GameplayLabService} from "../../service/gameplay-lab.service";
 
 let mapBorderTemplate = "" +

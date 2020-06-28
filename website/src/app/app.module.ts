@@ -14,12 +14,13 @@ import { ZoneComponent } from './labyrinth/labyrinth-game/zone/zone.component';
 import { AsciiComponent } from './utils/ascii/component/ascii.component';
 import { LevelViewComponent } from './labyrinth/labyrinth-game/level-view/level-view.component';
 import {MapViewComponent} from "./labyrinth/labyrinth-game/map-view/map-view.component";
-import { AsciiDivComponent } from './utils/ascii/ascii-div/ascii-div.component';
+import { AsciiHardDivComponent } from './utils/ascii/ascii-hard-div/ascii-hard-div.component';
 import { MenuComponent } from './labyrinth/menu/menu.component';
 import { NewFormComponent } from './labyrinth/new-form/new-form.component';
 import {AsciiLineComponent} from "./utils/ascii/ascii-line/ascii-line.component";
 import { AsciiModalComponent } from './utils/ascii/ascii-modal/ascii-modal.component';
 import { GeoObjectComponent } from './labyrinth/labyrinth-game/zone/geo-object/geo-object.component';
+import {AsciiDivComponent} from "./utils/ascii/ascii-div/ascii-div.component";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { GeoObjectComponent } from './labyrinth/labyrinth-game/zone/geo-object/g
     AsciiComponent,
     LevelViewComponent,
     MapViewComponent,
+    AsciiHardDivComponent,
     AsciiDivComponent,
     AsciiLineComponent,
     MenuComponent,

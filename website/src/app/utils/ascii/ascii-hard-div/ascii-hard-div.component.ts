@@ -1,21 +1,11 @@
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef,
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 
 @Component({
-  selector: 'ascii-div',
-  templateUrl: './ascii-div.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./ascii-div.component.css']
+  selector: 'ascii-hard-div',
+  templateUrl: './ascii-hard-div.component.html',
+  styleUrls: ['./ascii-hard-div.component.css']
 })
-export class AsciiDivComponent implements OnInit, AfterViewInit {
+export class AsciiHardDivComponent implements OnInit {
   @Input()
   xRepeat: number = 1
   @Input()
@@ -41,14 +31,13 @@ export class AsciiDivComponent implements OnInit, AfterViewInit {
   @Input()
   borderDatas: any
 
-  @ViewChild('contentDiv') contentDiv: ElementRef
+
 
   @Input()
-  onClick: any = () => {
-  }
+  onClick: any=()=>{}
 
 
-  constructor(private readonly _changeDetectorRef: ChangeDetectorRef) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -65,14 +54,6 @@ export class AsciiDivComponent implements OnInit, AfterViewInit {
     return array;
   }
 
-  ngAfterViewInit() {
-    console.log("ngAfterViewInit")
-    this.yRepeat = Math.round((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().height / 10)
-    this.xRepeat =  Math.round((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().width / 10)
-    console.log(this.yRepeat)
-    console.log(this.xRepeat)
-    this._changeDetectorRef.detectChanges();
-  }
 }
 
 
