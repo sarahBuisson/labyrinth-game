@@ -3,6 +3,7 @@ package fr.perso.labyrinth.board.algorithm
 import fr.perso.labyrinth.ConnectedZone
 import fr.perso.labyrinth.board.*
 import fr.perso.labyrinth.board.algorithm.composite.LevelBoard
+import fr.perso.labyrinth.board.algorithm.dataMap.CorridorIterator
 import fr.perso.labyrinth.board.algorithm.dataMap.distanceMap
 import org.jeasy.rules.api.Rule
 import org.jeasy.rules.core.RulesImpl
@@ -96,10 +97,16 @@ fun <T> chooseStartExit(board: LevelBoard<T>)
 /*
 * merge two impass corridor connected into one cul de sac
 * */
-fun <T : BoardZone> complexiteMergeImpasse(board: Board<T>) {
+fun <T : BoardZone> complexiteMergeImpasse(board: Board<T>, partToKeep: Double = 0.0) {
     val culDeSac = board.toList().filter { it.connected.size == 1 }
 
-    culDeSac.shuffled().forEach { currentImpass ->
+    culDeSac.sortedBy { CorridorIterator(it).size() }
+
+
+    val averageCulDeSac=culDeSac.subList((culDeSac.size*partToKeep/2).toInt(), (culDeSac.size*(1-partToKeep/2)).toInt())
+
+
+    averageCulDeSac.shuffled().forEach { currentImpass ->
 
        //if is still an impass
 

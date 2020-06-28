@@ -6,7 +6,8 @@ import fr.perso.labyrinth.board.Board
 import fr.perso.labyrinth.board.BoardZone
 import fr.perso.labyrinth.board.BoardZoneImpl
 import fr.perso.labyrinth.board.algorithm.chooseStartExit
-import fr.perso.labyrinth.board.algorithm.labyrinth.generation.drawLab
+import fr.perso.labyrinth.board.algorithm.labyrinth.generation.drawLabByPastingSmallCorridor
+import fr.perso.labyrinth.board.algorithm.labyrinth.generation.drawLabByPastingSmallCorridorToMediumOnes
 import fr.perso.labyrinth.freezone.gameplay.Partie
 import fr.perso.labyrinth.freezone.gameplay.Player
 import fr.perso.labyrinth.freezone.generation.*
@@ -25,14 +26,20 @@ class LevelBoard<T : Any>(width: Int, height: Int, factory: (x: Int, y: Int, boa
 fun generateComposite(size: Int): LevelBoard<CompositeZone> {
     val board = generateEmptyBoard(size)
     //
-    drawLab(board)
+    drawLabByPastingSmallCorridor(board)
     chooseStartExit(board)
     var doorWithKey = ('A'..'Z').map { arrayOf("" + it, "" + it.toLowerCase()) }.toTypedArray()
+
 
 
     LabFiller<CompositeZone>(doorWithKey)
             .init(board.toList(), board.start, board.exit, 10, 0)
             .fillLab()
+
+    listOf<String>("map", "radar", "boussole", "compas").forEach {
+        board.toList().random().content.add(ObjectZone(it));
+    }
+
     return board
 }
 
@@ -40,7 +47,7 @@ fun generateComposite(size: Int): LevelBoard<CompositeZone> {
 fun generateCompositeMapLabWithKey(size: Int): LevelBoard<CompositeZone> {
     val board = generateEmptyBoard(size)
     //When
-    drawLab(board)
+    drawLabByPastingSmallCorridorToMediumOnes(board)
     chooseStartExit(board)
 
     var doorWithKey = ('A'..'Z').map { arrayOf("" + it, "" + it.toLowerCase()) }.toTypedArray()

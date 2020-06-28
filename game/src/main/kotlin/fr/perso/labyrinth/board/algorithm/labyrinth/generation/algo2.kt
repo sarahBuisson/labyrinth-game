@@ -8,7 +8,7 @@ import org.jeasy.rules.api.Rule
 import org.jeasy.rules.core.RulesImpl
 
 
-fun <T : BoardZone> drawLabByPastingSmallCorridor(board: Board<T>): Board<T> {
+fun <T : BoardZone> drawLabByPastingSmallCorridorToMediumOnes(board: Board<T>): Board<T> {
 
     val start = board.toList().random()
 
@@ -34,8 +34,8 @@ fun <T : BoardZone> drawLabByPastingSmallCorridor(board: Board<T>): Board<T> {
         println(labyrinthTreeToString(board))
     } while (countFreeCase < previousCount)
 
-    complexiteMergeImpasse(board)
-    complexiteMergeImpasse(board)
+    complexiteMergeImpasse(board,0.5)
+    complexiteMergeImpasse(board,0.5)
 
     println(labyrinthTreeToString(board))
     return board

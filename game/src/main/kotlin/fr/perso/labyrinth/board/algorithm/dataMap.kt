@@ -137,8 +137,7 @@ public fun <T : BoardZone> corridorGrowingSizeDistanceMap(board: Board<T>): Map<
         distance.put(it, 0)
     }
 
-    intersections.forEach {
-        inter->
+    intersections.forEach { inter ->
 
         inter.connected.forEach {
             var n = 1;
@@ -150,7 +149,7 @@ public fun <T : BoardZone> corridorGrowingSizeDistanceMap(board: Board<T>): Map<
     }
 
 
-return distance
+    return distance
 }
 
 public fun <T : BoardZone> corridorSizeDistanceMap(board: Board<T>): Map<T, Int> {
@@ -203,7 +202,11 @@ public class CorridorIterator<T : ConnectedZone>(var start: T, var previous: T? 
         return previous!!
     }
 
-
+    fun size(): Int {
+        var n = 0;
+        CorridorIterator(start, previous).forEach { n++ }
+        return n
+    }
 }
 
 
