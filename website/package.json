@@ -49,6 +49,10 @@
     "install-jar-dependency": "sarahBuisson/install-jar-dependency"
   },
   "mavenDependencies": {
+    "easy-rules-kotlin-easy-rules-core": "https://packagecloud.io/sarahBuisson/snapshot/packages/java/org.jeasy/easy-rules-core-npm-3.2.4-snapshot.jar/artifacts/easy-rules-core-npm-3.2.4-snapshot.jar/download",
+    "easy-rules-kotlin-easy-rules-api": "https://packagecloud.io/sarahBuisson/snapshot/packages/java/org.jeasy/easy-rules-api-npm-3.2.4-snapshot.jar/artifacts/easy-rules-api-npm-3.2.4-snapshot.jar/download",
+    "easy-rules-core": "https://packagecloud.io/sarahBuisson/snapshot/packages/java/org.jeasy/easy-rules-core-npm-3.2.4-snapshot.jar/artifacts/easy-rules-core-npm-3.2.4-snapshot.jar/download",
+    "easy-rules-api": "https://packagecloud.io/sarahBuisson/snapshot/packages/java/org.jeasy/easy-rules-api-npm-3.2.4-snapshot.jar/artifacts/easy-rules-api-npm-3.2.4-snapshot.jar/download",
     "kotlin-logging": "io.github.microutils:kotlin-logging-js:1.7.9",
     "kotlin-stdlib": "org.jetbrains.kotlin:kotlin-stdlib-js:1.3.70",
     "kotlin-stdlib-js": "org.jetbrains.kotlin:kotlin-stdlib-js:1.3.70",
