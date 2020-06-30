@@ -13,10 +13,12 @@ data class Player(
         var location: GeoZone,
         val inventory: MutableList<ObjectZone> = mutableListOf<ObjectZone>(),
         var selected: ObjectZone? = null
-)
+) : ObjectZone("player", "player")
 
 
-class Partie<LevelType>(val player: Player, val level: LevelType)
+class Partie<LevelType>(val player: Player, val level: LevelType) {
+    var status: PartieStatus = PartieStatus.IN_PROGRESS
+}
 
 
 fun initLab(size: Int = 5): Partie<*> {
@@ -56,7 +58,7 @@ fun initPartieExit(size: Int = 5): Partie<List<FreeZone>> {
 class Interaction<Qui, Quoi, Comment, Univers>(val qui: Qui, val quoi: Quoi, val comment: Comment, val univers: Univers)
 
 
-abstract class MoveRule(evaluateL: (Interaction<Player, Any, Any, Partie<*>>) -> kotlin.Boolean, executeL: (Interaction<Player, Any, Any, Partie<*>>) -> kotlin.Unit={}) :
+abstract class MoveRule(evaluateL: (Interaction<Player, Any, Any, Partie<*>>) -> kotlin.Boolean, executeL: (Interaction<Player, Any, Any, Partie<*>>) -> kotlin.Unit = {}) :
         LambdaRule<Interaction<Player, Any, Any, Partie<*>>>(
                 { interaction ->
                     interaction.quoi is DoorObjectZone
@@ -66,6 +68,11 @@ abstract class MoveRule(evaluateL: (Interaction<Player, Any, Any, Partie<*>>) ->
                 },
                 { interaction ->
                     val doorObjectZone = interaction.quoi as DoorObjectZone
+
+                    if (interaction.qui is ObjectZone && interaction.qui.location.content.contains(interaction.qui)) {
+                        interaction.qui.location.content.remove(interaction.qui)
+                        (doorObjectZone.destination as GeoZone).content.add(interaction.qui)
+                    }
                     interaction.qui.location = doorObjectZone.destination as GeoZone
                     executeL(interaction)
                 })
@@ -92,13 +99,22 @@ class MoveClosedDoorRule :
 class TakeObjectRule :
         LambdaRule<Interaction<Player, Any, Any, Partie<*>>>(
                 { interaction ->
-                    interaction.quoi is KeyObjectZone &&
-                            interaction.qui.location.content.contains(interaction.quoi)
+                    interaction.quoi is ObjectZone
+                            && !(interaction.quoi is DoorObjectZone)
+                            && interaction.qui.location.content.contains(interaction.quoi)
                 },
                 { interaction ->
-                    interaction.qui.location.content.remove(interaction.quoi as KeyObjectZone)
-                    interaction.qui.inventory.add(interaction.quoi as KeyObjectZone)
+                    interaction.qui.location.content.remove(interaction.quoi as ObjectZone)
+                    interaction.qui.inventory.add(interaction.quoi)
+                    if ((interaction.quoi as ObjectZone).name === "exit") {
+                        interaction.univers.status = PartieStatus.WIN
+                    }
                 })
+
+enum class PartieStatus {
+    IN_PROGRESS, WIN, LOSE
+
+}
 
 class ExchangeObjectRule :
         LambdaRule<Interaction<Player, Any, Any, Partie<*>>>(

@@ -11,16 +11,11 @@
         <ng-container *ngIf="isCaseShowable(levelCaseInput)">
 
 
-          <ascii-div
-            topTemplate="{{renderService.renderSide('TOP',gameplayLabService.doorAt(levelCaseInput,'TOP'))}}"
-            bottomTemplate="{{renderService.renderSide('BOTTOM',gameplayLabService.doorAt(levelCaseInput,'BOTTOM'))}}"
-            leftTemplate="{{renderService.renderSide('LEFT',gameplayLabService.doorAt(levelCaseInput,'LEFT'))}}"
-            rightTemplate="{{renderService.renderSide('RIGHT',gameplayLabService.doorAt(levelCaseInput,'RIGHT'))}}"
-            topLeftTemplate=" "
-            bottomLeftTemplate=" "
-            topRightTemplate=" "
-            bottomRightTemplate=" "
-          >{{renderService.renderCenter(levelCaseInput, currentPartieProxy)}}</ascii-div>
+          <ascii-hard-div [borderDatas]="borderRendered(levelCaseInput)"
+          >
+            {{contentRendered(levelCaseInput)}}
+
+          </ascii-hard-div>
         </ng-container>
       </ng-container>
 

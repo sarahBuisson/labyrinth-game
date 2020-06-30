@@ -36,9 +36,7 @@ fun generateComposite(size: Int): LevelBoard<CompositeZone> {
             .init(board.toList(), board.start, board.exit, 10, 0)
             .fillLab()
 
-    listOf<String>("map", "radar", "boussole", "compas").forEach {
-        board.toList().random().content.add(ObjectZone(it));
-    }
+
 
     return board
 }
@@ -79,9 +77,25 @@ fun <T : BoardZone> connectAllZoneOfBoard(board: Board<T>): Board<T> {
 }
 
 
-fun initPartieComposite(size: Int = 5): Partie<LevelBoard<CompositeZone>> {
-    var lab = generateComposite(size)
-    return Partie(Player(lab.start), lab)
+fun initPartieLabGameComposite(size: Int = 5): Partie<LevelBoard<CompositeZone>> {
+    val lab = generateEmptyBoard(size)
+    //
+    drawLabByPastingSmallCorridor(lab)
+    chooseStartExit(lab)
+    var doorWithKey = ('A'..'Z').map { arrayOf("" + it, "" + it.toLowerCase()) }.toTypedArray()
+
+    LabFiller<CompositeZone>(doorWithKey)
+            .init(lab.toList(), lab.start, lab.exit, 10, 0)
+            .fillLab()
+
+    listOf("map", "radar", "boussole", "compas").forEach {
+        lab.toList().random().content.add(ObjectZone(it));
+    }
+    val player = Player(lab.start)
+    player.location.content.add(player)
+    lab.start.content.add(ObjectZone("start"))
+    lab.exit.content.add(ObjectZone("exit"))
+    return Partie(player, lab)
 }
 
 fun initPartieCompositeLabWithKey(size: Int = 5): Partie<LevelBoard<CompositeZone>> {
@@ -92,7 +106,7 @@ fun initPartieCompositeLabWithKey(size: Int = 5): Partie<LevelBoard<CompositeZon
 class CompositeLabService() {
 
     fun generateCompositeLab(size: Int) = generateComposite(size)
-    fun initPartieCompositeLab(size: Int) = initPartieComposite(size)
+    fun initPartieCompositeLab(size: Int) = initPartieLabGameComposite(size)
     fun initPartieCompositeLabWithKey(size: Int = 5): Partie<LevelBoard<CompositeZone>> {
         var lab = generateCompositeMapLabWithKey(size)
         return Partie(Player(lab.start), lab)

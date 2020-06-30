@@ -1,9 +1,12 @@
 pre {
-  margin: 0px
+  margin: 0px;
+  display: inline-block;
 }
 .asciiHighlight{
   color:black;
 }
 .asciiArt .asciiHighlight{
   color:black;
+
 }
+.asciiArt {display: inline-block;}

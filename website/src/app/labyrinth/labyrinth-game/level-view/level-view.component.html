@@ -5,24 +5,17 @@
 
     <ng-container *ngFor="let levelCaseInput of row; let y = index">
       <ng-container *ngIf="levelCaseInput.contentArray.length>0">
-        <app-zone
-          [renderService]="renderService"
-          [levelCase]="levelCaseInput"
-          label="{{isStart(levelCaseInput)?'start':isExit(levelCaseInput)?'exit':''}}"
-          [hasPlayer]="hasPlayer(levelCaseInput)"
+        <ascii-hard-div
 
+          [borderDatas]="borderRendered(levelCaseInput)"
+          [onClick]="manageClick"
+          (click)="clickOnZone(levelCaseInput)"
         >
-          <app-ascii *ngIf="hasPlayer(levelCaseInput)"
-                     [content]="renderService.renderPlayer(this.characterRenderData)"
-                     [asciiClass]="'asciiHighlight'">
+          <app-ascii *ngFor="let obj of this.gameplayLabService.levelContent(levelCaseInput)"
+          (click)="this.takeObj(obj)">
+            {{renderObj(obj)}}</app-ascii>
 
-          </app-ascii>
-          <app-ascii *ngIf="levelCaseInput.x===currentPartieProxy.level.exit.x && levelCaseInput.y===currentPartieProxy.level.exit.y"
-                     [content]="'EXIT'"
-                     [asciiClass]="'asciiHighlight'">
-
-          </app-ascii>
-        </app-zone>
+        </ascii-hard-div>
 
       </ng-container>
       <ng-container *ngIf="levelCaseInput.contentArray.length===0">

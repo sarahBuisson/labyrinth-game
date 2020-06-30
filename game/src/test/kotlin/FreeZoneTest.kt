@@ -59,18 +59,24 @@ class FreeZoneTest {
         val partie = initPartie()
         println(partie.level.map { it.toString() + "\n" })
         println("---")
-        for (i in 0..100) {
-            println("" + i + " " + partie.player)
-            if (!partie.player.inventory.isEmpty())
-                partie.player.selected = partie.player.inventory.random()
-            playerInteractWith(partie, partie.player.location.content.random())
+        try {
+            for (i in 0..100) {
+                println("" + i + " " + partie.player)
+                if (!partie.player.inventory.isEmpty())
+                    partie.player.selected = partie.player.inventory.random()
+                playerInteractWith(partie, partie.player.location.content.random())
 
+            }
+        } catch (e: Exception) {
+            throw e
+        } finally {
+            println("---")
+            println(partie.level)
+
+            println("---")
+            println(partie.player.inventory.map { it.name })
         }
-        println("---")
-        println(partie.level)
 
-        println("---")
-        println(partie.player.inventory.map { it.name })
     }
 
 
@@ -80,18 +86,26 @@ class FreeZoneTest {
         val partie = initPartieExit()
         println(partie.level.map { it.toString() + "\n" })
         println("---")
-        for (i in 0..100) {
-            println("" + i + " " + partie.player)
-            if (!partie.player.inventory.isEmpty())
-                partie.player.selected = partie.player.inventory.random()
-            playerInteractWith(partie, partie.player.location.content.random())
+        try {
 
+            for (i in 0..100) {
+                println("" + i + " " + partie.player)
+                if (!partie.player.inventory.isEmpty())
+                    partie.player.selected = partie.player.inventory.random()
+                playerInteractWith(partie, partie.player.location.content.random())
+
+            }
+            println("---")
+            println(partie.level)
+
+            println("---")
+            println(partie.player.inventory.map { it.name })
+        } catch (e: Exception) {
+
+
+            println(partie.player.inventory.map { it.name })
+            throw e;
         }
-        println("---")
-        println(partie.level)
-
-        println("---")
-        println(partie.player.inventory.map { it.name })
     }
 
 

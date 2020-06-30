@@ -1,21 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {asciiStringToGridObject} from "../../../utils/ascii/ascii-hard-div/ascii-hard-div.component";
 import {GameplayLabService} from "../../service/gameplay-lab.service";
+import {paperDataGridTemplate, mapGridTemplate} from "../decor/resources/data";
 
-let mapBorderTemplate = "" +
-  "   ____________\n" +
-  " / \\           \\.\n" +
-  "|   |          |.\n" +
-  " \\_ |          |.\n" +
-  "    |          |.\n" +
-  "    |          |.\n" +
-  "    |          |.\n" +
-  "    |          |.\n" +
-  "    |          |.\n" +
-  "    |   _______|___\n" +
-  "    |  /          /.\n" +
-  "    \\_/__________/."
-let mapBorderData = asciiStringToGridObject(mapBorderTemplate, 9, 3, 6, 3)
+
+let mapBorderData = paperDataGridTemplate;
 
 @Component({
   selector: 'app-map-view',
@@ -64,5 +53,55 @@ export class MapViewComponent implements OnInit {
     let location = this.currentPartieProxy.player.location;
     return (Math.abs(location.x - levelCase.x) <= this.rangeArroundPlayer
       && Math.abs(location.y - levelCase.y) <= this.rangeArroundPlayer);
+  }
+
+  borderRendered(levelCase) {
+    let borderRendered = {...mapGridTemplate}
+    let directions: Array<String> = ['left', 'right', 'top', 'bottom'];
+    directions.forEach((key: String) => {
+      let door = this.gameplayLabService.doorAt(levelCase, key.toUpperCase())
+     console.log("door")
+     console.log(door)
+      if (door) {
+        if (door.key) {
+          borderRendered[key + "Template"] = door.name
+        } else {
+
+        }
+
+      } else {
+        borderRendered[key + "Template"] = ' '
+      }
+    })
+console.log(borderRendered)
+console.log(mapGridTemplate)
+    return borderRendered;
+  }
+
+  contentRendered(levelCaseInput: any) {
+    let content = this.gameplayLabService.levelContent(levelCaseInput);
+    if (content[0]) {
+      console.log(content[0].classname)
+      if (content[0].classname === "KeyObjectZone") {
+        return content[0].name;
+      } else if (content[0].name === "player") {
+        return "@"
+      } else if (content[0].name === "exit") {
+        return "€"
+      } else if (content[0].name === "start") {
+        return "$"
+      }else if (content[0].name === "compass") {
+        return "%"
+      }else if (content[0].name === "boussole") {
+        return "@"
+      }
+      else if (content[0].name === "map") {
+        return "#"
+      }else {return  content[0].name;}}
+
+     else {
+      return " "
+    }
+
   }
 }
