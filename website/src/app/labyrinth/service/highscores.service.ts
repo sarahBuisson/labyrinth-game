@@ -11,7 +11,6 @@ export class HighscoresService {
 
 
   public saveScore(player, score) {
-    console.log("save score")
     let objectObservable = this.http.post("http://sarahbuisson-server-sample.herokuapp.com/score", {
       player: player,
       score

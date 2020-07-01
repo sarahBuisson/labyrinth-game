@@ -8,7 +8,6 @@ describe('test kotlin to JsView', () => {
   it("should parse methods of package", () => {
 
     let composite = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board.algorithm.composite);
-    console.log(composite)
     expect(composite.LevelBoard).toBeDefined();
     expect(composite.generateCompositeFunction).toBeDefined();
   });
@@ -18,14 +17,11 @@ describe('test kotlin to JsView', () => {
     let composite = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board.algorithm.composite, 0, false);
 
     let level = composite.generateEmptyBoardFunction(5);
-    console.log(level)
     let board = composite.connectAllZoneOfBoardFunction(level)
 
     let boardView = kotlinProxyToJsView(board, 4, true)
-    console.log(boardView.contentArray)
     expect(boardView.contentArray).toBeDefined();
     expect(boardView.contentArray[0][0].connectionsMap).toBeDefined();
-    console.log(boardView.contentArray[0][0].connectionsMap)
     expect(boardView.contentArray[0][0].connectionsMap.BOTTOM).toBeDefined();
   });
 
@@ -64,14 +60,9 @@ describe('test kotlin to JsView', () => {
 
   it('call without proxy', () => {
     let composite = gameRules.fr.perso.labyrinth.board.algorithm.composite
-    console.log(composite)
-    // @ts-ignore
-    // @ts-ignore
-    console.log(Object.getOwnPropertyNames(composite))
     // @ts-ignore
     let method = Object.getOwnPropertyNames(composite).filter(it => it.startsWith("initPartieComposite"))
     let r = composite[method].call(5)
-    console.log(r)
     //  expect(partie.level.contentArray[0][0].connectionsMap).toBeDefined();
   });
 });

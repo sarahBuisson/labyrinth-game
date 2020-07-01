@@ -22,7 +22,6 @@ export class CharacterRenderService {
   constructor(private asciiGeneratorService: AsciiGeneratorService) {
     this.bodyPartsKey = Object.keys(this.defaultData)
     this.templateRight = this.asciiGeneratorService.reverseTemplate(this.templateLeft, this.bodyPartsKey)
-    console.log(this.templateRight)
   }
 
   public bodyPartsKey: Array<String>

@@ -18,7 +18,6 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.highscoresService.getScores().subscribe((scores) => {
-console.log(scores)
       this.highscores = scores as Array<any>;
     })
 

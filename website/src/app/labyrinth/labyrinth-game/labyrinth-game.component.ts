@@ -35,15 +35,10 @@ export class LabyrinthGameComponent implements OnInit {
     this.subscribeCharacterData()
   }
 
-  log(data): void {
-    console.log(data)
-  }
-
   subscribeCurrentParty(): any {
     this.dataStorageService.getCurrentParty()
       .subscribe((c) => {
           this.currentParty = kotlinProxyToJsView(c, 0)
-          console.log(this.currentParty)
           if (this.currentParty) {
             this.currentLevel = this.currentParty.level
             this.currentPartyProxy = kotlinProxyToJsView(this.currentParty, 7)

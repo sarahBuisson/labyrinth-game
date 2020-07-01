@@ -75,12 +75,7 @@ export class GameplayLabService {
   moveAtCase(levelCase: any) {
     let connections = getJsViewFromKotlin(this.currentParty, "player", "location", "connections")
     let direction = findKey(connections, (it) => {
-      console.log("it");
-      console.log(it);
     return it && it.x === levelCase.x && it.y === levelCase.y})
-console.log(levelCase)
-console.log(connections)
-console.log(direction)
     if (direction) {
       return this.move(direction)
     }
