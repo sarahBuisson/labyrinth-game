@@ -15,7 +15,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./ascii-div.component.css']
 })
-export class AsciiDivComponent implements OnInit, AfterViewInit {
+export class AsciiDivComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @Input()
   xRepeat: number = 1
   @Input()
@@ -66,10 +66,14 @@ export class AsciiDivComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.yRepeat = Math.round((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().height / 12)
-    this.xRepeat =  Math.round((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().width / 12)
+    this.yRepeat = Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().height / 15)
+    this.xRepeat =  Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().width / 7.8)
 
     this._changeDetectorRef.detectChanges();
+  }
+
+  ngAfterViewChecked(): void {
+    this.ngAfterViewInit();
   }
 }
 
