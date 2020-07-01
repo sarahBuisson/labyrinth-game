@@ -19,6 +19,7 @@ import { NewFormComponent } from './labyrinth/new-form/new-form.component';
 import {AsciiLineComponent} from "./utils/ascii/ascii-line/ascii-line.component";
 import { AsciiModalComponent } from './utils/ascii/ascii-modal/ascii-modal.component';
 import {AsciiDivComponent} from "./utils/ascii/ascii-div/ascii-div.component";
+import { InventoryComponent } from './labyrinth/labyrinth-game/inventory/inventory.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {AsciiDivComponent} from "./utils/ascii/ascii-div/ascii-div.component";
     AsciiLineComponent,
     MenuComponent,
     NewFormComponent,
-    AsciiModalComponent
+    AsciiModalComponent,
+    InventoryComponent
   ],
   imports: [
     BrowserModule,

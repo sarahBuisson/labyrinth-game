@@ -60,8 +60,6 @@ export class MapViewComponent implements OnInit {
     let directions: Array<String> = ['left', 'right', 'top', 'bottom'];
     directions.forEach((key: String) => {
       let door = this.gameplayLabService.doorAt(levelCase, key.toUpperCase())
-     console.log("door")
-     console.log(door)
       if (door) {
         if (door.key) {
           borderRendered[key + "Template"] = door.name
@@ -73,15 +71,12 @@ export class MapViewComponent implements OnInit {
         borderRendered[key + "Template"] = ' '
       }
     })
-console.log(borderRendered)
-console.log(mapGridTemplate)
     return borderRendered;
   }
 
   contentRendered(levelCaseInput: any) {
     let content = this.gameplayLabService.levelContent(levelCaseInput);
     if (content[0]) {
-      console.log(content[0].classname)
       if (content[0].classname === "KeyObjectZone") {
         return content[0].name;
       } else if (content[0].name === "player") {

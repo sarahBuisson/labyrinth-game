@@ -27,7 +27,10 @@
     <div class="character">
       <pre>{{fullViewRenderService.renderPlayer(this.currentCharacterRenderData)}}</pre>
     </div>
-    <div><span *ngFor="let item of this.currentPartyProxy.player.inventoryArray">{{item.name}}</span></div>
+    <div>
+      <app-inventory [player]="this.currentPartyProxy.player"></app-inventory>
+
+    </div>
   </div>
 
 </div>

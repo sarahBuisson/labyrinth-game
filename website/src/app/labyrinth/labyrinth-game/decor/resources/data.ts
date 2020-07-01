@@ -147,3 +147,10 @@ export let startTemplate: any = "" +
   "  +¨¨¨¨¨¨¨¨\n" +
   "  |\n" +
   "  |";
+let bagRaw="" +
+  "(@=======(@   \n" +
+  "||       ||   \n" +
+  " \\\\ '' '//    \n" +
+  "  \\\\   //     \n" +
+  "   \\===/      ";
+export let bagGridTemplate = asciiStringToGridObject(bagRaw, 6, 1, 1, 1)

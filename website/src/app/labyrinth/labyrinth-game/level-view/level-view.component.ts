@@ -132,6 +132,16 @@ export class LevelViewComponent implements OnInit, OnChanges {
       return startTemplate
     if(obj.name==='player')
       return this.renderService.renderPlayer(this.characterRenderData)
+   if(obj.type==="key")
+     return `(${obj.name})--F`
+    if(obj.name==="boussole")
+      return `(/)`
+    if(obj.name==="radar")
+      return `(\`o )`
+    if(obj.name==="map")
+      return `/#/`
+    if(obj.name==="compas")
+      return `%/`
     return `[${obj.name}]`
   }
 }
