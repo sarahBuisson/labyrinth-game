@@ -11,10 +11,10 @@
           [onClick]="manageClick"
           (click)="clickOnZone(levelCaseInput)"
         >
+          <div class="zoneContent">
           <app-ascii *ngFor="let obj of this.gameplayLabService.levelContent(levelCaseInput)"
-          (click)="this.takeObj(obj)">
-            {{renderObj(obj)}}</app-ascii>
-
+          (click)="this.takeObj(obj)">{{renderObj(obj)}}</app-ascii>
+          </div>
         </ascii-hard-div>
 
       </ng-container>

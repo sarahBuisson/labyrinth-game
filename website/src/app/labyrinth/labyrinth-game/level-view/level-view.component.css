@@ -4,3 +4,8 @@
   grid-template-rows: repeat(auto-fit, 240px);
 }
 
+.zoneContent{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 60px);
+  grid-template-rows: repeat(auto-fill, 40px);
+}

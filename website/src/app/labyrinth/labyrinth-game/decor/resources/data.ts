@@ -142,11 +142,11 @@ export let exitTemplate: any = "" +
   "'¨¨¨¨¨¨'\n" +
   "  exit";
 export let startTemplate: any = "" +
-  "  +________\n" +
-  "  |start <\n" +
-  "  +¨¨¨¨¨¨¨¨\n" +
-  "  |\n" +
-  "  |";
+  "+______\n" +
+  "|start<\n" +
+  "+¨¨¨¨¨¨\n" +
+  "|\n" +
+  "|";
 let bagRaw="" +
   "(@=======(@   \n" +
   "||       ||   \n" +
