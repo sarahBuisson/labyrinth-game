@@ -66,8 +66,8 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterViewChecke
   }
 
   ngAfterViewInit() {
-    this.yRepeat = Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().height / 15)
-    this.xRepeat =  Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().width / 7.8)
+    this.yRepeat = Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().height / 15.1)
+    this.xRepeat =  Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().width / 7.82)
 
     this._changeDetectorRef.detectChanges();
   }

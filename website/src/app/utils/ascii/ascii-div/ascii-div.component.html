@@ -10,9 +10,11 @@
       <span class=" asciiArt rightSide" (click)="this.onClick('RIGHT',i)">{{rightTemplate}}</span>
     </ng-container>
 
-    <span #contentDiv class="asciiArt content">
-    <ng-content></ng-content>
-  </span>
+    <div  class="asciiArt content">
+      <span #contentDiv>
+      <ng-content></ng-content>
+        </span>
+    </div>
 
     <span class="asciiArt">{{bottomLeftTemplate}}</span>
     <span *ngFor="let i of counter(xRepeat)" (click)="this.onClick('BOTTOM',i)"
