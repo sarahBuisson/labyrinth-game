@@ -113,12 +113,21 @@ export class LevelViewComponent implements OnInit, OnChanges {
   }
 
 
-  manageClick: any = (direction) => {
-    this.gameplayLabService.move(direction)
+  manageClick: any = (caseLev) => {
+    if (this.gameplayLabService.hasPlayer(caseLev)) {
+      return (direction) => {
+        this.gameplayLabService.move(direction)
+      }
+    } else {
+      return () => {
+      }
+    }
   }
+
   takeObj: any = (obj) => {
     this.gameplayLabService.take(obj)
   }
+
   clickOnZone: any = (levelCase,e) => {
     if(this.gameplayLabService.moveAtCase(levelCase)){
       e.preventDefault();

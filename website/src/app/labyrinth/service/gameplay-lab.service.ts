@@ -80,4 +80,8 @@ export class GameplayLabService {
       return this.move(direction)
     }
   }
+
+  hasPlayer(levelCase: any) {
+    return levelCase.contentArray.find(p=>p.type==="player") && true;
+  }
 }
