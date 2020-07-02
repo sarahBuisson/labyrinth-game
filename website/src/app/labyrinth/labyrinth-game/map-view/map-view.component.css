@@ -2,3 +2,11 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, 1.5em);
 }
+
+.map {
+  position: fixed;
+  right: -100px;
+  top: 50%;
+  transition: 2s;
+}
+.map:hover { right: 0 }

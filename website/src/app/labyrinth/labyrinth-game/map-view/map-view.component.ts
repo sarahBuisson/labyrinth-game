@@ -25,6 +25,7 @@ export class MapViewComponent implements OnInit {
   rangeArroundPlayer: number = -1;
 
   borderData = mapBorderData
+  showMap:any;
 
   constructor(public gameplayLabService: GameplayLabService) {
   }
