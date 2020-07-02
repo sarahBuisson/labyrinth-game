@@ -10,6 +10,8 @@ export class AsciiComponent implements OnInit {
   content: any
 
   @Input()
+  tooltip:string
+  @Input()
   asciiClass:string
   constructor() {
   }
