@@ -24,14 +24,10 @@ fun <T : BoardZone> drawLabByPastingSmallCorridorToMediumOnes(board: Board<T>): 
     do {
         for (case in board.toList().shuffled()) {
             val facts = DrawLabCaseFacts(case, board)
-            println(rules)
-            println(facts)
             runBookD(facts, rules)
         }
         val previousCount = countFreeCase
         countFreeCase = board.toList().count { it.connections.size == 0 }
-        println(countFreeCase)
-        println(labyrinthTreeToString(board))
     } while (countFreeCase < previousCount)
 
     complexiteMergeImpasse(board,0.5)

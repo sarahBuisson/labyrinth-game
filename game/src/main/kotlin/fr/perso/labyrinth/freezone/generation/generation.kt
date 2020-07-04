@@ -36,10 +36,7 @@ open class LabFillerExit<T>(
 
         val pathToExit = extractPathFromStartToExit(exit)
         fillPathWithClosedDoor(pathToExit, listOfKey.subList(0, listOfKey.size / 2))
-        println("pathFilled")
         fillLabWithDoors(listOfKey.subList(listOfKey.size / 2, listOfKey.size))
-
-
     }
 
     private fun fillPathWithClosedDoor(pathToExit: MutableList<T>, listOfKey: MutableList<String>) {
@@ -47,8 +44,6 @@ open class LabFillerExit<T>(
         for (i in inter) {
             val currentZone = pathToExit[i]!!
             val lockedZone = pathToExit[i - 1]!!
-            println(currentZone)
-            println(lockedZone)
             val doorToExit = currentZone.content.filterIsInstance<DoorObjectZone>().find { it.destination == lockedZone }
 
 
