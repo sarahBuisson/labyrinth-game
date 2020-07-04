@@ -8,5 +8,6 @@
   right: -100px;
   top: 50%;
   transition: 2s;
+  background: white;
 }
 .map:hover { right: 0 }

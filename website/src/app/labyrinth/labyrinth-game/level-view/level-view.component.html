@@ -6,18 +6,18 @@
     <ng-container *ngFor="let levelCaseInput of row; let y = index">
       <ng-container *ngIf="levelCaseInput.contentArray.length>0">
         <ascii-hard-div
-
           [borderDatas]="borderRendered(levelCaseInput)"
           [onClick]="manageClick(levelCaseInput)"
           (click)="clickOnZone(levelCaseInput)"
         >
           <div class="zoneContent">
-            <app-ascii *ngFor="let obj of this.gameplayLabService.levelContent(levelCaseInput)"
-                       (click)="this.takeObj(obj)"
-                       [tooltip]="obj.name"
-                       [content]="renderObj(obj)"
-            >
-            </app-ascii>
+            <app-ascii-on-grid-div *ngFor="let obj of this.gameplayLabService.levelContent(levelCaseInput)">
+              <app-ascii
+                (click)="this.takeObj(obj)"
+                [tooltip]="obj.name"
+                [content]="renderObj(obj)"
+              ></app-ascii>
+            </app-ascii-on-grid-div>
           </div>
         </ascii-hard-div>
 

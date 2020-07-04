@@ -6,6 +6,6 @@
 
 .zoneContent{
   display: grid;
-  grid-template-columns: repeat(auto-fill, 60px);
-  grid-template-rows: repeat(auto-fill, 40px);
+  grid-template-columns: repeat(20, 8px);
+  grid-template-rows: repeat(6, 15px);
 }

@@ -20,6 +20,8 @@ import {AsciiLineComponent} from "./utils/ascii/ascii-line/ascii-line.component"
 import { AsciiModalComponent } from './utils/ascii/ascii-modal/ascii-modal.component';
 import {AsciiDivComponent} from "./utils/ascii/ascii-div/ascii-div.component";
 import { InventoryComponent } from './labyrinth/labyrinth-game/inventory/inventory.component';
+import { AsciiCharacterComponent } from './utils/ascii/ascii-character/ascii-character.component';
+import { AsciiOnGridDivComponent } from './utils/ascii/ascii-on-grid-div/ascii-on-grid-div.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { InventoryComponent } from './labyrinth/labyrinth-game/inventory/invento
     MenuComponent,
     NewFormComponent,
     AsciiModalComponent,
-    InventoryComponent
+    InventoryComponent,
+    AsciiCharacterComponent,
+    AsciiOnGridDivComponent
   ],
   imports: [
     BrowserModule,

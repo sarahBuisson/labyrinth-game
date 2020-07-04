@@ -1,6 +1,2 @@
-<pre [ngClass]="asciiClass" class="tooltip">{{content}}
-  <ng-content>
-
-</ng-content>
-  <span class="tooltiptext" *ngIf="tooltip">{{tooltip}}</span>
+<pre [ngClass]="asciiClass" class="withtooltip">{{content}}<ng-content></ng-content><span class="tooltiptext" *ngIf="tooltip">{{tooltip}}</span>
 </pre>
