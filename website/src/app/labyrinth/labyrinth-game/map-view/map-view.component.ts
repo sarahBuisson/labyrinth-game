@@ -81,7 +81,7 @@ export class MapViewComponent implements OnInit {
       if (content[0].classname === "KeyObjectZone") {
         return content[0].name;
       } else if (content[0].name === "player") {
-        return "@"
+        return "×"
       } else if (content[0].name === "exit") {
         return "€"
       } else if (content[0].name === "start") {
@@ -89,14 +89,27 @@ export class MapViewComponent implements OnInit {
       }else if (content[0].name === "compass") {
         return "%"
       }else if (content[0].name === "boussole") {
-        return "@"
+        return "¤"
+      }
+      else if (content[0].name === "radar") {
+        return "®"
       }
       else if (content[0].name === "map") {
         return "#"
-      }else {return  content[0].name;}}
+      } else {
+        return content[0].name;
+      }
+    } else {
+      let nbrOfConnections = levelCaseInput.connectedArray.length;
+      if (nbrOfConnections == 1) {
+        return " ";
+      }
+      if (nbrOfConnections == 2) {
+        return "."
+      } else {
+        return "+"
+      }
 
-     else {
-      return " "
     }
 
   }
