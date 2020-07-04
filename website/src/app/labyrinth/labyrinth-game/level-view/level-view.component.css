@@ -6,6 +6,9 @@
 
 .zoneContent{
   display: grid;
-  grid-template-columns: repeat(20, 8px);
+  grid-template-columns: repeat(18, 8px);
   grid-template-rows: repeat(6, 15px);
+}
+.zoneObject {
+  padding: 3px;
 }
