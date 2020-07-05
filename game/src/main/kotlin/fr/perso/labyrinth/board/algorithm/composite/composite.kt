@@ -87,10 +87,10 @@ fun initPartieLabGameComposite(size: Int = 5): Partie<LevelBoard<CompositeZone>>
     LabFiller<CompositeZone>(doorWithKey)
             .init(lab.toList(), lab.start, lab.exit, 10, 0)
             .fillLab()
-
+/*
     listOf("map", "radar", "boussole", "compas").forEach {
         lab.toList().random().content.add(ObjectZone(it));
-    }
+    }*/
     val player = Player(lab.start)
     player.location.content.add(player)
     lab.start.content.add(ObjectZone("start"))
