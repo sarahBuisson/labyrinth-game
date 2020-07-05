@@ -101,6 +101,7 @@ class TakeObjectRule :
                 { interaction ->
                     interaction.quoi is ObjectZone
                             && !(interaction.quoi is DoorObjectZone)
+                            && !(interaction.quoi is Player)
                             && interaction.qui.location.content.contains(interaction.quoi)
                 },
                 { interaction ->
