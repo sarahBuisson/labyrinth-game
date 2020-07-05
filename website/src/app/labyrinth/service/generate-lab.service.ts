@@ -25,8 +25,8 @@ export class GenerateLabService {
   generate(size, reroute = true): void {
     let party = composite.initPartieLabGameCompositeFunction(size) //composite.initPartieCompositeLabWithKeyFunction(size)
     this.dataStorageService.saveParty(party)
-    if (reroute)
-      this.router.navigateByUrl('/labyrinthGame');
+
+
   }
 
   generateEmpty(size): void {

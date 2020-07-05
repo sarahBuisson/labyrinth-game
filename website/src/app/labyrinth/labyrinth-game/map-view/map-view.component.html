@@ -10,8 +10,8 @@
     <div [ngClass]="'levelRowRender'" *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
       <ng-container *ngFor="let levelCaseInput of row; let y = index">
         <ng-container *ngIf="isCaseShowable(levelCaseInput)">
-          <ascii-hard-div [borderDatas]="borderRendered(levelCaseInput)">
-            {{contentRendered(levelCaseInput)}}
+          <ascii-hard-div [borderDatas]="borderRendered(levelCaseInput)" content="contentRendered(levelCaseInput)">
+
           </ascii-hard-div>
         </ng-container>
       </ng-container>

@@ -6,5 +6,48 @@
     <ascii-div [xRepeat]="20">
       <input [(ngModel)]="size"></ascii-div>
   </div>
-  <ascii-div [xRepeat]="4"(click)="play()">play</ascii-div>
+  <ascii-div [xRepeat]="4" (click)="play()">play</ascii-div>
 </ascii-div>
+
+<app-ascii-modal #loadingModal
+                 (click)="clickDuringLoading()"   >
+
+  <ascii-div >
+    <ascii-div> Labyrinth generating ...</ascii-div><br/>
+    <ascii-div>Do you know it ?</ascii-div><br/>
+
+    <ascii-div *ngIf="currentLoadingMessage===0">
+      Find the stair to the exit to win.
+      <pre>
+  |--|
+  |--|
+:¨|--|¨:
+'¨¨¨¨¨¨'
+  exit
+   </pre>
+
+    </ascii-div>
+    <ascii-div *ngIf="currentLoadingMessage===1">
+      You can move by :
+      <ul>
+        <li>clicking on the room you want to go</li>
+        <li>clicking on the door you want to use</li>
+        <li>using directional key</li>
+        <li>using the pad at the bottom of the screen</li>
+      </ul>
+    </ascii-div>
+    <ascii-div *ngIf="currentLoadingMessage===2">
+      some door are closed and need a key to be open
+    </ascii-div>
+    <ascii-div *ngIf="currentLoadingMessage===3">
+      You have a map
+    </ascii-div>
+
+    <ascii-div *ngIf="currentLoadingMessage===5">The lab didn't really take that much time to generate.
+      The dev just wanted a way to give tips to player.
+    </ascii-div>
+
+
+  </ascii-div>
+</app-ascii-modal>
+
