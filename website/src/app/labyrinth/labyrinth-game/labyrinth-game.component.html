@@ -1,4 +1,14 @@
-<div>
+<div class="title">
+<pre>
+  Lab generator
+</pre>
+  <div class="menuBar">
+    <ascii-div><a href="./menu">menu</a></ascii-div>
+    <ascii-div><a href="./character">characterEditor</a></ascii-div>
+    <ascii-div><a href="./labyrinthForm">new Labyrinth</a></ascii-div>
+  </div>
+</div>
+<div class="container">
 
   <div class="mainArea">
     <app-level-view [currentPartieProxy]="currentPartyProxy"
@@ -7,20 +17,21 @@
                     [characterRenderData]="currentCharacterRenderData"
     ></app-level-view>
   </div>
-
+  <div class="sidebar">
   <app-sliding
     [openData]="{
-  right: '100px',
-  left:'auto'}"
+  right: '20Opx',
+  left:'-400px'}"
     [closeData]="{
-  right: 'auto', left:'100px'}"
+  right: 'auto',
+  left:'-20px'}"
   >
     <app-map-view [currentPartieProxy]="currentPartyProxy"
                   [renderService]="mapRenderService"
                   class="map"
     ></app-map-view>
   </app-sliding>
-
+  </div>
   <div class="toolbar">
     <div class="gameplay">
       <div>
@@ -34,13 +45,13 @@
         <ascii-div (click)="take()" (keyup.enter)="take()">Prendre</ascii-div>
       </div>
     </div>
-    <div class="character">
-      <pre>{{fullViewRenderService.renderPlayer(this.currentCharacterRenderData)}}</pre>
-    </div>
-    <div>
+    <app-ascii class="character">
+      {{fullViewRenderService.renderPlayer(this.currentCharacterRenderData)}}
+    </app-ascii>
+    <div class="inventoryArea">
       <app-sliding
-        [openData]="{marginLeft:'auto'}"
-        [closeData]="{marginLeft:'90%'}"
+        [openData]="{bottom:'100px'}"
+        [closeData]="{bottom:'10px'}"
       >
         <app-inventory [player]="this.currentPartyProxy.player"></app-inventory>
     </app-sliding>

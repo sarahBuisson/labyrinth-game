@@ -1,7 +1,7 @@
 .levelRowRender{
   display: grid;
   grid-template-columns: repeat(auto-fit, 240px);
-  grid-template-rows: repeat(auto-fit, 240px);
+  grid-template-rows: repeat(auto-fit, 220px);
 }
 
 .zoneContent{

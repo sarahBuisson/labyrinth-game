@@ -46,10 +46,10 @@ function generateDefaultParams(dataName) {
         params: generateDefaultParams('_closeData')
       }),
       transition('* => open', [
-        animate('3s')
+        animate('1s')
       ]),
       transition('* => close', [
-        animate('3s')
+        animate('1s')
       ]),
     ]),
   ],

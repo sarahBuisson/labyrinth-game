@@ -57,3 +57,36 @@ export const Default = () => ({
     },
   },
 });
+
+
+export const NearTheBorder = () => ({
+  component: SlidingComponent,
+  moduleMetadata: {
+    declarations: [SlidingComponent], // Removed if no template
+    imports: [BrowserAnimationsModule]
+  },
+
+  template: `<div style="border:solid black 1px"> <app-sliding
+    [openData]="{
+  right: '-10px',
+  top: '10px',
+
+  color: 'red'
+  }
+  "
+    [closeData]="{
+  right: '50px',
+  top: '10px',
+     color: 'green'}"
+  >
+    XXXXXXXXXXXXXXXXXXX
+  </app-sliding></div>`,
+  props: {
+    openData: {
+      right: '10px',
+    },
+    closeData: {
+      right: '100px',
+    },
+  },
+});

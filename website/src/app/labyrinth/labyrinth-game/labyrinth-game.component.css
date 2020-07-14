@@ -1,9 +1,25 @@
-.mainArea{
+.container {
   display: grid;
-  grid-template-columns: 800px 1fr;
+  grid-template-columns: 1fr 50px;
+  grid-template-rows: 1fr 50px;
+  grid-template-areas:
+    "main sidebar"
+    "toolbar toolbar";
+}
+.mainArea{
+  grid-area: main;
+}
+.sidebar{
+  grid-area: sidebar;
+}
+.mapArea{
+}
+.inventoryArea{
 }
 
 .toolbar {
+  grid-area: toolbar;
   display: grid;
   grid-template-columns: 50% 30px 1fr;
 }
+

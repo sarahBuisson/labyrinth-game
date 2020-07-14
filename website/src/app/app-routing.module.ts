@@ -7,12 +7,13 @@ import {MenuComponent} from "./labyrinth/menu/menu.component";
 
 import {APP_BASE_HREF} from '@angular/common';
 
-const routes: Routes = [  { path: 'character', component: CharacterFormComponent },
-  { path: 'newLabyrinth', component: LabyrinthFormComponent },
-  { path: 'labyrinthForm', component: LabyrinthFormComponent },
-  { path: 'menu', component: MenuComponent },
-  { path: 'labyrinthGame', component: LabyrinthGameComponent }
-  ];
+const routes: Routes = [{path: 'character', component: CharacterFormComponent},
+  {path: 'newLabyrinth', component: LabyrinthFormComponent},
+  {path: 'labyrinthForm', component: LabyrinthFormComponent},
+  {path: 'menu', component: MenuComponent},
+  {path: 'labyrinthGame', component: LabyrinthGameComponent},
+  {path: '', redirectTo: '/menu', pathMatch: 'full'}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
