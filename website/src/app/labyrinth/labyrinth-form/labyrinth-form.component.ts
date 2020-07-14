@@ -27,7 +27,7 @@ export class LabyrinthFormComponent implements OnInit {
 
    let timer= new Promise((resolve)=>{
       // after 1 second signal that the job is finished with an error
-      setTimeout(() => resolve('done'), 20000);
+      setTimeout(() => resolve('done'), 5000);
     });
     let generation = new Promise((resolve) =>{
       // not taking our time to do the job

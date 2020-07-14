@@ -5,8 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { GridComponent } from './utils/grid/grid.component';
-import { GridCaseComponent } from './utils/grid-case/grid-case.component';
 import { CharacterFormComponent } from './characterEditor/character-form/character-form.component';
 import { LabyrinthFormComponent } from './labyrinth/labyrinth-form/labyrinth-form.component';
 import { LabyrinthGameComponent } from './labyrinth/labyrinth-game/labyrinth-game.component';
@@ -22,12 +20,12 @@ import {AsciiDivComponent} from "./utils/ascii/ascii-div/ascii-div.component";
 import { InventoryComponent } from './labyrinth/labyrinth-game/inventory/inventory.component';
 import { AsciiCharacterComponent } from './utils/ascii/ascii-character/ascii-character.component';
 import { AsciiOnGridDivComponent } from './utils/ascii/ascii-on-grid-div/ascii-on-grid-div.component';
+import { SlidingComponent } from './utils/ui/atom/sliding/sliding.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
     AppComponent,
-    GridComponent,
-    GridCaseComponent,
     CharacterFormComponent,
     LabyrinthFormComponent,
     LabyrinthGameComponent,
@@ -42,13 +40,15 @@ import { AsciiOnGridDivComponent } from './utils/ascii/ascii-on-grid-div/ascii-o
     AsciiModalComponent,
     InventoryComponent,
     AsciiCharacterComponent,
-    AsciiOnGridDivComponent
+    AsciiOnGridDivComponent,
+    SlidingComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

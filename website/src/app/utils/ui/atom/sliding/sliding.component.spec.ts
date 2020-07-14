@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GridCaseComponent } from './grid-case.component';
+import { SlidingComponent } from './sliding.component';
 
-describe('GridCaseComponent', () => {
-  let component: GridCaseComponent;
-  let fixture: ComponentFixture<GridCaseComponent>;
+describe('SlidingComponent', () => {
+  let component: SlidingComponent;
+  let fixture: ComponentFixture<SlidingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GridCaseComponent ]
+      declarations: [ SlidingComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GridCaseComponent);
+    fixture = TestBed.createComponent(SlidingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
