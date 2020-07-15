@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {bagGridTemplate} from "../decor/resources/data";
+import {FullsizeAsciiRenderService} from "../decor/fullsize-ascii-render.service";
 
 @Component({
   selector: 'app-inventory',
@@ -11,10 +12,14 @@ export class InventoryComponent implements OnInit {
   player: any;
   borderDatas: any = bagGridTemplate;
 
-  constructor() {
+  constructor(private _renderService:FullsizeAsciiRenderService) {
   }
 
   ngOnInit(): void {
+  }
+
+  render(obj) {
+    return this._renderService.renderObj(obj, undefined);
   }
 
 }

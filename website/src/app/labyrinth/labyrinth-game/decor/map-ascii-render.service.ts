@@ -70,4 +70,31 @@ export class MapAsciiRenderService extends AsciiRenderService {
     }
     return this.asciiGeneratorService.templateString(this[templateName], data)
   }
+
+  renderObj(obj: any, characterRenderData: CharacterRenderData) {
+
+    if (obj.classname === "KeyObjectZone") {
+      return obj.name;
+    } else if (obj.name === "player") {
+      return "×"
+    } else if (obj.name === "exit") {
+      return "€"
+    } else if (obj.name === "start") {
+      return "$"
+    }else if (obj.name === "compass") {
+      return "%"
+    }else if (obj.name === "boussole") {
+      return "¤"
+    }
+    else if (obj.name === "radar") {
+      return "®"
+    }
+    else if (obj.name === "map") {
+      return "#"
+    } else {
+      return obj.name;
+    }
+  }
+
+
 }

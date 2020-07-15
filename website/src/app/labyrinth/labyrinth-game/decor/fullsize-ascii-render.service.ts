@@ -3,11 +3,13 @@ import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.servic
 import {AsciiRenderService} from "./ascii-render.service";
 import {GenerateLabService} from "../../service/generate-lab.service";
 import {CharacterRenderService, CharacterRenderData} from "../../../characterEditor/character-render.service";
+import {exitTemplate, startTemplate} from "./resources/data";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FullsizeAsciiRenderService extends AsciiRenderService {
+
 
   constructor(protected asciiGeneratorService: AsciiGeneratorService, private serviceLabService: GenerateLabService, private characterRenderService: CharacterRenderService) {
     super(asciiGeneratorService);
@@ -87,6 +89,28 @@ export class FullsizeAsciiRenderService extends AsciiRenderService {
   }
 
   renderCenter(zone, party): String {
-    return "\n\n"+zone.contentArray.filter(it=>it.className!=="DoorObjectZone").map((it) => "["+it.name+"]");
+    return "\n\n" + zone.contentArray.filter(it => it.className !== "DoorObjectZone").map((it) => "[" + it.name + "]");
+  }
+
+
+  renderObj(obj: any, characterRenderData: CharacterRenderData | undefined) {
+
+    if (obj.name === 'exit')
+      return exitTemplate
+    if (obj.name === 'start')
+      return startTemplate
+    if (obj.name === 'player')
+      return this.renderPlayer(characterRenderData)
+    if (obj.type === "key")
+      return `(${obj.name})--±`
+    if (obj.name === "boussole")
+      return `(;)`
+    if (obj.name === "radar")
+      return `(®)`
+    if (obj.name === "map")
+      return `/#/`
+    if (obj.name === "compas")
+      return `%/`
+    return `[${obj.name}]`
   }
 }

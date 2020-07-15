@@ -9,7 +9,8 @@ const defaultData = {
   color:'initial',
   width:'initial',
   height:'initial',
-  position:'initial'
+  position:'initial',
+  transform:'initial'
 }
 
 
@@ -49,7 +50,7 @@ function generateDefaultParams(dataName) {
         params: generateDefaultParams('_closeData')
       }),
       transition('* => open', [
-        animate('1s')
+        animate('2s')
       ]),
       transition('* => close', [
         animate('1s')

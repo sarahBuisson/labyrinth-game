@@ -78,27 +78,8 @@ export class MapViewComponent implements OnInit {
   contentRendered(levelCaseInput: any) {
     let content = this.gameplayLabService.levelContent(levelCaseInput);
     if (content[0]) {
-      if (content[0].classname === "KeyObjectZone") {
-        return content[0].name;
-      } else if (content[0].name === "player") {
-        return "×"
-      } else if (content[0].name === "exit") {
-        return "€"
-      } else if (content[0].name === "start") {
-        return "$"
-      }else if (content[0].name === "compass") {
-        return "%"
-      }else if (content[0].name === "boussole") {
-        return "¤"
-      }
-      else if (content[0].name === "radar") {
-        return "®"
-      }
-      else if (content[0].name === "map") {
-        return "#"
-      } else {
-        return content[0].name;
-      }
+
+      return this.renderService.renderObj(content[0])
     } else {
       let nbrOfConnections = levelCaseInput.connectedArray.length;
       if (nbrOfConnections == 1) {

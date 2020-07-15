@@ -70,4 +70,6 @@ export abstract  class AsciiRenderService {
   abstract renderPlayer(characterData:CharacterRenderData)
 
   abstract renderCenter(zone,party):String
+
+  abstract renderObj(obj:any, characterRenderData: CharacterRenderData)
 }

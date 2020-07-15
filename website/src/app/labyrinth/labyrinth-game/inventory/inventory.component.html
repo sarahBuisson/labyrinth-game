@@ -2,8 +2,9 @@
 
   <ascii-div [borderDatas]="this.borderDatas">
     <ascii-div> Your pocket</ascii-div>
+
     <app-ascii *ngFor="let item of this.player.inventoryArray"
          [tooltip]="item.name"
-    >{{item.name}}</app-ascii>
+    ><div>{{render(item)}}</div></app-ascii>
   </ascii-div>
 </div>

@@ -55,5 +55,11 @@
       </app-sliding>
     </div>
   </div>
+  <app-ascii-modal>  <app-ascii class="character">
+    {{fullViewRenderService.renderPlayer(this.currentCharacterRenderData)}}
+  </app-ascii>
+  <app-ascii>{{fullViewRenderService.renderObj({name: 'exit'}, undefined)}}</app-ascii>
+  </app-ascii-modal>
+
 
 </div>
