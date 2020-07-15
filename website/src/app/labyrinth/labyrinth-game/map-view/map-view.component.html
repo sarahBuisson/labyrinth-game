@@ -1,13 +1,17 @@
-<div class="map">
+<div class="container">
   <ascii-div
   [borderDatas]="borderData"
   [yRepeat]="currentPartieProxy.level.contentArray.length+2"
   [xRepeat]="currentPartieProxy.level.contentArray[0].length+2"
-  class="map"
+  class="container"
 >
 
-    <div>Map</div>
-    <div [ngClass]="'levelRowRender'" *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
+    <div class="title">
+      <div>M</div>
+      <div>A</div>
+      <div>P</div>
+    </div>
+    <div class="main" *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
       <ng-container *ngFor="let levelCaseInput of row; let y = index">
         <ng-container *ngIf="isCaseShowable(levelCaseInput)">
           <ascii-hard-div [borderDatas]="borderRendered(levelCaseInput)" content="contentRendered(levelCaseInput)">

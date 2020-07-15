@@ -18,19 +18,17 @@
     ></app-level-view>
   </div>
   <div class="sidebar">
-  <app-sliding
-    [openData]="{
-  right: '20Opx',
-  left:'-400px'}"
-    [closeData]="{
-  right: 'auto',
-  left:'-20px'}"
-  >
-    <app-map-view [currentPartieProxy]="currentPartyProxy"
-                  [renderService]="mapRenderService"
-                  class="map"
-    ></app-map-view>
-  </app-sliding>
+    <app-sliding
+      [openData]="{position:'absolute',width: 'auto', right:'0px'}"
+      [closeData]="{position:'absolute',width: '100px', right:'0px'}"
+      style="background-color:red"
+
+
+    >
+      <app-map-view [currentPartieProxy]="currentPartyProxy"
+                    [renderService]="mapRenderService"
+      ></app-map-view>
+    </app-sliding>
   </div>
   <div class="toolbar">
     <div class="gameplay">
@@ -54,7 +52,7 @@
         [closeData]="{bottom:'10px'}"
       >
         <app-inventory [player]="this.currentPartyProxy.player"></app-inventory>
-    </app-sliding>
+      </app-sliding>
     </div>
   </div>
 

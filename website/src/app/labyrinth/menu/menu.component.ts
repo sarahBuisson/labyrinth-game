@@ -11,6 +11,7 @@ import {HighscoresService} from "../service/highscores.service";
 export class MenuComponent implements OnInit {
   @ViewChild('highScoreModal') highScoreModal: AsciiModalComponent;
   @ViewChild('loadingModal') loadingModal: AsciiModalComponent;
+  @ViewChild('newFormModal') newFormModal: AsciiModalComponent;
   highscores: Array<any>;
 
   constructor(private router: Router, private highscoresService: HighscoresService) {
@@ -24,7 +25,7 @@ export class MenuComponent implements OnInit {
   }
 
   clickNew() {
-    this.router.navigateByUrl('/newLabyrinth');
+    this.newFormModal.show()
   }
 
   saveHighScore() {

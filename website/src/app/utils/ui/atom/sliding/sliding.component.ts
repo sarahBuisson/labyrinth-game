@@ -6,7 +6,10 @@ const defaultData = {
   bottom: 'auto',
   left: 'auto',
   right: 'auto',
-  color:'default'
+  color:'initial',
+  width:'initial',
+  height:'initial',
+  position:'initial'
 }
 
 
@@ -95,9 +98,6 @@ export class SlidingComponent implements OnInit, OnChanges {
       params['_closeData'+key]=this.closeData[key]?this.closeData[key]:defaultData[key]
 
     }
-
-    console.log("generateParams")
-    console.log(params)
     return params
   }
 }

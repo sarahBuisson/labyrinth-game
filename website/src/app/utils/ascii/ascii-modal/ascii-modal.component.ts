@@ -10,6 +10,9 @@ export class AsciiModalComponent implements OnInit {
   @Input()
   _show = false
 
+  @Input()
+  closable = false
+
   constructor() {
   }
 

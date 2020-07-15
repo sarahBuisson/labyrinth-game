@@ -3,6 +3,22 @@
   grid-template-columns: repeat(auto-fill, 1.5em);
 }
 
-.map {
+.container {
+  background: white;
+}
+.container > div{
+  background: white;
+}
+.container > span{
+  background: white;
+}
+.title {
+  display: inline-block;
+  width: 30px;
+  padding: 10px ;
+}
+
+.main {
+  display: inline-block;
   background: white;
 }
