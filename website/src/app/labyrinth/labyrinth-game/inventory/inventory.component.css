@@ -1,0 +1,9 @@
+.container {
+  background: white;
+}
+.inventoryContent{
+  background: white;
+  display: grid;
+  grid-template-columns: repeat(18, 8px);
+  grid-template-rows: repeat(6, 15px);
+}
