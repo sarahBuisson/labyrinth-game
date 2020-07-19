@@ -6,11 +6,15 @@ const defaultData = {
   bottom: 'auto',
   left: 'auto',
   right: 'auto',
-  color:'initial',
-  width:'initial',
-  height:'initial',
-  position:'initial',
-  transform:'initial'
+  marginTop: 'auto',
+  marginBottom: 'auto',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  color: 'initial',
+  width: 'initial',
+  height: 'initial',
+  position: 'initial',
+  transform: 'initial',
 }
 
 
@@ -27,7 +31,7 @@ function generateDefaultParams(dataName) {
   const tokenStyle = {}
 
   for (let key in defaultData) {
-    tokenStyle[''+dataName + '' + key] = defaultData[key]
+    tokenStyle['' + dataName + '' + key] = defaultData[key]
   }
 
   console.log("generatedefaultParams")
@@ -63,6 +67,8 @@ export class SlidingComponent implements OnInit, OnChanges {
   public openData: any
   @Input()
   public closeData: any
+  @Input()
+  public onlyOnClick: any
 
   public isOpen = false
 
@@ -88,17 +94,37 @@ export class SlidingComponent implements OnInit, OnChanges {
   }
 
   onAnimationEvent($event: any) {
-    console.log("move"+$event.fromState)
+    console.log("move" + $event.fromState)
   }
 
-   generateParams() {
+  generateParams() {
     const params = {}
 
     for (let key in defaultData) {
-      params['_openData'+key]=this.openData[key]?this.openData[key]:defaultData[key]
-      params['_closeData'+key]=this.closeData[key]?this.closeData[key]:defaultData[key]
+      params['_openData' + key] = this.openData[key] ? this.openData[key] : defaultData[key]
+      params['_closeData' + key] = this.closeData[key] ? this.closeData[key] : defaultData[key]
 
     }
     return params
+  }
+
+  toggle() {
+    this.isOpen = !this.isOpen;
+  }
+
+  mouseOver() {
+    !this.onlyOnClick && this.open()
+  }
+
+  mouseLeave() {
+    !this.onlyOnClick && this.close()
+  }
+
+  click() {
+    if (this.onlyOnClick) {
+      this.toggle();
+    } else {
+      this.close()
+    }
   }
 }

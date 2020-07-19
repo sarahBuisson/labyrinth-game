@@ -10,6 +10,7 @@ import {FullsizeAsciiRenderService} from "./decor/fullsize-ascii-render.service"
 import {LevelViewComponent} from "./level-view/level-view.component";
 import {DataStorageService} from "../service/data-storage.service";
 import {GameplayLabService} from "../service/gameplay-lab.service";
+import {AsciiModalComponent} from "../../utils/ascii/ascii-modal/ascii-modal.component";
 
 @Component({
   selector: 'app-labyrinth-game',
@@ -22,6 +23,7 @@ export class LabyrinthGameComponent implements OnInit {
   currentPartyProxy: any
   currentCharacterRenderData: CharacterData
   @ViewChild('level-view') levelView:LevelViewComponent;
+  @ViewChild('winModal') winModal:AsciiModalComponent;
 
   constructor(private labService: GenerateLabService,
               private dataStorageService:DataStorageService,
@@ -42,6 +44,11 @@ export class LabyrinthGameComponent implements OnInit {
           if (this.currentParty) {
             this.currentLevel = this.currentParty.level
             this.currentPartyProxy = kotlinProxyToJsView(this.currentParty, 7)
+            console.log(this.currentPartyProxy)
+            console.log(this.currentPartyProxy.status)
+            if(this.currentPartyProxy.status.name$=="WIN"){
+              this.winModal.show()
+            }
           }
         }
       )

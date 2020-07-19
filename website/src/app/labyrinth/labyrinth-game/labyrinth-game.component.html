@@ -19,11 +19,15 @@
   </div>
   <div class="sidebar">
     <app-sliding
-      [openData]="{position:'absolute',width: 'auto', right:'0px'}"
-      [closeData]="{position:'absolute',width: '100px', right:'0px'}"
-      style="background-color:red"
+      [openData]="{position:'absolute',
 
-
+      transform: 'translateX(-50%)',
+      left:'50%'}"
+      [closeData]="{position:'absolute',
+           transform: 'translateX(-80px)',
+       left:'100%'}"
+      [onlyOnClick]="true"
+      style="background-color:red; overflow: hidden;"
     >
       <app-map-view [currentPartieProxy]="currentPartyProxy"
                     [renderService]="mapRenderService"
@@ -48,17 +52,20 @@
     </app-ascii>
     <div class="inventoryArea">
       <app-sliding
-        [openData]="{bottom:'100px'}"
-        [closeData]="{bottom:'10px'}"
+        onlyOnClick="true"
+        [openData]="{top:'50%', transform:'translateY(-50%)'}"
+        [closeData]="{top:'100%', transform:'translateY(-40px)'}"
       >
         <app-inventory [player]="this.currentPartyProxy.player"></app-inventory>
       </app-sliding>
     </div>
   </div>
-  <app-ascii-modal>  <app-ascii class="character">
-    {{fullViewRenderService.renderPlayer(this.currentCharacterRenderData)}}
-  </app-ascii>
-  <app-ascii>{{fullViewRenderService.renderObj({name: 'exit'}, undefined)}}</app-ascii>
+  <app-ascii-modal #winModal>
+    <ascii-div> YOU WIN !</ascii-div>
+    <app-ascii class="character">
+      {{fullViewRenderService.renderPlayer(this.currentCharacterRenderData)}}
+    </app-ascii>
+    <app-ascii>{{fullViewRenderService.renderObj({name: 'exit'}, undefined)}}</app-ascii>
   </app-ascii-modal>
 
 

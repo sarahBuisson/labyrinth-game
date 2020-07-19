@@ -1,1 +1,4 @@
-div {position:relative}
+.container {
+  position: relative;
+  overflow: hidden;
+}

@@ -1,8 +1,8 @@
 <div class="container">
-  <ascii-div
+  <ascii-hard-div
   [borderDatas]="borderData"
-  [yRepeat]="currentPartieProxy.level.contentArray.length+2"
-  [xRepeat]="currentPartieProxy.level.contentArray[0].length+2"
+  [yRepeat]="currentPartieProxy.level.contentArray.length*3+5"
+  [xRepeat]="currentPartieProxy.level.contentArray[0].length*3+5"
   class="container"
 >
 
@@ -11,17 +11,20 @@
       <div>A</div>
       <div>P</div>
     </div>
-    <div class="main" *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
-      <ng-container *ngFor="let levelCaseInput of row; let y = index">
+    <div class="main"   [ngStyle]="{'grid-template-columns': 'repeat(auto-fill,'+currentPartieProxy.level.contentArray[0].length+')'}">
+      <div *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
+        <ng-container *ngFor="let levelCaseInput of row; let y = index">
         <ng-container *ngIf="isCaseShowable(levelCaseInput)">
-          <ascii-hard-div [borderDatas]="borderRendered(levelCaseInput)" content="contentRendered(levelCaseInput)">
+          <ascii-hard-div [borderDatas]="borderRendered(levelCaseInput)"
 
+          >{{contentRendered(levelCaseInput)}}
           </ascii-hard-div>
         </ng-container>
       </ng-container>
     </div>
+    </div>
     <div> ¤ = You are here</div>
     <div> € = Exit</div>
 
-</ascii-div>
+</ascii-hard-div>
 </div>

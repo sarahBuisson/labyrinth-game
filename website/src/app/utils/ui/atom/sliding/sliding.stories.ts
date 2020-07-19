@@ -90,3 +90,69 @@ export const NearTheBorder = () => ({
     },
   },
 });
+
+export const FullBorderSlide = () => ({
+  component: SlidingComponent,
+  moduleMetadata: {
+    declarations: [SlidingComponent], // Removed if no template
+    imports: [BrowserAnimationsModule]
+  },
+
+  template: `<div style="border:solid black 1px; width:100px;position:absolute; right:0px;"> <app-sliding
+    [openData]="{
+  right: '-10px',
+  top: '10px',
+  transform: 'translateX(-50%)',
+  color: 'red'
+  }"
+    [closeData]="{
+  right: '-10px',
+  top: '10px',
+  transform: 'translateX(0)',
+  color: 'green'}"
+  >
+    XXXXXXXXXXXXXXXXXXX
+  </app-sliding></div>`,
+  props: {
+    openData: {
+      right: '10px',
+    },
+    closeData: {
+      right: '100px',
+    },
+  },
+});
+
+
+export const Click = () => ({
+  component: SlidingComponent,
+  moduleMetadata: {
+    declarations: [SlidingComponent], // Removed if no template
+    imports: [BrowserAnimationsModule]
+  },
+
+  template: `<div style="border:solid black 1px"> <app-sliding
+ onlyOnClick="true"
+    [openData]="{
+  right: '-10px',
+  top: '10px',
+
+  color: 'red'
+  }
+  "
+    [closeData]="{
+  right: '50px',
+  top: '10px',
+     color: 'green'}"
+  >
+    XXXXXXXXXXXXXXXXXXX
+  </app-sliding></div>`,
+  props: {
+    openData: {
+      right: '10px',
+    },
+    closeData: {
+      right: '100px',
+    },
+  },
+});
