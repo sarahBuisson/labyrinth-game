@@ -42,7 +42,6 @@ export class LabyrinthFormComponent implements OnInit {
 
   }
   clickDuringLoading(){
-    console.log("ccc")
     this.currentLoadingMessage=Math.round(Math.random()*5)
   }
 
