@@ -24,7 +24,10 @@
 
       </ng-container>
       <ng-container *ngIf="levelCaseInput.contentArray.length===0">
-        <app-ascii [content]="'####'"></app-ascii>
+        <ascii-hard-div
+          [borderDatas]="emptyRendered()"
+        >
+        </ascii-hard-div>
       </ng-container>
     </ng-container>
 

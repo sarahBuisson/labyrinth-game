@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {CharacterRenderData} from "../../../characterEditor/character-render.service";
 import {
   exitTemplate, startTemplate,
-  viewCloseDoorGridTemplate,
+  viewCloseDoorGridTemplate, viewEmptyZoneGridTemplate,
   viewOpenDoorGridTemplate,
   viewWallGridTemplate
 } from "../decor/resources/data";
@@ -136,5 +136,9 @@ export class LevelViewComponent implements OnInit, OnChanges {
 
   renderObj(obj: any) {
     return this.renderService.renderObj(obj, this.characterRenderData)
+  }
+
+  emptyRendered() {
+    return viewEmptyZoneGridTemplate;
   }
 }
