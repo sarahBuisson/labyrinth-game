@@ -6,8 +6,9 @@
 
 .zoneContent{
   display: grid;
-  grid-template-columns: repeat(14, 8px);
+  grid-template-columns: repeat(16, 8px);
   grid-template-rows: repeat(5, 15px);
+  grid-auto-flow: row dense;
 }
 .zoneObject {
   padding: 3px;

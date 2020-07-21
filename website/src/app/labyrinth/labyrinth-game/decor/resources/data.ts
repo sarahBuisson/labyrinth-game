@@ -137,7 +137,7 @@ let viewWallZoneRaw = "" +
   " |  /                  \\  |\n" +
   " | /                    \\ |\n" +
   " `-----------------------'"
-export let viewCloseDoorGridTemplate = asciiStringToGridObject(viewCloseDoorZoneRaw, 6, 14, 5, 5)
+export let viewCloseDoorGridTemplate = asciiStringToGridObject(viewCloseDoorZoneRaw, 6, 16, 5, 5)
 
 
 
@@ -283,8 +283,8 @@ export let viewEmptyZoneGridTemplate = asciiStringToGridObject(viewEmptyDeepOmbr
 
 
 
-export let viewOpenDoorGridTemplate = asciiStringToGridObject(viewOpenDoorZoneRaw, 6, 14, 5, 5)
-export let viewWallGridTemplate = asciiStringToGridObject(viewWallZoneRaw, 6, 14, 5, 5)
+export let viewOpenDoorGridTemplate = asciiStringToGridObject(viewOpenDoorZoneRaw, 6, 16, 5, 5)
+export let viewWallGridTemplate = asciiStringToGridObject(viewWallZoneRaw, 6, 16, 5, 5)
 
 export let exitTemplate: any = "" +
   "  |--|\n" +

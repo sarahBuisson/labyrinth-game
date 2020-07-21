@@ -1,4 +1,5 @@
 import {AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {defaultGridTemplate} from "../../../labyrinth/labyrinth-game/decor/resources/data";
 
 @Component({
   selector: 'ascii-hard-div',
@@ -29,7 +30,7 @@ export class AsciiHardDivComponent implements OnInit {
   bottomRightTemplate = this.topLeftTemplate
 
   @Input()
-  borderDatas: any
+  borderDatas: any = defaultGridTemplate;
 
 
 
