@@ -47,9 +47,7 @@
         <ascii-div (click)="take()" (keyup.enter)="take()">Prendre</ascii-div>
       </div>
     </div>
-    <app-ascii class="character">
-      {{fullViewRenderService.renderPlayer(this.currentCharacterRenderData)}}
-    </app-ascii>
+    <app-ascii class="character">{{fullViewRenderService.renderPlayer(this.currentCharacterRenderData)}}</app-ascii>
     <div class="inventoryArea">
       <app-sliding
         onlyOnClick="true"

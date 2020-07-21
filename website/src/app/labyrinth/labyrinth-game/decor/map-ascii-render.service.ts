@@ -76,7 +76,7 @@ export class MapAsciiRenderService extends AsciiRenderService {
     if (obj.classname === "KeyObjectZone") {
       return obj.name;
     } else if (obj.name === "player") {
-      return "×"
+      return "¤"
     } else if (obj.name === "exit") {
       return "€"
     } else if (obj.name === "start") {
@@ -84,7 +84,7 @@ export class MapAsciiRenderService extends AsciiRenderService {
     }else if (obj.name === "compass") {
       return "%"
     }else if (obj.name === "boussole") {
-      return "¤"
+      return "@"
     }
     else if (obj.name === "radar") {
       return "®"

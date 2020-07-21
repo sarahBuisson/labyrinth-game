@@ -52,7 +52,7 @@ fun generateCompositeMapLabWithKey(size: Int): LevelBoard<CompositeZone> {
 
 
     LabFillerMapLab<CompositeZone>(doorWithKey, board = board)
-            .init(board.toList(), board.start, board.exit, 10, 0)
+            .init(board.toList(), board.start, board.exit, size * 2, 0)
             .fillLab()
     return board
 }

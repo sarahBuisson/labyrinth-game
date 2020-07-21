@@ -1,17 +1,17 @@
 
 
-[ ] remove the object (compas, boussol : there are for V2)
+[X] remove the object (compas, boussol : there are for V2)
 [ ] create a div-large who take width and height css in account
-[ ] create a component who take a specific position when blur
-[ ] make lab form a modal of the menu
-[ ] the big title should be only on the menu
+[X] create a component who take a specific position when blur
+[X] make lab form a modal of the menu
+[ X the big title should be only on the menu
 [ ] correct map bug
-[ ] make key better looking
-[ ] key management
+[X] make key better looking
+[X] key management
 [ ] keypad
-[ ] bug when you can take the player in your pocket
-[ ] better footer, better header
-[ ] better render of the inventory
+[X] bug when you can take the player in your pocket
+[X] better footer, better header
+[X] better render of the inventory
 
 (z)
  |
@@ -35,7 +35,10 @@ a-¬
 a-± 
  
  
- [ ] give render to object in pocket
+ [X] give render to object in pocket
+ [ ] affichage bug in the loading lab screen
+ [ ] perf issue for big lab
+ [ ] end game screen
  
  
  

@@ -1,13 +1,13 @@
 .levelRowRender{
   display: grid;
-  grid-template-columns: repeat(auto-fit, 230px);
-  grid-template-rows: repeat(auto-fit, 220px);
+  grid-template-columns: repeat(auto-fit, 220px);
+  grid-template-rows: repeat(auto-fit, 210px);
 }
 
 .zoneContent{
   display: grid;
-  grid-template-columns: repeat(17, 8px);
-  grid-template-rows: repeat(6, 15px);
+  grid-template-columns: repeat(14, 8px);
+  grid-template-rows: repeat(5, 15px);
 }
 .zoneObject {
   padding: 3px;

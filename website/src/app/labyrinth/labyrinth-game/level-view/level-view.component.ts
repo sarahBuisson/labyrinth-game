@@ -8,6 +8,7 @@ import {
 } from "../decor/resources/data";
 import {GameplayLabService} from "../../service/gameplay-lab.service";
 import {AsciiRenderService} from "../decor/ascii-render.service";
+import {FullsizeAsciiRenderService} from "../decor/fullsize-ascii-render.service";
 
 @Component({
   selector: 'app-level-view',
@@ -19,10 +20,7 @@ export class LevelViewComponent implements OnInit, OnChanges {
   @Input()
   currentPartieProxy: any
 
-  @Input()
-  renderService: AsciiRenderService
-
-  constructor(public gameplayLabService: GameplayLabService) {
+  constructor(public gameplayLabService: GameplayLabService, public renderService: FullsizeAsciiRenderService) {
 
   }
 

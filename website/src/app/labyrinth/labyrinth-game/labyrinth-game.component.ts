@@ -43,7 +43,8 @@ export class LabyrinthGameComponent implements OnInit {
           this.currentParty = kotlinProxyToJsView(c, 0)
           if (this.currentParty) {
             this.currentLevel = this.currentParty.level
-            this.currentPartyProxy = kotlinProxyToJsView(this.currentParty, 7)
+            this.currentPartyProxy = kotlinProxyToJsView(this.currentParty, 6)
+            this.currentPartyProxy = kotlinProxyToJsView(this.currentParty, 6)
             console.log(this.currentPartyProxy)
             console.log(this.currentPartyProxy.status)
             if(this.currentPartyProxy.status.name$=="WIN"){

@@ -8,6 +8,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
+import {defaultGridTemplate} from "../../../labyrinth/labyrinth-game/decor/resources/data";
 
 @Component({
   selector: 'ascii-div',
@@ -39,7 +40,7 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterViewChecke
   bottomRightTemplate = this.topLeftTemplate
 
   @Input()
-  borderDatas: any
+  borderDatas: any=defaultGridTemplate;
 
   @ViewChild('contentDiv') contentDiv: ElementRef
 
@@ -66,9 +67,8 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterViewChecke
   }
 
   ngAfterViewInit() {
-    this.yRepeat = Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().height / 15.1)
-    this.xRepeat =  Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().width / 7.82)
-
+    this.yRepeat = Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().height / (15.1*this.borderDatas.leftSideHeight))
+    this.xRepeat =  Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().width / (7.82*this.borderDatas.topSideWidth))
     this._changeDetectorRef.detectChanges();
   }
 

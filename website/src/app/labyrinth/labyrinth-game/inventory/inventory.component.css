@@ -4,6 +4,6 @@
 .inventoryContent{
   background: white;
   display: grid;
-  grid-template-columns: repeat(18, 8px);
-  grid-template-rows: repeat(6, 15px);
+  grid-template-columns: repeat(13, 8px);
+  grid-template-rows: repeat(auto-fill, 15px);
 }

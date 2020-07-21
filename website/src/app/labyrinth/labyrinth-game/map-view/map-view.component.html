@@ -16,9 +16,7 @@
         <ng-container *ngFor="let levelCaseInput of row; let y = index">
         <ng-container *ngIf="isCaseShowable(levelCaseInput)">
           <ascii-hard-div [borderDatas]="borderRendered(levelCaseInput)"
-
-          >{{contentRendered(levelCaseInput)}}
-          </ascii-hard-div>
+          >{{contentRendered(levelCaseInput)}}</ascii-hard-div>
         </ng-container>
       </ng-container>
     </div>
