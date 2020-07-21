@@ -98,7 +98,7 @@ class BoardTreeLabTest {
                     y
             )
         }
-        val board = generateCompositeMapLabWithKey(10)
+        val board = generateCompositeMapLabWithKey(5)
         //Then
         println(labyrinthTreeToString(board))
         println("----")

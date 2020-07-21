@@ -60,7 +60,7 @@ fun <T : BoardZone> ruleConnectUnconnectedCaseToAnyConnectedNei() = LambdaRule<D
 });
 
 
-fun <T : BoardZone>ruleConnectUnconnectedCaseToBestConnectedNei() = LambdaRule<DrawLabCaseFacts<T>>({ facts ->
+fun <T : BoardZone> ruleConnectUnconnectedCaseToBestConnectedNei() = LambdaRule<DrawLabCaseFacts<T>>({ facts ->
     facts.zone.connections.size == 0
 
 
@@ -79,7 +79,6 @@ fun <T> runBookD(fact: T, rules: Rules<T>) {
 }
 
 
-
 fun <T> chooseStartExit(board: LevelBoard<T>)
         where T : BoardZone, T : Point {
 
@@ -92,25 +91,24 @@ fun <T> chooseStartExit(board: LevelBoard<T>)
 }
 
 
-
-
 /*
 * merge two impass corridor connected into one cul de sac
 * */
-fun <T : BoardZone> complexiteMergeImpasse(board: Board<T>, partToKeep: Double = 0.0) {
+fun <T : BoardZone> complexiteMergeImpasse(board: Board<T>, numberOfCulDeSacToKeep:Int=board.height) {
     val culDeSac = board.toList().filter { it.connected.size == 1 }
 
     culDeSac.sortedBy { CorridorIterator(it).size() }
 
 
-    val averageCulDeSac=culDeSac.subList((culDeSac.size*partToKeep/2).toInt(), (culDeSac.size*(1-partToKeep/2)).toInt())
+    val averageCulDeSac: Collection<T> = culDeSac.subList(0, numberOfCulDeSacToKeep)
+
 
 
     averageCulDeSac.shuffled().forEach { currentImpass ->
 
-       //if is still an impass
+        //if is still an impass
 
-        if(currentImpass.connected.size==1) {
+        if (currentImpass.connected.size == 1) {
             val nearestImpasses = board.getNeigbours(currentImpass).filter { nei ->
                 nei.connected.size == 1//are cul de sac
                         && !nei.connected.contains(currentImpass)//are not already linked to the current cul de sac

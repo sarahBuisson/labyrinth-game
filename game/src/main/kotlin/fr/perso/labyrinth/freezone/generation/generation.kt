@@ -73,7 +73,7 @@ open class LabFillerExit<T>(
 open class LabFiller<TZone>
         where TZone : GeoZone, TZone : ConnectedZone {
 
-     lateinit var zones: List<TZone>
+    lateinit var zones: List<TZone>
     lateinit var distanceFromStartMap: Map<ConnectedZone, Int>
     var numberOfDoor by Delegates.notNull<Int>()
     var numberOfExchanges by Delegates.notNull<Int>()
@@ -95,12 +95,12 @@ open class LabFiller<TZone>
 
     open public fun init(zones: List<TZone>, begin: TZone = zones.first(), exit: TZone = zones.last(), numberOfDoor: Int, numberOfExchanges: Int): LabFiller<TZone> {
 
-        this.begin=begin
-        this.exit=exit
+        this.begin = begin
+        this.exit = exit
         distanceFromStartMap = distanceToZone(begin);
-        this.zones=zones;
-        this.numberOfDoor=numberOfDoor;
-        this.numberOfExchanges=numberOfExchanges;
+        this.zones = zones;
+        this.numberOfDoor = numberOfDoor;
+        this.numberOfExchanges = numberOfExchanges;
 
         zones.forEach { zone ->
             zone.connected.forEach {
@@ -112,7 +112,7 @@ open class LabFiller<TZone>
     }
 
     open public fun fillLab(
-            ) {
+    ) {
 
 
         fillLabWithDoors(this.listOfKey)
@@ -181,7 +181,7 @@ open class LabFiller<TZone>
     ) {
         val availableZoneForKey = availableZonesToPutKeyToAccessZone(doorZone)
         if (!availableZoneForKey.isEmpty()) {
-            val keyZone = availableZoneForKey.random() as GeoZone;
+            val keyZone = filterUntilOnce(availableZoneForKey).random() as GeoZone;
 
             val key = generateKey(listOfKey)
 
@@ -242,5 +242,21 @@ class LabFillerMapLab<T>(
         return zoneEmpty;
     }
 
+
+}
+
+/**
+ * use filters until there is at least once value remaining
+ */
+fun <T> filterUntilOnce( toFilter: Collection<T>, vararg filters: (T) -> Boolean): Collection<T> {
+    var _toFilter = toFilter;
+    filters.forEach {
+        var filtered = _toFilter.filter(it);
+        if (filtered.isEmpty())
+            return _toFilter;
+        else
+            _toFilter = filtered;
+    }
+    return _toFilter;
 
 }

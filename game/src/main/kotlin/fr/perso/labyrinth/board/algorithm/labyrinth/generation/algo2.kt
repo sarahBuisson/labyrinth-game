@@ -30,8 +30,8 @@ fun <T : BoardZone> drawLabByPastingSmallCorridorToMediumOnes(board: Board<T>): 
         countFreeCase = board.toList().count { it.connections.size == 0 }
     } while (countFreeCase < previousCount)
 
-    complexiteMergeImpasse(board,0.5)
-    complexiteMergeImpasse(board,0.5)
+    val numberOfCulDeSacToKeep = board.height
+    complexiteMergeImpasse(board, numberOfCulDeSacToKeep)
 
     println(labyrinthTreeToString(board))
     return board
