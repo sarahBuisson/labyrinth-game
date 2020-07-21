@@ -1,8 +1,9 @@
-<pre>
+<div class="title">
+  <pre>
 
 
 
-  _           _        _____                           _
+   _           _        _____                           _
   | |         | |      / ____|                         | |
   | |     __ _| |__   | |  __  ___ _ __   ___ _ __ __ _| |_ ___  _ __
   | |    / _` | '_ \  | | |_ |/ _ \ '_ \ / _ \ '__/ _` | __/ _ \| '__|
@@ -37,21 +38,27 @@ ________        /___/   __
 -->
 
 
-</pre>
+  </pre>
+</div>
 <div class="container">
-
-  <ascii-div (click)="clickNew()">NEW</ascii-div>
-  <ascii-div>LOAD</ascii-div>
-  <ascii-div (click)="saveHighScore();highScoreModal.show()">HIGHSCORE</ascii-div>
+  <div>
+    <ascii-div (click)="clickNew()">NEW LABYRINTH</ascii-div>
+  </div>
+  <div>
+    <ascii-div (click)="clickCharacter()">CHANGE CHARACTER LOOK</ascii-div>
+  </div>
+  <div>
+    <ascii-div (click)="saveHighScore();highScoreModal.show()">HIGHSCORE</ascii-div>
+  </div>
   <app-ascii-modal #highScoreModal (click)="this.highScoreModal.hide()">
     <div>
       <ascii-div
-                 hoverClass="asciiHighlight"
+        hoverClass="asciiHighlight"
       >Highscore
       </ascii-div>
       <ascii-div>
 
-Your best score
+        Your best score
         <br/>
         Ever!
         <div *ngFor="let score of highscores">
@@ -61,7 +68,11 @@ Your best score
       </ascii-div>
     </div>
   </app-ascii-modal>
-
+  <app-ascii-modal #newFormModal [closable]="true">
+    <app-labyrinth-form></app-labyrinth-form>
+  </app-ascii-modal>
   <app-ascii-modal #loadingModal (click)="this.loadingModal.hide()">Loading</app-ascii-modal>
-  <app-ascii-modal #newFormModal [closable]="true"><app-labyrinth-form></app-labyrinth-form></app-ascii-modal>
+  <app-ascii-modal #characterFormModal [closable]="true">
+    <app-character-form></app-character-form>
+  </app-ascii-modal>
 </div>

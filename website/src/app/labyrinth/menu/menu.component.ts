@@ -12,6 +12,7 @@ export class MenuComponent implements OnInit {
   @ViewChild('highScoreModal') highScoreModal: AsciiModalComponent;
   @ViewChild('loadingModal') loadingModal: AsciiModalComponent;
   @ViewChild('newFormModal') newFormModal: AsciiModalComponent;
+  @ViewChild('characterFormModal') characterFormModal: AsciiModalComponent;
   highscores: Array<any>;
 
   constructor(private router: Router, private highscoresService: HighscoresService) {
@@ -25,7 +26,10 @@ export class MenuComponent implements OnInit {
   }
 
   clickNew() {
+
     this.newFormModal.show()
+  }  clickCharacter() {
+    this.characterFormModal.show()
   }
 
   saveHighScore() {
