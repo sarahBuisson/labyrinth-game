@@ -1,10 +1,11 @@
-<p>character-form works!</p>
-<div>
-
-  <li *ngFor="let bodyPart of renderService.bodyPartsKey">
-  {{bodyPart}} <input [(ngModel)]="data[bodyPart]" (change)="update()">
-
-  </li>
-  <textarea style="height: 100px">
-{{render}}</textarea>
-</div>
+<ascii-div>
+  <div *ngFor="let bodyPart of renderService.bodyPartsKey">
+    <span class="label">{{bodyPart}}</span>
+    <ascii-hard-div [xRepeat]="20" >
+      <input [(ngModel)]="data[bodyPart]" (change)="update()">
+    </ascii-hard-div>
+  </div>
+  <ascii-div>
+    <textarea style="height: 100px">{{render}}</textarea>
+  </ascii-div>
+</ascii-div>

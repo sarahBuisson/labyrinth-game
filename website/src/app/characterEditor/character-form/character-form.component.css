@@ -1,0 +1,16 @@
+input, textarea {
+  border: none;
+  outline: none;
+  font-family: monospace;
+  white-space: pre;
+  width: auto
+}
+
+input:focus {
+  outline: none !important;
+}
+
+span.label {
+  vertical-align: middle;
+  display: flex;
+}
