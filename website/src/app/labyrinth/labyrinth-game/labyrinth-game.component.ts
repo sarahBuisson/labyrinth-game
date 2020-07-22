@@ -73,4 +73,8 @@ export class LabyrinthGameComponent implements OnInit {
   take() {
     this.gameplayLabService.takeAll();
   }
+
+  nextLevel() {
+    this.labService.generate(this.currentLevel.contentArray.length+1);
+  }
 }

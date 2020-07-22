@@ -5,10 +5,10 @@
 [X] create a component who take a specific position when blur
 [X] make lab form a modal of the menu
 [ X the big title should be only on the menu
-[ ] correct map bug
+[X] correct map bug
 [X] make key better looking
 [X] key management
-[ ] keypad
+[X] keypad
 [X] bug when you can take the player in your pocket
 [X] better footer, better header
 [X] better render of the inventory
@@ -37,8 +37,8 @@ a-±
  
  [X] give render to object in pocket
  [ ] affichage bug in the loading lab screen
- [ ] perf issue for big lab
- [ ] end game screen
+ [X] perf issue for big lab
+ [X] end game screen
  
  
  
