@@ -1,13 +1,13 @@
 <div class="container">
   <div class="grid" [ngStyle]="{ 'grid-template-columns': 'min-content repeat('+xRepeat+', min-content) min-content',
   'grid-template-rows': 'min-content repeat('+yRepeat+', min-content) min-content'}">
-    <span class="asciiArt">{{topLeftTemplate}}</span>
-    <span class="asciiArt" *ngFor="let i of counter(xRepeat)" (click)="this.onClick('TOP',i)">{{topTemplate}}</span>
-    <span class="asciiArt">{{topRightTemplate}}</span>
+    <span class="asciiArt border">{{topLeftTemplate}}</span>
+    <span class="asciiArt border" *ngFor="let i of counter(xRepeat)" (click)="this.onClick('TOP',i)">{{topTemplate}}</span>
+    <span class="asciiArt border">{{topRightTemplate}}</span>
     <ng-container *ngFor="let i of counter(yRepeat)">
-      <span class="asciiArt leftSide" (click)="this.onClick('LEFT',i)">{{leftTemplate}}</span>
+      <span class="asciiArt leftSide border" (click)="this.onClick('LEFT',i)">{{leftTemplate}}</span>
 
-      <span class=" asciiArt rightSide" (click)="this.onClick('RIGHT',i)">{{rightTemplate}}</span>
+      <span class=" asciiArt rightSide border" (click)="this.onClick('RIGHT',i)">{{rightTemplate}}</span>
     </ng-container>
 
     <div  class="asciiArt content">
@@ -16,10 +16,10 @@
         </span>
     </div>
 
-    <span class="asciiArt">{{bottomLeftTemplate}}</span>
+    <span class="asciiArt border">{{bottomLeftTemplate}}</span>
     <span *ngFor="let i of counter(xRepeat)" (click)="this.onClick('BOTTOM',i)"
-          class="asciiArt">{{bottomTemplate}}</span>
-    <span class="asciiArt">{{bottomRightTemplate}}</span>
+          class="asciiArt border">{{bottomTemplate}}</span>
+    <span class="asciiArt border">{{bottomRightTemplate}}</span>
   </div>
 </div>
 
