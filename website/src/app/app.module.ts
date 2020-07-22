@@ -22,6 +22,7 @@ import { AsciiCharacterComponent } from './utils/ascii/ascii-character/ascii-cha
 import { AsciiOnGridDivComponent } from './utils/ascii/ascii-on-grid-div/ascii-on-grid-div.component';
 import { SlidingComponent } from './utils/ui/atom/sliding/sliding.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { KeypadComponent } from './labyrinth/labyrinth-game/keypad/keypad.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     InventoryComponent,
     AsciiCharacterComponent,
     AsciiOnGridDivComponent,
-    SlidingComponent
+    SlidingComponent,
+    KeypadComponent
   ],
   imports: [
     BrowserModule,

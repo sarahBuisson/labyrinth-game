@@ -6,7 +6,7 @@
 
 .zoneContent{
   display: grid;
-  grid-template-columns: repeat(16, 8px);
+  grid-template-columns: repeat(15, 8px);
   grid-template-rows: repeat(5, 15px);
   grid-auto-flow: row dense;
 }

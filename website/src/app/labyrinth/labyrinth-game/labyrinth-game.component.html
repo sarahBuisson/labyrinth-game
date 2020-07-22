@@ -8,7 +8,12 @@
     <ascii-div><a href="./labyrinthForm">new Labyrinth</a></ascii-div>
   </div>
 </div>
-<div class="container">
+<div class="noParty" *ngIf="!currentPartyProxy">
+  <ascii-div>no game loaded for the moment, please wait or create a new game</ascii-div>
+
+  <ascii-div><a href="./labyrinthForm">new game</a></ascii-div>
+</div>
+<div class="container" *ngIf="currentPartyProxy">
 
   <div class="mainArea">
     <app-level-view [currentPartieProxy]="currentPartyProxy"
@@ -35,16 +40,7 @@
   </div>
   <div class="toolbar">
     <div class="gameplay">
-      <div>
-
-        <ascii-div (click)="move('TOP')" (keyup.arrowUp)="move('TOP')">T</ascii-div>
-      </div>
-      <div>
-        <ascii-div (click)="move('LEFT')" (keyup.arrowLeft)="move('LEFT')"><-</ascii-div>
-        <ascii-div (click)="move('BOTTOM')" (keyup.arrowBottom)="move('BOTTOM')">B</ascii-div>
-        <ascii-div (click)="move('RIGHT')" (keyup.arrowRight)="move('RIGHT')">-></ascii-div>
-        <ascii-div (click)="take()" (keyup.enter)="take()">Prendre</ascii-div>
-      </div>
+<app-keypad></app-keypad>
     </div>
     <app-ascii class="character">{{fullViewRenderService.renderPlayer(this.currentCharacterRenderData)}}</app-ascii>
     <div class="inventoryArea">

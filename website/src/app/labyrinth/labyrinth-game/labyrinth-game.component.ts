@@ -11,6 +11,7 @@ import {LevelViewComponent} from "./level-view/level-view.component";
 import {DataStorageService} from "../service/data-storage.service";
 import {GameplayLabService} from "../service/gameplay-lab.service";
 import {AsciiModalComponent} from "../../utils/ascii/ascii-modal/ascii-modal.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-labyrinth-game',
