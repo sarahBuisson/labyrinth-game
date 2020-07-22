@@ -196,8 +196,11 @@ open class LabFiller<TZone>
     open protected fun availableZonesToPutKeyToAccessZone(doorZone: TZone): Collection<TZone> {
         val distanceMax = distanceFromStartMap[doorZone]!!
         val availableZoneForKey = distanceFromStartMap.filter {
-            it.value <= distanceMax && isZoneAvailable(it.key as TZone)
-                    && !doorZone.connected.contains(it.key) && doorZone != it.key
+            val possibleKeyZone = it.key
+            it.value <= distanceMax && isZoneAvailable(possibleKeyZone as TZone)
+                    && !doorZone.connected.contains(possibleKeyZone) && doorZone != possibleKeyZone
+                    && !possibleKeyZone.equals(this.begin)
+                    && possibleKeyZone.content.none { obj->obj is KeyObjectZone }
         }.keys
         return availableZoneForKey as Set<TZone>
     }
