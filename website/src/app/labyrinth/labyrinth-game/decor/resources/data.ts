@@ -373,17 +373,17 @@ export let viewOpenDoorGridTemplate = asciiStringToGridObject(viewOpenDoorZoneRa
 export let viewWallGridTemplate = asciiStringToGridObject(viewWallZoneRaw, 6, 16, 5, 5)
 
 export let exitTemplate: any = "" +
-  "  |--|\n" +
-  "  |--|\n" +
+  "  |--|  \n" +
+  "  |--|  \n" +
   ":¨|--|¨:\n" +
   "'¨¨¨¨¨¨'\n" +
-  "  exit";
+  "  exit ";
 export let startTemplate: any = "" +
   "+______\n" +
   "|start<\n" +
   "+¨¨¨¨¨¨\n" +
-  "|\n" +
-  "|";
+  "|      \n" +
+  "|      ";
 let bagRaw="" +
   "(@=======(@   \n" +
   "||       ||   \n" +
