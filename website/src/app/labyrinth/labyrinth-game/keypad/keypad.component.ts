@@ -37,6 +37,9 @@ export class KeypadComponent implements OnInit {
     if (event.key === 'ArrowRight') {
       this.gameplayLabService.move('RIGHT');
     }
+  }
 
+  take(): void {
+    this.gameplayLabService.takeAll();
   }
 }

@@ -1,21 +1,21 @@
 <ascii-div>
-  <div>   +-+   </div>
+  <div>&nbsp;&nbsp;&nbsp;&nbsp;+---+   </div>
   <div>
-    <span>  |</span>
-    <span (click)="move('TOP')" (keydown.arrowUp)="move('TOP')">T</span>
+    <span>&nbsp;&nbsp;&nbsp;&nbsp;|</span>
+    <span (click)="move('TOP')" (keydown.arrowUp)="move('TOP')">/^\</span>
     <span>|  </span>
   </div>
-  <div>+--+-+--+-------+</div>
+  <div>+---+---+---+-------+</div>
   <div>
     <span>|</span>
-    <span (click)="move('LEFT')" (keydown.arrowLeft)="move('LEFT')"><-</span>
+    <span (click)="move('LEFT')" (keydown.arrowLeft)="move('LEFT')"><<-</span>
     <span>|</span>
-    <span (click)="move('BOTTOM')" (keydown.arrowBottom)="move('BOTTOM')">B</span>
+    <span (click)="move('BOTTOM')" (keydown.arrowBottom)="move('BOTTOM')">\V/</span>
     <span>|</span>
-    <span (click)="move('RIGHT')" (keydown.arrowRight)="move('RIGHT')">-></span>
+    <span (click)="move('RIGHT')" (keydown.arrowRight)="move('RIGHT')">->></span>
     <span>|</span>
     <span (click)="take()">Prendre</span>
     <span>|</span>
   </div>
-  <div>+--+-+--+-------+</div>
+  <div>+---+---+---+-------+</div>
 </ascii-div>
