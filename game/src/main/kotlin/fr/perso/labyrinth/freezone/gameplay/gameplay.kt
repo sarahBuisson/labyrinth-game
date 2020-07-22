@@ -16,8 +16,8 @@ data class Player(
 ) : ObjectZone("player", "player")
 
 
-class Partie<LevelType>(val player: Player, val level: LevelType) {
-    var status: PartieStatus = PartieStatus.IN_PROGRESS
+class Partie<LevelType>(val player: Player, val level: LevelType, var status: PartieStatus = PartieStatus.IN_PROGRESS) {
+
 }
 
 
@@ -107,7 +107,7 @@ class TakeObjectRule :
                 { interaction ->
                     interaction.qui.location.content.remove(interaction.quoi as ObjectZone)
                     interaction.qui.inventory.add(interaction.quoi)
-                    if ((interaction.quoi as ObjectZone).name === "exit") {
+                    if ((interaction.quoi).name === "exit") {
                         interaction.univers.status = PartieStatus.WIN
                     }
                 })
@@ -144,7 +144,7 @@ fun playerInteractWith(partie: Partie<*>, obj: ObjectZone): Partie<*> {
         println(e)
         println(e.cause)
     }
-    return Partie(partie.player, partie.level)
+    return Partie(partie.player, partie.level, partie.status)
 
 }
 
