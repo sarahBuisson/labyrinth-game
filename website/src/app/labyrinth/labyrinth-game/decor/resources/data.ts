@@ -137,6 +137,10 @@ let viewWallZoneRaw = "" +
   " |  /                  \\  |\n" +
   " | /                    \\ |\n" +
   " `-----------------------'"
+
+
+
+
 export let viewCloseDoorGridTemplate = asciiStringToGridObject(viewCloseDoorZoneRaw, 6, 16, 5, 5)
 
 
@@ -261,6 +265,88 @@ let viewEmptyDeepOmbreZoneRaw = "" +
   " `-- --'--'------`---`---'"
 
 
+
+let viewEmptyDeepWaterZoneRaw = "" +
+  " .----.--  .----,----,---.\n" +
+  " |\\                      /|\n" +
+  " | \\            /       / |\n" +
+  " |  \\      \\            / /\n" +
+  " \\   \\                /    \n" +
+  " |    \\__-__-__--__  /    |\n" +
+  " |  - ¨(  _-__-__   )¨ _  |\n" +
+  "      ¨ )_-__   _  (¨    |\n" +
+  " |    _(  -   _-__  )_  - |\n" +
+  "      /'--__--__---'\\     |\n" +
+  " /   /     /          \\   \\\n" +
+  " |  /  /        \\      \\  |\n" +
+  " | /                    \\ |\n" +
+  " `-- --'--'------`---`---'"
+
+let viewEmptySpikeZoneRaw = "" +
+  " .----.--  .----,----,---.\n" +
+  " |\\                      /|\n" +
+  " | \\            /       / |\n" +
+  " |  \\      \\            / /\n" +
+  "     \\________________/   |\n" +
+  " |   |   A  /\\   /\\   |    \n" +
+  " |   |  / \\   /\\      |   |\n" +
+  " |   |   ^   /\\   /\\  |    \n" +
+  "     |  / \\   /\\  ^   |   |\n" +
+  " |   |        /\\  / \\ |   |\n" +
+  " |   /¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨\\   |\n" +
+  "  / /  /        \\      \\  \\\n" +
+  " | /                    \\ |\n" +
+  " `-- --'--'------`---`---'"
+
+
+
+let viewEmptyObstructedZoneRaw = "" +
+  " .                  ---    \n" +
+  "                           \n" +
+  " |                         \n" +
+  "                          |\n" +
+  "                           \n" +
+  " |                        |\n" +
+  "                           \n" +
+  " |                        |\n" +
+  "                           \n" +
+  "                          |\n" +
+  "                           \n" +
+  "                           \n" +
+  " |                        \n" +
+  "     --            ---  "
+let viewObstructed2lZoneRaw = "" +
+  " .-----------------------.\n" +
+  " |\\                      /|\n" +
+  " | _-_---_-____-__-____-, |\n" +
+  " |  |                   | |\n" +
+  " | |     °             |  |\n" +
+  " |  |             °     | |\n" +
+  " | |      O             | |\n" +
+  " | |            O       | |\n" +
+  " |  |                  |  |\n" +
+  " | |      °             | |\n" +
+  " | |   o        °       | |\n" +
+  " | '-_---_-____-__-_____- |\n" +
+  " | /                    \\ |\n" +
+  " `-----------------------'"
+let viewObstructed3lZoneRaw = "" +
+  " .-  ---- - ----    --- -.\n" +
+  " |\\                      /|\n" +
+  " | _-_---_-____-__-____-,  \n" +
+  "    |                   | |\n" +
+  "   |     °             |  |\n" +
+  "    |             °     |  \n" +
+  " | |      O             |  \n" +
+  "   |            O       | |\n" +
+  " |  |                  |   \n" +
+  "   |      °             |  \n" +
+  "   |   o        °       |  \n" +
+  " | '-_---_-____-__-_____- |\n" +
+  " | /                    \\ |\n" +
+  " `------    -----  --  --'"
+
+
 let viewEmptyZoneRaw5 = "" +
   "                               \n" +
   "                               \n" +
@@ -278,7 +364,7 @@ let viewEmptyZoneRaw5 = "" +
   "                               \n" +
   "                               "
 
-export let viewEmptyZoneGridTemplate = asciiStringToGridObject(viewEmptyDeepOmbreZoneRaw, 6, 0, 5, 0)
+export let viewEmptyZoneGridTemplate = asciiStringToGridObject(viewObstructed3lZoneRaw, 6, 0, 5, 0)
 
 
 
@@ -329,4 +415,15 @@ let bigHandRaw="" +
   "|                \\|   \\/ \n" +
   "\\                    /   \n" +
   " \\                  /    "
-export let bagGridTemplate = asciiStringToGridObject(bigHandRaw, 2, 16, 6, 1)
+
+let otherHandRaw = "" +
+  "     (IN) (VEN)(TOR)    \n" +
+  "     |¨¨| |¨¨¨||¨¨¨|(Y) \n" +
+  "\\\"-_ |¨¨| |¨¨¨||¨¨¨||¨|\n"+
+" \\  \\|¨¨¨  ¨¨¨  ¨¨¨ ¨¨/\n" +
+"  \\  :              ¨|\n" +
+"   \\_               /\n" +
+"     \\              /    "
+
+
+export let bagGridTemplate = asciiStringToGridObject(otherHandRaw, 6, 15, 4, 1)
