@@ -92,7 +92,8 @@ class FreeZoneTest {
                 println("" + i + " " + partie.player)
                 if (!partie.player.inventory.isEmpty())
                     partie.player.selected = partie.player.inventory.random()
-                playerInteractWith(partie, partie.player.location.content.random())
+                if (partie.player.location.content.isNotEmpty())
+                    playerInteractWith(partie, partie.player.location.content.random())
 
             }
             println("---")
