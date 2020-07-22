@@ -24,6 +24,8 @@ open class LabFillerExit<T>(
         LabFiller<T>(keyToDoorArray, objetDiversArray)
         where T : GeoZone, T : ConnectedZone {
 
+    lateinit var pathToExit: List<T>
+
     fun isCulDeSac(freeZone: ConnectedZone): Boolean {
         val distance = distanceFromStartMap[freeZone]!!
         return freeZone.connected.all { distanceFromStartMap[it]!! < distance }
@@ -33,13 +35,14 @@ open class LabFillerExit<T>(
     override fun fillLab(
     ) {
         exit!!.content.add(KeyObjectZone("victoire"))
+        begin!!.content.add(KeyObjectZone("start"))
 
-        val pathToExit = extractPathFromStartToExit(exit)
+        pathToExit = extractPathFromStartToExit(exit)
         fillPathWithClosedDoor(pathToExit, listOfKey.subList(0, listOfKey.size / 2))
         fillLabWithDoors(listOfKey.subList(listOfKey.size / 2, listOfKey.size))
     }
 
-    private fun fillPathWithClosedDoor(pathToExit: MutableList<T>, listOfKey: MutableList<String>) {
+    private fun fillPathWithClosedDoor(pathToExit: List<T>, listOfKey: MutableList<String>) {
         val inter = IntRange(1, pathToExit.size - 1).shuffled();
         for (i in inter) {
             val currentZone = pathToExit[i]!!
@@ -150,26 +153,28 @@ open class LabFiller<TZone>
 
             lateinit var zoneWhoWillBeClosedByDoorAndKey: TZone;
             lateinit var doorZone: TZone;
-            lateinit var zonesAfterDoorZone: List<TZone>;
+            var zonesAfterDoorZone: List<TZone> = listOf();
 
-
+            var zonesWhoCanHaveADoor= zones.filter { isZoneAvailable(it) }
             //Select a zone when you can put a door.
-            do {
-                doorZone = zones.filter { isZoneAvailable(it) }.random()
+            while (zonesAfterDoorZone.isEmpty() && zonesWhoCanHaveADoor.isNotEmpty()) {
+                doorZone = zonesWhoCanHaveADoor.random()
+                zonesWhoCanHaveADoor=zonesWhoCanHaveADoor.minus(doorZone)
                 val distanceMax = distanceFromStartMap[doorZone]!!
                 zonesAfterDoorZone = doorZone.connected.filter { distanceFromStartMap[it]!! > distanceMax && isZoneAvailable(it as TZone) } as List<TZone>
-            } while (zonesAfterDoorZone.isEmpty() && !zones.filter { isZoneAvailable(it) }.isEmpty())
+            }
+            if (zonesAfterDoorZone.isNotEmpty()) {
+                val distanceMax = distanceFromStartMap[doorZone]!!;
+                zoneWhoWillBeClosedByDoorAndKey = zonesAfterDoorZone.random()
+                val door =
+                        doorZone
+                                .content
+                                .find { it is DoorObjectZone && it.destination == zoneWhoWillBeClosedByDoorAndKey } as DoorObjectZone
 
-            val distanceMax = distanceFromStartMap[doorZone]!!;
-            zoneWhoWillBeClosedByDoorAndKey = zonesAfterDoorZone.random()
-            val door =
-                    doorZone
-                            .content
-                            .find { it is DoorObjectZone && it.destination == zoneWhoWillBeClosedByDoorAndKey } as DoorObjectZone
-
-            affectKeyToDoor(
-                    door, doorZone, listOfKey
-            )
+                affectKeyToDoor(
+                        door, doorZone, listOfKey
+                )
+            }
         }
     }
 
@@ -198,9 +203,7 @@ open class LabFiller<TZone>
         val availableZoneForKey = distanceFromStartMap.filter {
             val possibleKeyZone = it.key
             it.value <= distanceMax && isZoneAvailable(possibleKeyZone as TZone)
-                    && !doorZone.connected.contains(possibleKeyZone) && doorZone != possibleKeyZone
-                    && !possibleKeyZone.equals(this.begin)
-                    && possibleKeyZone.content.none { obj->obj is KeyObjectZone }
+
         }.keys
         return availableZoneForKey as Set<TZone>
     }
@@ -243,6 +246,16 @@ class LabFillerMapLab<T>(
                 && this.begin != it
 
         return zoneEmpty;
+    }
+
+
+    override fun availableZonesToPutKeyToAccessZone(doorZone: T): Collection<T> {
+
+        return filterUntilOnce(super.availableZonesToPutKeyToAccessZone(doorZone)
+                .filter { !doorZone.connected.contains(it) && doorZone != it && begin != it },
+                { it.content.none { obj -> obj is KeyObjectZone } },
+                { !this.pathToExit.contains(it) }
+        )
     }
 
 

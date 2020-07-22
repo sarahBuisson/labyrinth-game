@@ -5,6 +5,7 @@ import fr.perso.labyrinth.board.*
 import fr.perso.labyrinth.board.algorithm.composite.LevelBoard
 import fr.perso.labyrinth.board.algorithm.dataMap.CorridorIterator
 import fr.perso.labyrinth.board.algorithm.dataMap.distanceMap
+import fr.perso.labyrinth.freezone.generation.filterUntilOnce
 import org.jeasy.rules.api.Rule
 import org.jeasy.rules.core.RulesImpl
 import org.jeasy.rules.api.Rules
@@ -82,27 +83,31 @@ fun <T> runBookD(fact: T, rules: Rules<T>) {
 fun <T> chooseStartExit(board: LevelBoard<T>)
         where T : BoardZone, T : Point {
 
-    board.start = board.toList().random()
+    val suitableStart: Collection<T> = filterUntilOnce(board.toList(), { it.connected.any { u -> isAnIntersection(u as T) } }, { !isAnIntersection(it) })
+    board.start = suitableStart.random()
     val mapDistance = distanceMap(board.start, board)
     board.exit = mapDistance.entries.maxBy { it.value }!!.key
     val mapDistanceS = distanceMap(board.exit!!, board)
-    board.start = mapDistanceS.entries.maxBy { it.value }!!.key
+    board.start = mapDistanceS.entries.filter { suitableStart.contains(it.key) }.maxBy { it.value }!!.key
 
 }
+
+private fun <T> isAnIntersection(it: T) where T : ConnectedZone, T : Point = it.connected.size > 1
 
 
 /*
 * merge two impass corridor connected into one cul de sac
 * */
-fun <T : BoardZone> complexiteMergeImpasse(board: Board<T>, numberOfCulDeSacToKeep:Int=board.height) {
+fun <T : BoardZone> complexiteMergeImpasse(board: Board<T>, numberOfCulDeSacToKeep: Int = board.height) {
     val culDeSac = board.toList().filter { it.connected.size == 1 }
 
     culDeSac.sortedBy { CorridorIterator(it).size() }
-
-
-    val averageCulDeSac: Collection<T> = culDeSac.subList(0, numberOfCulDeSacToKeep)
-
-
+    var averageCulDeSac: Collection<T>;
+    if (culDeSac.size > numberOfCulDeSacToKeep) {
+        averageCulDeSac = culDeSac.subList(0, numberOfCulDeSacToKeep)
+    } else {
+        averageCulDeSac = culDeSac;
+    }
 
     averageCulDeSac.shuffled().forEach { currentImpass ->
 
