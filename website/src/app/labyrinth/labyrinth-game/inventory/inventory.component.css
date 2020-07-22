@@ -1,5 +1,6 @@
 .container {
   background: white;
+  display: inline-block;
 }
 .inventoryContent{
   background: white;

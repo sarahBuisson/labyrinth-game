@@ -20,6 +20,6 @@
 .toolbar {
   grid-area: toolbar;
   display: grid;
-  grid-template-columns: 50% 30px 1fr;
+  grid-template-columns: 200px 40px 1fr;
 }
 

@@ -26,10 +26,10 @@ export class KeypadComponent implements OnInit {
       this.gameplayLabService.takeAll();
     }
     if (event.key === 'ArrowUp') {
-      this.gameplayLabService.move('UP');
+      this.gameplayLabService.move('TOP');
     }
     if (event.key === 'ArrowDown') {
-      this.gameplayLabService.move('DOWN');
+      this.gameplayLabService.move('BOTTOM');
     }
     if (event.key === 'ArrowLeft') {
       this.gameplayLabService.move('LEFT');
