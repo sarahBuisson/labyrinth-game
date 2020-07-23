@@ -92,7 +92,7 @@ fun <T> chooseStartExit(board: LevelBoard<T>)
 
 }
 
-private fun <T> isAnIntersection(it: T) where T : ConnectedZone, T : Point = it.connected.size > 1
+private fun <T> isAnIntersection(it: T) where T : ConnectedZone, T : Point = it.connected.size > 2
 
 
 /*
