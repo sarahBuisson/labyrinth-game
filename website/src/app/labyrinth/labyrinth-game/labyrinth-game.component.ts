@@ -30,7 +30,8 @@ export class LabyrinthGameComponent implements OnInit {
               private dataStorageService:DataStorageService,
               private gameplayLabService:GameplayLabService,
               public fullViewRenderService: FullsizeAsciiRenderService,
-              public mapRenderService: MapAsciiRenderService) {
+              public mapRenderService: MapAsciiRenderService,
+              private router:Router) {
   }
 
   ngOnInit(): void {
@@ -75,6 +76,6 @@ export class LabyrinthGameComponent implements OnInit {
   }
 
   nextLevel() {
-    this.labService.generate(this.currentLevel.contentArray.length+1);
+    this.router.navigateByUrl('/labyrinthForm?size=' + this.currentLevel.contentArray.length + 1);
   }
 }

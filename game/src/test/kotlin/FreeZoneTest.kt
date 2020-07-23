@@ -1,3 +1,5 @@
+import fr.perso.labyrinth.board.algorithm.composite.initPartieCompositeLabWithKey
+import fr.perso.labyrinth.board.algorithm.composite.initPartieLabGameComposite
 import fr.perso.labyrinth.freezone.gameplay.initPartie
 import fr.perso.labyrinth.freezone.gameplay.initPartieExit
 import fr.perso.labyrinth.freezone.gameplay.playerInteractWith
@@ -101,6 +103,39 @@ class FreeZoneTest {
 
             println("---")
             println(partie.player.inventory.map { it.name })
+        } catch (e: Exception) {
+
+
+            println(partie.player.inventory.map { it.name })
+            throw e;
+        }
+    }
+
+
+
+    @Test
+    fun shouldPlayLab() {
+        val partie = initPartieLabGameComposite()
+        println(partie.level.toList().map { it.toString() + "\n" })
+        println("---")
+        try {
+
+            for (i in 0..100) {
+                println("" + i + " " + partie.player)
+                if (!partie.player.inventory.isEmpty())
+                    partie.player.selected = partie.player.inventory.random()
+                if (partie.player.location.content.isNotEmpty())
+                    playerInteractWith(partie, partie.player.location.content.random())
+                if (partie.player.inventory.any { it.name == "exit" }) {
+                    break;
+                }
+            }
+            println("---")
+            println(partie.level)
+
+            println("---")
+            println(partie.player.inventory.map { it.name })
+            println(partie.computeDatas())
         } catch (e: Exception) {
 
 

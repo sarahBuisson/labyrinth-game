@@ -40,7 +40,12 @@ a-±
  [X] perf issue for big lab
  [X] end game screen
  
- 
+ V1.5 : avant de la montrer
+ [ ] refacto back
+ [ ] refacto front
+ [ ] score stocké dans les cookies
+ [ ] meilleur positionnement UI
+ [ ] meilleur couleur UI
  
  V2:
  [ ]allow ascii art to have multiple color 

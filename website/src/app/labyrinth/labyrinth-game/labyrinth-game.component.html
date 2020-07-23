@@ -60,6 +60,7 @@
     </app-ascii>
     <app-ascii>{{fullViewRenderService.renderObj({name: 'exit'}, undefined)}}</app-ascii>
 
+    <ascii-div>score:{{this.currentPartyProxy.computeDatasFunction().score}}</ascii-div>
     <ascii-div (click)="nextLevel()">next level</ascii-div>
   </app-ascii-modal>
 

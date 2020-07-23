@@ -12,9 +12,9 @@
 <app-ascii-modal #loadingModal
                  (click)="clickDuringLoading()"   >
 
-  <ascii-div >
+  <ascii-hard-div>
     <ascii-div> Labyrinth generating ...</ascii-div><br/>
-    <ascii-div>Do you know it ?</ascii-div><br/>
+    <ascii-div>Do you know it ? ({{currentLoadingMessage}})</ascii-div><br/>
 
     <ascii-div *ngIf="currentLoadingMessage===0">
       Find the stair to the exit to win.
@@ -49,6 +49,6 @@
 
     <ascii-div *ngIf="currentLoadingMessage===6">All game have a solution
     </ascii-div>
-  </ascii-div>
+  </ascii-hard-div>
 </app-ascii-modal>
 

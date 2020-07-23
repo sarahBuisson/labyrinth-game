@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {GenerateLabService} from "../service/generate-lab.service";
 import {AsciiModalComponent} from "../../utils/ascii/ascii-modal/ascii-modal.component";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-labyrinth-form',
@@ -10,28 +10,31 @@ import {Router} from "@angular/router";
 })
 export class LabyrinthFormComponent implements OnInit {
 
-
-  size:Number=5
-  currentLoadingMessage: number=1;
+  size: Number = 5
+  currentLoadingMessage: number = 1;
 
   @ViewChild('loadingModal') loadingModal: AsciiModalComponent;
 
-  constructor(private labService:GenerateLabService, private router: Router ) { }
-
-  ngOnInit(): void {
+  constructor(private labService: GenerateLabService, private router: Router, private route: ActivatedRoute) {
   }
 
-  play():void{
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.size = params['size']?params['size']:5;
+    });
+  }
+
+  play(): void {
     this.loadingModal.show()
 
 
-   let timer= new Promise((resolve)=>{
+    let timer = new Promise((resolve) => {
       // after 1 second signal that the job is finished with an error
       setTimeout(() => resolve('done'), 5000);
     });
-    let generation = new Promise((resolve) =>{
+    let generation = new Promise((resolve) => {
       // not taking our time to do the job
-      resolve( this.labService.generate(this.size)); // immediately give the result: 123
+      resolve(this.labService.generate(this.size)); // immediately give the result: 123
 
     });
 
@@ -41,11 +44,12 @@ export class LabyrinthFormComponent implements OnInit {
     })
 
   }
-  clickDuringLoading(){
-    this.currentLoadingMessage=Math.round(Math.random()*5)
+
+  clickDuringLoading() {
+    this.currentLoadingMessage = Math.round(Math.random() * 5)
   }
 
-  emptyBoard():void{
+  emptyBoard(): void {
     this.labService.generateEmpty(this.size);
   }
 }

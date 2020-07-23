@@ -1,10 +1,14 @@
 package fr.perso.labyrinth.freezone.gameplay
 
+import fr.perso.labyrinth.ConnectedZone
 import fr.perso.labyrinth.GeoZone
+import fr.perso.labyrinth.board.Board
+import fr.perso.labyrinth.board.BoardZone
+import fr.perso.labyrinth.board.algorithm.composite.LevelBoard
+import fr.perso.labyrinth.board.algorithm.dataMap.distanceMap
 import fr.perso.labyrinth.freezone.generation.*
 import fr.perso.labyrinth.freezone.model.*
 import mu.KotlinLogging
-import org.jeasy.rules.api.Rule
 import org.jeasy.rules.core.RulesImpl
 import org.jeasy.rules.core.DefaultRulesEngine
 import org.jeasy.rules.core.LambdaRule
@@ -12,14 +16,30 @@ import org.jeasy.rules.core.LambdaRule
 data class Player(
         var location: GeoZone,
         val inventory: MutableList<ObjectZone> = mutableListOf<ObjectZone>(),
-        var selected: ObjectZone? = null
+        var selected: ObjectZone? = null,
+        var numberOfSteps: Int = 0
 ) : ObjectZone("player", "player")
 
 
-class Partie<LevelType>(val player: Player, val level: LevelType, var status: PartieStatus = PartieStatus.IN_PROGRESS) {
+class Partie<LevelType>(open val player: Player, open val level: LevelType, open var status: PartieStatus = PartieStatus.IN_PROGRESS) {
 
+    fun computeDatas(): MutableMap<String, Int> {
+
+        val datas: MutableMap<String, Int> = mutableMapOf()
+        if (level is LevelBoard<*>) {
+            val level = this.level as LevelBoard<ConnectedZone>
+            val numberOfCulDeSac = level.toList().count { it.connected.size == 1 }
+            datas.put("numberOfCulDeSac", numberOfCulDeSac)
+            val solutionLength = distanceMap(level.start as BoardZone, level as Board<BoardZone>).get(level.exit)!!
+            datas.put("solutionLength", solutionLength)
+            datas.put("numberOfSteps", player.numberOfSteps )
+            datas.put("numberOfRoom", level.width * level.height )
+            datas.put("score", (level.width * level.height * solutionLength * numberOfCulDeSac / (player.numberOfSteps + 1)))
+        }
+        return datas;
+
+    }
 }
-
 
 fun initLab(size: Int = 5): Partie<*> {
     val lab = createLab(size)
@@ -74,6 +94,7 @@ abstract class MoveRule(evaluateL: (Interaction<Player, Any, Any, Partie<*>>) ->
                         (doorObjectZone.destination as GeoZone).content.add(interaction.qui)
                     }
                     interaction.qui.location = doorObjectZone.destination as GeoZone
+                    interaction.qui.numberOfSteps++
                     executeL(interaction)
                 })
 
