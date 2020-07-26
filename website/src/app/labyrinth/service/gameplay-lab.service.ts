@@ -5,6 +5,7 @@ import {getJsViewFromKotlin, kotlinProxyToJsView} from "../../utils/util";
 import gameRules from "gameRules";
 import {DataStorageService} from "./data-storage.service";
 import findKey from 'lodash/findKey';
+let gameplay = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.freezone.gameplay, 0, false);
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +48,6 @@ export class GameplayLabService {
   }
 
   private play(obj): void {
-    let gameplay = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.freezone.gameplay, 0, false);
 
     let newParty = gameplay.playerInteractWithFunction(this.currentParty, obj);
     this.dataStorageService.saveParty(newParty)
@@ -75,13 +75,18 @@ export class GameplayLabService {
   moveAtCase(levelCase: any) {
     let connections = getJsViewFromKotlin(this.currentParty, "player", "location", "connections")
     let direction = findKey(connections, (it) => {
-    return it && it.x === levelCase.x && it.y === levelCase.y})
+      return it && it.x === levelCase.x && it.y === levelCase.y
+    })
     if (direction) {
       return this.move(direction)
     }
   }
 
   hasPlayer(levelCase: any) {
-    return levelCase.contentArray.find(p=>p.type==="player") && true;
+    return levelCase.contentArray.find(p => p.type === "player") && true;
+  }
+
+  computePartieScore() {
+    return gameplay.computePartieScoreFunction(this.currentParty)
   }
 }

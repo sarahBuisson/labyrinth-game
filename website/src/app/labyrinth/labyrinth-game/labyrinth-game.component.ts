@@ -25,6 +25,7 @@ export class LabyrinthGameComponent implements OnInit {
   currentCharacterRenderData: CharacterData
   @ViewChild('level-view') levelView:LevelViewComponent;
   @ViewChild('winModal') winModal:AsciiModalComponent;
+  score: any;
 
   constructor(private labService: GenerateLabService,
               private dataStorageService:DataStorageService,
@@ -48,10 +49,14 @@ export class LabyrinthGameComponent implements OnInit {
             this.currentPartyProxy = kotlinProxyToJsView(this.currentParty, 6)
             this.currentPartyProxy = kotlinProxyToJsView(this.currentParty, 6)
             console.log(this.currentPartyProxy)
+            console.log(Object.getOwnPropertyNames(this.currentPartyProxy))
             console.log(this.currentPartyProxy.status)
             if(this.currentPartyProxy.status.name$=="WIN"){
               this.winModal.show()
             }
+
+
+            this.score=this.gameplayLabService.computePartieScore()
           }
         }
       )
@@ -76,6 +81,6 @@ export class LabyrinthGameComponent implements OnInit {
   }
 
   nextLevel() {
-    this.router.navigateByUrl('/labyrinthForm?size=' + this.currentLevel.contentArray.length + 1);
+    this.router.navigateByUrl('/labyrinthForm?size=' + this.score.size + 1);
   }
 }

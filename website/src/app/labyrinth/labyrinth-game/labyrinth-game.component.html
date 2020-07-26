@@ -60,7 +60,15 @@
     </app-ascii>
     <app-ascii>{{fullViewRenderService.renderObj({name: 'exit'}, undefined)}}</app-ascii>
 
-    <ascii-div>score:{{this.currentPartyProxy.computeDatasFunction().score}}</ascii-div>
+    <ascii-div>
+      <div>total size:{{this.score.size}}</div>
+      <div>total number of room:{{this.score.numberOfRooms}}</div>
+      <div>minimum solution:{{this.score.solutionLength}} m</div>
+      <div>total number of wrong exit:{{this.score.numberOfCulDeSac}}</div>
+      <div>total walked distance:{{this.score.numberOfSteps}} m</div>
+      <div> </div>
+      <div>total score:{{this.score.score}}</div>
+    </ascii-div>
     <ascii-div (click)="nextLevel()">next level</ascii-div>
   </app-ascii-modal>
 

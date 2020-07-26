@@ -23,22 +23,7 @@ data class Player(
 
 class Partie<LevelType>(open val player: Player, open val level: LevelType, open var status: PartieStatus = PartieStatus.IN_PROGRESS) {
 
-    fun computeDatas(): MutableMap<String, Int> {
 
-        val datas: MutableMap<String, Int> = mutableMapOf()
-        if (level is LevelBoard<*>) {
-            val level = this.level as LevelBoard<ConnectedZone>
-            val numberOfCulDeSac = level.toList().count { it.connected.size == 1 }
-            datas.put("numberOfCulDeSac", numberOfCulDeSac)
-            val solutionLength = distanceMap(level.start as BoardZone, level as Board<BoardZone>).get(level.exit)!!
-            datas.put("solutionLength", solutionLength)
-            datas.put("numberOfSteps", player.numberOfSteps )
-            datas.put("numberOfRoom", level.width * level.height )
-            datas.put("score", (level.width * level.height * solutionLength * numberOfCulDeSac / (player.numberOfSteps + 1)))
-        }
-        return datas;
-
-    }
 }
 
 fun initLab(size: Int = 5): Partie<*> {
@@ -169,5 +154,21 @@ fun playerInteractWith(partie: Partie<*>, obj: ObjectZone): Partie<*> {
 
 }
 
+fun computePartieScore(partie: Partie<*>): MutableMap<String, Int> {
 
+    val datas: MutableMap<String, Int> = mutableMapOf()
+    if (partie.level is LevelBoard<*>) {
+        val level = partie.level as LevelBoard<ConnectedZone>
+        val numberOfCulDeSac = level.toList().count { it.connected.size == 1 }
+        datas.put("numberOfCulDeSac", numberOfCulDeSac)
+        val solutionLength = distanceMap(level.start as BoardZone, level as Board<BoardZone>).get(level.exit)!!
+        datas.put("solutionLength", solutionLength)
+        datas.put("size", level.height)
+        datas.put("numberOfSteps", partie.player.numberOfSteps )
+        datas.put("numberOfRooms", partie.level.width * level.height )
+        datas.put("score", (level.width * level.height * solutionLength * numberOfCulDeSac / (partie.player.numberOfSteps + 1)))
+    }
+    return datas;
+
+}
 private val LOGGER = KotlinLogging.logger {}

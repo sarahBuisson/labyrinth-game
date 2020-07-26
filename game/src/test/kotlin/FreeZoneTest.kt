@@ -1,5 +1,6 @@
 import fr.perso.labyrinth.board.algorithm.composite.initPartieCompositeLabWithKey
 import fr.perso.labyrinth.board.algorithm.composite.initPartieLabGameComposite
+import fr.perso.labyrinth.freezone.gameplay.computePartieScore
 import fr.perso.labyrinth.freezone.gameplay.initPartie
 import fr.perso.labyrinth.freezone.gameplay.initPartieExit
 import fr.perso.labyrinth.freezone.gameplay.playerInteractWith
@@ -135,7 +136,7 @@ class FreeZoneTest {
 
             println("---")
             println(partie.player.inventory.map { it.name })
-            println(partie.computeDatas())
+            println(computePartieScore(partie))
         } catch (e: Exception) {
 
 
