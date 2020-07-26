@@ -48,15 +48,14 @@ export class LabyrinthGameComponent implements OnInit {
             this.currentLevel = this.currentParty.level
             this.currentPartyProxy = kotlinProxyToJsView(this.currentParty, 6)
             this.currentPartyProxy = kotlinProxyToJsView(this.currentParty, 6)
-            console.log(this.currentPartyProxy)
-            console.log(Object.getOwnPropertyNames(this.currentPartyProxy))
-            console.log(this.currentPartyProxy.status)
-            if(this.currentPartyProxy.status.name$=="WIN"){
+
+            if (this.currentPartyProxy.status.name$ == "WIN") {
               this.winModal.show()
             }
 
 
             this.score = this.gameplayLabService.computePartieScore()
+            console.log(this.score)
           }
         }
       )
@@ -81,6 +80,6 @@ export class LabyrinthGameComponent implements OnInit {
   }
 
   nextLevel() {
-    this.router.navigateByUrl('/labyrinthForm?size=' + parseInt(this.score.size) + 1);
+    this.router.navigateByUrl('/labyrinthForm?size=' + (this.score.size + 1));
   }
 }

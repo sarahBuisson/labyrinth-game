@@ -46,7 +46,7 @@ export class LabyrinthFormComponent implements OnInit {
   }
 
   clickDuringLoading() {
-    this.currentLoadingMessage = Math.round(Math.random() * 5)
+    this.currentLoadingMessage = Math.round(Math.random() * 5.0)
   }
 
   emptyBoard(): void {
