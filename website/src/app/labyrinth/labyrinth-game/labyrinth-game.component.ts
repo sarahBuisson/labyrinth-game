@@ -56,7 +56,7 @@ export class LabyrinthGameComponent implements OnInit {
             }
 
 
-            this.score=this.gameplayLabService.computePartieScore()
+            this.score = this.gameplayLabService.computePartieScore()
           }
         }
       )
@@ -81,6 +81,6 @@ export class LabyrinthGameComponent implements OnInit {
   }
 
   nextLevel() {
-    this.router.navigateByUrl('/labyrinthForm?size=' + this.score.size + 1);
+    this.router.navigateByUrl('/labyrinthForm?size=' + parseInt(this.score.size) + 1);
   }
 }
