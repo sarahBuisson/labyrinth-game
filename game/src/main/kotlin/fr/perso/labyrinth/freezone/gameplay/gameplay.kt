@@ -156,7 +156,7 @@ fun playerInteractWith(partie: Partie<*>, obj: ObjectZone): Partie<*> {
 
 fun computePartieScore(partie: Partie<*>): MutableMap<String, Int> {
 
-    val datas: MutableMap<String, Int> = mutableMapOf()
+    val datas: MutableMap<String, Int> = HashMap()
     if (partie.level is LevelBoard<*>) {
         val level = partie.level as LevelBoard<ConnectedZone>
         val numberOfCulDeSac = level.toList().count { it.connected.size == 1 }
