@@ -11,6 +11,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class LabyrinthFormComponent implements OnInit {
 
   size: Number = 5
+  playerName: string
   currentLoadingMessage: number = 1;
 
   @ViewChild('loadingModal') loadingModal: AsciiModalComponent;
@@ -34,7 +35,7 @@ export class LabyrinthFormComponent implements OnInit {
     });
     let generation = new Promise((resolve) => {
       // not taking our time to do the job
-      resolve(this.labService.generate(this.size)); // immediately give the result: 123
+      resolve(this.labService.generate(this.size, this.playerName)); // immediately give the result: 123
 
     });
 

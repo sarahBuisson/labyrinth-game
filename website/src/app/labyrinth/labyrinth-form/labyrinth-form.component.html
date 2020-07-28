@@ -28,7 +28,7 @@
 
     </ascii-div>
 
-    <ascii-hard-div *ngIf="currentLoadingMessage===1" xRepeat="35" yRepeat="10">
+    <ascii-hard-div *ngIf="currentLoadingMessage===1" xRepeat="70" yRepeat="10">
    <pre> You can move by :
       - clicking on the room you want to go
       - clicking on the door you want to use
@@ -43,11 +43,12 @@
       You have a map
     </ascii-div>
 
-    <ascii-div *ngIf="currentLoadingMessage===4">The lab didn't really take that much time to generate.
-      The dev just wanted a way to give tips to player.
+    <ascii-div *ngIf="currentLoadingMessage===4">
+      <div>The lab didn't really take that much time to generate.</div>
+      <div>The dev just wanted a way to give tips to player.</div>
     </ascii-div>
 
-    <ascii-div *ngIf="currentLoadingMessage===4">All game have a solution
+    <ascii-div *ngIf="currentLoadingMessage===5">All labyrinths always have a solution
     </ascii-div>
   </ascii-hard-div>
 </app-ascii-modal>

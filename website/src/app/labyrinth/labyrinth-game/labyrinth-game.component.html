@@ -60,7 +60,7 @@
     </app-ascii>
     <app-ascii>{{fullViewRenderService.renderObj({name: 'exit'}, undefined)}}</app-ascii>
 
-    <ascii-div xRepeat="300">
+    <ascii-hard-div xRepeat="40">
       <div>total size:{{this.score.size}}</div>
       <div>total number of room:{{this.score.numberOfRooms}}</div>
       <div>minimum solution:{{this.score.solutionLength}} m</div>
@@ -68,7 +68,7 @@
       <div>total walked distance:{{this.score.numberOfSteps}} m</div>
       <div> </div>
       <div>total score:{{this.score.score}}</div>
-    </ascii-div>
+    </ascii-hard-div>
     <ascii-div (click)="nextLevel()">next level</ascii-div>
   </app-ascii-modal>
 

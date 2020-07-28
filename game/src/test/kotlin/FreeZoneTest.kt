@@ -1,4 +1,3 @@
-import fr.perso.labyrinth.board.algorithm.composite.initPartieCompositeLabWithKey
 import fr.perso.labyrinth.board.algorithm.composite.initPartieLabGameComposite
 import fr.perso.labyrinth.freezone.gameplay.computePartieScore
 import fr.perso.labyrinth.freezone.gameplay.initPartie

@@ -40,7 +40,7 @@ describe('GameplayLabService', () => {
   });
   it('should play', () => {
     //given
-    let partie = serviceGenerate.generate(5,false)
+    let partie = serviceGenerate.generate(5, "somePlayer")
     //when
     service.takeAll()
     service.move("RIGHT")

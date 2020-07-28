@@ -22,8 +22,8 @@ export class GenerateLabService {
   }
 
 
-  generate(size, reroute = true): void {
-    let party = composite.initPartieLabGameCompositeFunction(size) //composite.initPartieCompositeLabWithKeyFunction(size)
+  generate(size, playerName: string): void {
+    let party = composite.initPartieMapLabWithKeyFunction(size, playerName) //composite.initPartieCompositeLabWithKeyFunction(size)
     this.dataStorageService.saveParty(party)
 
 

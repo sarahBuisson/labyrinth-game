@@ -46,15 +46,15 @@ export class LabyrinthGameComponent implements OnInit {
           this.currentParty = kotlinProxyToJsView(c, 0)
           if (this.currentParty) {
             this.currentLevel = this.currentParty.level
-            this.currentPartyProxy = kotlinProxyToJsView(this.currentParty, 6)
-            this.currentPartyProxy = kotlinProxyToJsView(this.currentParty, 6)
+            this.currentPartyProxy = kotlinProxyToJsView(this.currentParty, 5)
 
             if (this.currentPartyProxy.status.name$ == "WIN") {
               this.winModal.show()
             }
 
 
-            this.score = this.gameplayLabService.computePartieScore()
+            let kotlinScore = this.gameplayLabService.computePartieScore();
+            this.score = kotlinProxyToJsView(kotlinScore, 3)
             console.log(this.score)
           }
         }

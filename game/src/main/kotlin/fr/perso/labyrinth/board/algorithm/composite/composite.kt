@@ -98,8 +98,12 @@ fun initPartieLabGameComposite(size: Int = 5): Partie<LevelBoard<CompositeZone>>
     return Partie(player, lab)
 }
 
-fun initPartieCompositeLabWithKey(size: Int = 5): Partie<LevelBoard<CompositeZone>> {
+fun initPartieMapLabWithKey(size: Int = 5, playerName: String = "AFGNCAAP" ): Partie<LevelBoard<CompositeZone>> {
     var lab = generateCompositeMapLabWithKey(size)
+    val player = Player(lab.start)
+    player.location.content.add(player)
+    lab.start.content.add(ObjectZone("start"))
+    lab.exit.content.add(ObjectZone("exit"))
     return Partie(Player(lab.start), lab)
 }
 
