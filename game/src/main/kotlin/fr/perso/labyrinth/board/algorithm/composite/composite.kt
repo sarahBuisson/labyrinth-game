@@ -11,6 +11,7 @@ import fr.perso.labyrinth.board.algorithm.labyrinth.generation.drawLabByPastingS
 import fr.perso.labyrinth.freezone.gameplay.Partie
 import fr.perso.labyrinth.freezone.gameplay.Player
 import fr.perso.labyrinth.freezone.generation.*
+import fr.perso.labyrinth.freezone.model.KeyObjectZone
 import fr.perso.labyrinth.freezone.model.ObjectZone
 
 class CompositeZone(x: Int, y: Int) : GeoZone, ConnectedZone, BoardZone, BoardZoneImpl(x, y) {
@@ -36,6 +37,8 @@ fun generateComposite(size: Int): LevelBoard<CompositeZone> {
             .init(board.toList(), board.start, board.exit, 10, 0)
             .fillLab()
 
+    board.exit!!.content.add(KeyObjectZone("victoire"))
+    board.start!!.content.add(KeyObjectZone("start"))
 
 
     return board

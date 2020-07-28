@@ -34,8 +34,6 @@ open class LabFillerExit<T>(
 
     override fun fillLab(
     ) {
-        exit!!.content.add(KeyObjectZone("victoire"))
-        begin!!.content.add(KeyObjectZone("start"))
 
         pathToExit = extractPathFromStartToExit(exit)
         fillPathWithClosedDoor(pathToExit, listOfKey.subList(0, listOfKey.size / 2))
