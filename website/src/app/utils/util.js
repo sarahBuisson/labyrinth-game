@@ -90,7 +90,6 @@ export function kotlinProxyToJsView(kotlinInstance, maxDeep = undefined, autoPro
         }
       })
     } else if (className === "HashMap" || className == "LinkedHashMap") {
-
       let newkotlinInstance = {};
       let protoMap = instanceWithSimplifiedField(kotlinInstance, 0, false);
       if (protoMap.internalMap) {
@@ -100,8 +99,8 @@ export function kotlinProxyToJsView(kotlinInstance, maxDeep = undefined, autoPro
             .forEach((protoEntry) => {
               protoEntry = kotlinProxyToJsView(protoEntry, maxDeep, false)
               //keep the $
-              newkotlinInstance[protoEntry.key.name$] = protoEntry._value;
-
+              let key = protoEntry.key.name$ ? protoEntry.key.name$ : protoEntry.key;
+              newkotlinInstance[key] = protoEntry._value;
             })
         }
       }
