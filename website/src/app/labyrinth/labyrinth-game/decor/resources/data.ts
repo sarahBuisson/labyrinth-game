@@ -127,21 +127,21 @@ let viewWallZoneRaw = "" +
   " |\\                      /|\n" +
   " | \\                    / |\n" +
   " |  \\                  /  |\n" +
-  " |   \\________________/   |\n" +
-  " |   |                |   |\n" +
-  " |   |                |   |\n" +
-  " |   |                |   |\n" +
-  " |   |                |   |\n" +
-  " |   |                |   |\n" +
-  " |   /¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨\\   |\n" +
-  " |  /                  \\  |\n" +
-  " | /                    \\ |\n" +
-  " `-----------------------'"
+  " |   \\_______________/   |\n" +
+  " |   |               |   |\n" +
+  " |   |               |   |\n" +
+  " |   |               |   |\n" +
+  " |   |               |   |\n" +
+  " |   |               |   |\n" +
+  " |   /¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨\\   |\n" +
+  " |  /                 \\  |\n" +
+  " | /                   \\ |\n" +
+  " `----------------------'"
 
 
 
 
-export let viewCloseDoorGridTemplate = asciiStringToGridObject(viewCloseDoorZoneRaw, 6, 16, 5, 5)
+export let viewCloseDoorGridTemplate = asciiStringToGridObject(viewCloseDoorZoneRaw, 6, 15, 5, 5)
 
 
 
@@ -369,8 +369,8 @@ export let viewEmptyZoneGridTemplate = asciiStringToGridObject(viewObstructed3lZ
 
 
 
-export let viewOpenDoorGridTemplate = asciiStringToGridObject(viewOpenDoorZoneRaw, 6, 16, 5, 5)
-export let viewWallGridTemplate = asciiStringToGridObject(viewWallZoneRaw, 6, 16, 5, 5)
+export let viewOpenDoorGridTemplate = asciiStringToGridObject(viewOpenDoorZoneRaw, 6, 15, 5, 5)
+export let viewWallGridTemplate = asciiStringToGridObject(viewWallZoneRaw, 6, 15, 5, 5)
 
 export let exitTemplate: any = "" +
   "  |--|  \n" +

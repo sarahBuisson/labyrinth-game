@@ -5,7 +5,7 @@ import {CharacterRenderData} from "../../characterEditor/character-render.servic
 @Injectable({
   providedIn: 'root'
 })
-export class DataStorageService {
+export class DataStorageService  {
 
   constructor() { }
 

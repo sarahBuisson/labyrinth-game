@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {take} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -14,17 +15,16 @@ export class HighscoresService {
     let objectObservable = this.http.post("http://sarahbuisson-server-sample.herokuapp.com/score", {
       player: player,
       score
-    },{
+    }, {
       headers: {
-        'Access-Control-Allow-Origin':'*'
+        'Access-Control-Allow-Origin': '*'
       }
-    }).subscribe(
-      data => console.log('success', data),
-      error => console.log('oops', error)
-    );
-
+    }).pipe(take(1))
+      .subscribe(
+        data => console.log('success', data),
+        error => console.log('oops', error)
+      );
     return objectObservable
-
   }
 
   public getScores() {

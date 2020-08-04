@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {GenerateLabService} from "../service/generate-lab.service";
 import {kotlinProxyToJsView} from "../../utils/util";
 
@@ -12,13 +12,14 @@ import {DataStorageService} from "../service/data-storage.service";
 import {GameplayLabService} from "../service/gameplay-lab.service";
 import {AsciiModalComponent} from "../../utils/ascii/ascii-modal/ascii-modal.component";
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-labyrinth-game',
   templateUrl: './labyrinth-game.component.html',
   styleUrls: ['./labyrinth-game.component.css']
 })
-export class LabyrinthGameComponent implements OnInit {
+export class LabyrinthGameComponent implements OnInit, OnDestroy {
   currentParty: any
   currentLevel: any
   currentPartyProxy: any
@@ -26,6 +27,8 @@ export class LabyrinthGameComponent implements OnInit {
   @ViewChild('level-view') levelView:LevelViewComponent;
   @ViewChild('winModal') winModal:AsciiModalComponent;
   score: any;
+  private subscriptionCurrentParty: Subscription;
+  private subscriptionCharacterData: Subscription;
 
   constructor(private labService: GenerateLabService,
               private dataStorageService:DataStorageService,
@@ -41,7 +44,7 @@ export class LabyrinthGameComponent implements OnInit {
   }
 
   subscribeCurrentParty(): any {
-    this.dataStorageService.getCurrentParty()
+    this.subscriptionCurrentParty = this.dataStorageService.getCurrentParty()
       .subscribe((c) => {
           this.currentParty = kotlinProxyToJsView(c, 0)
           if (this.currentParty) {
@@ -63,7 +66,7 @@ export class LabyrinthGameComponent implements OnInit {
   }
 
   subscribeCharacterData(): any {
-    this.dataStorageService.getCurrentCharaRenderData()
+    this.subscriptionCharacterData = this.dataStorageService.getCurrentCharaRenderData()
       .subscribe((c) => {
           this.currentCharacterRenderData = c;
         }
@@ -82,4 +85,13 @@ export class LabyrinthGameComponent implements OnInit {
   nextLevel() {
     this.router.navigateByUrl('/labyrinthForm?size=' + (this.score.size + 1));
   }
+
+  ngOnDestroy(): void {
+    this.subscriptionCurrentParty.unsubscribe();
+    this.subscriptionCharacterData.unsubscribe();
+  }
+}
+
+class LabyrinthGameComponentImpl extends LabyrinthGameComponent {
+
 }
