@@ -13,3 +13,7 @@
 .zoneObject {
   padding: 3px;
 }
+
+.outside{color:lightgray}
+::ng-deep.outside .border{color:lightgray}
+.inside{color:grey}

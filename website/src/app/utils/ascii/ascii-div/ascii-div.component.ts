@@ -1,4 +1,5 @@
 import {
+  AfterContentChecked,
   AfterViewChecked,
   AfterViewInit,
   ChangeDetectionStrategy, ChangeDetectorRef,
@@ -16,7 +17,7 @@ import {defaultGridTemplate} from "../../../labyrinth/service/render/resources/b
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./ascii-div.component.css']
 })
-export class AsciiDivComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class AsciiDivComponent implements OnInit, AfterViewInit, AfterViewChecked, AfterContentChecked {
   @Input()
   xRepeat: number = 1
   @Input()
@@ -67,12 +68,18 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterViewChecke
   }
 
   ngAfterViewInit() {
+    if(this.contentDiv){
     this.yRepeat = Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().height / (15.1*this.borderDatas.leftSideHeight))
     this.xRepeat =  Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().width / (7.82*this.borderDatas.topSideWidth))
     this._changeDetectorRef.detectChanges();
+    }
   }
 
   ngAfterViewChecked(): void {
+    this.ngAfterViewInit();
+  }
+
+  ngAfterContentChecked(): void {
     this.ngAfterViewInit();
   }
 }

@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {CharacterRenderData} from "../../../characterEditor/character-render.service";
 import {
-  viewCloseDoorGridTemplate, viewEmptyZoneGridTemplate,
+  viewCloseDoorGridTemplate, viewEmptyZoneGridTemplate, viewEmptyZoneGridTemplates,
   viewOpenDoorGridTemplate,
   viewWallGridTemplate
 } from "../../service/render/resources/border";
@@ -134,7 +134,13 @@ export class LevelViewComponent implements OnInit, OnChanges {
     return this.renderService.renderObj(obj, this.characterRenderData)
   }
 
-  emptyRendered() {
-    return viewEmptyZoneGridTemplate;
+  emptyRendered(x, y) {
+
+    let dx = x + this.currentPartieProxy.player.location.x
+    let dy = y + this.currentPartieProxy.player.location.y
+
+    let index = (dx + dy) % 5;
+    console.log(index)
+    return viewEmptyZoneGridTemplates[index];
   }
 }

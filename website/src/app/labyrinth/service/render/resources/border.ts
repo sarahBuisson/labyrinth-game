@@ -368,7 +368,12 @@ let viewEmptyZoneRaw5 = "" +
 
 export let viewEmptyZoneGridTemplate = asciiStringToGridObject(viewObstructed3lZoneRaw, 6, 0, 5, 0)
 
-
+export let viewEmptyZoneGridTemplates=[asciiStringToGridObject(viewObstructed3lZoneRaw, 6, 0, 5, 0),
+  asciiStringToGridObject(viewObstructed2lZoneRaw, 6, 0, 5, 0),
+  asciiStringToGridObject(viewEmptySpikeZoneRaw, 6, 0, 5, 0),
+  asciiStringToGridObject(viewEmptyObstructedZoneRaw, 6, 0, 5, 0),
+  asciiStringToGridObject(viewEmptyDeepWaterZoneRaw, 6, 0, 5, 0),
+ ]
 
 
 export let viewOpenDoorGridTemplate = asciiStringToGridObject(viewOpenDoorZoneRaw, defaultZoneCornerWidth, defaultZoneSideWidth, defaultZoneCornerHeight, defaultZoneSideHeight)

@@ -11,7 +11,7 @@
           (click)="clickOnZone(levelCaseInput)"
         >
           <div class="zoneContent">
-            <app-ascii-on-grid-div *ngFor="let obj of this.gameplayLabService.levelContent(levelCaseInput)">
+            <app-ascii-on-grid-div *ngFor="let obj of this.gameplayLabService.levelContent(levelCaseInput)"  [ngClass]="'room'">
               <app-ascii
                 (click)="this.takeObj(obj)"
                 [tooltip]="obj.name"
@@ -25,7 +25,8 @@
       </ng-container>
       <ng-container *ngIf="levelCaseInput.contentArray.length===0">
         <ascii-hard-div
-          [borderDatas]="emptyRendered()"
+          [borderDatas]="emptyRendered(x,y)"
+          [ngClass]="'outside'"
         >
         </ascii-hard-div>
       </ng-container>
