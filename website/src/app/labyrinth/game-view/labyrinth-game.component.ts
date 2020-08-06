@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {GenerateLabService} from "../service/generate-lab.service";
-import {kotlinProxyToJsView} from "../../utils/util";
+import {kotlinProxyToJsView} from "../../utils/kotlinUtils";
 
 // @ts-ignore
 import gameRules from 'gameRules';
-import {AsciiRenderService} from "./decor/ascii-render.service";
-import {MapAsciiRenderService} from "./decor/map-ascii-render.service";
-import {FullsizeAsciiRenderService} from "./decor/fullsize-ascii-render.service";
+import {AsciiRenderService} from "../service/render/ascii-render.service";
+import {MapAsciiRenderService} from "../service/render/map-ascii-render.service";
+import {FullsizeAsciiRenderService} from "../service/render/fullsize-ascii-render.service";
 import {LevelViewComponent} from "./level-view/level-view.component";
 import {DataStorageService} from "../service/data-storage.service";
 import {GameplayLabService} from "../service/gameplay-lab.service";

@@ -34,8 +34,8 @@ export const Default = () => ({
   },
 
   template: `<div style="background: red">
-<app-map-view>
-  </app-map-view></div> `,
+<map-view>
+  </map-view></div> `,
   props: {
     openData: {
       right: '10px',

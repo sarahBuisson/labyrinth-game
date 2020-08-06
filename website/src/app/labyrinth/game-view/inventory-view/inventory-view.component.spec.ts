@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KeypadComponent } from './keypad.component';
+import { InventoryViewComponent } from './inventory-view.component';
 
-describe('KeypadComponent', () => {
-  let component: KeypadComponent;
-  let fixture: ComponentFixture<KeypadComponent>;
+describe('InventoryComponent', () => {
+  let component: InventoryViewComponent;
+  let fixture: ComponentFixture<InventoryViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ KeypadComponent ]
+      declarations: [ InventoryViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KeypadComponent);
+    fixture = TestBed.createComponent(InventoryViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

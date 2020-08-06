@@ -9,6 +9,12 @@ import {AppModule} from "../../../app.module";
 import {AsciiComponent} from "../../../utils/ascii/component/ascii.component";
 import {AsciiOnGridDivComponent} from "../../../utils/ascii/ascii-on-grid-div/ascii-on-grid-div.component";
 import {Router} from "@angular/router";
+import {AppRoutingModule} from "../../../app-routing.module";
+import {CharacterFormComponent} from "../../../characterEditor/character-form/character-form.component";
+import {NewLabyrinthFormComponent} from "../../new-form/new-labyrinth-form.component";
+import {LabyrinthGameModule} from "../labyrinth-game.module";
+import {AsciiModule} from "../../../utils/ascii/ascii.module";
+import {MenuComponent} from "../../menu/menu.component";
 
 
 /*
@@ -34,14 +40,22 @@ export default {
 export const Default = () => ({
   component: LevelViewComponent,
   moduleMetadata: {
-    declarations: [LevelViewComponent, AsciiHardDivComponent, AsciiComponent,AsciiOnGridDivComponent], // Removed if no template
-    imports: [BrowserAnimationsModule]
+    declarations: [
+      NewLabyrinthFormComponent,
+      CharacterFormComponent,
+      MenuComponent], // Removed if no template
+    imports: [
+      BrowserAnimationsModule,
+      AppRoutingModule,
+      LabyrinthGameModule,
+      AsciiModule],
+    providers: []
   },
 
   template: `<div style="background: red">
 level
-<app-level-view>
-  </app-level-view></div> `,
+<level-view>
+  </level-view></div> `,
   props: {
     currentPartieProxy: {
       level: {contentArray: [[{x: 0, y: 0}, {}, {}], [{}, {}, {}], [{}, {}, {}]]},

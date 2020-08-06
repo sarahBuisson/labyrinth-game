@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.service";
 import {AsciiRenderService} from "./ascii-render.service";
-import {GenerateLabService} from "../../service/generate-lab.service";
+import {GenerateLabService} from "../generate-lab.service";
 import {CharacterRenderService, CharacterRenderData} from "../../../characterEditor/character-render.service";
-import {exitTemplate, startTemplate} from "./resources/data";
+import {exitTemplate, startTemplate} from "./resources/view";
 
 @Injectable({
   providedIn: 'root'

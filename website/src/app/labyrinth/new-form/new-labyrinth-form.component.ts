@@ -5,10 +5,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-labyrinth-form',
-  templateUrl: './labyrinth-form.component.html',
-  styleUrls: ['./labyrinth-form.component.css']
+  templateUrl: './new-labyrinth-form.component.html',
+  styleUrls: ['./new-labyrinth-form.component.css']
 })
-export class LabyrinthFormComponent implements OnInit {
+export class NewLabyrinthFormComponent implements OnInit {
 
   size: Number = 5
   playerName: string

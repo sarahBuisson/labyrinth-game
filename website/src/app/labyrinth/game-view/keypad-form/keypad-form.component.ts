@@ -2,11 +2,11 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import {GameplayLabService} from "../../service/gameplay-lab.service";
 
 @Component({
-  selector: 'app-keypad',
-  templateUrl: './keypad.component.html',
-  styleUrls: ['./keypad.component.css']
+  selector: 'keypad-form',
+  templateUrl: './keypad-form.component.html',
+  styleUrls: ['./keypad-form.component.css']
 })
-export class KeypadComponent implements OnInit {
+export class KeypadFormComponent implements OnInit {
 
   constructor(private gameplayLabService: GameplayLabService) {
   }

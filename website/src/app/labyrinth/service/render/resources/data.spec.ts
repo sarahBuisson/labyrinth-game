@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {asciiStringToGridObject} from "./data";
+import {asciiStringToGridObject} from "./view";
 
 
 describe('AsciiRenderService', () => {

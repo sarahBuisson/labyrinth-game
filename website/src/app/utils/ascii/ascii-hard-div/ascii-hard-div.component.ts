@@ -1,5 +1,5 @@
 import {AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {defaultGridTemplate} from "../../../labyrinth/labyrinth-game/decor/resources/data";
+import {defaultGridTemplate} from "../../../labyrinth/service/render/resources/view";
 
 @Component({
   selector: 'ascii-hard-div',

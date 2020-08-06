@@ -1,17 +1,15 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {CharacterRenderData} from "../../../characterEditor/character-render.service";
 import {
-  exitTemplate, startTemplate,
   viewCloseDoorGridTemplate, viewEmptyZoneGridTemplate,
   viewOpenDoorGridTemplate,
   viewWallGridTemplate
-} from "../decor/resources/data";
+} from "../../service/render/resources/view";
 import {GameplayLabService} from "../../service/gameplay-lab.service";
-import {AsciiRenderService} from "../decor/ascii-render.service";
-import {FullsizeAsciiRenderService} from "../decor/fullsize-ascii-render.service";
+import {FullsizeAsciiRenderService} from "../../service/render/fullsize-ascii-render.service";
 
 @Component({
-  selector: 'app-level-view',
+  selector: 'level-view',
   templateUrl: './level-view.component.html',
   styleUrls: ['./level-view.component.css']
 })

@@ -4,7 +4,7 @@ import {LabyrinthGameComponent} from './labyrinth-game.component';
 import {RouterTestingModule} from "@angular/router/testing";
 import {GenerateLabService} from "../service/generate-lab.service";
 import {Router, Routes} from "@angular/router";
-import {LabyrinthFormComponent} from "../labyrinth-form/labyrinth-form.component";
+import {NewLabyrinthFormComponent} from "../new-form/new-labyrinth-form.component";
 import {Location} from "@angular/common";
 
 describe('LabyrinthGameComponent', () => {
@@ -16,7 +16,7 @@ describe('LabyrinthGameComponent', () => {
   beforeEach(async(() => {
     const routes: Routes = [
       {path: '', redirectTo: 'home', pathMatch: 'full'},
-      {path: 'labForm', component: LabyrinthFormComponent},
+      {path: 'labForm', component: NewLabyrinthFormComponent},
       {path: 'labGame', component: LabyrinthGameComponent}
     ];
     TestBed.configureTestingModule({

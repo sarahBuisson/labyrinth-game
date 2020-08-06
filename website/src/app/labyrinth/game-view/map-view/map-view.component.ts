@@ -1,13 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {asciiStringToGridObject} from "../../../utils/ascii/ascii-hard-div/ascii-hard-div.component";
 import {GameplayLabService} from "../../service/gameplay-lab.service";
-import {paperDataGridTemplate, mapGridTemplate} from "../decor/resources/data";
+import {paperDataGridTemplate, mapGridTemplate} from "../../service/render/resources/view";
 
 
 let mapBorderData = paperDataGridTemplate;
 
 @Component({
-  selector: 'app-map-view',
+  selector: 'map-view',
   templateUrl: './map-view.component.html',
   styleUrls: ['./map-view.component.css']
 })

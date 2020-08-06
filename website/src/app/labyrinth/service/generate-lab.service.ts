@@ -4,7 +4,7 @@ import {Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {Router} from "@angular/router";
 // @ts-ignore
 import gameRules from 'gameRules';
-import { kotlinProxyToJsView } from '../../utils/util.js'
+import { kotlinProxyToJsView } from '../../utils/kotlinUtils.js'
 
 import {CharacterRenderData} from "../../characterEditor/character-render.service";
 import {DataStorageService} from "./data-storage.service";

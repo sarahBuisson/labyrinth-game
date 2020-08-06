@@ -1,30 +1,30 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LabyrinthFormComponent } from './labyrinth-form.component';
+import { NewLabyrinthFormComponent } from './new-labyrinth-form.component';
 import {Router, Routes} from "@angular/router";
-import {LabyrinthGameComponent} from "../labyrinth-game/labyrinth-game.component";
+import {LabyrinthGameComponent} from "../game-view/labyrinth-game.component";
 import {RouterTestingModule} from "@angular/router/testing";
 import {Location} from "@angular/common";
 
 describe('LabyrinthFormComponent', () => {
-  let component: LabyrinthFormComponent;
-  let fixture: ComponentFixture<LabyrinthFormComponent>;
+  let component: NewLabyrinthFormComponent;
+  let fixture: ComponentFixture<NewLabyrinthFormComponent>;
   let router: Router;
 
   beforeEach(async(() => {
     const routes: Routes = [
       {path: '', redirectTo: 'home', pathMatch: 'full'},
-      {path: 'labForm', component: LabyrinthFormComponent},
+      {path: 'labForm', component: NewLabyrinthFormComponent},
       {path: 'labGame', component: LabyrinthGameComponent}
     ];
     TestBed.configureTestingModule({
-      declarations: [LabyrinthFormComponent],
+      declarations: [NewLabyrinthFormComponent],
       imports: [RouterTestingModule.withRoutes(routes)],
     })
       .compileComponents();
     router = TestBed.get(Router);
     location = TestBed.get(Location);
-    fixture = TestBed.createComponent(LabyrinthFormComponent);
+    fixture = TestBed.createComponent(NewLabyrinthFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
     router.initialNavigation();

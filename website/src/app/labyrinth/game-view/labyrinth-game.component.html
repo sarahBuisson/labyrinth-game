@@ -16,10 +16,10 @@
 <div class="container" *ngIf="currentPartyProxy">
 
   <div class="mainArea">
-    <app-level-view [currentPartieProxy]="currentPartyProxy"
-                    [rangeArroundPlayer]="1" class="level"
-                    [characterRenderData]="currentCharacterRenderData"
-    ></app-level-view>
+    <level-view [currentPartieProxy]="currentPartyProxy"
+                [rangeArroundPlayer]="1" class="level"
+                [characterRenderData]="currentCharacterRenderData"
+    ></level-view>
   </div>
   <div class="sidebar">
     <app-sliding
@@ -33,14 +33,14 @@
       [onlyOnClick]="true"
       style="background-color:red; overflow: hidden;"
     >
-      <app-map-view [currentPartieProxy]="currentPartyProxy"
-                    [renderService]="mapRenderService"
-      ></app-map-view>
+      <map-view [currentPartieProxy]="currentPartyProxy"
+                [renderService]="mapRenderService"
+      ></map-view>
     </app-sliding>
   </div>
   <div class="toolbar">
     <div class="gameplay">
-    <app-keypad></app-keypad>
+    <keypad-form></keypad-form>
     </div>
     <app-ascii class="character">{{fullViewRenderService.renderPlayer(this.currentCharacterRenderData)}}</app-ascii>
     <div class="inventoryArea">
@@ -49,7 +49,7 @@
         [openData]="{top:'50%', transform:'translateY(-50%)', position:'absolute'}"
         [closeData]="{top:'100%', transform:'translateY(-40px)', position:'absolute'}"
       >
-        <app-inventory [player]="this.currentPartyProxy.player"></app-inventory>
+        <inventory-view [player]="this.currentPartyProxy.player"></inventory-view>
       </app-sliding>
     </div>
   </div>

@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 // @ts-ignore
 import gameRules from 'gameRules';
-import {getFromKotlin, getJsViewFromKotlin, kotlinProxyToJsView} from '../utils/util.js'
+import {getFromKotlin, getJsViewFromKotlin, kotlinProxyToJsView} from './kotlinUtils.js'
 let labeatGeneration = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat.generation);
 describe('test kotlin to JsView', () => {
 

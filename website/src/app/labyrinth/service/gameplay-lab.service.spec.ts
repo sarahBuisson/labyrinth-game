@@ -4,8 +4,8 @@ import { GameplayLabService } from './gameplay-lab.service';
 import {GenerateLabService} from "./generate-lab.service";
 import {Location} from "@angular/common";
 import {Router, Routes} from "@angular/router";
-import {LabyrinthFormComponent} from "../labyrinth-form/labyrinth-form.component";
-import {LabyrinthGameComponent} from "../labyrinth-game/labyrinth-game.component";
+import {NewLabyrinthFormComponent} from "../new-form/new-labyrinth-form.component";
+import {LabyrinthGameComponent} from "../game-view/labyrinth-game.component";
 import {RouterTestingModule} from "@angular/router/testing";
 
 describe('GameplayLabService', () => {
@@ -17,7 +17,7 @@ describe('GameplayLabService', () => {
   beforeEach(() => {
     const routes: Routes = [
       {path: '', redirectTo: 'home', pathMatch: 'full'},
-      { path: 'labForm', component: LabyrinthFormComponent },
+      { path: 'labForm', component: NewLabyrinthFormComponent },
       { path: 'labGame', component: LabyrinthGameComponent }
     ];
     TestBed.configureTestingModule({

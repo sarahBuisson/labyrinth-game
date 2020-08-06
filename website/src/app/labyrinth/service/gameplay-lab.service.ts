@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {GenerateLabService} from "./generate-lab.service";
-import {getJsViewFromKotlin, kotlinProxyToJsView} from "../../utils/util";
+import {getJsViewFromKotlin, kotlinProxyToJsView} from "../../utils/kotlinUtils";
 // @ts-ignore
 import gameRules from "gameRules";
 import {DataStorageService} from "./data-storage.service";
