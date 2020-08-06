@@ -3,7 +3,7 @@ import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.servic
 import {AsciiRenderService} from "./ascii-render.service";
 import {GenerateLabService} from "../generate-lab.service";
 import {CharacterRenderService, CharacterRenderData} from "../../../characterEditor/character-render.service";
-import {exitTemplate, startTemplate} from "./resources/view";
+import {exitTemplate, startTemplate} from "./resources/border";
 
 @Injectable({
   providedIn: 'root'

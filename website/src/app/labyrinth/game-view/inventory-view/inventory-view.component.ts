@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {bagGridTemplate} from "../../service/render/resources/view";
+import {bagGridTemplate} from "../../service/render/resources/border";
 import {FullsizeAsciiRenderService} from "../../service/render/fullsize-ascii-render.service";
 
 @Component({

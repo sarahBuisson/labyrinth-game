@@ -8,7 +8,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import {defaultGridTemplate} from "../../../labyrinth/service/render/resources/view";
+import {defaultGridTemplate} from "../../../labyrinth/service/render/resources/border";
 
 @Component({
   selector: 'ascii-div',

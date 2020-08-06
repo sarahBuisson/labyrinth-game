@@ -4,7 +4,7 @@ import {
   viewCloseDoorGridTemplate, viewEmptyZoneGridTemplate,
   viewOpenDoorGridTemplate,
   viewWallGridTemplate
-} from "../../service/render/resources/view";
+} from "../../service/render/resources/border";
 import {GameplayLabService} from "../../service/gameplay-lab.service";
 import {FullsizeAsciiRenderService} from "../../service/render/fullsize-ascii-render.service";
 

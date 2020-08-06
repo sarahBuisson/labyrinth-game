@@ -8,13 +8,15 @@ import {AsciiHardDivComponent} from "../../../utils/ascii/ascii-hard-div/ascii-h
 import {AppModule} from "../../../app.module";
 import {AsciiComponent} from "../../../utils/ascii/component/ascii.component";
 import {AsciiOnGridDivComponent} from "../../../utils/ascii/ascii-on-grid-div/ascii-on-grid-div.component";
-import {Router} from "@angular/router";
+import {Router, RouterModule} from "@angular/router";
 import {AppRoutingModule} from "../../../app-routing.module";
 import {CharacterFormComponent} from "../../../characterEditor/character-form/character-form.component";
 import {NewLabyrinthFormComponent} from "../../new-form/new-labyrinth-form.component";
 import {LabyrinthGameModule} from "../labyrinth-game.module";
 import {AsciiModule} from "../../../utils/ascii/ascii.module";
 import {MenuComponent} from "../../menu/menu.component";
+import {Component} from "@angular/core";
+import {APP_BASE_HREF} from "@angular/common";
 
 
 /*
@@ -37,23 +39,36 @@ export default {
   title: 'LevelViewComponent',
   component: LevelViewComponent,
 };
+
+@Component({
+  selector: 'router-outlet',
+  template: `
+    <div>
+    routeroutlet </div>
+  `,
+})
+class RouterOutletMockComponent {}
 export const Default = () => ({
   component: LevelViewComponent,
   moduleMetadata: {
     declarations: [
       NewLabyrinthFormComponent,
       CharacterFormComponent,
-      MenuComponent], // Removed if no template
+      MenuComponent,
+      RouterOutletMockComponent],  // Removed if no template
     imports: [
       BrowserAnimationsModule,
       AppRoutingModule,
+      RouterModule.forRoot([{
+        path: '*',
+        component: RouterOutletMockComponent
+      }]),
       LabyrinthGameModule,
       AsciiModule],
-    providers: []
+    providers: [   { provide: APP_BASE_HREF, useValue: '/' },]
   },
 
   template: `<div style="background: red">
-level
 <level-view>
   </level-view></div> `,
   props: {
