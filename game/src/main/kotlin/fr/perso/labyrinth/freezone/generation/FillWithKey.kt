@@ -1,7 +1,6 @@
 package fr.perso.labyrinth.freezone.generation
 
-import fr.perso.labyrinth.ConnectedZone
-import fr.perso.labyrinth.board.algorithm.dataMap.distanceMap
+import fr.perso.labyrinth.toolbox.model.ConnectedZone
 import fr.perso.labyrinth.freezone.model.ObjectZone
 import org.jeasy.rules.api.Condition
 
@@ -10,7 +9,7 @@ fun extractPathFromTo(start: ConnectedZone, exit: ConnectedZone): List<Connected
     throw NotImplementedError()
 }
 
-fun findBestPlaceToHideKey(doorZone: ConnectedZone, closedZone: ConnectedZone, filters:List<(ConnectedZone) -> kotlin.Boolean> ):ConnectedZone
+fun findBestPlaceToHideKey(doorZone: ConnectedZone, closedZone: ConnectedZone, filters:List<(ConnectedZone) -> kotlin.Boolean> ): ConnectedZone
 {
     throw NotImplementedError()
 }

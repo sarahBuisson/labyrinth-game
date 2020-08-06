@@ -9,8 +9,8 @@ import { kotlinProxyToJsView } from '../../utils/util.js'
 import {CharacterRenderData} from "../../characterEditor/character-render.service";
 import {DataStorageService} from "./data-storage.service";
 
-let composite = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board.algorithm.composite, 0, false);
-
+let labeatGeneration = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat.generation, 0, false);
+console.log(labeatGeneration)
 @Injectable({
   providedIn: 'root'
 })
@@ -22,14 +22,14 @@ export class GenerateLabService {
 
 
   generate(size, playerName: string): void {
-    let party = composite.initPartieMapLabWithKeyFunction(size, playerName) //composite.initPartieCompositeLabWithKeyFunction(size)
+    let party = labeatGeneration.initPartieMapLabWithKeyFunction(size, playerName) //labeatGeneration.initPartieCompositeLabWithKeyFunction(size)
     this.dataStorageService.saveParty(party)
 
 
   }
 
   generateEmpty(size): void {
-    let party = {level: composite.connectAllZoneOfBoard(composite.generateEmptyBoardFunction(size))}
+    let party = {level: labeatGeneration.connectAllZoneOfBoard(labeatGeneration.generateEmptyBoardFunction(size))}
     this.dataStorageService.saveParty(party)
     this.router.navigateByUrl('/labyrinthGame');
   }

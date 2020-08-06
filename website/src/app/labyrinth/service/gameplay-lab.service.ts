@@ -5,7 +5,7 @@ import {getJsViewFromKotlin, kotlinProxyToJsView} from "../../utils/util";
 import gameRules from "gameRules";
 import {DataStorageService} from "./data-storage.service";
 import findKey from 'lodash/findKey';
-let gameplay = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.freezone.gameplay, 0, false);
+let gameplay = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat, 0, false);
 
 @Injectable({
   providedIn: 'root'

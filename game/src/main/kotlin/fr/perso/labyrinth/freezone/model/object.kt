@@ -1,6 +1,6 @@
 package fr.perso.labyrinth.freezone.model
 
-import fr.perso.labyrinth.ConnectedZone
+import fr.perso.labyrinth.toolbox.model.ConnectedZone
 
 
 open class ObjectZone(open var name: String, open var type: String?=null) {

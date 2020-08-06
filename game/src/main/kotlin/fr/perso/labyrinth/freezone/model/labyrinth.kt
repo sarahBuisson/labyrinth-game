@@ -1,8 +1,8 @@
 package fr.perso.labyrinth.freezone.model
 
-import fr.perso.labyrinth.ConnectedZone
-import fr.perso.labyrinth.GeoZone
-import fr.perso.labyrinth.NamedZone
+import fr.perso.labyrinth.toolbox.model.ConnectedZone
+import fr.perso.labyrinth.toolbox.model.GeoZone
+import fr.perso.labyrinth.toolbox.model.NamedZone
 
 var index = 0
 

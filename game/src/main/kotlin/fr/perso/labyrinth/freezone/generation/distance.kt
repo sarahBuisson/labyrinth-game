@@ -1,7 +1,7 @@
 package fr.perso.labyrinth.freezone.generation
 
-import fr.perso.labyrinth.ConnectedZone
-import fr.perso.labyrinth.board.algorithm.followCorridor
+import fr.perso.labyrinth.toolbox.model.ConnectedZone
+import fr.perso.labyrinth.toolbox.algorithm.followCorridor
 
 
 fun distanceToZone(

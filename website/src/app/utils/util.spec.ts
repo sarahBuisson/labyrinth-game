@@ -2,22 +2,20 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 // @ts-ignore
 import gameRules from 'gameRules';
 import {getFromKotlin, getJsViewFromKotlin, kotlinProxyToJsView} from '../utils/util.js'
-
+let labeatGeneration = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat.generation);
 describe('test kotlin to JsView', () => {
 
   it("should parse methods of package", () => {
 
-    let composite = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board.algorithm.composite);
-    expect(composite.LevelBoard).toBeDefined();
-    expect(composite.generateCompositeFunction).toBeDefined();
+
+    expect(labeatGeneration.LevelBoard).toBeDefined();
+    expect(labeatGeneration.generateCompositeFunction).toBeDefined();
   });
 
   it('should parse array, method and map ', () => {
 
-    let composite = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board.algorithm.composite, 0, false);
-
-    let level = composite.generateEmptyBoardFunction(5);
-    let board = composite.connectAllZoneOfBoardFunction(level)
+    let level = labeatGeneration.generateEmptyBoardFunction(5);
+    let board = labeatGeneration.connectAllZoneOfBoardFunction(level)
 
     let boardView = kotlinProxyToJsView(board, 4, true)
     expect(boardView.contentArray).toBeDefined();
@@ -26,16 +24,14 @@ describe('test kotlin to JsView', () => {
   });
 
   it('should parse array, method and map of partie', () => {
-    let composite = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board.algorithm.composite, 0, false);
-    let partie = composite.initPartieCompositeFunction(3);
+    let partie = labeatGeneration.initPartieCompositeFunction(3);
     let partieView = kotlinProxyToJsView(partie, 7, true);
 
     expect(partieView.level.contentArray[0][0].connectionsMap).toBeDefined();
   });
 
   it('should get array, method and map of partie', () => {
-    let composite = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board.algorithm.composite, 0, false);
-    let partie = composite.initPartieCompositeFunction(3);
+    let partie = labeatGeneration.initPartieCompositeFunction(3);
 
     let zone =getFromKotlin(partie,"level","content",0,0)
     expect(zone).toBeDefined()
@@ -47,8 +43,7 @@ describe('test kotlin to JsView', () => {
 
 
   it('should get proxyarray, method and map of partie', () => {
-    let composite = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.board.algorithm.composite, 0, false);
-    let partie = composite.initPartieCompositeFunction(3);
+    let partie = labeatGeneration.initPartieCompositeFunction(3);
 
 
     let zone2 =getJsViewFromKotlin(partie,"level","content",0,0)
@@ -59,10 +54,9 @@ describe('test kotlin to JsView', () => {
 
 
   it('call without proxy', () => {
-    let composite = gameRules.fr.perso.labyrinth.board.algorithm.composite
     // @ts-ignore
-    let method = Object.getOwnPropertyNames(composite).filter(it => it.startsWith("initPartieComposite"))
-    let r = composite[method].call(5)
+    let method = Object.getOwnPropertyNames(labeatGeneration).filter(it => it.startsWith("initPartieComposite"))
+    let r = labeatGeneration[method].call(5)
     //  expect(partie.level.contentArray[0][0].connectionsMap).toBeDefined();
   });
 });
