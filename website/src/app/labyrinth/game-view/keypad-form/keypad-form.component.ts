@@ -21,7 +21,6 @@ export class KeypadFormComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   handleKey(event: KeyboardEvent) {
-    console.log(event.key)
     if (event.key === 'Enter') {
       this.gameplayLabService.takeAll();
     }

@@ -36,13 +36,13 @@ a-±
  
  
  [X] give render to object in pocket
- [ ] affichage bug in the loading lab screen
+ [X] affichage bug in the loading lab screen
  [X] perf issue for big lab
  [X] end game screen
  
  V1.5 : avant de la montrer
- [ ] refacto back
- [ ] refacto front
+ [X] refacto back
+ [X] refacto front
  [ ] score stocké dans les cookies
  [ ] meilleur positionnement UI
  [ ] meilleur couleur UI

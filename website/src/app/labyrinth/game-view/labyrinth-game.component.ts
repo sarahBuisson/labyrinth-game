@@ -13,6 +13,7 @@ import {GameplayLabService} from "../service/gameplay-lab.service";
 import {AsciiModalComponent} from "../../utils/ascii/ascii-modal/ascii-modal.component";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
+import {SoundService} from "../service/sound.service";
 
 @Component({
   selector: 'app-labyrinth-game',
@@ -35,12 +36,13 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
               private gameplayLabService:GameplayLabService,
               public fullViewRenderService: FullsizeAsciiRenderService,
               public mapRenderService: MapAsciiRenderService,
-              private router:Router) {
+              private router:Router, private soundService:SoundService) {
   }
 
   ngOnInit(): void {
     this.subscribeCurrentParty()
     this.subscribeCharacterData()
+    this.soundService.playGameMusic()
   }
 
   subscribeCurrentParty(): any {

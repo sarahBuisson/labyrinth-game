@@ -5,6 +5,8 @@ import {getJsViewFromKotlin, kotlinProxyToJsView} from "../../utils/kotlinUtils"
 import gameRules from "gameRules";
 import {DataStorageService} from "./data-storage.service";
 import findKey from 'lodash/findKey';
+import {SoundService} from "./sound.service";
+
 let gameplay = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat, 0, false);
 
 @Injectable({
@@ -13,7 +15,7 @@ let gameplay = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat, 0, false
 export class GameplayLabService {
   currentParty: any;
 
-  constructor(private serviceLabService: GenerateLabService, private dataStorageService: DataStorageService) {
+  constructor(private serviceLabService: GenerateLabService, private dataStorageService: DataStorageService, private soundService: SoundService) {
     dataStorageService.getCurrentParty().subscribe((party) => {
       this.currentParty = party;
     })
@@ -29,6 +31,9 @@ export class GameplayLabService {
         .find(it => it.destination && it.destination.x === nextLocation.x && it.destination.y === nextLocation.y)
       if (door) {
         this.play(door)
+        this.soundService.playMove()
+      } else {
+        this.soundService.playNo()
       }
       return true;
     }
@@ -39,12 +44,14 @@ export class GameplayLabService {
       .filter(it => it.name === objToTake.name)
       .forEach((it) => this.play(it))
 
+    this.soundService.playTake()
   }
 
   takeAll() {
     getJsViewFromKotlin(this.currentParty, "player", "location", "content")
       .filter(it => it.destination === undefined)
       .forEach((it) => this.play(it))
+    this.soundService.playTake()
   }
 
   private play(obj): void {

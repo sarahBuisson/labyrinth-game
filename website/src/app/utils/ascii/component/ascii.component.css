@@ -1,6 +1,8 @@
 pre {
   margin: 0px;
   display: inline-block;
+  font-family: Arial, Helvetica, sans-serif, monospace;
+
 }
 .asciiHighlight{
   color:black;
@@ -29,4 +31,11 @@ pre {
 /* Show the tooltip text when you mouse over the tooltip container */
 .withtooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+::ng-deep.asciiArt{
+  display: block;
+  font-family: Arial, Helvetica, sans-serif, monospace;
+  white-space: pre;
+  color:gray;
 }

@@ -34,8 +34,6 @@ function generateDefaultParams(dataName) {
     tokenStyle['' + dataName + '' + key] = defaultData[key]
   }
 
-  console.log("generatedefaultParams")
-  console.log(tokenStyle)
   return tokenStyle
 }
 
@@ -94,7 +92,6 @@ export class SlidingComponent implements OnInit, OnChanges {
   }
 
   onAnimationEvent($event: any) {
-    console.log("move" + $event.fromState)
   }
 
   generateParams() {

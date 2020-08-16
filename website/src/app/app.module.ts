@@ -11,6 +11,7 @@ import {MenuComponent} from './labyrinth/menu/menu.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AsciiModule} from "./utils/ascii/ascii.module";
 import {LabyrinthGameModule} from "./labyrinth/game-view/labyrinth-game.module";
+import { SoundComponent } from './utils/ui/atom/sound/sound.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {LabyrinthGameModule} from "./labyrinth/game-view/labyrinth-game.module";
     CharacterFormComponent,
     NewLabyrinthFormComponent,
     MenuComponent,
+    SoundComponent,
   ],
   imports: [
     BrowserModule,

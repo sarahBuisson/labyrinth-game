@@ -12,7 +12,7 @@
 <app-ascii-modal #loadingModal
                  (click)="clickDuringLoading()"   >
 
-  <ascii-hard-div>
+  <ascii-div>
     <ascii-div> Labyrinth generating ...</ascii-div><br/>
     <ascii-div>Do you know it ? ({{currentLoadingMessage}})</ascii-div><br/>
 
@@ -50,6 +50,6 @@
 
     <ascii-div *ngIf="currentLoadingMessage===5">All labyrinths always have a solution
     </ascii-div>
-  </ascii-hard-div>
+  </ascii-div>
 </app-ascii-modal>
 

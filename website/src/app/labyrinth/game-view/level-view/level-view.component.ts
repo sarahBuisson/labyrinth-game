@@ -140,7 +140,6 @@ export class LevelViewComponent implements OnInit, OnChanges {
     let dy = y + this.currentPartieProxy.player.location.y
 
     let index = (dx + dy) % 5;
-    console.log(index)
     return viewEmptyZoneGridTemplates[index];
   }
 }

@@ -8,3 +8,11 @@
   grid-template-columns: repeat(13, 8px);
   grid-template-rows: repeat(auto-fill, 15px);
 }
+
+::ng-deep .inventory .border {
+  color: lightgray
+}
+
+::ng-deep .inventoryContent {
+  color: black
+}

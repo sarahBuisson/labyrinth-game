@@ -10,7 +10,6 @@ import {CharacterRenderData} from "../../characterEditor/character-render.servic
 import {DataStorageService} from "./data-storage.service";
 
 let labeatGeneration = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat.generation, 0, false);
-console.log(labeatGeneration)
 @Injectable({
   providedIn: 'root'
 })
