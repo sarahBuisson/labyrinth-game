@@ -5,7 +5,7 @@ import {getJsViewFromKotlin, kotlinProxyToJsView} from "../../utils/kotlinUtils"
 import gameRules from "gameRules";
 import {DataStorageService} from "./data-storage.service";
 import findKey from 'lodash/findKey';
-import {SoundService} from "./sound.service";
+import {SoundService} from "./sound/sound.service";
 
 let gameplay = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat, 0, false);
 
@@ -23,15 +23,17 @@ export class GameplayLabService {
 
 
   move(direction: string) {
-
+    console.log("move")
     let connections = getJsViewFromKotlin(this.currentParty, "player", "location", "connections")
     let nextLocation = connections[direction];
     if (nextLocation) {
       let door = getJsViewFromKotlin(this.currentParty, "player", "location", "content")
         .find(it => it.destination && it.destination.x === nextLocation.x && it.destination.y === nextLocation.y)
-      if (door) {
+      if (door) {console.log("bf")
         this.play(door)
+        console.log("af")
         this.soundService.playMove()
+        console.log("zf")
       } else {
         this.soundService.playNo()
       }

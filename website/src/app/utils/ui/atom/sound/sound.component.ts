@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {SoundService} from "../../../../labyrinth/service/sound.service";
+import {SoundService} from "../../../../labyrinth/service/sound/sound.service";
 import {Subscription} from "rxjs";
 
 @Component({
@@ -29,6 +29,7 @@ export class SoundComponent implements OnInit, OnDestroy {
   }
 
   toogle() {
+    console.log("tt")
     this.soundService.toogleSound();
   }
 }

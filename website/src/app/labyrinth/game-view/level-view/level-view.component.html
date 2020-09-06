@@ -8,7 +8,7 @@
         <ascii-hard-div
           [borderDatas]="borderRendered(levelCaseInput)"
           [onClick]="manageClick(levelCaseInput)"
-          (click)="clickOnZone(levelCaseInput)"
+          (click)="clickOnZone(levelCaseInput, $event)"
         >
           <div class="zoneContent">
             <app-ascii-on-grid-div *ngFor="let obj of this.gameplayLabService.levelContent(levelCaseInput)"  [ngClass]="'room'">

@@ -13,7 +13,7 @@ import {GameplayLabService} from "../service/gameplay-lab.service";
 import {AsciiModalComponent} from "../../utils/ascii/ascii-modal/ascii-modal.component";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
-import {SoundService} from "../service/sound.service";
+import {SoundService} from "../service/sound/sound.service";
 
 @Component({
   selector: 'app-labyrinth-game',

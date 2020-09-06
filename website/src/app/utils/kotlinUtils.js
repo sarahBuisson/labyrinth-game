@@ -153,3 +153,4 @@ export function getFromKotlin(instance, ...path) {
     }
   }
 }
+export var SampleLibrary = {}

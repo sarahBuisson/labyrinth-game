@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {AsciiModalComponent} from "../../utils/ascii/ascii-modal/ascii-modal.component";
 import {HighscoresService} from "../service/highscores.service";
 import {Subscription} from "rxjs";
-import {SoundService} from "../service/sound.service";
+import {SoundService} from "../service/sound/sound.service";
 
 @Component({
   selector: 'app-menu',
@@ -29,9 +29,11 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   clickNew() {
-
+    this.soundService.playMove()
     this.newFormModal.show()
-  }  clickCharacter() {
+  }
+
+  clickCharacter() {
     this.characterFormModal.show()
   }
 

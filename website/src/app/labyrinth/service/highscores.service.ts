@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {take} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
-export class HighscoresService {
+export class HighscoresService  {
 
   constructor(private http: HttpClient) {
   }
@@ -30,6 +30,5 @@ export class HighscoresService {
   public getScores() {
     return this.http.get("http://sarahbuisson-server-sample.herokuapp.com/scores");
   }
-
 
 }
