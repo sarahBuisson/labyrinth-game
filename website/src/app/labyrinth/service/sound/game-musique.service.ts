@@ -199,6 +199,15 @@ export class GameMusiqueService {
   }
 
 
+  moveMusic() {
+    return [new Note("D3", "8n"),new Note("E3", "8n"),new Note("D3", "8n"),new Note("E3", "8n")];
+  }  noMusic() {
+    return [new Note("C3", "8n"),new Note("B3", "8n")];
+  }
+
+  takeMusic() {
+    return  [new Note("C3", "8n"),new Note("E3", "8n"),new Note("G3", "8n")];;
+  }
 }
 
 
