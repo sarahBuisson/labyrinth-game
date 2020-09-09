@@ -29,7 +29,6 @@ export class SoundComponent implements OnInit, OnDestroy {
   }
 
   toogle() {
-    console.log("tt")
     this.soundService.toogleSound();
   }
 }

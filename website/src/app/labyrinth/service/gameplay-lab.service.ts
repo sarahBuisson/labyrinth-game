@@ -23,17 +23,14 @@ export class GameplayLabService {
 
 
   move(direction: string) {
-    console.log("move")
     let connections = getJsViewFromKotlin(this.currentParty, "player", "location", "connections")
     let nextLocation = connections[direction];
     if (nextLocation) {
       let door = getJsViewFromKotlin(this.currentParty, "player", "location", "content")
         .find(it => it.destination && it.destination.x === nextLocation.x && it.destination.y === nextLocation.y)
-      if (door) {console.log("bf")
+      if (door) {
         this.play(door)
-        console.log("af")
         this.soundService.playMove()
-        console.log("zf")
       } else {
         this.soundService.playNo()
       }

@@ -76,9 +76,6 @@ export class SoundService implements OnDestroy {
     this.soundInstrument = new tone.Synth();
     this.ambiantInstrument.toDestination();
     this.soundInstrument.toDestination();
-    console.log("wait audio to be ready")
-
-    console.log("try generate  musics")
     this.tryNTimes(5, () => {
       if (!this.menuMusic)
         this.menuMusic = createLoop(this.ambiantInstrument, this.gameMusiqueService.menuMusicRandom());

@@ -76,9 +76,6 @@ export class GameMusiqueService {
 
 
     let firstNoteTheme = randomFromArray(mainNotes.slice(0, 4))
-    console.log(mainNotes)
-    console.log(mainNotes.slice(0, 4))
-    console.log(firstNoteTheme)
     let mainTheme = fillPatternWithNoteDescendantes(firstNoteTheme, mainRhytme, mainNotes, chooseNoteWhoRespect);
 
 
@@ -120,7 +117,6 @@ export class GameMusiqueService {
 
     let firstNoteTheme = randomFromArray(mainNotes.slice(0, 3))
 
-    console.log(firstNoteTheme)
     let lastNotePreviousPattern = firstNoteTheme
     let mainThemePart1;
     try {
@@ -158,40 +154,27 @@ export class GameMusiqueService {
       return newPattern;
 
     });
-    console.log("(mainThemePart1)")
-    console.log((mainThemePart1))
-    console.log("(mainThemePart2)")
-    console.log((mainThemePart2))
 
 
     let mainTheme = mainThemePart1.concat(mainThemePart2)
     let mainThemeNotes = flatPartition(mainTheme).map(n => n.tune);
-    console.log(mainThemeNotes)
+
 
     let intro = fillWithNotesRespecting(getSuroundingTunes(mainThemePart1[0].map(n => n.tune)), mainRhytmePart2, randomFromArray(mainThemeNotes), [isInIntervalDegres(-3, 3)]);
     insertDisconnanceAndResolutionAtEnd(flatPartition(intro), mainNotes, chooseNoteWhoRespect)
     let flatIntro = flatPartition(intro);
-    console.log("intro" + flatIntro)
 
 
     let noteForVariation = getSuroundingTunes((last(mainThemePart1) as Array<Note>).map(n => n.tune))
     let variation1 = shuffle(mainThemePart2).map(pattern => fillWithRandomNote(flatPartition(pattern).map(n => n.value), noteForVariation))
-    console.log("variation1" + variation1)
-    let lastnoteV1 = last(flatPartition(variation1).map(n => n.tune))
-    let firstnoteV1 = flatPartition(variation1)[0].tune
+
     let variation2 = (shuffle(variation1))
-    console.log("variations")
-    console.log(flatPartition(mainThemePart2))
-    console.log(flatPartition(shuffle(mainThemePart2)))
-    console.log(flatPartition(variation1))
-    console.log(flatPartition(variation2))
 
 
     let conclusion = fillWithNotesRespecting(mainThemeNotes, mainRhytmePart2, last(flatPartition(variation2)).tune, [isConsonnanteOf, isDiffOf]);
-    console.log("conclusion" + conclusion)
+
 
     let form = [intro, mainThemePart1, mainThemePart2, mainThemePart1, variation1, mainThemePart1, variation2, mainThemePart1, mainThemePart2, conclusion]
-    console.log([intro, mainThemePart1, mainThemePart2, variation1, mainTheme, variation2, mainTheme, conclusion])
 
 
     return form
