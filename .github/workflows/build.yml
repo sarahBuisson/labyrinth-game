@@ -24,7 +24,7 @@ jobs:
               -Dartifact=org.jeasy:easy-rules-core-npm:3.2.4-snapshot
           mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.2:get \
               -DremoteRepositories=https://packagecloud.io/sarahBuisson/snapshot/maven2/ \
-              -Dartifact=org.jeasy:easy-rules-core-api:3.2.4-snapshot
+              -Dartifact=org.jeasy:easy-rules-api-npm:3.2.4-snapshot
 
           cd website
           npm install -g @angular/cli
