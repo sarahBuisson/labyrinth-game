@@ -78,12 +78,12 @@ export class SoundService implements OnDestroy {
     this.soundInstrument.toDestination();
     this.tryNTimes(5, () => {
       if (!this.menuMusic)
-        this.menuMusic = createLoop(this.ambiantInstrument, this.gameMusiqueService.menuMusicRandom());
+        this.menuMusic = createLoop(this.ambiantInstrument, this.gameMusiqueService.menuMusicRandom(), 1.3);
     });
 
     this.tryNTimes(5, () => {
       if (!this.gameMusic)
-        this.gameMusic = createLoop(this.ambiantInstrument, this.gameMusiqueService.gameMusicRandom());
+        this.gameMusic = createLoop(this.ambiantInstrument, this.gameMusiqueService.gameMusicRandom(), 0.8);
     });
 
 
@@ -172,8 +172,8 @@ export class SoundService implements OnDestroy {
   }
 }
 
-export function createLoop(instrument, partition: Array<any>) {
-  let tempo = 1.2;
+export function createLoop(instrument, partition: Array<any>, tempo) {
+
   let flatpartition = CompositionUtils.flatPartition(partition)
   let timeC = 0;
 
@@ -192,7 +192,7 @@ export function play(instrument, partition: Array<any>, tempo = 1) {
   instrument.toDestination()
   for (let i = 0; i < 1; i++) {
     flatpartition.forEach((n) => {
-      now = playNote(instrument, n, now)
+      now = playNote(instrument, n, now, tempo)
     })
   }
 }
