@@ -17,7 +17,7 @@ jobs:
       - name: Build back
         run: |
           gradle build --stacktrace
-      - name: Build front load dep
+      - name: Download front dependancies
         run: |
           mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.2:get \
               -DremoteRepositories=https://packagecloud.io/sarahBuisson/snapshot/maven2/ \
@@ -29,13 +29,20 @@ jobs:
           cd website
           npm install -g @angular/cli
           npm install -g angular-cli-ghpages
+          npm install tone
           yarn install
-
+      - name: list front dependancies downloaded
+          run: |
+          cd website
           echo "npm package installed:"
-          find ./node_modules -type f -name 'package.json'
+          find ./node_modules -type f -name 'package.json' |sort
           echo "npm package installed in gamRules:"
-          find ./node_modules/gameRules -type f -name 'package.json'
-
+          find ./node_modules/gameRules -type f -name 'package.json' |sort
+          ls -lrt ./node_modules/tone
+          ls -lrt ./node_modules/tone/build
+      - name: Build front
+        run: |
+          cd website
           ng build --base-href /labyrinth-game/
           ls dist
           cp ./dist/website-angular/index.html ./dist/website-angular/404.html
