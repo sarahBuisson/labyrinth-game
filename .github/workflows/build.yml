@@ -43,7 +43,7 @@ jobs:
       - name: Build front
         run: |
           cd website
-          ng build --base-href /labyrinth-game/
+          ng build --base-href /labyrinth-game/ 2> /dev/null
           ls dist
           cp ./dist/website-angular/index.html ./dist/website-angular/404.html
       - name: extract build version
