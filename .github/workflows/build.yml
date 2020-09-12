@@ -32,7 +32,7 @@ jobs:
           npm install tone
           yarn install
       - name: list front dependancies downloaded
-          run: |
+        run: |
           cd website
           echo "npm package installed:"
           find ./node_modules -type f -name 'package.json' |sort
