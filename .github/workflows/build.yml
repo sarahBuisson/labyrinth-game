@@ -30,6 +30,12 @@ jobs:
           npm install -g @angular/cli
           npm install -g angular-cli-ghpages
           yarn install
+
+          echo "npm package installed:"
+          find ./node_modules -type f -name 'package.json'
+          echo "npm package installed in gamRules:"
+          find ./node_modules/gameRules -type f -name 'package.json'
+
           ng build --base-href /labyrinth-game/
           ls dist
           cp ./dist/website-angular/index.html ./dist/website-angular/404.html
