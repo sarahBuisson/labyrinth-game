@@ -1,4 +1,5 @@
 <div (click)="toogle()">
-  <app-ascii *ngIf="soundOn" tooltip="toggle sound" >°c° < ))) </app-ascii>
-  <app-ascii *ngIf="!soundOn" tooltip="toggle sound">°X° < X </app-ascii>
+  <app-ascii *ngIf="soundOn" tooltip="mute" [content]="'          __ \n°c° < d d '" >
+  </app-ascii>
+  <app-ascii *ngIf="!soundOn" tooltip="sound"  [content]="'             \n°_°          '">     </app-ascii>
 </div>
