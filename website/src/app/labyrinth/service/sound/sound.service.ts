@@ -3,11 +3,12 @@ import {BehaviorSubject, Subject, Subscription} from "rxjs";
 import {scan} from "rxjs/operators";
 import {GameMusiqueService} from "./game-musique.service";
 
-import * as tone from "tone/build/tone.js";
+import * as tone from "tone";
 import * as CompositionUtils from "music-generator/dist/compositionUtils"
 import * as rhytmeUtils from "music-generator/dist/rhythmUtils"
 import {flatPartition} from "music-generator/dist/compositionUtils";
 import {instrumentSamples, playNote} from "music-generator/dist/instrumentUtils";
+import {Note} from "music-generator";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,6 @@ export class SoundService implements OnDestroy {
 
     } else {
       console.warn("unmute")
-      tone.mute = false;
       tone.Destination.mute = false;
     }
     this.soundOn = soundOn;
@@ -177,7 +177,7 @@ export function createLoop(instrument, partition: Array<any>) {
   let flatpartition = CompositionUtils.flatPartition(partition)
   let timeC = 0;
 
-  return new tone.Part((time, note) => {
+  return new tone.Part((time, note: Note) => {
     let decalage = rhytmeUtils.duration(note.value) * tempo;
     instrument.triggerAttackRelease(note.tune, note.value, "+" + timeC)
     timeC += decalage
