@@ -13,5 +13,5 @@ fun initPartieMapLabWithKey(size: Int = 5, playerName: String = "AFGNCAAP" ): Pa
     player.location.content.add(player)
     lab.start.content.add(ObjectZone("start"))
     lab.exit.content.add(ObjectZone("exit"))
-    return Partie(Player(lab.start), lab)
+    return Partie(player, lab)
 }

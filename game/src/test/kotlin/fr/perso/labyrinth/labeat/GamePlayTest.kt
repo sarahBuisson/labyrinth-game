@@ -1,7 +1,10 @@
 package fr.perso.labyrinth.labeat
 
+import fr.perso.labyrinth.freezone.model.DoorObjectZone
 import fr.perso.labyrinth.labeat.generation.initPartieMapLabWithKey
 import org.junit.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertNotEquals
 
 class GamePlayTest {
 
@@ -32,5 +35,23 @@ class GamePlayTest {
             println(partie.player.inventory.map { it.name })
             throw e;
         }
+    }
+
+
+
+    @Test
+    fun shouldStillBeingAbleToMoveAfterTakingStart() {
+        val partie = initPartieMapLabWithKey()
+        println(partie.player.location)
+        val startLocation = partie.player.location
+        val startFlag = startLocation.content.first({ it.name == "start" })
+        playerInteractWith(partie, startFlag);
+        val door = partie.player.location.content.first({ it is DoorObjectZone })
+        playerInteractWith(partie, door);
+
+
+        assertNotEquals(partie.player.location, startLocation)
+        assertFalse(startLocation.content.contains(partie.player))
+        assert(partie.player.location.content.contains(partie.player))
     }
 }
