@@ -6,10 +6,9 @@ import {LabyrinthGameComponent} from "./labyrinth/game-view/labyrinth-game.compo
 import {MenuComponent} from "./labyrinth/menu/menu.component";
 
 const routes: Routes = [{path: 'character', component: CharacterFormComponent},
-  {path: 'newLabyrinth', component: NewLabyrinthFormComponent},
-  {path: 'labyrinthForm', component: NewLabyrinthFormComponent},
+  {path: 'new', component: NewLabyrinthFormComponent},
   {path: 'menu', component: MenuComponent},
-  {path: 'labyrinthGame', component: LabyrinthGameComponent},
+  {path: 'game', component: LabyrinthGameComponent},
   {path: '**', redirectTo: '/menu'}
 ];
 

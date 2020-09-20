@@ -84,7 +84,7 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
   }
 
   nextLevel() {
-    this.router.navigateByUrl('/labyrinthForm?size=' + (parseInt(this.score.size)+1));
+    this.router.navigateByUrl('/new?size=' + (parseInt(this.score.size)+1));
   }
 
   ngOnDestroy(): void {

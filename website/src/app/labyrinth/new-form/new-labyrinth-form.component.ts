@@ -41,7 +41,7 @@ export class NewLabyrinthFormComponent implements OnInit {
 
     Promise.all([timer, generation]).then(() => {
       this.loadingModal.hide()
-      this.router.navigateByUrl('/labyrinthGame');
+      this.router.navigateByUrl('/game');
     })
 
   }
