@@ -9,6 +9,7 @@ import * as rhytmeUtils from "music-generator/dist/rhythmUtils"
 import {flatPartition} from "music-generator/dist/compositionUtils";
 import {instrumentSamples, playNote} from "music-generator/dist/instrumentUtils";
 import {Note} from "music-generator";
+import {Instrument} from "tone/Tone/instrument/Instrument";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ import {Note} from "music-generator";
 export class SoundService implements OnDestroy {
 
 
-  currentAmbiance: any
+
 
   soundOnSubject$: Subject<boolean> = new BehaviorSubject<boolean>(false);
   soundOn$ = this.soundOnSubject$.pipe(scan((previousValue, forcedValue) => {
@@ -39,14 +40,17 @@ export class SoundService implements OnDestroy {
   private toneHaveBeenInitialized: boolean = false;
 
 
-  private gameMusic: any;
-  private menuMusic: any;
+  private gameMusic: tone.Part;
+  private menuMusic: tone.Part;
+  private currentAmbiance: tone.Part;
 
   private moveSound: any;
   private noSound: any;
   private takeSound: any;
-  private ambiantInstrument: any;
-  private soundInstrument: any;
+  private ambiantInstrument: tone.Synth<any>;
+  private menuInstrument: tone.Synth<any>;
+  private gameInstrument: tone.Synth<any>;
+  private soundInstrument: tone.Synth<any>;
 
   subscribeSoundOn(observer): Subscription {
     return this.soundOn$.subscribe(observer)
@@ -59,6 +63,7 @@ export class SoundService implements OnDestroy {
     document.querySelector('body')?.addEventListener('click', async () => {
       if (tone && !this.toneHaveBeenInitialized) {
         tone.start();
+        //this.currentAmbiance.volume-=10
         console.log('audio is ready');
         this.forceSoundOn()
         this.toneHaveBeenInitialized = true;
@@ -72,24 +77,32 @@ export class SoundService implements OnDestroy {
     });
 
 
-    this.ambiantInstrument = new tone.Synth();
+    this.menuInstrument = new tone.Synth();
+
+    this.gameInstrument = new tone.Synth();
     this.soundInstrument = new tone.Synth();
-    this.ambiantInstrument.toDestination();
+    this.gameInstrument.toDestination();
+    this.menuInstrument.toDestination();
     this.soundInstrument.toDestination();
-    this.tryNTimes(5, () => {
-      if (!this.menuMusic)
-        this.menuMusic = createLoop(this.ambiantInstrument, this.gameMusiqueService.menuMusicRandom(), 1.3);
-    });
-
-    this.tryNTimes(5, () => {
-      if (!this.gameMusic)
-        this.gameMusic = createLoop(this.ambiantInstrument, this.gameMusiqueService.gameMusicRandom(), 0.8);
-    });
-
-
+    this.soundInstrument.volume.value -= 35
+    console.log( this.soundInstrument.volume.value)
     this.moveSound = this.gameMusiqueService.moveMusic();
     this.takeSound = this.gameMusiqueService.takeMusic();
     this.noSound = this.gameMusiqueService.noMusic();
+  }
+
+  generateMenuMusic() {
+    this.tryNTimes(5, () => {
+      if (!this.menuMusic)
+        this.menuMusic = createLoop(this.menuInstrument, this.gameMusiqueService.menuMusicRandom(), 1.3);
+    });
+  }
+
+  generateGameMusic() {
+    this.tryNTimes(5, () => {
+      if (!this.gameMusic)
+        this.gameMusic = createLoop(this.gameInstrument, this.gameMusiqueService.gameMusicRandom(), 0.8);
+    });
   }
 
   private tryNTimes(numberOfTry, callback) {
@@ -105,47 +118,43 @@ export class SoundService implements OnDestroy {
   }
 
   playMove() {
-    this.ambiantInstrument.mute = true
-    play(this.soundInstrument, this.moveSound)
-    this.ambiantInstrument.mute = false
+    play(this.soundInstrument, this.moveSound, 0.5)
   }
 
   playTake() {
-    this.ambiantInstrument.mute = true
-    play(this.soundInstrument, this.takeSound)
-    this.ambiantInstrument.mute = false
+    play(this.soundInstrument, this.takeSound, 0.5)
   }
 
   playNo() {
-    this.ambiantInstrument.mute = true
-    play(this.soundInstrument, this.noSound)
-    this.ambiantInstrument.mute = false
+    play(this.soundInstrument, this.noSound, 0.5)
   }
 
   async playMenuMusic() {
-    try {
-      console.log("playMenuMusic" + this.menuMusic)
-      this.menuMusic.loop = true;
-      await this.menuMusic.start()
+    return this.playAmbiantMusic(this.menuMusic, this.menuInstrument);
+  }
 
-      this.currentAmbiance = this.menuMusic;
-    } catch (e) {
-      console.error(e);
+
+  public async playAmbiantMusic(newMusic:tone.Part<any>, instrument) {
+    console.log("new music to play")
+    if (this.currentAmbiance) {
+      this.currentAmbiance.loop = false;
+      this.currentAmbiance.mute = true
+      await this.currentAmbiance.stop(tone.now())
+      this.ambiantInstrument.volume.value-=100;
     }
+    newMusic.loop = true;
+    this.currentAmbiance = newMusic;
+    this.ambiantInstrument = instrument;
+    this.ambiantInstrument.volume.value=-45;
+    return newMusic.start()
   }
 
   private async playBruitageSound(music) {
 
   }
 
-  playGameMusic() {
-    try {
-      this.gameMusic.loop = true;
-      this.gameMusic.start()
-      this.currentAmbiance = this.gameMusic;
-    } catch (e) {
-      console.error(e);
-    }
+  async playGameMusic() {
+    return this.playAmbiantMusic(this.gameMusic, this.gameInstrument);
 
   }
 
@@ -172,17 +181,19 @@ export class SoundService implements OnDestroy {
   }
 }
 
-export function createLoop(instrument, partition: Array<any>, tempo) {
-
+export function createLoop(instrument, partition: Array<any>, tempo = 1): tone.Part {
   let flatpartition = CompositionUtils.flatPartition(partition)
   let timeC = 0;
 
-  return new tone.Part((time, note: Note) => {
+  let part = new tone.Part((time, note: Note) => {
+console.log(time)
     let decalage = rhytmeUtils.duration(note.value) * tempo;
     instrument.triggerAttackRelease(note.tune, note.value, "+" + timeC)
     timeC += decalage
     //time = InstrumentUtils.playNote(instrument, n, time, 1.2)
   }, flatpartition.map((note) => [0, note]));
+  part.loop = true;
+  return part;
 }
 
 export function play(instrument, partition: Array<any>, tempo = 1) {

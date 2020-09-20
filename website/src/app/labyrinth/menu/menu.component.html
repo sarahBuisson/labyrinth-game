@@ -50,6 +50,10 @@ ________        /___/   __
   <div>
     <ascii-div (click)="saveHighScore();highScoreModal.show()">HIGHSCORE</ascii-div>
   </div>
+
+  <div>
+    <ascii-div (click)="clickMusic()">ABOUT THE MUSIC...</ascii-div>
+  </div>
   <app-ascii-modal #highScoreModal (click)="this.highScoreModal.hide()">
     <div>
       <ascii-div

@@ -24,8 +24,7 @@ export class GenerateLabService {
   generate(size, playerName: string): void {
     let party = labeatGeneration.initPartieMapLabWithKeyFunction(size, playerName) //labeatGeneration.initPartieCompositeLabWithKeyFunction(size)
     this.dataStorageService.saveParty(party)
-
-
+    this.soundService.generateGameMusic();
   }
 
   generateEmpty(size): void {

@@ -22,10 +22,10 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.subscriptionHighscores=this.highscoresService.getScores().subscribe((scores) => {
+    this.subscriptionHighscores = this.highscoresService.getScores().subscribe((scores) => {
       this.highscores = scores as Array<any>;
     })
-
+    this.soundService.generateMenuMusic()
   }
 
   clickNew() {
@@ -33,7 +33,13 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.newFormModal.show()
   }
 
+  clickMusic() {
+    this.router.navigateByUrl('/music');
+  }
+
   clickCharacter() {
+
+    this.soundService.playMove()
     this.characterFormModal.show()
   }
 

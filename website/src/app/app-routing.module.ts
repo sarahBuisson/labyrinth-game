@@ -4,11 +4,13 @@ import {CharacterFormComponent} from "./characterEditor/character-form/character
 import {NewLabyrinthFormComponent} from "./labyrinth/new-form/new-labyrinth-form.component";
 import {LabyrinthGameComponent} from "./labyrinth/game-view/labyrinth-game.component";
 import {MenuComponent} from "./labyrinth/menu/menu.component";
+import {MusicViewComponent} from "./music-view/music-view.component";
 
 const routes: Routes = [{path: 'character', component: CharacterFormComponent},
   {path: 'new', component: NewLabyrinthFormComponent},
   {path: 'menu', component: MenuComponent},
   {path: 'game', component: LabyrinthGameComponent},
+  {path: 'music', component: MusicViewComponent},
   {path: '**', redirectTo: '/menu'}
 ];
 

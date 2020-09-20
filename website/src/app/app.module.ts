@@ -12,6 +12,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AsciiModule} from "./utils/ascii/ascii.module";
 import {LabyrinthGameModule} from "./labyrinth/game-view/labyrinth-game.module";
 import { SoundComponent } from './utils/ui/atom/sound/sound.component';
+import { MusicViewComponent } from './music-view/music-view.component';
+import {MusicModule} from "./music-view/music.module";
 
 
 @NgModule({
@@ -21,6 +23,7 @@ import { SoundComponent } from './utils/ui/atom/sound/sound.component';
     NewLabyrinthFormComponent,
     MenuComponent,
     SoundComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,8 @@ import { SoundComponent } from './utils/ui/atom/sound/sound.component';
     HttpClientModule,
     BrowserAnimationsModule,
     AsciiModule,
-    LabyrinthGameModule
+    LabyrinthGameModule,
+    MusicModule
   ],
   providers: [],
   bootstrap: [AppComponent]
