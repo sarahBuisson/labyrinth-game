@@ -1,0 +1,21 @@
+<div>
+  <ascii-div>About the music...</ascii-div>
+</div>
+<div>
+  <ascii-div>A new music is randomly generated at each new level</ascii-div>
+</div>
+<div>
+  <ascii-div>Only the music's menu is generated with a fix seed</ascii-div>
+</div>
+<div>
+  <ascii-div>try-it !</ascii-div>
+</div>
+<div>
+  <ascii-div (click)="generateMenuMusic()">Music menu</ascii-div>
+  <ascii-div (click)="generateGameMusic()">Random Level Music</ascii-div>
+</div>
+<div>
+  <ascii-div (click)="pause()">Pause</ascii-div>
+  <ascii-div (click)="play()">Play</ascii-div>
+</div>
+<app-partition-view [partitionForms]="currentMusicPartition"></app-partition-view>
