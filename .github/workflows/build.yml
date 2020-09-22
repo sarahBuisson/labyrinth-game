@@ -39,7 +39,6 @@ jobs:
           echo "npm package installed in gamRules:"
           find ./node_modules/gameRules -type f -name 'package.json' |sort
           ls -lrt ./node_modules/tone
-          ls -lrt ./node_modules/tone/build
       - name: Build front
         run: |
           cd website
