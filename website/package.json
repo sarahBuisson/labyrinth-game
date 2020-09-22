@@ -57,7 +57,7 @@
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "3.8.3"
+    "typescript": "3.9.2"
   },
   "mavenDependencies": {
     "kotlin-logging": "io.github.microutils:kotlin-logging-js:1.7.9",
