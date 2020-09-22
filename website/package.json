@@ -27,7 +27,7 @@
     "music-generator": "https://github.com/sarahBuisson/music-generator.git",
     "routing": "^0.0.2",
     "rxjs": "~6.5.4",
-    "tone": "git+https://github.com/Tonejs/Tone.js.git",
+    "tone": "git+https://github.com/Tonejs/Tone.js.git#dev",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

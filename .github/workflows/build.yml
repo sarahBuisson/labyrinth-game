@@ -31,6 +31,8 @@ jobs:
           npm install -g angular-cli-ghpages
           npm install tone
           yarn install
+      - name: temp fix waiting tone is delivered
+        run: |
           cd ./node_modules/tone
           npm run ts:build
           npm run webpack:build"
