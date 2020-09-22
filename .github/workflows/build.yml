@@ -33,7 +33,7 @@ jobs:
           yarn install
       - name: temp fix waiting tone is delivered
         run: |
-          cd ./node_modules/tone
+          cd website/node_modules/tone
           npm run ts:build
           npm run webpack:build"
       - name: list front dependancies downloaded
