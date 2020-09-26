@@ -1,28 +1,32 @@
 <div class="container">
-  <ascii-hard-div
+  <div ascii-div
   [borderDatas]="borderData"
   [yRepeat]="currentPartieProxy.level.contentArray.length*3+5"
   [xRepeat]="currentPartieProxy.level.contentArray[0].length*3+5"
   class="container"
 >
-
-    <div class="title">
+    <div class="title text">
       <div>M</div>
       <div>A</div>
       <div>P</div>
     </div>
-    <div class="main"   [ngStyle]="{'grid-template-columns': 'repeat(auto-fill,'+currentPartieProxy.level.contentArray[0].length+')'}">
-      <div *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
+    <div class="main asciiArt" [ngStyle]="{'grid-template-columns': 'repeat(auto-fill, '+ currentPartieProxy.level.contentArray[0].length + ')'}">
+      <div class="roww" *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
         <ng-container *ngFor="let levelCaseInput of row; let y = index">
         <ng-container *ngIf="isCaseShowable(levelCaseInput)">
-          <ascii-hard-div [borderDatas]="borderRendered(levelCaseInput)"
-          >{{contentRendered(levelCaseInput)}}</ascii-hard-div>
+          <div class="mapzone" ascii-div
+               xRepeat="1" yRepeat="1"
+               [borderDatas]="borderRendered(levelCaseInput)"
+          >{{contentRendered(levelCaseInput)}}</div>
         </ng-container>
       </ng-container>
     </div>
     </div>
+    <div class="text">
+      legende:
     <div> ¤ = You are here</div>
     <div> € = Exit</div>
+    </div>
 
-</ascii-hard-div>
+</div>
 </div>

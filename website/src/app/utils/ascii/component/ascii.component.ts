@@ -7,12 +7,12 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class AsciiComponent implements OnInit {
   @Input()
-  content: any
+  public content: any
+  @Input()
+  public tooltip: string
+  @Input()
+  public asciiClass: string=''
 
-  @Input()
-  tooltip:string
-  @Input()
-  asciiClass:string
   constructor() {
   }
 

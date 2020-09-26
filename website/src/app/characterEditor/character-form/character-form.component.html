@@ -1,11 +1,16 @@
-<ascii-div>
+<div ascii-div class="decor-ui" [computeRenderEachTime]="false" name="border">
+   <span ascii-div class="label text">edit your character !</span>
   <div *ngFor="let bodyPart of renderService.bodyPartsKey">
-    <span class="label">{{bodyPart}}</span>
-    <ascii-hard-div [xRepeat]="20" >
+    <span class="label text">{{bodyPart}}</span>
+    <div ascii-div [xRepeat]="10" class="ihm-ui" contentClass="interact-ui">
       <input [(ngModel)]="data[bodyPart]" (change)="update()">
-    </ascii-hard-div>
+    </div>
   </div>
-  <ascii-div>
-    <textarea style="height: 100px">{{render}}</textarea>
-  </ascii-div>
-</ascii-div>
+  <span class="label text">render :</span>
+  <div ascii-div [yRepeat]="5">
+    <textarea style="height: 80px" class="asciiArt">{{render}}</textarea>
+  </div>
+  <div ascii-div [yRepeat]="5" class="asciiArt">
+   {{render}}
+  </div>
+</div>

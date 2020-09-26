@@ -14,6 +14,7 @@ import {LabyrinthGameModule} from "./labyrinth/game-view/labyrinth-game.module";
 import { SoundComponent } from './utils/ui/atom/sound/sound.component';
 import { MusicViewComponent } from './music-view/music-view.component';
 import {MusicModule} from "./music-view/music.module";
+import { AsciiGalleryComponent } from './ascii-gallery/ascii-gallery.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import {MusicModule} from "./music-view/music.module";
     NewLabyrinthFormComponent,
     MenuComponent,
     SoundComponent,
+    AsciiGalleryComponent,
 
   ],
   imports: [

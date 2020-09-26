@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {asciiStringToGridObject} from "../../../utils/ascii/ascii-hard-div/ascii-hard-div.component";
 import {GameplayLabService} from "../../service/gameplay-lab.service";
 import {paperDataGridTemplate, mapGridTemplate} from "../../service/render/resources/border";
 
@@ -59,21 +58,24 @@ export class MapViewComponent implements OnInit {
   borderRendered(levelCase) {
     let borderRendered = {...mapGridTemplate}
     let directions: Array<String> = ['left', 'right', 'top', 'bottom'];
-    directions.forEach((key: String) => {
-      let door = this.gameplayLabService.doorAt(levelCase, key.toUpperCase())
+    directions.forEach((direction: String) => {
+      let door = this.gameplayLabService.doorAt(levelCase, direction.toUpperCase())
+      borderRendered[direction + "Class"] = "decor-ui"
       if (door) {
         if (door.key) {
-          borderRendered[key + "Template"] = door.name
+          borderRendered[direction + "Template"] = door.name
+          borderRendered[direction + "Class"] = "interact-ui"
         } else {
 
         }
 
       } else {
-        borderRendered[key + "Template"] = ' '
+        borderRendered[direction + "Template"] = ' '
       }
     })
     return borderRendered;
   }
+
 
   contentRendered(levelCaseInput: any) {
     let content = this.gameplayLabService.levelContent(levelCaseInput);

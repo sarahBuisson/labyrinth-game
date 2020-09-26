@@ -1,4 +1,65 @@
 /* You can add global styles to this file, and also import other style files */
-body {
-  overflow: hidden
+/*@font-face {
+  font-family: asciiArtFont;
+  src: url('./assets/font/Courrier-Prime-Code.ttf');
+
+  white-space: pre;
 }
+
+@font-face {
+  font-family: asciiTextFont;
+  src: url('./assets/font/Courrier-Prime.ttf');
+
+  white-space: pre;
+}
+*/
+body {
+
+  overflow: hidden;
+  font-size: 12px;
+  font-family: asciiArtFont;
+
+}
+
+
+
+.asciiArt {
+  font-family: Consolas, monospace;/* monaco,Consolas,'Lucida Console';*/
+  font-size: 12px;
+  white-space: pre;
+}
+.text {
+  font-family: monospace;
+  white-space: pre;
+  font-size: 12px;
+}
+
+.background-ui {
+  color: #888;
+}
+
+.decor-ui {
+  color:  #666;
+}
+
+.ihm-ui {
+  color:  #444;
+}
+
+a .ihm-ui {
+text-decoration: none;
+}
+
+.interact-ui{
+  color: #222;
+}
+
+.important-ui {
+  color: #000;
+}
+
+input, textarea {
+  border: none;
+  outline: none;
+}
+

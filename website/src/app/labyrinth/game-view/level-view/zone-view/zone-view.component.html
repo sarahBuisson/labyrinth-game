@@ -1,0 +1,20 @@
+<div ascii-div class="zone asciiArt decor-ui"
+     [borderDatas]="borderRendered()"
+     [onClick]="manageClick()"
+     (click)="clickOnZone( $event)"
+     [xRepeat]="1"
+     [yRepeat]="1"
+>
+  <div class="zoneContent">
+    <app-ascii-on-grid-div *ngFor="let obj of this.gameplayLabService.levelContent(this.zone)"
+    >
+      <app-ascii
+        (click)="this.takeObj(obj)"
+        [tooltip]="obj.name"
+        [content]="renderObj(obj)"
+        class="zoneObject asciiArt interact-ui"
+
+      ></app-ascii>
+    </app-ascii-on-grid-div>
+  </div>
+</div>

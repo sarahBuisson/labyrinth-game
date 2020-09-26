@@ -3,21 +3,21 @@
   Lab generator
 </pre>
   <div class="menuBar">
-    <ascii-div><a href="./menu">menu</a></ascii-div>
-    <ascii-div><a href="./character">characterEditor</a></ascii-div>
-    <ascii-div><a href="./new">new Labyrinth</a></ascii-div>
+    <app-ascii-button class="button asciiArt ihm-ui" ><a href="./menu" class="interact-ui">menu</a></app-ascii-button>
+    <app-ascii-button class="button asciiArt ihm-ui"><a href="./character" class="interact-ui">characterEditor</a></app-ascii-button>
+    <app-ascii-button class="button asciiArt ihm-ui"><a href="./new" class="interact-ui">new Labyrinth</a></app-ascii-button>
   </div>
 </div>
-<div class="noParty" *ngIf="!currentPartyProxy">
-  <ascii-div>no game loaded for the moment, please wait or create a new game</ascii-div>
-
-  <ascii-div><a href="./new">new game</a></ascii-div>
+<div class="noPartyMessage" *ngIf="!currentPartyProxy">
+  <div ascii-div class="text interact-ui" >no game loaded for the moment, please wait or create a new game
+    <app-ascii-button class="ihm-ui"><a  class="interact-ui" href="./new">new game</a></app-ascii-button>
+  </div>
 </div>
 <div class="container" *ngIf="currentPartyProxy">
 
   <div class="mainArea">
-    <level-view [currentPartieProxy]="currentPartyProxy"
-                [rangeArroundPlayer]="1" class="level"
+    <level-view [currentPartie]="currentPartyProxy"
+                [rangeArroundPlayer]="1"
                 [characterRenderData]="currentCharacterRenderData"
     ></level-view>
   </div>
@@ -53,14 +53,14 @@
       </app-sliding>
     </div>
   </div>
-  <app-ascii-modal #winModal>
-    <ascii-div> YOU WIN !</ascii-div>
+  <app-ascii-modal #winModal class="text">
+    <div ascii-div cl> YOU WIN !</div>
     <app-ascii class="character">
       {{fullViewRenderService.renderPlayer(this.currentCharacterRenderData)}}
     </app-ascii>
     <app-ascii>{{fullViewRenderService.renderObj({name: 'exit'}, undefined)}}</app-ascii>
 
-    <ascii-hard-div xRepeat="40">
+    <div ascii-div xRepeat="40">
       <div>total size:{{this.score.size}}</div>
       <div>total number of room:{{this.score.numberOfRooms}}</div>
       <div>minimum solution:{{this.score.solutionLength}} m</div>
@@ -68,8 +68,8 @@
       <div>total walked distance:{{this.score.numberOfSteps}} m</div>
       <div> </div>
       <div>total score:{{this.score.score}}</div>
-    </ascii-hard-div>
-    <ascii-div (click)="nextLevel()">next level</ascii-div>
+    </div>
+    <div ascii-div (click)="nextLevel()">next level</div>
   </app-ascii-modal>
 
 

@@ -38,18 +38,19 @@ export class AsciiOnGridDivComponent implements OnInit, AfterViewInit, AfterView
 
   ngAfterViewInit() {
     if(this.contentDiv) {
+      const old={ yRepeat: this.yRepeat,xRepeat: this.xRepeat,}
+
       this.yRepeat = Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().height / 15.1)
       this.xRepeat = Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().width / 7.82)
-
-      this.renderer.setStyle(this.host.nativeElement,'grid-column', 'span ' + this.xRepeat);
-      this.renderer.setStyle(this.host.nativeElement,'grid-row', 'span ' + this.yRepeat);
-      this.tick_then(() => {
-        this.gridColumn = 'span ' + this.xRepeat;
-        this.gridRow = 'span ' + this.yRepeat;
-        this._changeDetectorRef.detectChanges();
-      })
-
-
+      if (this.xRepeat != old.xRepeat || this.yRepeat != old.yRepeat) {
+        this.renderer.setStyle(this.host.nativeElement, 'grid-column', 'span ' + this.xRepeat);
+        this.renderer.setStyle(this.host.nativeElement, 'grid-row', 'span ' + this.yRepeat);
+        this.tick_then(() => {
+          this.gridColumn = 'span ' + this.xRepeat;
+          this.gridRow = 'span ' + this.yRepeat;
+          this._changeDetectorRef.detectChanges();
+        })
+      }
     }
   }
 

@@ -12,3 +12,8 @@ input:focus {outline:none!important;}
   grid-template-columns: min-content min-content;
   align-items:center;
 }
+
+.loadingContent {
+
+  max-width: 400px;
+}

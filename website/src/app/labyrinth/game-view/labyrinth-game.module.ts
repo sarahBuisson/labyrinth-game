@@ -7,6 +7,8 @@ import {AsciiModule} from "../../utils/ascii/ascii.module";
 import {LevelViewComponent} from "./level-view/level-view.component";
 import {MapViewComponent} from "./map-view/map-view.component";
 import {InventoryViewComponent} from "./inventory-view/inventory-view.component";
+import { ZoneViewComponent } from './level-view/zone-view/zone-view.component';
+import {BrowserModule} from "@angular/platform-browser";
 
 
 @NgModule({
@@ -16,18 +18,21 @@ import {InventoryViewComponent} from "./inventory-view/inventory-view.component"
     LevelViewComponent,
     MapViewComponent,
     KeypadFormComponent,
-    InventoryViewComponent],
+    InventoryViewComponent,
+    ZoneViewComponent],
   imports: [
     CommonModule,
-    AsciiModule
+    BrowserModule,
+    AsciiModule,
+
   ],
-  exports: [LabyrinthGameComponent,
-    SlidingComponent,
-    KeypadFormComponent,
-    LevelViewComponent,
-    MapViewComponent,
-    KeypadFormComponent,
-    InventoryViewComponent]
+    exports: [LabyrinthGameComponent,
+        SlidingComponent,
+        KeypadFormComponent,
+        LevelViewComponent,
+        MapViewComponent,
+        KeypadFormComponent,
+        InventoryViewComponent, ZoneViewComponent]
 })
 export class LabyrinthGameModule {
 }

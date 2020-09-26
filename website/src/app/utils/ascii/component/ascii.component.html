@@ -1,2 +1,2 @@
-<pre [ngClass]="asciiClass" class="withtooltip">{{content}}<ng-content></ng-content><div class="tooltiptext" *ngIf="tooltip">{{tooltip}}</div>
+<pre [ngClass]="[asciiClass, 'asciiArt']" class="withtooltip">{{content}}<ng-content></ng-content><div class="tooltiptext" *ngIf="tooltip">[{{tooltip}}]</div>
 </pre>

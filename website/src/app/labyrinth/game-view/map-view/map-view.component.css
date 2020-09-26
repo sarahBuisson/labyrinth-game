@@ -13,7 +13,8 @@
   background: white;
 }
 .title {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
   width: 30px;
   padding: 10px ;
 }
@@ -22,3 +23,4 @@
   display: inline-block;
   background: white;
 }
+.mapzone{display: inline-block}

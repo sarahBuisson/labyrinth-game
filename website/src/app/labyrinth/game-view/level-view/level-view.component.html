@@ -1,34 +1,20 @@
 <div class="levelRender">
 
 
-  <div [ngClass]="'levelRowRender'" *ngFor="let row of fieldOfView; let x = index ">
+  <div class="levelRowRender" *ngFor="let row of fieldOfView; let x = index ">
 
     <ng-container *ngFor="let levelCaseInput of row; let y = index">
       <ng-container *ngIf="levelCaseInput.contentArray.length>0">
-        <ascii-hard-div
-          [borderDatas]="borderRendered(levelCaseInput)"
-          [onClick]="manageClick(levelCaseInput)"
-          (click)="clickOnZone(levelCaseInput, $event)"
-        >
-          <div class="zoneContent">
-            <app-ascii-on-grid-div *ngFor="let obj of this.gameplayLabService.levelContent(levelCaseInput)"  [ngClass]="'room'">
-              <app-ascii
-                (click)="this.takeObj(obj)"
-                [tooltip]="obj.name"
-                [content]="renderObj(obj)"
-                class="zoneObject"
-              ></app-ascii>
-            </app-ascii-on-grid-div>
-          </div>
-        </ascii-hard-div>
+        <app-zone-view [zone]="levelCaseInput" [characterRenderData]="characterRenderData"> </app-zone-view>
 
       </ng-container>
       <ng-container *ngIf="levelCaseInput.contentArray.length===0">
-        <ascii-hard-div
-          [borderDatas]="emptyRendered(x,y)"
-          [ngClass]="'outside'"
+        <div ascii-div class="zone outside background-ui"
+             [xRepeat]="1"
+             [yRepeat]="1"
+             [borderDatas]="emptyRendered(x,y)"
         >
-        </ascii-hard-div>
+        </div>
       </ng-container>
     </ng-container>
 

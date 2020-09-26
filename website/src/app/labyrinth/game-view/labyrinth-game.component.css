@@ -9,15 +9,19 @@
   margin-right: auto;
   width: 800px;
 }
-.mainArea{
+
+.mainArea {
   grid-area: main;
 }
-.sidebar{
+
+.sidebar {
   grid-area: sidebar;
 }
-.mapArea{
+
+.mapArea {
 }
-.inventoryArea{
+
+.inventoryArea {
 }
 
 .toolbar {
@@ -26,3 +30,12 @@
   grid-template-columns: 200px 40px 1fr;
 }
 
+.button {
+  display: inline-flex;
+  text-align: center;
+}
+
+
+.noPartyMessage {
+  padding: 50px;
+}

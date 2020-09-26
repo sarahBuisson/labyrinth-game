@@ -1,24 +1,23 @@
-<ascii-div xRepeat="100" yRepeat="10">
+<div ascii-div xRepeat="100" yRepeat="10" class="text" [computeRenderEachTime]="false">
   <div class="grid">
-    <span>
+    <span >
     Labyrinth Size:
     </span>
-    <ascii-div [xRepeat]="20">
-      <input [(ngModel)]="size"></ascii-div>
+    <div ascii-div [xRepeat]="20"><input [(ngModel)]="size"></div>
   </div>
-  <ascii-div [xRepeat]="4" (click)="play()">play</ascii-div>
-</ascii-div>
+  <app-ascii-button (click)="play()">play</app-ascii-button>
+</div>
 
 <app-ascii-modal #loadingModal
                  (click)="clickDuringLoading()"   >
 
-  <ascii-div>
-    <ascii-div> Labyrinth generating ...</ascii-div><br/>
-    <ascii-div>Do you know it ? ({{currentLoadingMessage}})</ascii-div><br/>
+  <div ascii-div class="loadingContent text" [computeRenderEachTime]="false">
+    <div ascii-div> Labyrinth generating ...</div><br/>
+    <div ascii-div>Do you know it ? ({{currentLoadingMessage}})</div><br/>
 
-    <ascii-div *ngIf="currentLoadingMessage===0">
+    <div ascii-div *ngIf="currentLoadingMessage===0">
       Find the stair to the exit to win.
-      <pre>
+      <pre class="asciiArt">
 :    |--|    :
 :    |--|    :
 :  :¨|--|¨:  :
@@ -26,30 +25,30 @@
 :    exit    :
    </pre>
 
-    </ascii-div>
+    </div>
 
-    <ascii-hard-div *ngIf="currentLoadingMessage===1" xRepeat="70" yRepeat="10">
+    <div ascii-div *ngIf="currentLoadingMessage===1" xRepeat="70" yRepeat="10">
    <pre> You can move by :
       - clicking on the room you want to go
       - clicking on the door you want to use
       - using directional key
       - using the pad at the bottom of the screen
    </pre>
-    </ascii-hard-div>
-    <ascii-div *ngIf="currentLoadingMessage===2">
+    </div>
+    <div ascii-div *ngIf="currentLoadingMessage===2">
       some door are closed and need a key to be open
-    </ascii-div>
-    <ascii-div *ngIf="currentLoadingMessage===3">
+    </div>
+    <div ascii-div *ngIf="currentLoadingMessage===3">
       You have a map
-    </ascii-div>
+    </div>
 
-    <ascii-div *ngIf="currentLoadingMessage===4">
+    <div ascii-div *ngIf="currentLoadingMessage===4">
       <div>The lab didn't really take that much time to generate.</div>
       <div>The dev just wanted a way to give tips to player.</div>
-    </ascii-div>
+    </div>
 
-    <ascii-div *ngIf="currentLoadingMessage===5">All labyrinths always have a solution
-    </ascii-div>
-  </ascii-div>
+    <div ascii-div *ngIf="currentLoadingMessage===5">All labyrinths always have a solution
+    </div>
+  </div>
 </app-ascii-modal>
 

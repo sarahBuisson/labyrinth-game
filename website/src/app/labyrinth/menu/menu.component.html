@@ -9,76 +9,76 @@
   | |    / _` | '_ \  | | |_ |/ _ \ '_ \ / _ \ '__/ _` | __/ _ \| '__|
   | |___| (_| | |_) | | |__| |  __/ | | |  __/ | | (_| | || (_) | |
   |______\__,_|_.__/   \_____|\___|_| |_|\___|_|  \__,_|\__\___/|_|
-  <!--
-_______ _            _       _
-|__   __| |          | |     | |
-| |  | |__   ___  | | __ _| |__
-| |  | '_ \ / _ \ | |/ _` | '_ \
-| |  | | | |  __/ | | (_| | |_) |
-|_|  |_| |_|\___| |_|\__,_|_.__/
-__          ___                        _                            _
-\ \        / / |                      | |                          | |
-\ \  /\  / /| |__   ___     ___  __ _| |_   _ __   ___  ___  _ __ | | ___
-\ \/  \/ / | '_ \ / _ \   / _ \/ _` | __| | '_ \ / _ \/ _ \| '_ \| |/ _ \
-\  /\  /  | | | | (_) | |  __/ (_| | |_  | |_) |  __/ (_) | |_) | |  __/
-\/  \/   |_| |_|\___/   \___|\__,_|\__| | .__/ \___|\___/| .__/|_|\___|
-                                       | |              | |
-                                       |_|              |_|
+    <!--
+  _______ _            _       _
+  |__   __| |          | |     | |
+  | |  | |__   ___  | | __ _| |__
+  | |  | '_ \ / _ \ | |/ _` | '_ \
+  | |  | | | |  __/ | | (_| | |_) |
+  |_|  |_| |_|\___| |_|\__,_|_.__/
+  __          ___                        _                            _
+  \ \        / / |                      | |                          | |
+  \ \  /\  / /| |__   ___     ___  __ _| |_   _ __   ___  ___  _ __ | | ___
+  \ \/  \/ / | '_ \ / _ \   / _ \/ _` | __| | '_ \ / _ \/ _ \| '_ \| |/ _ \
+  \  /\  /  | | | | (_) | |  __/ (_| | |_  | |_) |  __/ (_) | |_) | |  __/
+  \/  \/   |_| |_|\___/   \___|\__,_|\__| | .__/ \___|\___/| .__/|_|\___|
+                                         | |              | |
+                                         |_|              |_|
 
 
 
-________        /___/   __
-/_  __/ /  ___   / /__ _/ /
-/ / / _ \/ -_) / / _ `/ _ \
-/_/ /_//_/\__/ /_/\_,_/_.__/    __                       __
-| | /| / / /  ___    ___ ___ _/ /_  ___  ___ ___  ___  / /__
-| |/ |/ / _ \/ _ \  / -_) _ `/ __/ / _ \/ -_) _ \/ _ \/ / -_)
-|__/|__/_//_/\___/  \__/\_,_/\__/ / .__/\__/\___/ .__/_/\__/
-                                /_/           /_/
--->
+  ________        /___/   __
+  /_  __/ /  ___   / /__ _/ /
+  / / / _ \/ -_) / / _ `/ _ \
+  /_/ /_//_/\__/ /_/\_,_/_.__/    __                       __
+  | | /| / / /  ___    ___ ___ _/ /_  ___  ___ ___  ___  / /__
+  | |/ |/ / _ \/ _ \  / -_) _ `/ __/ / _ \/ -_) _ \/ _ \/ / -_)
+  |__/|__/_//_/\___/  \__/\_,_/\__/ / .__/\__/\___/ .__/_/\__/
+                                  /_/           /_/
+  -->
 
 
   </pre>
 </div>
 <div class="container">
-  <div>
-    <ascii-div (click)="clickNew()">NEW LABYRINTH</ascii-div>
-  </div>
-  <div>
-    <ascii-div (click)="clickCharacter()">CHANGE CHARACTER LOOK</ascii-div>
-  </div>
-  <div>
-    <ascii-div (click)="saveHighScore();highScoreModal.show()">HIGHSCORE</ascii-div>
-  </div>
-
-  <div>
-    <ascii-div (click)="clickMusic()">ABOUT THE MUSIC...</ascii-div>
-  </div>
-  <app-ascii-modal #highScoreModal (click)="this.highScoreModal.hide()">
-    <div>
-      <ascii-div
-        hoverClass="asciiHighlight"
-      >Highscore
-      </ascii-div>
-      <ascii-div>
-
-        Your best score
-        <br/>
-        Ever!
-        <div *ngFor="let score of highscores">
-          <ascii-div xRepeat="30">
-            {{score.player.name}} : {{score.score}}</ascii-div>
-        </div>
-      </ascii-div>
-    </div>
-  </app-ascii-modal>
-  <app-ascii-modal #newFormModal [closable]="true">
-    <app-labyrinth-form></app-labyrinth-form>
-  </app-ascii-modal>
-  <app-ascii-modal #loadingModal (click)="this.loadingModal.hide()">Loading</app-ascii-modal>
-  <app-ascii-modal #characterFormModal [closable]="true">
-    <app-character-form></app-character-form>
-  </app-ascii-modal>
+  <app-ascii-button
+       (click)="clickNew()">NEW LABYRINTH
+  </app-ascii-button>
+  <app-ascii-button
+       (click)="clickCharacter()">CHANGE CHARACTER LOOK
+  </app-ascii-button>
+  <app-ascii-button
+       (click)="saveHighScore();highScoreModal.show()">HIGHSCORE
+  </app-ascii-button>
+  <app-ascii-button
+       (click)="clickMusic()">ABOUT THE MUSIC...
+  </app-ascii-button>
 </div>
+<app-ascii-modal #highScoreModal (click)="this.highScoreModal.hide()">
+  <div>
+    <div ascii-div
+         hoverClass="asciiHighlight"
+    ><span>Highscore</span>
+    </div>
+    <div ascii-div>
+
+      Your best score
+      <br/>
+      Ever!
+      <div *ngFor="let score of highscores">
+        <div ascii-div xRepeat="30">
+          {{score.player.name}} : {{score.score}}</div>
+      </div>
+    </div>
+  </div>
+</app-ascii-modal>
+<app-ascii-modal #newFormModal [closable]="true">
+  <app-labyrinth-form></app-labyrinth-form>
+</app-ascii-modal>
+<app-ascii-modal #loadingModal (click)="this.loadingModal.hide()">Loading</app-ascii-modal>
+<app-ascii-modal #characterFormModal [closable]="true">
+  <app-character-form></app-character-form>
+</app-ascii-modal>
+
 <audio #player
 ></audio>

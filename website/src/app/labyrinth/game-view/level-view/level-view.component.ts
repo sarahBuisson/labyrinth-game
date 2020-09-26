@@ -16,7 +16,7 @@ import {FullsizeAsciiRenderService} from "../../service/render/fullsize-ascii-re
 export class LevelViewComponent implements OnInit, OnChanges {
 
   @Input()
-  currentPartieProxy: any
+  currentPartie: any
 
   constructor(public gameplayLabService: GameplayLabService, public renderService: FullsizeAsciiRenderService) {
 
@@ -39,10 +39,10 @@ export class LevelViewComponent implements OnInit, OnChanges {
 
   public updateFieldOfView() {
     if (this.rangeArroundPlayer === -1) {
-      this.fieldOfView = this.currentPartieProxy.level.contentArray;
+      this.fieldOfView = this.currentPartie.level.contentArray;
     } else {
       this.fieldOfView = new Array();
-      let location = this.currentPartieProxy.player.location;
+      let location = this.currentPartie.player.location;
 
       for (let dy = -this.rangeArroundPlayer; dy <= this.rangeArroundPlayer; dy++) {
         this.fieldOfView[this.rangeArroundPlayer + dy] = new Array();
@@ -52,10 +52,11 @@ export class LevelViewComponent implements OnInit, OnChanges {
           let y: number = 0 + location.y + dy;
           let ix = 0 + this.rangeArroundPlayer + dx;
           let iy = 0 + this.rangeArroundPlayer + dy;
-          if (this.currentPartieProxy.level.contentArray[y] && this.currentPartieProxy.level.contentArray[y][x]) {
-            this.fieldOfView[this.rangeArroundPlayer + dy][this.rangeArroundPlayer + dx] = this.currentPartieProxy.level.contentArray[y][x]
+
+          if (this.currentPartie.level.contentArray[y] && this.currentPartie.level.contentArray[y][x]) {
+            this.fieldOfView[iy][ix] = this.currentPartie.level.contentArray[y][x]
           } else {
-            this.fieldOfView[this.rangeArroundPlayer + dy][this.rangeArroundPlayer + dx] = {
+            this.fieldOfView[iy][ix] = {
               contentArray: [],
               connections: {}
             }
@@ -65,79 +66,11 @@ export class LevelViewComponent implements OnInit, OnChanges {
     }
   }
 
-  isStart(levelCase) {
-    let start = this.currentPartieProxy.level.start;
-    return start.x === levelCase.x && start.y === levelCase.y
-  }
-
-  isExit(levelCase) {
-    let exit = this.currentPartieProxy.level.exit;
-    return exit.x === levelCase.x && exit.y === levelCase.y
-  }
-
-  hasPlayer(levelCase) {
-    let location = this.currentPartieProxy.player.location;
-    return location.x === levelCase.x && location.y === levelCase.y
-  }
-
-  isCaseShowable(levelCase) {
-    if (!levelCase)
-      return false
-    if (this.rangeArroundPlayer < 0)
-      return true
-    let location = this.currentPartieProxy.player.location;
-    return (Math.abs(location.x - levelCase.x) <= this.rangeArroundPlayer
-      && Math.abs(location.y - levelCase.y) <= this.rangeArroundPlayer);
-  }
-
-  borderRendered(levelCase) {
-    let borderRendered = {...viewWallGridTemplate}
-    let directions: Array<String> = ['left', "right", 'top', 'bottom'];
-    directions.forEach((key: String) => {
-      let door = this.gameplayLabService.doorAt(levelCase, key.toUpperCase())
-      if (door) {
-        if (door.key) {
-          borderRendered[key + "Template"] = viewCloseDoorGridTemplate[key + "Template"].replace("1", door.name)//TODO : use template instead of replace
-        } else {
-          borderRendered[key + "Template"] = viewOpenDoorGridTemplate[key + "Template"]
-
-        }
-      }
-    })
-
-    return borderRendered;
-  }
-
-
-  manageClick: any = (caseLev) => {
-    if (this.gameplayLabService.hasPlayer(caseLev)) {
-      return (direction) => {
-        this.gameplayLabService.move(direction)
-      }
-    } else {
-      return () => {
-      }
-    }
-  }
-
-  takeObj: any = (obj) => {
-    this.gameplayLabService.take(obj)
-  }
-
-  clickOnZone: any = (levelCase,e) => {
-    if(this.gameplayLabService.moveAtCase(levelCase)){
-      e.preventDefault();
-    }
-  };
-
-  renderObj(obj: any) {
-    return this.renderService.renderObj(obj, this.characterRenderData)
-  }
 
   emptyRendered(x, y) {
 
-    let dx = x + this.currentPartieProxy.player.location.x
-    let dy = y + this.currentPartieProxy.player.location.y
+    let dx = x + this.currentPartie.player.location.x
+    let dy = y + this.currentPartie.player.location.y
 
     let index = (dx + dy) % 5;
     return viewEmptyZoneGridTemplates[index];

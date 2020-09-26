@@ -1,18 +1,17 @@
+<span *ngIf="!partitionForms" class="text">  no partition</span>
 
-  <span *ngIf="!partitionForms">  no partition</span>
+<div class="vertical musicForm" *ngFor="let form of partitionForms" [style]="{borderColor:borderColor}">
+  <ng-container *ngIf="isPattern(form) ">
 
-  <div class="vertical musicForm" *ngFor="let form of partitionForms" [style]="{borderColor:borderColor}">
-    <ng-container *ngIf="isPattern(form) ">
+    <app-temp-view *ngFor="let note of form" [temp]="note" [scale]="scale"></app-temp-view>
 
-        <app-temp-view  *ngFor="let note of form" [temp]="note" [scale]="scale"></app-temp-view>
-
-    </ng-container>
-    <ng-container *ngIf="isNote(form) ">
-      <app-temp-view [temp]="form" [scale]="scale"></app-temp-view>
-    </ng-container>
-    <ng-container *ngIf="!isNote(form)&&!isPattern(form) ">
-      <app-partition-view [partitionForms]="form" [initscale]="scale"></app-partition-view>
-    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="isNote(form) ">
+    <app-temp-view [temp]="form" [scale]="scale"></app-temp-view>
+  </ng-container>
+  <ng-container *ngIf="!isNote(form)&&!isPattern(form) ">
+    <app-partition-view [partitionForms]="form" [initscale]="scale" ></app-partition-view>
+  </ng-container>
 
 
-  </div>
+</div>

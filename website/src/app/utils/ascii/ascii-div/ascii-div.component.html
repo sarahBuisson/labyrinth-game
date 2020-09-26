@@ -1,25 +1,41 @@
-<div class="container">
-  <div class="grid" [ngStyle]="{ 'grid-template-columns': 'min-content repeat('+xRepeat+', min-content) min-content',
-  'grid-template-rows': 'min-content repeat('+yRepeat+', min-content) min-content'}">
-    <span class="asciiArt border">{{topLeftTemplate}}</span>
-    <span class="asciiArt border" *ngFor="let i of counter(xRepeat)" (click)="this.onClick('TOP',i)">{{topTemplate}}</span>
-    <span class="asciiArt border">{{topRightTemplate}}</span>
-    <ng-container *ngFor="let i of counter(yRepeat)">
-      <span class="asciiArt leftSide border" (click)="this.onClick('LEFT',i)">{{leftTemplate}}</span>
-
-      <span class=" asciiArt rightSide border" (click)="this.onClick('RIGHT',i)">{{rightTemplate}}</span>
-    </ng-container>
-
-    <div  class="asciiArt content">
+<div class="grid"
+     [ngStyle]="{ 'grid-template-columns': 'min-content repeat('+xComputedRepeat+', min-content) min-content',
+  'grid-template-rows': 'min-content repeat('+yComputedRepeat+', min-content) min-content'}"
+>
+  <div class="content"
+       [ngStyle]="computedInnerStyle"
+       [ngClass]="contentClass" >
       <span #contentDiv>
       <ng-content></ng-content>
         </span>
-    </div>
-
-    <span class="asciiArt border">{{bottomLeftTemplate}}</span>
-    <span *ngFor="let i of counter(xRepeat)" (click)="this.onClick('BOTTOM',i)"
-          class="asciiArt border">{{bottomTemplate}}</span>
-    <span class="asciiArt border">{{bottomRightTemplate}}</span>
   </div>
-</div>
+  <span class="asciiArt border" [ngClass]="topLeftClass">{{topLeftTemplate}}</span>
+  <span *ngFor="let i of counter(xComputedRepeat)"
+        class="asciiArt border" [ngClass]="topClass"
+        (click)="this.onClick('TOP',i)"
+  >{{topTemplate}}</span>
+  <span
+    class="asciiArt border" [ngClass]="topRightClass"
+  >{{topRightTemplate}}</span>
+  <ng-container *ngFor="let i of counter(yComputedRepeat)">
+      <span
+        class="asciiArt leftSide border" [ngClass]="leftClass"
+        (click)="this.onClick('LEFT',i)">{{leftTemplate}}</span>
 
+    <span
+      class=" asciiArt rightSide border" [ngClass]="rightClass"
+      (click)="this.onClick('RIGHT',i)">{{rightTemplate}}</span>
+  </ng-container>
+
+
+  <span
+    class="asciiArt border" [ngClass]="bottomLeftClass"
+  >{{bottomLeftTemplate}}</span>
+  <span *ngFor="let i of counter(xComputedRepeat)"
+        (click)="this.onClick('BOTTOM',i)"
+        class="asciiArt border" [ngClass]="bottomClass"
+  >{{bottomTemplate}}</span>
+  <span
+    class="asciiArt border" [ngClass]="bottomRightClass"
+  >{{bottomRightTemplate}}</span>
+</div>

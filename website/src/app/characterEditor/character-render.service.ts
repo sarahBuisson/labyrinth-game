@@ -36,7 +36,7 @@ export class CharacterRenderService {
     eye: "'",
     hair: "(",
     torso: "M",
-    hat: "_--_",
+    hat: " _--_ ",
     leg: "d"
   })
 

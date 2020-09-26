@@ -4,14 +4,9 @@
   grid-template-rows: repeat(auto-fit, 210px);
 }
 
-.zoneContent{
-  display: grid;
-  grid-template-columns: repeat(15, 8px);
-  grid-template-rows: repeat(5, 15px);
-  grid-auto-flow: row dense;
-}
+
 .zoneObject {
-  padding: 3px;
+
 }
 
 ::ng-deep.outside .border{color:lightgray}
