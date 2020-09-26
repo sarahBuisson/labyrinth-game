@@ -35,15 +35,15 @@ body {
 }
 
 .background-ui {
-  color: #888;
+  color: #BBB;
 }
 
 .decor-ui {
-  color:  #666;
+  color:  #999;
 }
 
 .ihm-ui {
-  color:  #444;
+  color:  #666;
 }
 
 a .ihm-ui {
@@ -51,7 +51,7 @@ text-decoration: none;
 }
 
 .interact-ui{
-  color: #222;
+  color: #333;
 }
 
 .important-ui {
