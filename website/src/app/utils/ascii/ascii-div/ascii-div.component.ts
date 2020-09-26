@@ -61,21 +61,23 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterContentChe
   bottomRightTemplate = this.topLeftTemplate
 
   @Input()
-  topClass = "-"
+  defaultBorderClass: string
   @Input()
-  bottomClass = this.topClass
+  topBorderClass = this.defaultBorderClass
   @Input()
-  leftClass = "|"
+  bottomBorderClass = this.defaultBorderClass
   @Input()
-  rightClass = this.leftClass
+  leftBorderClass = this.defaultBorderClass
   @Input()
-  topLeftClass = "+"
+  rightBorderClass = this.defaultBorderClass
   @Input()
-  topRightClass = this.topLeftClass
+  topLeftBorderClass = this.defaultBorderClass
   @Input()
-  bottomLeftClass = this.topLeftClass
+  topRightBorderClass = this.defaultBorderClass
   @Input()
-  bottomRightClass = this.topLeftClass
+  bottomLeftBorderClass = this.defaultBorderClass
+  @Input()
+  bottomRightBorderClass = this.defaultBorderClass
 
   @Input()
   borderDatas: any = defaultGridTemplate;
@@ -90,7 +92,6 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterContentChe
   }
 
   constructor(private readonly _changeDetectorRef: ChangeDetectorRef) {
-    console.log("rr")
   }
 
   ngOnInit() {
@@ -99,12 +100,23 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterContentChe
     }
   }
 
+  computeGridStyle() {
+    return {
+      'grid-template-columns': `min-content repeat(${this.xComputedRepeat}, min-content) min-content`,
+      'grid-template-rows': `min-content repeat(${this.yComputedRepeat}, min-content) min-content`
+    }
+  }
+
+  /**
+   * return an array of counter
+   * @param size
+   */
   counter(size): number[] {
     let array = new Array<number>();
     for (let i = 0; i < size; i++) {
       array.push(i)
     }
-    return array;
+    return array;//TODO check why dont work for modal: [...Array(size).keys()]
   }
 
   ngAfterViewInit() {
@@ -117,7 +129,6 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterContentChe
 
       if (this.contentDiv) {
         let boundingClientRect = (<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect();
-
 
         if (this.yRepeat) {
           this.yComputedRepeat = this.yRepeat;
@@ -166,5 +177,7 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterContentChe
   ngAfterContentChecked(): void {
     this.ngAfterViewInit();
   }
+
+
 }
 

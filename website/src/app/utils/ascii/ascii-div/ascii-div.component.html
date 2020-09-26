@@ -1,6 +1,5 @@
 <div class="grid"
-     [ngStyle]="{ 'grid-template-columns': 'min-content repeat('+xComputedRepeat+', min-content) min-content',
-  'grid-template-rows': 'min-content repeat('+yComputedRepeat+', min-content) min-content'}"
+     [ngStyle]="computeGridStyle()"
 >
   <div class="content"
        [ngStyle]="computedInnerStyle"
@@ -9,33 +8,33 @@
       <ng-content></ng-content>
         </span>
   </div>
-  <span class="asciiArt border" [ngClass]="topLeftClass">{{topLeftTemplate}}</span>
+  <span class="asciiArt border" [ngClass]="topLeftBorderClass">{{topLeftTemplate}}</span>
   <span *ngFor="let i of counter(xComputedRepeat)"
-        class="asciiArt border" [ngClass]="topClass"
-        (click)="this.onClick('TOP',i)"
+        class="asciiArt border" [ngClass]="topBorderClass"
+        (click)="this.onClick('TOP', i)"
   >{{topTemplate}}</span>
   <span
-    class="asciiArt border" [ngClass]="topRightClass"
+    class="asciiArt border" [ngClass]="topRightBorderClass"
   >{{topRightTemplate}}</span>
   <ng-container *ngFor="let i of counter(yComputedRepeat)">
       <span
-        class="asciiArt leftSide border" [ngClass]="leftClass"
+        class="asciiArt leftSide border" [ngClass]="leftBorderClass"
         (click)="this.onClick('LEFT',i)">{{leftTemplate}}</span>
 
     <span
-      class=" asciiArt rightSide border" [ngClass]="rightClass"
+      class="asciiArt rightSide border" [ngClass]="rightBorderClass"
       (click)="this.onClick('RIGHT',i)">{{rightTemplate}}</span>
   </ng-container>
 
 
   <span
-    class="asciiArt border" [ngClass]="bottomLeftClass"
+    class="asciiArt border" [ngClass]="bottomLeftBorderClass"
   >{{bottomLeftTemplate}}</span>
   <span *ngFor="let i of counter(xComputedRepeat)"
         (click)="this.onClick('BOTTOM',i)"
-        class="asciiArt border" [ngClass]="bottomClass"
+        class="asciiArt border" [ngClass]="bottomBorderClass"
   >{{bottomTemplate}}</span>
   <span
-    class="asciiArt border" [ngClass]="bottomRightClass"
+    class="asciiArt border" [ngClass]="bottomRightBorderClass"
   >{{bottomRightTemplate}}</span>
 </div>

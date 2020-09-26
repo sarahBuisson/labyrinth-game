@@ -35,11 +35,11 @@ export class ZoneViewComponent implements OnInit {
     let directions: Array<String> = ['left', "right", 'top', 'bottom'];
     directions.forEach((key: String) => {
       let door = this.gameplayLabService.doorAt(this.zone, key.toUpperCase())
-      borderRendered[key + "Class"] = 'decor-ui'
+      borderRendered[key + "BorderClass"] = 'decor-ui'
 
       if (door) {
+        borderRendered[key + "BorderClass"] = 'interact-ui'
         if (door.key) {
-          borderRendered[key + "Class"] = 'interact-ui'
           borderRendered[key + "Template"] = viewCloseDoorGridTemplate[key + "Template"].replace("1", door.name)//TODO : use template instead of replace
         } else {
           borderRendered[key + "Template"] = viewOpenDoorGridTemplate[key + "Template"]
@@ -75,5 +75,18 @@ export class ZoneViewComponent implements OnInit {
 
   renderObj(obj: any) {
     return this.renderService.renderObj(obj, this.characterRenderData)
+  }
+
+  computeTooltip(obj: any) {
+    if(obj.name=='start')
+      return 'start flag'
+    if (obj.name == 'exit')
+      return 'the exit'
+    if (obj.key)
+      return 'closed door ' + obj.name
+    if (obj.destination)
+      return 'door'
+    return 'key ' + obj.name
+
   }
 }

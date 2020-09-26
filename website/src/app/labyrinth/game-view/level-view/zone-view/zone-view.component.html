@@ -10,7 +10,7 @@
     >
       <app-ascii
         (click)="this.takeObj(obj)"
-        [tooltip]="obj.name"
+        [tooltip]="computeTooltip(obj)"
         [content]="renderObj(obj)"
         class="zoneObject asciiArt interact-ui"
 
