@@ -4,7 +4,7 @@
 }
 
 .grid {
-  display: grid;
+  display: inline-grid;
   grid-template-columns: min-content repeat(auto-fill, min-content) min-content;
   grid-template-rows: min-content repeat(auto-fill, min-content) min-content;
   width: min-content;
