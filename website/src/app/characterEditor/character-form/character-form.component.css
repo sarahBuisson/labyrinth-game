@@ -10,3 +10,10 @@ span.label {
   vertical-align: middle;
   display: flex;
 }
+.column{
+  display: inline-block;
+}
+
+input {
+  width: 40px;
+}

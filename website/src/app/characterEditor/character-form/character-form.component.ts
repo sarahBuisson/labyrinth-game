@@ -17,6 +17,9 @@ export class CharacterFormComponent implements OnInit {
   data: CharacterRenderData = new CharacterRenderData()
 
   render: String = ""
+  renderReverse: String = ""
+  renderFront: String = ""
+  renderBack: String = ""
 
   constructor(public renderService: CharacterRenderService,
               private dataStorage:DataStorageService) {
@@ -25,6 +28,9 @@ export class CharacterFormComponent implements OnInit {
 
   update() {
     this.render = this.renderService.render(this.data)
+    this.renderReverse = this.renderService.render(this.data, 'RIGHT')
+    this.renderFront = this.renderService.render(this.data, 'BOTTOM')
+    this.renderBack = this.renderService.render(this.data, 'TOP')
   }
 
 
