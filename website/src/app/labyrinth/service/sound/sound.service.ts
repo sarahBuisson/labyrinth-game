@@ -186,7 +186,6 @@ export function createLoop(instrument, partition: Array<any>, tempo = 1): tone.P
   let timeC = 0;
 
   let part = new tone.Part((time, note: Note) => {
-console.log(time)
     let decalage = rhytmeUtils.duration(note.value) * tempo;
     instrument.triggerAttackRelease(note.tune, note.value, "+" + timeC)
     timeC += decalage
