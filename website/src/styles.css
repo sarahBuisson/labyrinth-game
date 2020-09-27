@@ -46,8 +46,8 @@ body {
   color:  #666;
 }
 
-a .ihm-ui {
-text-decoration: none;
+a.ihm-ui, a.interact-ui {
+  text-decoration: none;
 }
 
 .interact-ui{
