@@ -55,7 +55,9 @@ export class AsciiGeneratorService {
   }
 
   templateString(template:String, data:any) {
-    return template.replace(/\$\{(\w+)\}/g, (_, name) => data[name] || "?");
+    console.log(data)
+    console.log(template)
+    return template.replace(/\$\{(\w+)\}/g, (_, name) =>{console.log(name);return  data[name] || "?"});
   }
 
 }

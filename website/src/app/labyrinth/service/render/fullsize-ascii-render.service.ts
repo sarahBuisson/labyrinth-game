@@ -1,21 +1,36 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.service";
 import {AsciiRenderService} from "./ascii-render.service";
 import {GenerateLabService} from "../generate-lab.service";
 import {CharacterRenderService, CharacterRenderData} from "../../../characterEditor/character-render.service";
 import {exitTemplate, startTemplate} from "./resources/border";
+import {DataStorageService} from "../data-storage.service";
+import {Subscription} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class FullsizeAsciiRenderService extends AsciiRenderService {
+export class FullsizeAsciiRenderService extends AsciiRenderService implements OnDestroy {
+  private dirSub: Subscription;
+  private playerRenderDataSub: Subscription;
+  private playerDirection: String;
+  private playerRenderData: CharacterRenderData;
 
 
-  constructor(protected asciiGeneratorService: AsciiGeneratorService, private serviceLabService: GenerateLabService, private characterRenderService: CharacterRenderService) {
+  constructor(protected asciiGeneratorService: AsciiGeneratorService,
+              private dataStorageService: DataStorageService,
+              private characterRenderService: CharacterRenderService) {
     super(asciiGeneratorService);
     this.partsKeys = Object.keys(this.defaultData)
     this.rightDoorTemplate = this.asciiGeneratorService.reverseTemplate(this.leftDoorTemplate, this.partsKeys)
     this.rightWallTemplate = this.asciiGeneratorService.reverseTemplate(this.leftWallTemplate, this.partsKeys)
+    this.dirSub = this.dataStorageService
+      .getPlayerDirection()
+      .subscribe((c) => this.playerDirection = c);
+    this.playerRenderDataSub = this.dataStorageService
+      .getCurrentCharaRenderData()
+      .subscribe((c) => this.playerRenderData = c)
+
   }
 
   defaultData = {
@@ -84,8 +99,10 @@ export class FullsizeAsciiRenderService extends AsciiRenderService {
   rightTopCornerTemplate = this.asciiGeneratorService.reverseTemplate(this.leftTopCornerTemplate, this.partsKeys)
 
 
-  renderPlayer(characterData) {
-    return this.characterRenderService.render(characterData)
+  renderPlayer(characterData, direction = undefined) {
+    console.log('renderPlayer')
+    console.log(characterData)
+    return this.characterRenderService.render(characterData, direction)
   }
 
   renderCenter(zone, party): String {
@@ -93,14 +110,14 @@ export class FullsizeAsciiRenderService extends AsciiRenderService {
   }
 
 
-  renderObj(obj: any, characterRenderData: CharacterRenderData | undefined) {
+  renderObj(obj: any) {
 
     if (obj.name === 'exit')
       return exitTemplate
     if (obj.name === 'start')
       return startTemplate
     if (obj.name === 'player')
-      return this.renderPlayer(characterRenderData)
+      return this.renderPlayer(this.playerRenderData, this.playerDirection)
     if (obj.type === "key")
       return `(${obj.name})--±`
     if (obj.name === "boussole")
@@ -112,5 +129,11 @@ export class FullsizeAsciiRenderService extends AsciiRenderService {
     if (obj.name === "compas")
       return `%/`
     return `[${obj.name}]`
+  }
+
+  ngOnDestroy(): void {
+
+    this.dirSub.unsubscribe();
+    this.playerRenderDataSub.unsubscribe();
   }
 }

@@ -18,7 +18,6 @@
   <div class="mainArea">
     <level-view [currentPartie]="currentPartyProxy"
                 [rangeArroundPlayer]="1"
-                [characterRenderData]="currentCharacterRenderData"
     ></level-view>
   </div>
   <div class="sidebar">
@@ -42,7 +41,6 @@
     <div class="gameplay">
     <keypad-form></keypad-form>
     </div>
-    <app-ascii class="character">{{fullViewRenderService.renderPlayer(this.currentCharacterRenderData)}}</app-ascii>
     <div class="inventoryArea">
       <app-sliding
         onlyOnClick="true"
@@ -55,10 +53,11 @@
   </div>
   <app-ascii-modal #winModal class="text">
     <div ascii-div cl> YOU WIN !</div>
+    <app-ascii>{{fullViewRenderService.renderObj({name: 'exit'})}}</app-ascii>
     <app-ascii class="character">
-      {{fullViewRenderService.renderPlayer(this.currentCharacterRenderData)}}
+      {{fullViewRenderService.renderObj(this.currentPartyProxy.player)}}
     </app-ascii>
-    <app-ascii>{{fullViewRenderService.renderObj({name: 'exit'}, undefined)}}</app-ascii>
+
 
     <div ascii-div xRepeat="40">
       <div>total size:{{this.score.size}}</div>

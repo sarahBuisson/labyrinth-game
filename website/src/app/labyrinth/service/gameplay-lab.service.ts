@@ -23,6 +23,7 @@ export class GameplayLabService {
 
 
   move(direction: string) {
+    this.dataStorageService.saveCharacterDirection(direction);
     let connections = getJsViewFromKotlin(this.currentParty, "player", "location", "connections")
     let nextLocation = connections[direction];
     if (nextLocation) {
@@ -39,6 +40,7 @@ export class GameplayLabService {
   }
 
   take(objToTake) {
+    this.dataStorageService.saveCharacterDirection('LEFT');
     getJsViewFromKotlin(this.currentParty, "player", "location", "content")
       .filter(it => it.name === objToTake.name)
       .forEach((it) => this.play(it))

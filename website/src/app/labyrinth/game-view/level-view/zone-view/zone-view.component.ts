@@ -17,9 +17,6 @@ export class ZoneViewComponent implements OnInit {
   @Input()
   zone: any;
 
- @Input()
- characterRenderData: any; //TODO : not to like this
-
   constructor(public gameplayLabService: GameplayLabService, public renderService:FullsizeAsciiRenderService) {
   }
 
@@ -74,7 +71,7 @@ export class ZoneViewComponent implements OnInit {
   };
 
   renderObj(obj: any) {
-    return this.renderService.renderObj(obj, this.characterRenderData)
+    return this.renderService.renderObj(obj)
   }
 
   computeTooltip(obj: any) {
@@ -86,6 +83,8 @@ export class ZoneViewComponent implements OnInit {
       return 'closed door ' + obj.name
     if (obj.destination)
       return 'door'
+    if (obj.inventory)
+      return 'You'
     return 'key ' + obj.name
 
   }

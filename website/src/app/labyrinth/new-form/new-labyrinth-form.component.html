@@ -1,19 +1,25 @@
-<div ascii-div xRepeat="100" yRepeat="10" class="text" [computeRenderEachTime]="false">
+<div ascii-div xRepeat="100" yRepeat="40" class="text" [computeRenderEachTime]="false">
+  <app-character-form></app-character-form>
   <div class="grid">
-    <span >
+    <span>
     Labyrinth Size:
     </span>
-    <div ascii-div [xRepeat]="20"><input [(ngModel)]="size"></div>
+    <span ascii-div [xRepeat]="20"><input [(ngModel)]="size"></span>
+    <app-ascii-button (click)="play()">play</app-ascii-button>
   </div>
-  <app-ascii-button (click)="play()">play</app-ascii-button>
+
+
 </div>
 
+
 <app-ascii-modal #loadingModal
-                 (click)="clickDuringLoading()"   >
+                 (click)="clickDuringLoading()">
 
   <div ascii-div class="loadingContent text" [computeRenderEachTime]="false">
-    <div ascii-div> Labyrinth generating ...</div><br/>
-    <div ascii-div>Do you know it ? ({{currentLoadingMessage}})</div><br/>
+    <div ascii-div> Labyrinth generating ...</div>
+    <br/>
+    <div ascii-div>Do you know it ? ({{currentLoadingMessage}})</div>
+    <br/>
 
     <div ascii-div *ngIf="currentLoadingMessage===0">
       Find the stair to the exit to win.

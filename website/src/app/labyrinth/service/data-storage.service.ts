@@ -7,15 +7,17 @@ import {CharacterRenderData} from "../../characterEditor/character-render.servic
 })
 export class DataStorageService  {
 
-  constructor() { }
-
-
-
   currentParty$: Subject<any> = new ReplaySubject<any>(1);
-  currentCharaRenderData$: Subject<any> = new ReplaySubject<any>(1);
+  characterDirection$: Subject<any> = new ReplaySubject<any>(1);
+  currentCharaRenderData$: Subject<CharacterRenderData> = new ReplaySubject<CharacterRenderData>(1);
 
+  constructor() {
+    this.characterDirection$.next('LEFT')
+    this.currentCharaRenderData$.next(new CharacterRenderData())
+  }
 
   saveParty(party: { level: any }) {
+
     this.currentParty$.next(party)
   }
 
@@ -29,7 +31,15 @@ export class DataStorageService  {
     this.currentCharaRenderData$.next(chardata)
   }
 
+  saveCharacterDirection(direction) {
+    this.characterDirection$.next(direction)
+  }
+
   getCurrentCharaRenderData() {
     return this.currentCharaRenderData$
+  }
+
+  getPlayerDirection() {
+    return this.characterDirection$
   }
 }

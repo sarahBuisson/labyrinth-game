@@ -28,9 +28,6 @@ export class LevelViewComponent implements OnInit, OnChanges {
 
   @Input()
   rangeArroundPlayer: number = -1;
-
-  @Input()
-  characterRenderData: CharacterRenderData;
   fieldOfView: Array<Array<any>>;
 
   ngOnInit(): void {

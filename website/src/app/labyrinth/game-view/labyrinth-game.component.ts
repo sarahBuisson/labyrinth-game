@@ -14,6 +14,7 @@ import {AsciiModalComponent} from "../../utils/ascii/ascii-modal/ascii-modal.com
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {SoundService} from "../service/sound/sound.service";
+import {CharacterRenderData} from "../../characterEditor/character-render.service";
 
 @Component({
   selector: 'app-labyrinth-game',
@@ -24,12 +25,10 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
   currentParty: any
   currentLevel: any
   currentPartyProxy: any
-  currentCharacterRenderData: CharacterData
   @ViewChild('level-view') levelView:LevelViewComponent;
   @ViewChild('winModal') winModal:AsciiModalComponent;
   score: any;
   private subscriptionCurrentParty: Subscription;
-  private subscriptionCharacterData: Subscription;
 
   constructor(private labService: GenerateLabService,
               private dataStorageService:DataStorageService,
@@ -41,7 +40,6 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribeCurrentParty()
-    this.subscribeCharacterData()
     this.soundService.playGameMusic()
   }
 
@@ -66,15 +64,6 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
     return this.currentParty
   }
 
-  subscribeCharacterData(): any {
-    this.subscriptionCharacterData = this.dataStorageService.getCurrentCharaRenderData()
-      .subscribe((c) => {
-          this.currentCharacterRenderData = c;
-        }
-      )
-    return this.currentCharacterRenderData
-  }
-
   move(direction: string) {
     this.gameplayLabService.move(direction);
   }
@@ -89,10 +78,6 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptionCurrentParty.unsubscribe();
-    this.subscriptionCharacterData.unsubscribe();
   }
 }
 
-class LabyrinthGameComponentImpl extends LabyrinthGameComponent {
-
-}

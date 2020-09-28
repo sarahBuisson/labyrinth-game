@@ -19,7 +19,7 @@ export class InventoryViewComponent implements OnInit {
   }
 
   render(obj) {
-    return this._renderService.renderObj(obj, undefined);
+    return this._renderService.renderObj(obj);
   }
 
 }
