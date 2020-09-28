@@ -42,6 +42,7 @@ export class ZoneViewComponent implements OnInit {
           borderRendered[key + "Template"] = viewOpenDoorGridTemplate[key + "Template"]
 
         }
+        borderRendered[key + "Tooltip"] = this.computeTooltip(door)
       }
     })
 

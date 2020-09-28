@@ -45,12 +45,16 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterContentChe
   yComputedRepeat: number = 0
   @Input()
   topTemplate = "-"
+  topRender
   @Input()
   bottomTemplate = this.topTemplate
+  bottomRender
   @Input()
   leftTemplate = "|"
+  leftRender
   @Input()
   rightTemplate = this.leftTemplate
+  rightRender
   @Input()
   topLeftTemplate = "+"
   @Input()
@@ -102,8 +106,8 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterContentChe
 
   computeGridStyle() {
     return {
-      'grid-template-columns': `min-content repeat(${this.xComputedRepeat}, min-content) min-content`,
-      'grid-template-rows': `min-content repeat(${this.yComputedRepeat}, min-content) min-content`
+      'grid-template-columns': `min-content min-content min-content`,
+      'grid-template-rows': `min-content min-content min-content`
     }
   }
 
@@ -153,12 +157,37 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterContentChe
 
           let style = getComputedStyle(<HTMLElement>this.contentDiv.nativeElement)
 
+
+          let splitTop = this.topTemplate.split("\n")
+          let splitBottom = this.bottomTemplate.split("\n")
+          let counterX = this.counter(this.xComputedRepeat);
+          this.topRender = splitTop.map((l) => {
+              return counterX.map((i) => l).join("")
+            }
+          ).join('\n')
+
+          this.bottomRender = splitBottom.map((l) => {
+              return counterX.map((i) => l).join("")
+            }
+          ).join('\n')
+
+
+          let counterY = this.counter(this.yComputedRepeat);
+          this.leftRender=counterY.map((i)=>this.leftTemplate).join("\n")
+          this.rightRender=counterY.map((i)=>this.rightTemplate).join("\n")
+console.log("this.xRepeat")
+console.log(this.xComputedRepeat)
+console.log(this.leftRender)
           this.computedInnerStyle = {}
           Object.keys(style).filter((n) => n.startsWith('padding')).forEach((key) => {
             this.computedInnerStyle[key] = style[key];
           });
           console.log("update div" + this.name + " " + this.haveAlreadyBeComputed + " " + this.computeRenderEachTime)
-          this.haveAlreadyBeComputed = true;
+
+          if (this.xRepeat > 0 && this.yRepeat > 0) {
+            console.log("comput")
+            this.haveAlreadyBeComputed = true;
+          }
           this._changeDetectorRef.detectChanges();
 
 

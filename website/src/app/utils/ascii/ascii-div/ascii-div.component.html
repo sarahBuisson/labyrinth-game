@@ -9,31 +9,31 @@
         </span>
   </div>
   <span class="asciiArt border" [ngClass]="topLeftBorderClass">{{topLeftTemplate}}</span>
-  <span *ngFor="let i of counter(xComputedRepeat)"
+  <span
         class="asciiArt border" [ngClass]="topBorderClass"
-        (click)="this.onClick('TOP', i)"
-  >{{topTemplate}}</span>
+        (click)="this.onClick('TOP')"
+  >{{topRender}}</span>
   <span
     class="asciiArt border" [ngClass]="topRightBorderClass"
   >{{topRightTemplate}}</span>
-  <ng-container *ngFor="let i of counter(yComputedRepeat)">
+  <ng-container>
       <span
         class="asciiArt leftSide border" [ngClass]="leftBorderClass"
-        (click)="this.onClick('LEFT',i)">{{leftTemplate}}</span>
+        (click)="this.onClick('LEFT')">{{leftRender}}</span>
 
     <span
       class="asciiArt rightSide border" [ngClass]="rightBorderClass"
-      (click)="this.onClick('RIGHT',i)">{{rightTemplate}}</span>
+      (click)="this.onClick('RIGHT')">{{rightRender}}</span>
   </ng-container>
 
 
   <span
     class="asciiArt border" [ngClass]="bottomLeftBorderClass"
   >{{bottomLeftTemplate}}</span>
-  <span *ngFor="let i of counter(xComputedRepeat)"
-        (click)="this.onClick('BOTTOM',i)"
+  <span
+        (click)="this.onClick('BOTTOM')"
         class="asciiArt border" [ngClass]="bottomBorderClass"
-  >{{bottomTemplate}}</span>
+  >{{bottomRender}}</span>
   <span
     class="asciiArt border" [ngClass]="bottomRightBorderClass"
   >{{bottomRightTemplate}}</span>
