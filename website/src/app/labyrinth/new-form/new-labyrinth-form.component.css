@@ -1,16 +1,23 @@
+:host {
+  text-align: center;
+}
+
 input {
   border: none;
   outline: none;
   font-family: monospace;
   white-space: pre;
-  width: auto
+  width: 30px
 }
-input:focus {outline:none!important;}
 
-.grid{
+input:focus {
+  outline: none !important;
+}
+
+.grid {
   display: grid;
   grid-template-columns: min-content min-content;
-  align-items:center;
+  align-items: center;
 }
 
 .loadingContent {
