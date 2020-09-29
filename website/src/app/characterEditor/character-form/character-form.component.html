@@ -1,17 +1,12 @@
 <div ascii-div class="text">aspect of your character</div>
 <div class="layout">
-<div class="column">
   <div *ngFor="let bodyPart of renderService.bodyPartsKey">
     <span class="text">{{bodyPart}}</span>
     <div ascii-div [xRepeat]="10" class="ihm-ui" contentClass="interact-ui">
       <input [(ngModel)]="data[bodyPart]" (change)="update()" [maxLength]="bodyPart==='hat'?6:1">
     </div>
   </div>
-</div>
-<div class="column">
-  <span class="text">render :</span>
-  <div ascii-div [yRepeat]="5" [xRepeat]="8" contentClass="asciiArt">
+  <div ascii-div [yRepeat]="5" [xRepeat]="8" contentClass="render asciiArt">
     <app-ascii>{{render}}</app-ascii>
   </div>
-</div>
 </div>

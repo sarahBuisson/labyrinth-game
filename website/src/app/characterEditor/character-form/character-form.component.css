@@ -11,10 +11,14 @@ span.label {
   display: flex;
 }
 .layout{
-  display: flex;
+  display: grid;
+  grid-template-columns: min-content min-content min-content;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+}
+.render{
+  grid-row: span 2;
 }
 
 .column{
