@@ -7,56 +7,11 @@
     Labyrinth Size:
     </span>
     <span ascii-div><input [(ngModel)]="size"></span>
-    <app-ascii-button (click)="play()" ><span class="interact-ui">play</span></app-ascii-button>
+    <app-ascii-button (click)="play()"><span class="interact-ui">play</span></app-ascii-button>
   </div>
 
 
 </div>
-
-
-<app-ascii-modal #loadingModal
-                 (click)="clickDuringLoading()">
-
-  <div ascii-div class="loadingContent text" [computeRenderEachTime]="false">
-    <div ascii-div> Labyrinth generating ...</div>
-    <br/>
-    <div ascii-div>Do you know it ? ({{currentLoadingMessage}})</div>
-    <br/>
-
-    <div ascii-div *ngIf="currentLoadingMessage===0">
-      Find the stair to the exit to win.
-      <pre class="asciiArt">
-:    |--|    :
-:    |--|    :
-:  :¨|--|¨:  :
-:  '¨¨¨¨¨¨'  :
-:    exit    :
-   </pre>
-
-    </div>
-
-    <div ascii-div *ngIf="currentLoadingMessage===1" xRepeat="70" yRepeat="10">
-   <pre> You can move by :
-      - clicking on the room you want to go
-      - clicking on the door you want to use
-      - using directional key
-      - using the pad at the bottom of the screen
-   </pre>
-    </div>
-    <div ascii-div *ngIf="currentLoadingMessage===2">
-      some door are closed and need a key to be open
-    </div>
-    <div ascii-div *ngIf="currentLoadingMessage===3">
-      You have a map
-    </div>
-
-    <div ascii-div *ngIf="currentLoadingMessage===4">
-      <div>The lab didn't really take that much time to generate.</div>
-      <div>The dev just wanted a way to give tips to player.</div>
-    </div>
-
-    <div ascii-div *ngIf="currentLoadingMessage===5">All labyrinths always have a solution
-    </div>
-  </div>
+<app-ascii-modal #loadingModal>
+  <app-loading></app-loading>
 </app-ascii-modal>
-

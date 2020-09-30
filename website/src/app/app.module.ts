@@ -15,6 +15,8 @@ import { SoundComponent } from './utils/ui/atom/sound/sound.component';
 import { MusicViewComponent } from './music-view/music-view.component';
 import {MusicModule} from "./music-view/music.module";
 import { AsciiGalleryComponent } from './ascii-gallery/ascii-gallery.component';
+import { LoadingComponent } from './labyrinth/loading/loading.component';
+import {LoadingModule} from "./labyrinth/loading/loading.module";
 
 
 @NgModule({
@@ -35,7 +37,7 @@ import { AsciiGalleryComponent } from './ascii-gallery/ascii-gallery.component';
     BrowserAnimationsModule,
     AsciiModule,
     LabyrinthGameModule,
-    MusicModule
+    MusicModule, LoadingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

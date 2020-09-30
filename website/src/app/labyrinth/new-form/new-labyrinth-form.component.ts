@@ -12,7 +12,6 @@ export class NewLabyrinthFormComponent implements OnInit {
 
   size: Number = 5
   playerName: string
-  currentLoadingMessage: number = 1;
 
   @ViewChild('loadingModal') loadingModal: AsciiModalComponent;
 
@@ -44,10 +43,6 @@ export class NewLabyrinthFormComponent implements OnInit {
       this.router.navigateByUrl('/game');
     })
 
-  }
-
-  clickDuringLoading() {
-    this.currentLoadingMessage = Math.round(Math.random() * 5.0)
   }
 
   emptyBoard(): void {

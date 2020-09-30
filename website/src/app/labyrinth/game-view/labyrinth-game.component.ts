@@ -27,6 +27,7 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
   currentPartyProxy: any
   @ViewChild('level-view') levelView:LevelViewComponent;
   @ViewChild('winModal') winModal:AsciiModalComponent;
+  @ViewChild('loadingModal') loadingModal;
   score: any;
   private subscriptionCurrentParty: Subscription;
 
@@ -72,12 +73,30 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
     this.gameplayLabService.takeAll();
   }
 
-  nextLevel() {
-    this.router.navigateByUrl('/new?size=' + (parseInt(this.score.size)+1));
-  }
-
   ngOnDestroy(): void {
     this.subscriptionCurrentParty.unsubscribe();
   }
+
+  nextLevel(): void {
+    this.loadingModal.show();
+    this.winModal.hide();
+
+    let timer = new Promise((resolve) => {
+      // after 1 second signal that the job is finished with an error
+      setTimeout(() => resolve('done'), 5000);
+    });
+    let generation = new Promise((resolve) => {
+      // not taking our time to do the job
+      resolve(this.labService.generate( (parseInt(this.score.size)+1), this.currentPartyProxy.player.name)); // immediately give the result: 123
+
+    });
+
+    Promise.all([timer, generation]).then(() => {
+      this.loadingModal.hide()
+      this.router.navigateByUrl('/game');
+    })
+
+  }
+
 }
 
