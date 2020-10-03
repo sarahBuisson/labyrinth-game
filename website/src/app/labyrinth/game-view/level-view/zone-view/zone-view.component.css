@@ -1,6 +1,18 @@
-.zoneContent{
+.zoneContent {
   display: grid;
   grid-template-columns: repeat(15, 7px);
   grid-template-rows: repeat(5, 14px);
   grid-auto-flow: row dense;
+  position: relative;
+}
+
+.zoneBackground {
+  position:absolute;
+  right: 0;
+  bottom: 0;
+  display: inline-block;
+  z-index: -100;
+}
+.zoneObject {
+  background-color: white;
 }

@@ -6,15 +6,15 @@
      [yRepeat]="1"
 >
   <div class="zoneContent">
+    <div class="background-ui zoneBackground">{{backgroundRender()}}</div>
     <app-ascii-on-grid-div *ngFor="let obj of this.gameplayLabService.levelContent(this.zone)"
     >
       <app-ascii
         (click)="this.takeObj(obj)"
         [tooltip]="computeTooltip(obj)"
-        [content]="renderObj(obj)"
-        class="zoneObject asciiArt interact-ui"
-
-      ></app-ascii>
+      ><span class="zoneObject asciiArt interact-ui">{{renderObj(obj)}}
+       </span></app-ascii>
     </app-ascii-on-grid-div>
+
   </div>
 </div>

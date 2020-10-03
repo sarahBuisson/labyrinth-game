@@ -6,6 +6,23 @@ import {
 } from "../../../service/render/resources/border";
 import {GameplayLabService} from "../../../service/gameplay-lab.service";
 import {FullsizeAsciiRenderService} from "../../../service/render/fullsize-ascii-render.service";
+import {shuffle} from "music-generator/dist/utils";
+
+let backgroundTemplate = shuffle([' ¨    \n  °',
+  ' -      \n       -   \n    -',
+  "",
+  //'__/___/____\\_\\_\n_/_/_______\\___\n_____/____\\____\n___/____\\______\n_/_______\\___\\_\n',
+  ' _/  _/____\\_\\_\n_/_/___    \\___\n_____/  __\\____\n___/____\\__    \n_/   ___\\__ \\_\n',
+  //' _/___ /_ \\_\\_\n_/_/_ __  _\\___\n____ /__ _\\_ __\n_ _/_ _ \\__ ___\n_/__ __ _\\__\\__\n',
+  //' _/_/__ \\__ \\_\n___/ / __\\__  \\\n __/ /__ \\_\\\\_\n_ __/  __\\_\\ \\\n/ __/_/_\\__  \\_',
+
+  ' ,`    ,  \'  \n ,\'    \'  ,  ,,  \n       ,  \n    \'\'  , ` ,     ',
+  ' .    .  \n    .   .   \n    .',
+  ' .       .  \n       .    .   \n       .',
+  ' °       o  \n       °    .   \n  o   °       .',
+  ' ..    ..... .. \n. . .... ..... .\n.. ... ..   ....\n....     .... . \n. .      ...   .\n'
+
+])
 
 @Component({
   selector: 'app-zone-view',
@@ -17,14 +34,13 @@ export class ZoneViewComponent implements OnInit {
   @Input()
   zone: any;
 
-  constructor(public gameplayLabService: GameplayLabService, public renderService:FullsizeAsciiRenderService) {
+  constructor(public gameplayLabService: GameplayLabService, public renderService: FullsizeAsciiRenderService) {
+
   }
 
   ngOnInit(): void {
+
   }
-
-
-
 
 
   borderRendered() {
@@ -49,6 +65,10 @@ export class ZoneViewComponent implements OnInit {
     return borderRendered;
   }
 
+  backgroundRender() {
+
+    return backgroundTemplate[(this.zone.x + this.zone.y*3) % backgroundTemplate.length]
+  }
 
   manageClick: any = () => {
     if (this.gameplayLabService.hasPlayer(this.zone)) {
@@ -76,7 +96,7 @@ export class ZoneViewComponent implements OnInit {
   }
 
   computeTooltip(obj: any) {
-    if(obj.name=='start')
+    if (obj.name == 'start')
       return 'start flag'
     if (obj.name == 'exit')
       return 'the exit'

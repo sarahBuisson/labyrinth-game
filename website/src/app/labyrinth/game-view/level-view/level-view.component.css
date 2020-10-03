@@ -5,9 +5,6 @@
 }
 
 
-.zoneObject {
-
-}
 
 ::ng-deep.outside .border{color:lightgray}
 ::ng-deep.inside .border{color:grey}
