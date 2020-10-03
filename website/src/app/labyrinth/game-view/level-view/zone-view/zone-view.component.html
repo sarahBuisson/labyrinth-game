@@ -7,9 +7,8 @@
 >
   <div class="zoneContent">
     <div class="background-ui zoneBackground">{{backgroundRender()}}</div>
-    <app-ascii-on-grid-div *ngFor="let obj of this.gameplayLabService.levelContent(this.zone)"
-    >
-      <app-ascii
+    <app-ascii-on-grid-div [width]="15" [height]="5">
+      <app-ascii *ngFor="let obj of this.gameplayLabService.levelContent(this.zone)"
         (click)="this.takeObj(obj)"
         [tooltip]="computeTooltip(obj)"
       ><span class="zoneObject asciiArt interact-ui">{{renderObj(obj)}}

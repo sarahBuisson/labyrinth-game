@@ -1,10 +1,12 @@
 <div class="inventory container">
-  <div ascii-div [borderDatas]="this.borderDatas">
-    <div class="inventoryContent">
-      <app-ascii-on-grid-div
-        *ngFor="let item of this.player.inventoryArray">
-        <app-ascii [tooltip]="item.name">{{render(item)}}</app-ascii>
+  <div ascii-div [borderDatas]="this.borderDatas" class="inventoryContent">
+
+      <app-ascii-on-grid-div [width]="15">
+        <ng-container *ngFor="let item of this.player.inventoryArray">
+          <app-ascii
+            [tooltip]="item.name">{{render(item)}}</app-ascii>
+        </ng-container>
       </app-ascii-on-grid-div>
-    </div>
+
   </div>
 </div>

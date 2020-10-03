@@ -5,8 +5,7 @@
 
     <ng-container *ngFor="let levelCaseInput of row; let y = index">
       <ng-container *ngIf="levelCaseInput.contentArray.length>0">
-        <app-zone-view [zone]="levelCaseInput" [x]="x + this.currentPartie.player.location.x" [y]="y + this.currentPartie.player.location.y"> </app-zone-view>
-
+        <app-zone-view [zone]="levelCaseInput"> </app-zone-view>
       </ng-container>
       <ng-container *ngIf="levelCaseInput.contentArray.length===0">
         <div ascii-div class="zone outside background-ui"
