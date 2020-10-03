@@ -1,14 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 /*@font-face {
   font-family: asciiArtFont;
-  src: url('./assets/font/Courrier-Prime-Code.ttf');
+  src: url('/Courrier-Prime-Code.ttf') format("truetype");
 
   white-space: pre;
 }
 
 @font-face {
   font-family: asciiTextFont;
-  src: url('./assets/font/Courrier-Prime.ttf');
+  src: url(Courrier-Prime.ttf) format("truetype");
 
   white-space: pre;
 }
@@ -18,18 +18,19 @@ body {
   overflow: hidden;
   font-size: 12px;
   font-family: asciiArtFont;
-
+  white-space: pre;
 }
 
 
 
 .asciiArt {
-  font-family: Consolas, monospace;/* monaco,Consolas,'Lucida Console';*/
+  font-family: asciiArtFont, "Comic Sans MS";
   font-size: 12px;
   white-space: pre;
+
 }
 .text {
-  font-family: monospace;
+  font-family: asciiTextFont, "Comic Sans MS";
   white-space: pre;
   font-size: 12px;
 }
