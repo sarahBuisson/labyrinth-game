@@ -3,8 +3,8 @@
 
       <app-ascii-on-grid-div [width]="15">
         <ng-container *ngFor="let item of this.player.inventoryArray">
-          <app-ascii
-            [tooltip]="item.name">{{render(item)}}</app-ascii>
+          <span app-ascii
+            [tooltip]="item.name">{{render(item)}}</span>
         </ng-container>
       </app-ascii-on-grid-div>
 
