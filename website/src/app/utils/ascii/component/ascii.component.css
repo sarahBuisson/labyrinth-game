@@ -1,7 +1,7 @@
 pre {
   margin: 0px;
-  margin-right: -10px;/*TODO for some reason there is alway an extra char at the right of each line*/
   display: inline-block;
+  background: white;
 }
 
 /* Tooltip text */

@@ -1,6 +1,6 @@
 .container {
   display: grid;
-  grid-template-columns: 700px 50px;
+  grid-template-columns: 750px 50px;
   grid-template-rows: 650px 50px;
   grid-template-areas:
     "main sidebar"

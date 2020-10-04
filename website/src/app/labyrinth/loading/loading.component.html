@@ -7,24 +7,18 @@
 
     <div ascii-div *ngIf="currentLoadingMessage===0">
       Find the ladder to the exit to win.
-      <pre class="asciiArt">
-:    |--|    :
-:    |--|    :
-:  :¨|--|¨:  :
-:  '¨¨¨¨¨¨'  :
-:    exit    :
-   </pre>
+  <div app-ascii>{{fullViewRenderService.renderObj({name: 'exit'})}}</div>
 
     </div>
 
-    <div ascii-div *ngIf="currentLoadingMessage===1" xRepeat="70" yRepeat="10">
-   <pre> You can move by :
+    <pre ascii-div class="text" *ngIf="currentLoadingMessage===1" xRepeat="70" yRepeat="10">
+   You can move by :
       - clicking on the room you want to go
       - clicking on the door you want to use
       - using directional key
       - using the pad at the bottom of the screen
-   </pre>
-    </div>
+
+    </pre>
     <div ascii-div *ngIf="currentLoadingMessage===2">
       some door are closed and need a key to be open
     </div>

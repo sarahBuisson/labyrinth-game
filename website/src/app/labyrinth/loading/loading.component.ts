@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FullsizeAsciiRenderService} from "../service/render/fullsize-ascii-render.service";
 
 @Component({
   selector: 'app-loading',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class LoadingComponent implements OnInit {
 
   currentLoadingMessage: number = 1;
-  constructor() { }
+  constructor(private fullViewRenderService:FullsizeAsciiRenderService) { }
 
   ngOnInit(): void {
   }
