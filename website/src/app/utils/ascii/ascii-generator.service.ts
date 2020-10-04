@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ export class AsciiGeneratorService {
       this.reverseChar[this.reverseChar[key]] = key;
     }
   }
+
   reverseChar: Object = {
     'd': 'b',
     '/': '\\',
@@ -22,16 +23,19 @@ export class AsciiGeneratorService {
 
     return this.reverseChar[str] ? this.reverseChar[str] : str;
   }
+
   reverseTemplate(template, partsKey) {
     return template.split("\n")
-      .map(row=>{
+      .map(row => {
         let reversedRow = row.split(/\$\{(\w+)\}/g)
-          .filter(s=>s!="")
+          .filter(s => s != "")
           .map((word) => {
 
 
             if (!partsKey.includes(word) && !partsKey.includes(word.replace("Reversed", ""))) {
-              return word.split("").map(e => {return this.reverseChar[e]?this.reverseChar[e]:e})
+              return word.split("").map(e => {
+                return this.reverseChar[e] ? this.reverseChar[e] : e
+              })
                 .reverse().join("");
             } else if (word.endsWith("Reversed")) {
               return `$\{${word.replace("Reversed", "")}}`;
@@ -39,25 +43,24 @@ export class AsciiGeneratorService {
               return `$\{${word}Reversed}`;
             }
           }).reverse().join("");
-        return reversedRow})
+        return reversedRow
+      })
       .join("\n")
 
   }
 
-  reverseData(data:any) {
+  reverseData(data: any) {
     let ret = {}
     for (let key in data) {
-
       ret[key + "Reversed"] = this.reverseString(data[key])
-
     }
     return ret;
   }
 
-  templateString(template:String, data:any) {
-    console.log(data)
-    console.log(template)
-    return template.replace(/\$\{(\w+)\}/g, (_, name) =>{console.log(name);return  data[name] || "?"});
+  templateString(template: String, data: any) {
+    return template.replace(/\$\{(\w+)\}/g, (_, name) => {
+      return data[name] || "?"
+    });
   }
 
 }

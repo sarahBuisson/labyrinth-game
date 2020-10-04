@@ -85,7 +85,6 @@ export class SoundService implements OnDestroy {
     this.menuInstrument.toDestination();
     this.soundInstrument.toDestination();
     this.soundInstrument.volume.value -= 35
-    console.log( this.soundInstrument.volume.value)
     this.moveSound = this.gameMusiqueService.moveMusic();
     this.takeSound = this.gameMusiqueService.takeMusic();
     this.noSound = this.gameMusiqueService.noMusic();

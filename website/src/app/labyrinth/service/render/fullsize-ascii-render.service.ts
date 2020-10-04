@@ -100,8 +100,6 @@ export class FullsizeAsciiRenderService extends AsciiRenderService implements On
 
 
   renderPlayer(characterData, direction = undefined) {
-    console.log('renderPlayer')
-    console.log(characterData)
     return this.characterRenderService.render(characterData, direction)
   }
 

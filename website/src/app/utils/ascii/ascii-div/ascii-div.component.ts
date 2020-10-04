@@ -130,7 +130,6 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterContentChe
 
     if (shouldCompute) {
 
-
       if (this.contentDiv) {
         let boundingClientRect = (<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect();
 
@@ -157,7 +156,6 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterContentChe
 
           let style = getComputedStyle(<HTMLElement>this.contentDiv.nativeElement)
 
-
           let splitTop = this.topTemplate.split("\n")
           let splitBottom = this.bottomTemplate.split("\n")
           let counterX = this.counter(this.xComputedRepeat);
@@ -170,43 +168,24 @@ export class AsciiDivComponent implements OnInit, AfterViewInit, AfterContentChe
               return counterX.map((i) => l).join("")
             }
           ).join('\n')
-
-
           let counterY = this.counter(this.yComputedRepeat);
           this.leftRender=counterY.map((i)=>this.leftTemplate).join("\n")
           this.rightRender=counterY.map((i)=>this.rightTemplate).join("\n")
-console.log("this.xRepeat")
-console.log(this.xComputedRepeat)
-console.log(this.leftRender)
           this.computedInnerStyle = {}
           Object.keys(style).filter((n) => n.startsWith('padding')).forEach((key) => {
             this.computedInnerStyle[key] = style[key];
           });
-          console.log("update div" + this.name + " " + this.haveAlreadyBeComputed + " " + this.computeRenderEachTime)
-
           if (this.xRepeat > 0 && this.yRepeat > 0) {
-            console.log("comput")
             this.haveAlreadyBeComputed = true;
           }
           this._changeDetectorRef.detectChanges();
-
-
-          console.log(boundingClientRect.width)
         }
       }
 
     }
   }
-
-  /*
-    ngAfterViewChecked(): void {
-      this.ngAfterViewInit();
-    }*/
-
   ngAfterContentChecked(): void {
     this.ngAfterViewInit();
   }
-
-
 }
 

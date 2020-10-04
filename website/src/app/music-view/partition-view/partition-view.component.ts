@@ -39,7 +39,6 @@ export class PartitionViewComponent implements OnInit, OnChanges {
       this.scale=this.initscale
     else
     if (this.partitionForms) {
-      console.log(this.partitionForms)
       let tunes = flatPartition(this.partitionForms).map((n) => n.tune)
       this.scale = getSuroundingTunes(tunes).sort((a,b)=>getLevel(b)-getLevel(a));
     }

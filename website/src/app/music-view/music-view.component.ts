@@ -24,13 +24,10 @@ export class MusicViewComponent implements OnInit {
   }
 
   generateMenuMusic() {
-
-    console.log("generateMenuMusic")
     this.changeMusic(this.musiqueService.menuMusicRandom(), this.instrument)
   }
 
   generateGameMusic() {
-    console.log("generateGameMusic")
     this.changeMusic(this.musiqueService.gameMusicRandom(), this.instrument2)
   }
 
