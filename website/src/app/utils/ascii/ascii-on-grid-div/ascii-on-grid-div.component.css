@@ -1,0 +1,4 @@
+.grid-content{
+  grid-auto-flow: column dense;
+  display: grid;
+}

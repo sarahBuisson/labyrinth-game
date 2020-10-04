@@ -5,14 +5,14 @@ import {
 
 @Component({
   selector: 'app-ascii-on-grid-div',
-  template: '<ng-content></ng-content>',
+  template: '<div class="grid-content" [ngStyle]="{gridRow:gridRow, gridColumn:gridColumn}"><ng-content></ng-content></div>',
   styleUrls: ['./ascii-on-grid-div.component.css']
 })
 export class AsciiOnGridDivComponent implements OnInit {
-  @HostBinding('style.grid-column')
+
   public gridColumn: string;
 
-  @HostBinding('style.grid-row')
+
   public gridRow: string;
   @Input()
   public width: number = 1;

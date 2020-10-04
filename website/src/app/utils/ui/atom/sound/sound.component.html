@@ -1,5 +1,4 @@
 <div (click)="toogle()">
-  <app-ascii *ngIf="soundOn" tooltip="mute" [content]="'          __ \n((\'c\') < d d '" >
-  </app-ascii>
-  <app-ascii *ngIf="!soundOn" tooltip="music"  [content]="'             _\n((\'x\')   ° ° (d)'">     </app-ascii>
+  <span app-ascii *ngIf="soundOn" tooltip="mute" [content]="'          __ \n((\'c\') < d d '" ></span>
+  <span app-ascii *ngIf="!soundOn" tooltip="music"  [content]="'             _\n((\'x\')   ° ° (d)'"></span>
 </div>

@@ -53,10 +53,10 @@
   </div>
   <app-ascii-modal #winModal class="text">
     <div ascii-div cl> YOU WIN !</div>
-    <app-ascii>{{fullViewRenderService.renderObj({name: 'exit'})}}</app-ascii>
-    <app-ascii class="character">
+    <span app-ascii>{{fullViewRenderService.renderObj({name: 'exit'})}}</span>
+    <span app-ascii>
       {{fullViewRenderService.renderObj(this.currentPartyProxy.player)}}
-    </app-ascii>
+    </span>
 
 
     <div ascii-div xRepeat="40">
