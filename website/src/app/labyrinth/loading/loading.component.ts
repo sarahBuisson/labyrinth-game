@@ -9,7 +9,7 @@ import {FullsizeAsciiRenderService} from "../service/render/fullsize-ascii-rende
 export class LoadingComponent implements OnInit {
 
   currentLoadingMessage: number = 1;
-  constructor(private fullViewRenderService:FullsizeAsciiRenderService) { }
+  constructor(public fullViewRenderService:FullsizeAsciiRenderService) { }
 
   ngOnInit(): void {
   }
