@@ -1,20 +1,19 @@
-<div class="title">
-<pre>
+<div class="title text">
+<h1 ascii-render [name]="'title'">
   Lab generator
-</pre>
+</h1>
   <div class="menuBar">
-    <app-ascii-button class="button asciiArt ihm-ui" ><a href="./menu" class="interact-ui">menu</a></app-ascii-button>
-    <app-ascii-button class="button asciiArt ihm-ui"><a href="./character" class="interact-ui">characterEditor</a></app-ascii-button>
-    <app-ascii-button class="button asciiArt ihm-ui"><a href="./new" class="interact-ui">new Labyrinth</a></app-ascii-button>
+    <button ascii-render class="ihm-ui" ><a href="./menu" class="interact-ui text">menu</a></button>
+    <button ascii-render class="ihm-ui"><a href="./character" class="interact-ui text">characterEditor</a></button>
+    <button ascii-render  class="ihm-ui"><a href="./new" class="interact-ui text">new Labyrinth</a></button>
   </div>
 </div>
 <div class="noPartyMessage" *ngIf="!currentPartyProxy">
-  <div ascii-div class="text interact-ui" >no game loaded for the moment, please wait or create a new game
-    <app-ascii-button class="ihm-ui"><a  class="interact-ui" href="./new">new game</a></app-ascii-button>
+  <div ascii-border class="text interact-ui" >no game loaded for the moment, please wait or create a new game
+    <button class="ihm-ui"><a  class="text interact-ui" href="./new">new game</a></button>
   </div>
 </div>
 <div class="container" *ngIf="currentPartyProxy">
-
   <div class="mainArea">
     <level-view [currentPartie]="currentPartyProxy"
                 [rangeArroundPlayer]="1"
@@ -23,7 +22,6 @@
   <div class="sidebar">
     <app-sliding
       [openData]="{position:'absolute',
-
       transform: 'translateX(-50%)',
       left:'50%'}"
       [closeData]="{position:'absolute',
@@ -52,14 +50,14 @@
     </div>
   </div>
   <app-ascii-modal #winModal class="text">
-    <div ascii-div cl> YOU WIN !</div>
+    <div ascii-border cl> YOU WIN !</div>
     <span app-ascii>{{fullViewRenderService.renderObj({name: 'exit'})}}</span>
     <span app-ascii>
       {{fullViewRenderService.renderObj(this.currentPartyProxy.player)}}
     </span>
 
 
-    <div ascii-div xRepeat="40">
+    <div ascii-border xRepeat="40">
       <div>total size:{{this.score.size}}</div>
       <div>total number of room:{{this.score.numberOfRooms}}</div>
       <div>minimum solution:{{this.score.solutionLength}} m</div>
@@ -68,7 +66,7 @@
       <div> </div>
       <div>total score:{{this.score.score}}</div>
     </div>
-    <div ascii-div (click)="nextLevel()">next level</div>
+    <div ascii-border (click)="nextLevel()">next level</div>
   </app-ascii-modal>
 
   <app-ascii-modal #loadingModal>

@@ -1,13 +1,15 @@
-<div ascii-div xRepeat="70" yRepeat="40" class="text ihm-ui" [computeRenderEachTime]="false">
+<div ascii-render class="container text ihm-ui" borderTemplateName="paper">
   <app-character-form></app-character-form>
 
-  <div ascii-div class="text">Level creation</div>
+  <h1 ascii-render class="text">Level creation</h1>
   <div class="grid">
-    <span>
+    <h2>
     Labyrinth Size:
-    </span>
-    <span ascii-div><input [(ngModel)]="size"></span>
-    <app-ascii-button (click)="play()"><span class="interact-ui">play</span></app-ascii-button>
+    </h2>
+    <div class="input--border" ascii-render><input [(ngModel)]="size"></div>
+    <button ascii-render class="text interact-ui"
+            (click)="play()">play
+    </button>
   </div>
 
 

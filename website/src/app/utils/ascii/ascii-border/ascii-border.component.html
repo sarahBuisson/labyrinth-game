@@ -1,0 +1,70 @@
+<ng-content></ng-content>
+
+
+<ng-container *ngIf="debug">
+  <span>
+  <div class="debug top left"></div>
+  <div class="debug top right"></div>
+  <div class="debug bottom left"></div>
+  <div class="debug bottom right"></div>
+    </span>
+</ng-container>
+
+<div class="asciiArt border-part top left"
+      style="display: inline-block;position: absolute;"
+      [ngStyle]="styleOfPart(['top','left'])"
+      [ngClass]="borderClasses.topLeft||borderClasses.default">{{borderTemplate.topLeftTemplate}}</div>
+
+  <div
+    class="asciiArt border-part top"
+    [ngClass]="borderClasses.top||borderClasses.default"
+    [ngStyle]="styleOfPart(['top'])"
+    (click)="this.onClick('TOP')"
+  >{{renders.top}}</div>
+
+  <div
+    class="asciiArt border-part top right"
+    [ngClass]="borderClasses.topRight||borderClasses.default"
+    [ngStyle]="styleOfPart(['top','right'])"
+  >{{borderTemplate.topRightTemplate}}</div>
+
+
+  <div class="asciiArt rightSide"
+        [ngClass]="borderClasses.right||borderClasses.default"
+        [ngStyle]="styleOfPart(['right'])"
+        (click)="this.onClick('RIGHT')">{{renders.right}}</div>
+
+
+
+
+<div class="asciiArt border-part leftSide" [ngClass]="borderClasses.left||borderClasses.default"
+     *ngIf="yComputedRepeat>0"
+     style="position: absolute;"
+     [ngStyle]="styleOfPart(['left'])"
+     (click)="this.onClick('LEFT')"
+>{{renders.left}}</div>
+
+
+<div class="borderBottom"
+
+></div>
+    <div
+      class="asciiArt border-part bottom left"
+      [ngStyle]="styleOfPart(['bottom','left'])"
+      [ngClass]="borderClasses.bottomLeft||borderClasses.default"
+    >{{borderTemplate.bottomLeftTemplate}}</div>
+  <div
+    (click)="this.onClick('BOTTOM')"
+    *ngIf="xComputedRepeat>0"
+    class="asciiArt border-part bottom"
+    [ngClass]="borderClasses.bottom||borderClasses.default"
+    [ngStyle]="styleOfPart(['bottom'])"
+  >{{renders.bottom}}</div>
+  <div
+    class="asciiArt border-part bottom right"
+    [ngClass]="borderClasses.bottomRight||borderClasses.default"
+    [ngStyle]="styleOfPart(['bottom','right'])"
+  >{{borderTemplate.bottomRightTemplate}}</div>
+
+
+

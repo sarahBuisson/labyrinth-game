@@ -1,4 +1,4 @@
-<div class="levelRender">
+<div class="levelRender" >
 
 
   <div class="levelRowRender" *ngFor="let row of fieldOfView; let x = index ">
@@ -8,10 +8,8 @@
         <app-zone-view [zone]="levelCaseInput"> </app-zone-view>
       </ng-container>
       <ng-container *ngIf="levelCaseInput.contentArray.length===0">
-        <div ascii-div class="zone outside background-ui"
-             [xRepeat]="1"
-             [yRepeat]="1"
-             [borderDatas]="emptyRendered(x,y)"
+        <div app-ascii class="zone outside background-ui"
+        [content]="emptyRendered(x,y)"
         >
         </div>
       </ng-container>

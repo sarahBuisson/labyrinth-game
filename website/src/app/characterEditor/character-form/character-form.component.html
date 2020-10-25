@@ -1,12 +1,19 @@
-<div ascii-div class="text">aspect of your character</div>
+<h1 ascii-render class="text" >aspect of your character</h1>
 <div class="layout">
   <div *ngFor="let bodyPart of renderService.bodyPartsKey">
-    <span class="text">{{bodyPart}}</span>
-    <div ascii-div [xRepeat]="10" class="ihm-ui" contentClass="interact-ui">
-      <input [(ngModel)]="data[bodyPart]" (change)="update()" [maxLength]="bodyPart==='hat'?6:1">
+    <h2 ascii-render class="text">{{bodyPart}}</h2>
+
+    <div class="input--border" ascii-render>
+      <input class="interact-ui"
+             [(ngModel)]="data[bodyPart]"
+             (change)="update()"
+             [maxLength]="bodyPart==='hat'?6:1">
     </div>
   </div>
-  <div ascii-div [yRepeat]="5" [xRepeat]="8" contentClass="render asciiArt">
-    {{render}}
+  <div>  <h2 ascii-render class="text">You</h2>
+    <div ascii-render [xRepeat]="6" [yRepeat]="4" class="character-render asciiArt"
+         borderTemplateName="double">
+      {{render}}
+    </div>
   </div>
 </div>

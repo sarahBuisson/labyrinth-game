@@ -1,5 +1,6 @@
-input, textarea {
-  width: auto
+input {
+  width: 54px;
+  padding: 0;
 }
 
 input:focus {
@@ -17,14 +18,12 @@ span.label {
   align-items: center;
   justify-content: space-around;
 }
-.render{
-  grid-row: span 2;
+.character-render{
 }
 
 .column{
   display: inline-block;
 }
-
-input {
-  width: 40px;
+.input--border{
+  display: inline-block;
 }

@@ -1,5 +1,7 @@
 :host {
   text-align: center;
+  width: 50%;
+  max-width: 500px;
 }
 
 input {
@@ -7,7 +9,11 @@ input {
   outline: none;
   font-family: monospace;
   white-space: pre;
-  width: 30px
+  width: 45px
+}
+
+.input--border {
+  display: inline-block;
 }
 
 input:focus {
@@ -18,9 +24,4 @@ input:focus {
   display: grid;
   grid-template-columns: min-content min-content;
   align-items: center;
-}
-
-.loadingContent {
-
-  max-width: 400px;
 }

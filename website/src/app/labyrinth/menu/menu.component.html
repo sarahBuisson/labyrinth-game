@@ -36,37 +36,35 @@
   |__/|__/_//_/\___/  \__/\_,_/\__/ / .__/\__/\___/ .__/_/\__/
                                   /_/           /_/
   -->
-
-
   </pre>
 </div>
-<div class="container">
-  <app-ascii-button
+<div class="container text">
+  <button ascii-render
        (click)="clickNew()">NEW LABYRINTH
-  </app-ascii-button>
-  <app-ascii-button
+  </button>
+  <button ascii-render
        (click)="clickCharacter()">CHANGE CHARACTER LOOK
-  </app-ascii-button>
-  <app-ascii-button
+  </button>
+  <button ascii-render
        (click)="saveHighScore();highScoreModal.show()">HIGHSCORE
-  </app-ascii-button>
-  <app-ascii-button
+  </button>
+  <button ascii-render
        (click)="clickMusic()">ABOUT THE MUSIC...
-  </app-ascii-button>
+  </button>
 </div>
 <app-ascii-modal #highScoreModal (click)="this.highScoreModal.hide()">
   <div>
-    <div ascii-div
+    <div ascii-border
          hoverClass="asciiHighlight"
     ><span>Highscore</span>
     </div>
-    <div ascii-div>
+    <div ascii-border>
 
       Your best score
       <br/>
       Ever!
       <div *ngFor="let score of highscores">
-        <div ascii-div xRepeat="30">
+        <div ascii-border xRepeat="30">
           {{score.player.name}} : {{score.score}}</div>
       </div>
     </div>

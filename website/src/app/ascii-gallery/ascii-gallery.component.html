@@ -1,8 +1,78 @@
-
-
 <span (click)="toggle()" class="text"> toggle galery</span>
+<inventory-view [player]="{inventory:[]}"></inventory-view>
 <ng-container *ngIf="display">
   <app-zone-view [zone]="defaultZone"></app-zone-view>
-  <span ascii-div><span class="text">text</span>
+  <span ascii-border><span class="text">text</span>
     <span class="asciiArt">art</span></span>
+
+  <br/>
+  <br/>
+  <button ascii-render [name]="'bigspan'" class="text">button</button>
+
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <span ascii-render [borderTemplate]="abc" [name]="'X'">X</span>
+  <input ascii-render value="inputAlone"/>
+  <br/><br/>
+  <div style="display: inline-block" ascii-render [borderTemplate]="abc" [name]="'X'"><input value="inputDiv"></div>
+  <br/><br/>
+  <br/><br/>
+
+  <span ascii-render [name]="'bigspan'" class="text">spon</span>
+  <br/>
+  <h1 ascii-render [name]="'bigspan'" class="text">H1</h1>
+
+  <br/>
+  <br/>
+  <span ascii-render [name]="'new'" class="text">SPA LABYRINTH</span>
+  <br/>
+  <br/>
+  <br/>
+  <button ascii-render [name]="'new'" class="text">BTN LABYRINTH</button>
+  <br/>
+  <button ascii-render [name]="'new'" class="text"><span app-ascii [content]="'BTN \nLABYRINTH'"></span></button>
+  <br/>
+  <br/>
+  <div ascii-border class="zone outside background-ui"
+       [xRepeat]="0"
+       [yRepeat]="0"
+       [borderTemplate]="outsideZone"
+  >
+  </div>
+  <div ascii-border class="zone outside background-ui"
+       [xRepeat]="0"
+       [yRepeat]="0"
+       [borderTemplate]="outsideZone"
+  >
+  </div>
+  <br/>
+  <br/>
+  <br/>
+  <button ascii-render class="asciiArt">button</button>
+  <br/>
+  <div ascii-render [name]="'diiiiv'" class="text">text div</div>
+  <div ascii-render [name]="'diiiiv'" class="text" [borderTemplate]="parchemin"><span app-ascii
+                                                                                      [content]="'div \nmulti\n line'"></span>
+  </div>
+  <div ascii-render [name]="'diiiiv'" class="text"><span app-ascii [content]="'div \nmulti\n line'"></span></div>
+  <div ascii-render [name]="'diiiiv'" class="text"><span app-ascii [content]="'div \nmulti\n with content'"></span>
+    <span ascii-render [name]="'bigspan'" class="text">span</span>
+
+    <div ascii-render> another div</div>
+  </div>
+  <br/>
+  <input ascii-render [defaultValue]="'input'"/>
+  <div style="width:300px">
+    <p> some exemple of text lorelum ipsum blbkuuhiue hfue hfuezhfuhz efuhezfez hfizofhioezhfoz hiehfozehfnhoif zz</p>
+    <p ascii-render> some exemple of text lorelum ipsum blbkuuhiue hfue hfuezhfuhz efuhezfez hfizofhioezhfoz
+      hiehfozehfnhoif zz</p>
+  </div>
 </ng-container>
+
+
+<div ascii-render [name]="'diiiiv'" class="asciiArt" borderTemplateName="paper">div</div>
+
+
+<!-- -->

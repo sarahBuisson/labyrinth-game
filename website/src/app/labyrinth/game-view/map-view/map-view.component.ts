@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GameplayLabService} from "../../service/gameplay-lab.service";
-import {paperDataGridTemplate, mapGridTemplate} from "../../service/render/resources/border";
+import {paperGridTemplate, mapGridTemplate} from "../../service/render/resources/border";
 
 
-let mapBorderData = paperDataGridTemplate;
+let mapBorderData = paperGridTemplate;
 
 @Component({
   selector: 'map-view',

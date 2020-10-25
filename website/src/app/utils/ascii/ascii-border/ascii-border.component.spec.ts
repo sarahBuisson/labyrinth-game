@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AsciiDivComponent } from './ascii-div.component';
+import { AsciiBorderComponent } from './ascii-border.component';
 
 describe('AsciiButtonComponent', () => {
-  let component: AsciiDivComponent;
-  let fixture: ComponentFixture<AsciiDivComponent>;
+  let component: AsciiBorderComponent;
+  let fixture: ComponentFixture<AsciiBorderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AsciiDivComponent ]
+      declarations: [ AsciiBorderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AsciiDivComponent);
+    fixture = TestBed.createComponent(AsciiBorderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -14,24 +14,48 @@
 }
 */
 body {
-
   overflow: hidden;
   font-size: 12px;
   font-family: asciiArtFont;
-  white-space: pre;
+
 }
 
+button, div{
+
+  border-top-width: 14px;
+  border-bottom-width: 14px;
+  border-left-width: 9px;
+  border-right-width: 9px;
+
+}
+button {
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+button, h1, h2, input {
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-size: 12px;
+  font-weight:normal;
+}
+
+input {
+  font-family: asciiTextFont, "Comic Sans MS";
+}
 
 
 .asciiArt {
   font-family: asciiArtFont, "Comic Sans MS";
   font-size: 12px;
   white-space: pre;
-
 }
 .text {
   font-family: asciiTextFont, "Comic Sans MS";
-  white-space: pre;
+  white-space: pre-wrap;
   font-size: 12px;
 }
 
@@ -51,7 +75,7 @@ a.ihm-ui, a.interact-ui {
   text-decoration: none;
 }
 
-.interact-ui{
+.interact-ui {
   color: #333;
 }
 
@@ -59,8 +83,7 @@ a.ihm-ui, a.interact-ui {
   color: #000;
 }
 
-input, textarea {
-  border: none;
-  outline: none;
+input, textarea, button {
+  font-family: asciiTextFont, "Comic Sans MS";
 }
 

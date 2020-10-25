@@ -1,9 +1,10 @@
-<div ascii-div class="zone asciiArt decor-ui"
-     [borderDatas]="borderRendered()"
+<div ascii-border class="zone asciiArt decor-ui"
+     [borderTemplate]="borderRendered()"
      [onClick]="manageClick()"
      (click)="clickOnZone( $event)"
      [xRepeat]="1"
      [yRepeat]="1"
+     [name]="'zone'"
 >
   <div class="zoneContent">
     <div class="background-ui zoneBackground">{{backgroundRender()}}</div>

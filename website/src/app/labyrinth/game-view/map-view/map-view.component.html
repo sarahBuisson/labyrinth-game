@@ -1,32 +1,28 @@
-<div class="container">
-  <div ascii-div
-  [borderDatas]="borderData"
-  [yRepeat]="currentPartieProxy.level.contentArray.length*3+5"
-  [xRepeat]="currentPartieProxy.level.contentArray[0].length*3+5"
-  class="container"
+<div ascii-render class="container"
+     [borderTemplate]="borderData"
 >
-    <div class="title text">
-      <div>M</div>
-      <div>A</div>
-      <div>P</div>
-    </div>
-    <div class="main asciiArt" [ngStyle]="{'grid-template-columns': 'repeat(auto-fill, '+ currentPartieProxy.level.contentArray[0].length + ')'}">
-      <div class="roww" *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
-        <ng-container *ngFor="let levelCaseInput of row; let y = index">
+  <div class="title text">
+    <div>M</div>
+    <div>A</div>
+    <div>P</div>
+  </div>
+  <div class="main asciiArt"
+       [ngStyle]="{'grid-template-columns': 'repeat(auto-fill, '+ currentPartieProxy.level.contentArray[0].length + ')'}">
+    <div class="row" *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
+      <ng-container *ngFor="let levelCaseInput of row; let y = index">
         <ng-container *ngIf="isCaseShowable(levelCaseInput)">
-          <div class="mapzone" ascii-div
+          <div class="mapzone" ascii-border
                xRepeat="1" yRepeat="1"
-               [borderDatas]="borderRendered(levelCaseInput)"
+               [borderTemplate]="borderRendered(levelCaseInput)"
           >{{contentRendered(levelCaseInput)}}</div>
         </ng-container>
       </ng-container>
     </div>
-    </div>
-    <div class="text">
-      legende:
+  </div>
+  <div class="text">
+    legende:
     <div> ¤ = You are here</div>
     <div> € = Exit</div>
-    </div>
+  </div>
 
-</div>
 </div>

@@ -11,8 +11,6 @@ const defaultData = {
   marginLeft: 'auto',
   marginRight: 'auto',
   color: 'initial',
-  width: 'initial',
-  height: 'initial',
   position: 'initial',
   transform: 'initial',
 }
