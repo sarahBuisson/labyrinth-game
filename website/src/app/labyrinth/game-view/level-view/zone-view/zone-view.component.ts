@@ -70,7 +70,7 @@ export class ZoneViewComponent implements OnInit {
     return backgroundTemplate[(this.zone.x + this.zone.y*3) % backgroundTemplate.length]
   }
 
-  manageClick: any = () => {
+  clickOnBorder: any = () => {
     if (this.gameplayLabService.hasPlayer(this.zone)) {
       return (direction) => {
         this.gameplayLabService.move(direction)

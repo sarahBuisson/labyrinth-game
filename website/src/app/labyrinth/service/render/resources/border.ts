@@ -90,14 +90,22 @@ export function asciiStringToGridObject(str, leftCornerWidth, topSideWidth,
 
 
 let paperRaw = "" +
-  "  ________     \n" +
-  " / \\      \\    \n" +
-  "(  )|      `  \n" +
-  " \\_/|      |   \n" +
-  "    |      |   \n" +
+  "  ________   \n" +
+  " / \\      \\  \n" +
+  "(  )|      | \n" +
+  " \\_/|      |  \n" +
+  "    |      |  \n" +
   "    |  ,___|_ \n" +
-  "    \\_/_____/"
+  "    \\_/_____/ "
 export let paperGridTemplate = asciiStringToGridObject(paperRaw, 8, 1, 4, 1)
+
+
+let paperExitRaw = "" +
+  "____  \n" +
+  "\\   \\ \n" +
+  "|   | \n" +
+  " \\__| "
+export let paperExitGridTemplate = asciiStringToGridObject(paperExitRaw, 2, 1, 2, 1)
 
 let mapZoneRaw = "" +
   " | \n" +
@@ -475,5 +483,19 @@ let otherHandRaw = "" +
   "     \\              /    "
 
 
+
+
+
 export let bagGridTemplate = asciiStringToGridObject(otherHandRaw, 6, 15, 4, 1)
+
+let inventoryBox =  "" +
+  ".=====.\n" +
+  "|\\   /|\n" +
+  "| \\=/ |\n" +
+  "| | | |\n" +
+  "| /=\\ |\n" +
+  "|/   \\|\n" +
+  "`====='"
+export let inventoryBoxGridTemplate = asciiStringToGridObject(inventoryBox, 3, 1, 3, 1)
+
 console.log(bagGridTemplate)

@@ -29,6 +29,7 @@
   padding-right: 9px;
   padding-top: 12px;
   padding-bottom: 12px;
+  margin-left: -27px;
 }
 
 .main {
@@ -38,3 +39,4 @@
 .mapzone {
   display: inline-block
 }
+.legend {min-width:150px }

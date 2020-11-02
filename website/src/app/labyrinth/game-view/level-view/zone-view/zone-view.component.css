@@ -1,9 +1,6 @@
 .zoneContent {
-  display: grid;
-  grid-template-columns: repeat(15, 7px);
-  grid-template-rows: repeat(5, 14px);
-  grid-auto-flow: row dense;
   position: relative;
+  min-height: 70px;
 }
 
 .zoneBackground {

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component,Input, OnInit} from '@angular/core';
 
 @Component({
   selector: '[app-ascii]',
@@ -7,11 +7,11 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class AsciiComponent implements OnInit {
   @Input()
-  public content: any
+  public content: string
   @Input()
   public tooltip: string
   @Input()
-  public asciiClass: string=''
+  public asciiClass: string = ''
 
   constructor() {
   }

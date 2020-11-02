@@ -41,8 +41,13 @@ button, h1, h2, input {
   text-align: center;
   font-size: 12px;
   font-weight:normal;
+  margin: 0;
+  padding: 0;
 }
-
+h1{
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
 input {
   font-family: asciiTextFont, "Comic Sans MS";
 }
@@ -55,7 +60,6 @@ input {
 }
 .text {
   font-family: asciiTextFont, "Comic Sans MS";
-  white-space: pre-wrap;
   font-size: 12px;
 }
 

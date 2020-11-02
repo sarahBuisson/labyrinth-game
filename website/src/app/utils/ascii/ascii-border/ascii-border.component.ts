@@ -86,7 +86,7 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
 
 
   @Input()
-  onClick: any = () => {
+  borderClick: any = () => {
   }
 
   @HostBinding("style")
@@ -247,8 +247,6 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
             left: counterY.map((i) => this.borderTemplate.leftTemplate).join('\n'),
             right: counterY.map((i) => this.borderTemplate.rightTemplate).join('\n')
           }
-          console.log(this.renders.top )
-          console.log( this.hostStyle.minWidth )
           this.haveAlreadyBeComputed = true;
           return true;
         } catch (e) {

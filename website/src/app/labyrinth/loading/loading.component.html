@@ -3,7 +3,7 @@
      borderTemplateName="loadingBorderGridTemplate">
   <h1 ascii-render> Labyrinth generating ...</h1>
   <br/>
-  <h1 ascii-render>Do you know it ? ({{currentLoadingMessage}})</h1>
+  <h1 ascii-render>Do you know it ? ({{currentLoadingMessage}}/{{maxNumberOfMessage}})</h1>
   <br/>
 
   <h1 ascii-render *ngIf="currentLoadingMessage===0">
@@ -35,6 +35,6 @@
   <div ascii-render *ngIf="currentLoadingMessage===5">All labyrinths always have a solution
   </div>
 
-  <div ascii-render> click to show next advice</div>
+  <button ascii-render>next advice</button>
 
 </div>

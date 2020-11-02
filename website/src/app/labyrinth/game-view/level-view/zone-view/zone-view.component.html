@@ -1,6 +1,6 @@
 <div ascii-border class="zone asciiArt decor-ui"
      [borderTemplate]="borderRendered()"
-     [onClick]="manageClick()"
+     [borderClick]="clickOnBorder()"
      (click)="clickOnZone( $event)"
      [xRepeat]="1"
      [yRepeat]="1"
@@ -8,15 +8,16 @@
 >
   <div class="zoneContent">
     <div class="background-ui zoneBackground">{{backgroundRender()}}</div>
-    <app-ascii-on-grid-div [width]="15" [height]="5">
+    <div app-ascii-on-grid-div>
       <span app-ascii
-            *ngFor="let obj of this.gameplayLabService.levelContent(this.zone)"
-            class="zoneObject asciiArt interact-ui"
-            (click)="this.takeObj(obj)"
-            [tooltip]="computeTooltip(obj)"
-      >{{renderObj(obj)}}
-       </span>
-    </app-ascii-on-grid-div>
+           *ngFor="let obj of this.gameplayLabService.levelContent(this.zone)"
+           class="zoneObject asciiArt interact-ui"
+           (click)="this.takeObj(obj)"
+           [tooltip]="computeTooltip(obj)"
+           [content]="renderObj(obj)"
+      >
+      </span>
+    </div>
 
   </div>
 </div>

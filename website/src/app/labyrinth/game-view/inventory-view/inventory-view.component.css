@@ -2,3 +2,15 @@
   background: white;
   display: inline-block;
 }
+
+.title {
+  width: 9px;
+  margin-left: -18px;
+  margin-right: 9px;
+  display: inline-block;
+}
+
+.content {
+  display: inline-block;
+  width: 130px;
+}

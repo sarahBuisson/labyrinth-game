@@ -10,7 +10,7 @@
 </div>
 <div class="noPartyMessage" *ngIf="!currentPartyProxy">
   <div ascii-border class="text interact-ui" >no game loaded for the moment, please wait or create a new game
-    <button class="ihm-ui"><a  class="text interact-ui" href="./new">new game</a></button>
+    <button class="ihm-ui" ascii-border><a  class="text interact-ui" href="./new">new game</a></button>
   </div>
 </div>
 <div class="container" *ngIf="currentPartyProxy">
@@ -20,12 +20,13 @@
     ></level-view>
   </div>
   <div class="sidebar">
+
     <app-sliding
       [openData]="{position:'absolute',
       transform: 'translateX(-50%)',
       left:'50%'}"
       [closeData]="{position:'absolute',
-           transform: 'translateX(-80px)',
+           transform: 'translateX(-81px)',
        left:'100%'}"
       [onlyOnClick]="true"
       style="background-color:red; overflow: hidden;"
@@ -33,20 +34,34 @@
       <map-view [currentPartieProxy]="currentPartyProxy"
                 [renderService]="mapRenderService"
       ></map-view>
+
+
     </app-sliding>
+
+    <app-sliding
+      onlyOnClick="true"
+      [openData]="{position:'absolute',
+      transform: 'translateX(-50%)',
+      left:'50%',
+      bottom:'0'}"
+      [closeData]="{position:'absolute',
+           transform: 'translateX(-27px)',
+       left:'100%',
+          bottom:'0'}">
+      <div class="inventoryArea">
+      <inventory-view
+        [player]="this.currentPartyProxy.player"
+      ></inventory-view>
+      </div>
+    </app-sliding>
+
   </div>
   <div class="toolbar">
     <div class="gameplay">
     <keypad-form></keypad-form>
     </div>
     <div class="inventoryArea">
-      <app-sliding
-        onlyOnClick="true"
-        [openData]="{top:'50%', transform:'translateY(-50%)', position:'absolute'}"
-        [closeData]="{top:'100%', transform:'translateY(-40px)', position:'absolute'}"
-      >
-        <inventory-view [player]="this.currentPartyProxy.player"></inventory-view>
-      </app-sliding>
+
     </div>
   </div>
   <app-ascii-modal #winModal class="text">

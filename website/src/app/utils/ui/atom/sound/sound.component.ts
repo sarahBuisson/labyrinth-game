@@ -10,6 +10,13 @@ import {Subscription} from "rxjs";
 export class SoundComponent implements OnInit, OnDestroy {
   soundOn: boolean;
   soundSubscription: Subscription;
+  on = '' +
+    '           __ \n' +
+    ' ((\'c\') < d d \n';
+  //≮
+  off = '' +
+    '            _ \n' +
+    ' ((\'x\') ° (d) \n';
 
   constructor(private soundService: SoundService) {
 
