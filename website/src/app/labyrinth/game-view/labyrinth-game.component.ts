@@ -32,10 +32,14 @@ import {CHARACTER_SPACING, LINE_HEIGHT} from "../../utils/ascii/AsciiConst";
     "toolbar toolbar";
       margin-left: auto;
       margin-right: auto;
-      width: ${CHARACTER_SPACING*110}px;
+      width: ${CHARACTER_SPACING * 110}px;
       overflow-x: hidden;
     }
-
+    .menuBar {  display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
     .toolbar {
       grid-area: toolbar;
       display: grid;
@@ -45,6 +49,7 @@ import {CHARACTER_SPACING, LINE_HEIGHT} from "../../utils/ascii/AsciiConst";
     .noPartyMessage {
       padding: ${LINE_HEIGHT * 1}px ${CHARACTER_SPACING * 1}px;
     }
+
   `]
 })
 export class LabyrinthGameComponent implements OnInit, OnDestroy {
