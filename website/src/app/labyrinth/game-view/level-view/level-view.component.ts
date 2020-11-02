@@ -1,15 +1,21 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {
-  defaultGridTemplate, viewEmptyZoneGridTemplate, viewEmptyZoneGridTemplates, viewEmptyZones,
-
+  viewEmptyZones
 } from "../../service/render/resources/border";
 import {GameplayLabService} from "../../service/gameplay-lab.service";
 import {FullsizeAsciiRenderService} from "../../service/render/fullsize-ascii-render.service";
+import {CHARACTER_SPACING, LINE_HEIGHT} from "../../../utils/ascii/AsciiConst";
 
 @Component({
   selector: 'level-view',
   templateUrl: './level-view.component.html',
-  styleUrls: ['./level-view.component.css']
+  styles: [`
+    .levelRowRender {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, ${CHARACTER_SPACING * 30}px);
+    grid-template-rows: repeat(auto-fit, ${LINE_HEIGHT * 15}px);
+  }
+  `]
 })
 export class LevelViewComponent implements OnInit, OnChanges {
 

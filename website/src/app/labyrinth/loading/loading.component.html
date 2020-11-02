@@ -1,40 +1,46 @@
 <div ascii-render
-     class="loadingContent text"
-     borderTemplateName="loadingBorderGridTemplate">
+              class="container text"
+              borderTemplateName="loadingBorderGridTemplate">
   <h1 ascii-render> Labyrinth generating ...</h1>
   <br/>
-  <h1 ascii-render>Do you know it ? ({{currentLoadingMessage}}/{{maxNumberOfMessage}})</h1>
-  <br/>
 
-  <h1 ascii-render *ngIf="currentLoadingMessage===0">
-    Find the ladder to the exit to win.
-    <div app-render>{{fullViewRenderService.renderObj({name: 'exit'})}}</div>
 
-  </h1>
+  <div class="content" ascii-border>
+    <div>Do you know it ? ({{currentLoadingMessage}}/{{maxNumberOfMessage}})</div>
+<br/>
+    <ng-container  *ngIf="currentLoadingMessage===0">
+      Find the ladder to the exit to win.
+      <div app-render class="asciiArt">{{fullViewRenderService.renderObj({name: 'exit'})}}</div>
+    </ng-container >
 
-  <pre ascii-render class="text" *ngIf="currentLoadingMessage===1" xRepeat="70" yRepeat="10">
-   You can move by :
-      - clicking on the room you want to go
-      - clicking on the door you want to use
-      - using directional key
-      - using the pad at the bottom of the screen
+    <ng-container *ngIf="currentLoadingMessage===1">
+      You can move by :
+      <ul>
+        <li>clicking on the room you want to go</li>
+        <li>clicking on the door you want to use</li>
+        <li>using directional key</li>
+        <li>using the pad at the bottom of the screen</li>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="currentLoadingMessage===2">
+      some door are closed and need a key to be open
+    </ng-container>
+    <ng-container *ngIf="currentLoadingMessage===3">
+      You have a map
+    </ng-container>
 
-    </pre>
-  <div ascii-render *ngIf="currentLoadingMessage===2">
-    some door are closed and need a key to be open
+    <ng-container *ngIf="currentLoadingMessage===4">
+      <div>The lab didn't really take that much time to generate.</div>
+      <div>The dev just wanted a way to give tips to player.</div>
+    </ng-container>
+
+    <ng-container *ngIf="currentLoadingMessage===5">All labyrinths always have a solution
+    </ng-container>
+    <br/>
+    <div>
+      <button ascii-render (click)="clickDuringLoading()">next advice</button>
+    </div>
   </div>
-  <div ascii-render *ngIf="currentLoadingMessage===3">
-    You have a map
-  </div>
 
-  <div ascii-render *ngIf="currentLoadingMessage===4">
-    <div>The lab didn't really take that much time to generate.</div>
-    <div>The dev just wanted a way to give tips to player.</div>
-  </div>
-
-  <div ascii-render *ngIf="currentLoadingMessage===5">All labyrinths always have a solution
-  </div>
-
-  <button ascii-render>next advice</button>
 
 </div>

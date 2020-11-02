@@ -1,7 +1,7 @@
 <span (click)="toggle()" class="text"> toggle galery</span>
 <app-zone-view [zone]="defaultZone"></app-zone-view>
 
-
+<app-loading></app-loading>
 <div *ngIf="display">
   <inventory-view [player]="{inventoryArray:defaultZone.contentArray}"></inventory-view>
 

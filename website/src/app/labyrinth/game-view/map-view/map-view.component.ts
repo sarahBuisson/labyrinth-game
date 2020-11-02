@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GameplayLabService} from "../../service/gameplay-lab.service";
 import {paperGridTemplate, mapGridTemplate} from "../../service/render/resources/border";
+import {CHARACTER_SPACING, LINE_HEIGHT} from "../../../utils/ascii/AsciiConst";
 
 
 let mapBorderData = paperGridTemplate;
@@ -8,7 +9,20 @@ let mapBorderData = paperGridTemplate;
 @Component({
   selector: 'map-view',
   templateUrl: './map-view.component.html',
-  styleUrls: ['./map-view.component.css']
+  styleUrls: ['./map-view.component.css'],
+  styles: [`
+    .title {
+      display: inline-flex;
+      flex-direction: column;
+      width: ${CHARACTER_SPACING * 3}px;
+      padding:${LINE_HEIGHT * 3}px ${CHARACTER_SPACING * 3}px;
+      margin-left: ${CHARACTER_SPACING * 9}px;
+
+    }
+
+    .legend {
+        min-width: ${CHARACTER_SPACING * 10}px;
+    }`]
 })
 export class MapViewComponent implements OnInit {
 

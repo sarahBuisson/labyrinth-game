@@ -7,6 +7,7 @@ import {
 import {GameplayLabService} from "../../../service/gameplay-lab.service";
 import {FullsizeAsciiRenderService} from "../../../service/render/fullsize-ascii-render.service";
 import {shuffle} from "music-generator/dist/utils";
+import {LINE_HEIGHT} from "../../../../utils/ascii/AsciiConst";
 
 let backgroundTemplate = shuffle([' ¨    \n  °',
   ' -      \n       -   \n    -',
@@ -27,7 +28,12 @@ let backgroundTemplate = shuffle([' ¨    \n  °',
 @Component({
   selector: 'app-zone-view',
   templateUrl: './zone-view.component.html',
-  styleUrls: ['./zone-view.component.css']
+  styleUrls: ['./zone-view.component.css'],
+  styles: [`.zoneContent {
+    position: relative;
+    min-height: ${LINE_HEIGHT * 5}px;
+  }`]
+
 })
 export class ZoneViewComponent implements OnInit {
 

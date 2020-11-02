@@ -15,11 +15,37 @@ import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {SoundService} from "../service/sound/sound.service";
 import {CharacterRenderData} from "../../characterEditor/character-render.service";
+import {CHARACTER_SPACING, LINE_HEIGHT} from "../../utils/ascii/AsciiConst";
 
 @Component({
   selector: 'app-labyrinth-game',
   templateUrl: './labyrinth-game.component.html',
-  styleUrls: ['./labyrinth-game.component.css']
+  styleUrls: ['./labyrinth-game.component.css'],
+
+  styles: [`
+    .container {
+      display: grid;
+      grid-template-columns: ${CHARACTER_SPACING * 100}px ${CHARACTER_SPACING * 4}px;
+      grid-template-rows: ${LINE_HEIGHT * 40}px ${LINE_HEIGHT * 8}px;
+      grid-template-areas:
+    "main sidebar"
+    "toolbar toolbar";
+      margin-left: auto;
+      margin-right: auto;
+      width: ${CHARACTER_SPACING*110}px;
+      overflow-x: hidden;
+    }
+
+    .toolbar {
+      grid-area: toolbar;
+      display: grid;
+      grid-template-columns: ${CHARACTER_SPACING * 100}px ${CHARACTER_SPACING * 6}px 1fr;
+    }
+
+    .noPartyMessage {
+      padding: ${LINE_HEIGHT * 1}px ${CHARACTER_SPACING * 1}px;
+    }
+  `]
 })
 export class LabyrinthGameComponent implements OnInit, OnDestroy {
   currentParty: any

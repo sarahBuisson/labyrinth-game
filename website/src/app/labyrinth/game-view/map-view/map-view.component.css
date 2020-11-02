@@ -1,5 +1,6 @@
 :host {
   background: white;
+  text-align: left;
 }
 
 .levelRowRender {
@@ -21,16 +22,6 @@
   background: white;
 }
 
-.title {
-  display: inline-flex;
-  flex-direction: column;
-  width: 36px;
-  padding-left: 9px;
-  padding-right: 9px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  margin-left: -27px;
-}
 
 .main {
   display: inline-block;
@@ -39,4 +30,4 @@
 .mapzone {
   display: inline-block
 }
-.legend {min-width:150px }
+

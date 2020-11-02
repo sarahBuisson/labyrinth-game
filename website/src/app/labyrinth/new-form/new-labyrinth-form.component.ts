@@ -2,11 +2,25 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {GenerateLabService} from "../service/generate-lab.service";
 import {AsciiModalComponent} from "../../utils/ascii/ascii-modal/ascii-modal.component";
 import {ActivatedRoute, Router} from "@angular/router";
+import {CHARACTER_SPACING} from "../../utils/ascii/AsciiConst";
 
 @Component({
   selector: 'app-labyrinth-form',
   templateUrl: './new-labyrinth-form.component.html',
-  styleUrls: ['./new-labyrinth-form.component.css']
+  styles:[`
+    input {
+      width: ${CHARACTER_SPACING * 8}px
+    }
+
+
+    .grid {
+      max-width: ${CHARACTER_SPACING * 30}px;
+      display: grid;
+      grid-template-columns: 2fr ${CHARACTER_SPACING*9}px;
+      align-items: center;
+      text-align: center;
+    }
+  `]
 })
 export class NewLabyrinthFormComponent implements OnInit {
 

@@ -1,11 +1,28 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {bagGridTemplate} from "../../service/render/resources/border";
 import {FullsizeAsciiRenderService} from "../../service/render/fullsize-ascii-render.service";
+import {CHARACTER_SPACING} from "../../../utils/ascii/AsciiConst";
 
 @Component({
   selector: 'inventory-view',
   templateUrl: './inventory-view.component.html',
-  styleUrls: ['./inventory-view.component.css']
+  styles:[`:host {
+    background: white;
+    display: inline-block;
+  }
+
+  .title {
+    width: ${CHARACTER_SPACING}px;
+    margin-left: -${CHARACTER_SPACING*2}px;
+    margin-right: ${CHARACTER_SPACING}px;
+    display: inline-block;
+  }
+
+  .content {
+    display: inline-block;
+    width: ${CHARACTER_SPACING*(6*2+1)}px;
+  }
+  `]
 })
 export class InventoryViewComponent implements OnInit {
   @Input()

@@ -1,16 +1,13 @@
-<div class="title text">
-<h1 ascii-render [name]="'title'">
-  Lab generator
-</h1>
-  <div class="menuBar">
-    <button ascii-render class="ihm-ui" ><a href="./menu" class="interact-ui text">menu</a></button>
-    <button ascii-render class="ihm-ui"><a href="./character" class="interact-ui text">characterEditor</a></button>
-    <button ascii-render  class="ihm-ui"><a href="./new" class="interact-ui text">new Labyrinth</a></button>
-  </div>
+<div class="menuBar text" ascii-border>
+  <span>LAB GENERATOR </span>
+  <button ascii-render class="ihm-ui"><a href="./menu" class="interact-ui text">menu</a></button>
+  <button ascii-render class="ihm-ui"><a href="./character" class="interact-ui text">characterEditor</a></button>
+  <button ascii-render class="ihm-ui"><a href="./new" class="interact-ui text">new Labyrinth</a></button>
+
 </div>
 <div class="noPartyMessage" *ngIf="!currentPartyProxy">
-  <div ascii-border class="text interact-ui" >no game loaded for the moment, please wait or create a new game
-    <button class="ihm-ui" ascii-border><a  class="text interact-ui" href="./new">new game</a></button>
+  <div ascii-border class="text interact-ui">no game loaded for the moment, please wait or create a new game
+    <button class="ihm-ui" ascii-border><a class="text interact-ui" href="./new">new game</a></button>
   </div>
 </div>
 <div class="container" *ngIf="currentPartyProxy">
@@ -49,23 +46,24 @@
        left:'100%',
           bottom:'0'}">
       <div class="inventoryArea">
-      <inventory-view
-        [player]="this.currentPartyProxy.player"
-      ></inventory-view>
+        <inventory-view
+          [player]="this.currentPartyProxy.player"
+        ></inventory-view>
       </div>
     </app-sliding>
 
   </div>
   <div class="toolbar">
     <div class="gameplay">
-    <keypad-form></keypad-form>
+      <keypad-form></keypad-form>
     </div>
     <div class="inventoryArea">
 
     </div>
   </div>
   <app-ascii-modal #winModal class="text">
-    <div ascii-border cl> YOU WIN !</div>
+    <div ascii-border >
+    <h1 ascii-border > YOU WIN !</h1>
     <span app-ascii>{{fullViewRenderService.renderObj({name: 'exit'})}}</span>
     <span app-ascii>
       {{fullViewRenderService.renderObj(this.currentPartyProxy.player)}}
@@ -78,10 +76,11 @@
       <div>minimum solution:{{this.score.solutionLength}} m</div>
       <div>total number of wrong exit:{{this.score.numberOfCulDeSac}}</div>
       <div>total walked distance:{{this.score.numberOfSteps}} m</div>
-      <div> </div>
+      <div></div>
       <div>total score:{{this.score.score}}</div>
     </div>
-    <div ascii-border (click)="nextLevel()">next level</div>
+    <button ascii-border (click)="nextLevel()">next level</button>
+    </div>
   </app-ascii-modal>
 
   <app-ascii-modal #loadingModal>

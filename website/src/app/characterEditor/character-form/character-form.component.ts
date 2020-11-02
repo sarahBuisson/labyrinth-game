@@ -2,13 +2,19 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CharacterRenderService, CharacterRenderData} from "../character-render.service";
 import {GenerateLabService} from "../../labyrinth/service/generate-lab.service";
 import {DataStorageService} from "../../labyrinth/service/data-storage.service";
+import {CHARACTER_SPACING} from "../../utils/ascii/AsciiConst";
 
 
 
 @Component({
   selector: 'app-character-form',
   templateUrl: './character-form.component.html',
-  styleUrls: ['./character-form.component.css']
+  styleUrls: ['./character-form.component.css'],
+  styles: [`input {
+    width: ${CHARACTER_SPACING * 6}px;
+    padding: 0;
+  }
+  `]
 })
 export class CharacterFormComponent implements OnInit, OnDestroy {
 

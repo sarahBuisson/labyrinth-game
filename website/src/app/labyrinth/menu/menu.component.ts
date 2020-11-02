@@ -4,11 +4,30 @@ import {AsciiModalComponent} from "../../utils/ascii/ascii-modal/ascii-modal.com
 import {HighscoresService} from "../service/highscores.service";
 import {Subscription} from "rxjs";
 import {SoundService} from "../service/sound/sound.service";
+import {CHARACTER_SPACING} from "../../utils/ascii/AsciiConst";
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  styles: [`.container {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    text-align: center;
+  }
+
+
+  .title pre{
+    margin-left: auto;
+    margin-right: auto;
+    width: ${CHARACTER_SPACING * 60}px;
+  }
+
+  button {
+    text-align: center;
+    padding: 0 ${CHARACTER_SPACING * 4}px;
+  }
+  `]
 })
 export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('highScoreModal') highScoreModal: AsciiModalComponent;
