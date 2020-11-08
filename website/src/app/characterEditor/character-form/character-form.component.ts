@@ -1,8 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CharacterRenderService, CharacterRenderData} from "../character-render.service";
-import {GenerateLabService} from "../../labyrinth/service/generate-lab.service";
 import {DataStorageService} from "../../labyrinth/service/data-storage.service";
 import {CHARACTER_SPACING} from "../../utils/ascii/AsciiConst";
+import {CharacterRenderData, CharacterRenderService} from "../../labyrinth/service/render/character-render.service";
 
 
 

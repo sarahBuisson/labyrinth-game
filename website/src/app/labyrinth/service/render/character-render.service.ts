@@ -29,20 +29,20 @@ export class CharacterRenderService {
   templateLeft: String =
     "${hat}\n" +
     "${hair}${eye}${eye} ${hairReversed}${hairReversed}\n" +
-    "/${torso} \\\n" +
-    " ${leg}${leg} \n";
+    " /${torso} \\ \n" +
+    "  ${leg}${leg}  \n";
 
   templateFront: String =
     "${hat}\n" +
     "${hair} ${eye}${eye} ${hairReversed}\n" +
-    "/ ${torso} \\\n" +
-    " ${leg}${legReversed} \n";
+    " / ${torso}\\ \n" +
+    "  ${leg}${legReversed}  \n";
 
   templateBack: String =
     "${hat}\n" +
     "${hair}${hair}${hair}${hairReversed}${hairReversed}${hairReversed}\n" +
-    "/   \\\n" +
-    " ${leg}${legReversed} \n";
+    " /  \\ \n" +
+    "  ${leg}${legReversed}  \n";
   templateRight: String
   defaultData: CharacterRenderData = Object.assign(new CharacterRenderData(), {
     eye: "'",

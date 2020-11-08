@@ -14,6 +14,7 @@ import {CHARACTER_SPACING, LINE_HEIGHT} from "../AsciiConst";
 import {timer} from "rxjs";
 import {delay} from "rxjs/operators";
 import {Style} from "@angular/cli/lib/config/schema";
+import {BorderTemplate} from "../../../labyrinth/service/render/resources/border-compute";
 
 @Component({
   selector: 'ascii-border , [ascii-border] , div [ascii-render], span [ascii-render], button [ascii-render], p [ascii-render], h1 [ascii-render]',
@@ -67,7 +68,7 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
   borderTemplateName: string;
 
   @Input()
-  borderTemplate: borderTemplates.BorderTemplate;
+  borderTemplate: BorderTemplate;
 
 
   computedData: {
@@ -271,7 +272,7 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
   }
 
 
-  getAsciiBorderForName(name: string): borderTemplates.BorderTemplate {
+  getAsciiBorderForName(name: string): BorderTemplate {
 
     if (Object.keys(borderTemplates).includes(name + 'GridTemplate'))
       return borderTemplates[name + 'GridTemplate']//TODO : we need to test the include otherwise it bug
