@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable, ReplaySubject, Subject} from "rxjs";
-import {CharacterRenderData} from "../../characterEditor/character-render.service";
+import {CharacterRenderData} from "./render/character-render.service";
 
 @Injectable({
   providedIn: 'root'

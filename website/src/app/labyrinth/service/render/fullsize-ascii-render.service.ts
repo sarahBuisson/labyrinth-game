@@ -1,11 +1,10 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.service";
 import {AsciiRenderService} from "./ascii-render.service";
-import {GenerateLabService} from "../generate-lab.service";
-import {CharacterRenderService, CharacterRenderData} from "../../../characterEditor/character-render.service";
 import {exitTemplate, startTemplate} from "./resources/border";
 import {DataStorageService} from "../data-storage.service";
 import {Subscription} from "rxjs";
+import {CharacterRenderData, CharacterRenderService} from "./character-render.service";
 
 @Injectable({
   providedIn: 'root'

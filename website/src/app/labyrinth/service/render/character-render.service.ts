@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AsciiGeneratorService} from "../utils/ascii/ascii-generator.service";
+import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.service";
 
 
 export class CharacterRenderData {

@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AsciiRenderService} from "./ascii-render.service";
 import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.service";
-import {CharacterRenderData} from "../../../characterEditor/character-render.service";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +23,7 @@ export class MapAsciiRenderService extends AsciiRenderService {
     this.rightTopCornerTemplate = " ";
   }
 
-  renderPlayer(characterData: CharacterRenderData) {
+  renderPlayer(characterData: any) {
     return "@"
   }
 
@@ -71,7 +70,7 @@ export class MapAsciiRenderService extends AsciiRenderService {
     return this.asciiGeneratorService.templateString(this[templateName], data)
   }
 
-  renderObj(obj: any, characterRenderData: CharacterRenderData) {
+  renderObj(obj: any, characterRenderData: any) {
 
     if (obj.classname === "KeyObjectZone") {
       return obj.name;

@@ -1,10 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+
 import {GenerateLabService} from "../service/generate-lab.service";
 import {kotlinProxyToJsView} from "../../utils/kotlinUtils";
-
-// @ts-ignore
-import gameRules from 'gameRules';
-import {AsciiRenderService} from "../service/render/ascii-render.service";
 import {MapAsciiRenderService} from "../service/render/map-ascii-render.service";
 import {FullsizeAsciiRenderService} from "../service/render/fullsize-ascii-render.service";
 import {LevelViewComponent} from "./level-view/level-view.component";
@@ -14,7 +11,6 @@ import {AsciiModalComponent} from "../../utils/ascii/ascii-modal/ascii-modal.com
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {SoundService} from "../service/sound/sound.service";
-import {CharacterRenderData} from "../../characterEditor/character-render.service";
 import {CHARACTER_SPACING, LINE_HEIGHT} from "../../utils/ascii/AsciiConst";
 
 @Component({

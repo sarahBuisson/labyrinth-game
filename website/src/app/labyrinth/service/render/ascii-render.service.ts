@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
+
 import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.service";
-import {CharacterRenderData} from "../../../characterEditor/character-render.service";
+import {CharacterRenderData} from "./character-render.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,6 @@ export abstract  class AsciiRenderService {
     this.partsKeys = Object.keys(this.defaultData)
     this.rightDoorTemplate = this.asciiGeneratorService.reverseTemplate(this.leftDoorTemplate, this.partsKeys)
     this.rightWallTemplate = this.asciiGeneratorService.reverseTemplate(this.leftWallTemplate, this.partsKeys)
-
   }
 
   defaultData = {
@@ -67,9 +67,9 @@ export abstract  class AsciiRenderService {
     return s.charAt(0).toUpperCase() + s.slice(1)
   }
 
-  abstract renderPlayer(characterData:CharacterRenderData)
+  abstract renderPlayer(characterData: CharacterRenderData)
 
-  abstract renderCenter(zone,party):String
+  abstract renderCenter(zone, party): String
 
-  abstract renderObj(obj:any, characterRenderData: CharacterRenderData)
+  abstract renderObj(obj: any, characterRenderData: CharacterRenderData)
 }

@@ -6,7 +6,6 @@ import {Router} from "@angular/router";
 import gameRules from 'gameRules';
 import { kotlinProxyToJsView } from '../../utils/kotlinUtils.js'
 
-import {CharacterRenderData} from "../../characterEditor/character-render.service";
 import {DataStorageService} from "./data-storage.service";
 import {SoundService} from "./sound/sound.service";
 
@@ -16,8 +15,9 @@ let labeatGeneration = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat.g
 })
 export class GenerateLabService {
 
-  constructor(private router: Router, private dataStorageService: DataStorageService, private soundService:SoundService) {
-    this.dataStorageService.saveCharacter(new CharacterRenderData());
+  constructor(private router: Router,
+              private dataStorageService: DataStorageService,
+              private soundService:SoundService) {
   }
 
 

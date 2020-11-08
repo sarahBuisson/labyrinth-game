@@ -22,8 +22,6 @@ export class CharacterFormComponent implements OnInit, OnDestroy {
 
   render: String = ""
   private interval:any;
-  private time: number = 0;
-  private direction: string;
 
 
   constructor(public renderService: CharacterRenderService,
@@ -32,31 +30,36 @@ export class CharacterFormComponent implements OnInit, OnDestroy {
   }
 
   update() {
-    this.render = this.renderService.render(this.data, this.direction)
+    this.dataStorage.saveCharacter(this.data)
   }
 
 
   ngOnInit(): void {
-    this.update()
-    this.dataStorage.saveCharacter(this.data)
+    this.update();
+    this.initCharacterRotation();
+  }
 
+  private initCharacterRotation() {
+
+    let time: number = 0;
+    let direction: string;
     this.interval = setInterval(() => {
-      this.time = (this.time + 1) % 4;
-      switch (this.time) {
+      time = (time + 1) % 4;
+      switch (time) {
         case 0:
-          this.direction = 'LEFT';
+          direction = 'LEFT';
           break;
         case 1:
-          this.direction = 'BOTTOM';
+          direction = 'BOTTOM';
           break;
         case 2:
-          this.direction = 'RIGHT';
+          direction = 'RIGHT';
           break;
         case 3:
-          this.direction = 'TOP';
+          direction = 'TOP';
           break;
       }
-      this.render = this.renderService.render(this.data, this.direction);
+      this.render = this.renderService.render(this.data, direction);
     }, 1000)
   }
 
