@@ -4,14 +4,14 @@ function standardizeName(oldName) {
   return oldName.replace(/\_\S*\$/, "").replace(/\_\d/, "");
 }
 
-function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod) {
+function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod): any {
   let newkotlinInstance = {};
   Object.getOwnPropertyNames(kotlinInstance).forEach(
-    (oldName) => {
+    (oldName: string) => {
       newkotlinInstance[oldName] = kotlinInstance[oldName]
       let propertyclassName = get(kotlinInstance, oldName + '.__proto__.constructor.name');
       let newName
-      if (Number.isInteger(oldName)) {
+      if (!isNaN(parseInt(oldName))) {
         newName = oldName;
       } else {
 
@@ -51,7 +51,7 @@ function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod) {
   return newkotlinInstance;
 }
 
-export function kotlinProxyToJsView(kotlinInstance, maxDeep = undefined, autoProxyMethod = true) {
+export function kotlinProxyToJsView(kotlinInstance, maxDeep: number = 10000, autoProxyMethod = true) {
   if (maxDeep && maxDeep < 0) {
     return kotlinInstance
   } else if (kotlinInstance === undefined || kotlinInstance === null) {
@@ -96,10 +96,10 @@ export function kotlinProxyToJsView(kotlinInstance, maxDeep = undefined, autoPro
         protoMap = kotlinProxyToJsView(protoMap.internalMap, 0, false)
         if (protoMap.backingMap) {
           Object.values(protoMap.backingMap)
-            .forEach((protoEntry) => {
+            .forEach((protoEntry: { _value: any, key: any }) => {
               protoEntry = kotlinProxyToJsView(protoEntry, maxDeep, false)
               //keep the $
-              let key = protoEntry.key.name$ ? protoEntry.key.name$ : protoEntry.key;
+              let key: string = protoEntry.key.name$ ? protoEntry.key.name$ : protoEntry.key;
               newkotlinInstance[key] = protoEntry._value;
             })
         }
@@ -142,9 +142,9 @@ export function getFromKotlin(instance, ...path) {
     } else if (propertyclassName === "HashMap" || propertyclassName == "LinkedHashMap") {
       return getFromKotlin(kotlinProxyToJsView(instance, 0, false), ...path);
     } else {
-      let field = Object.keys(instance).find(fieldName => {
+      let field: string  = Object.keys(instance).find(fieldName => {
         return standardizeName(fieldName) == path[0] //don't use ===, here
-      })
+      });
       if (instance[field]) {
         return getFromKotlin(instance[field], ...path.slice(1))
       } else {
@@ -153,4 +153,3 @@ export function getFromKotlin(instance, ...path) {
     }
   }
 }
-export var SampleLibrary = {}

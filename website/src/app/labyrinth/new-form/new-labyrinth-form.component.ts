@@ -48,7 +48,8 @@ export class NewLabyrinthFormComponent implements OnInit {
     });
     let generation = new Promise((resolve) => {
       // not taking our time to do the job
-      resolve(this.labService.generate(this.size, this.playerName)); // immediately give the result: 123
+      this.labService.generate(this.size, this.playerName);
+      resolve({}); // immediately give the result: 123
 
     });
 

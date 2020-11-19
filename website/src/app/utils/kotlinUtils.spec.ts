@@ -1,8 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 // @ts-ignore
 import gameRules from 'gameRules';
-import {getFromKotlin, getJsViewFromKotlin, kotlinProxyToJsView} from './kotlinUtils.js'
-let labeatGeneration = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat.generation);
+import {getFromKotlin, getJsViewFromKotlin, kotlinProxyToJsView} from './kotlinUtils'
+let labeatGeneration:any = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat.generation);
 describe('test kotlin to JsView', () => {
 
   it("should parse methods of package", () => {
@@ -55,7 +55,7 @@ describe('test kotlin to JsView', () => {
 
   it('call without proxy', () => {
     // @ts-ignore
-    let method = Object.getOwnPropertyNames(labeatGeneration).filter(it => it.startsWith("initPartieComposite"))
+    let method: string = Object.getOwnPropertyNames(labeatGeneration).filter(it => it.startsWith("initPartieComposite"))
     let r = labeatGeneration[method].call(5)
     //  expect(partie.level.contentArray[0][0].connectionsMap).toBeDefined();
   });

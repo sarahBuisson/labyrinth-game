@@ -4,20 +4,12 @@ import {scan} from "rxjs/operators";
 import {GameMusiqueService} from "./game-musique.service";
 
 import * as tone from "tone";
-import * as CompositionUtils from "music-generator/dist/compositionUtils"
-import * as rhytmeUtils from "music-generator/dist/rhythmUtils"
-import {flatPartition} from "music-generator/dist/compositionUtils";
-import {instrumentSamples, playNote} from "music-generator/dist/instrumentUtils";
-import {Note} from "music-generator";
-import {Instrument} from "tone/Tone/instrument/Instrument";
+import {compositionUtils, rhythmUtils, Note, instrumentUtils} from "music-generator"
 
 @Injectable({
   providedIn: 'root'
 })
 export class SoundService implements OnDestroy {
-
-
-
 
   soundOnSubject$: Subject<boolean> = new BehaviorSubject<boolean>(false);
   soundOn$ = this.soundOnSubject$.pipe(scan((previousValue, forcedValue) => {
@@ -60,7 +52,7 @@ export class SoundService implements OnDestroy {
     // document.body.addEventListener("mousemove", () => this.soundOnSubject$.next(true), {once: true})
 
 
-    document.querySelector('body')?.addEventListener('click', async () => {
+    document.querySelector('body') && document.querySelector('body').addEventListener('click', async () => {
       if (tone && !this.toneHaveBeenInitialized) {
         tone.start();
         //this.currentAmbiance.volume-=10
@@ -181,11 +173,11 @@ export class SoundService implements OnDestroy {
 }
 
 export function createLoop(instrument, partition: Array<any>, tempo = 1): tone.Part {
-  let flatpartition = CompositionUtils.flatPartition(partition)
+  let flatpartition = compositionUtils.flatPartition(partition)
   let timeC = 0;
 
   let part = new tone.Part((time, note: Note) => {
-    let decalage = rhytmeUtils.duration(note.value) * tempo;
+    let decalage = rhythmUtils.duration(note.value) * tempo;
     instrument.triggerAttackRelease(note.tune, note.value, "+" + timeC)
     timeC += decalage
     //time = InstrumentUtils.playNote(instrument, n, time, 1.2)
@@ -195,13 +187,12 @@ export function createLoop(instrument, partition: Array<any>, tempo = 1): tone.P
 }
 
 export function play(instrument, partition: Array<any>, tempo = 1) {
-  let flatpartition = flatPartition(partition)
+  let flatpartition = compositionUtils.flatPartition(partition)
   let now = tone.now()
-
   instrument.toDestination()
   for (let i = 0; i < 1; i++) {
     flatpartition.forEach((n) => {
-      now = playNote(instrument, n, now, tempo)
+      now = instrumentUtils.playNote(instrument, n, now, tempo)
     })
   }
 }

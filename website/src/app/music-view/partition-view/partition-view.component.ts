@@ -1,6 +1,5 @@
 import {Component, OnInit, Input, OnChanges} from '@angular/core';
-import {flatPartition} from "music-generator/dist/compositionUtils";
-import {getLevel, getSuroundingTunes} from "music-generator/dist/harmoniqueUtils";
+import {compositionUtils, harmoniqueUtils} from "music-generator";
 
 @Component({
   selector: 'app-partition-view',
@@ -13,7 +12,7 @@ import {getLevel, getSuroundingTunes} from "music-generator/dist/harmoniqueUtils
       <app-temp-view [temp]="form" [scale]="scale"></app-temp-view>
     </ng-container>
     <ng-container *ngIf="!isNote(form)&&!isPattern(form) ">
-      <app-partition-view [partitionForms]="form" [initscale]="scale" ></app-partition-view>
+      <app-partition-view [partitionForms]="form" [initscale]="scale"></app-partition-view>
     </ng-container>
   </div> `
   ,
@@ -23,7 +22,7 @@ export class PartitionViewComponent implements OnInit, OnChanges {
   @Input()
   partitionForms: Array<any>;
   @Input()
-  initscale:any
+  initscale: any
   scale: any;
   borderColor: string
 
@@ -35,12 +34,11 @@ export class PartitionViewComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    if(this.initscale)
-      this.scale=this.initscale
-    else
-    if (this.partitionForms) {
-      let tunes = flatPartition(this.partitionForms).map((n) => n.tune)
-      this.scale = getSuroundingTunes(tunes).sort((a,b)=>getLevel(b)-getLevel(a));
+    if (this.initscale)
+      this.scale = this.initscale
+    else if (this.partitionForms) {
+      let tunes = compositionUtils.flatPartition(this.partitionForms).map((n) => n.tune)
+      this.scale = harmoniqueUtils.getSuroundingTunes(tunes).sort((a, b) => harmoniqueUtils.getLevel(b) - harmoniqueUtils.getLevel(a));
     }
   }
 

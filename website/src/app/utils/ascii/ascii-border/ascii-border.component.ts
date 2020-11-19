@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   ElementRef, HostBinding,
-  Input, NgZone,
+  Input, NgZone, OnDestroy,
   OnInit, Renderer2,
   ViewChild
 } from '@angular/core';
@@ -22,7 +22,7 @@ import {BorderTemplate} from "../../../labyrinth/service/render/resources/border
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./ascii-border.component.css']
 })
-export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContentChecked {
+export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContentChecked, OnDestroy {
 
   /**
    * place the border on the outside of the div, making the div bigger
@@ -85,7 +85,7 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
     }
   } = {borderSizePx: {}}
 
-
+  toClear: any[] = [];
   @Input()
   borderClick: any = () => {
   }
@@ -98,8 +98,8 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
       borderBottomWidth: this.computedData.borderSizePx.bottom + 'px',
       borderRightWidth: this.computedData.borderSizePx.right + 'px',
       borderLeftWidth: this.computedData.borderSizePx.left + 'px',
-      height :this.yRepeat? (this.yRepeat * this.borderTemplate.leftSideHeight * LINE_HEIGHT)+'px':undefined,
-      width :this.xRepeat?  (this.xRepeat * this.borderTemplate.topSideWidth * CHARACTER_SPACING)+'px':undefined
+      height: this.yRepeat ? (this.yRepeat * this.borderTemplate.leftSideHeight * LINE_HEIGHT) + 'px' : undefined,
+      width: this.xRepeat ? (this.xRepeat * this.borderTemplate.topSideWidth * CHARACTER_SPACING)+'px':undefined
     } as CSSStyleDeclaration
 
 
@@ -110,7 +110,9 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
   debug = false;
 
   constructor(private readonly _changeDetectorRef: ChangeDetectorRef,
-              private hostRef: ElementRef, private renderer: Renderer2, private _ngZone: NgZone) {
+              private hostRef: ElementRef,
+              private renderer: Renderer2,
+              private _ngZone: NgZone) {
 
   }
 
@@ -175,9 +177,12 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
     try {
       if (this.computeBorderDimension()) {
         this._ngZone.runOutsideAngular(() => {
-          setTimeout(() => {
+          let timeout = setTimeout(() => {
             this._changeDetectorRef.detectChanges();
+
+            clearTimeout(timeout);
           }, 100);
+          this.toClear.push(timeout);
         });
       }
     } catch (e) {
@@ -261,13 +266,15 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
   ngAfterContentChecked(): void {
     if (this.computeRenderEachTime || this.haveAlreadyBeComputed)
       this._ngZone.runOutsideAngular(() => {
-        setTimeout(() => {
+        let timeout=setTimeout(() => {
           try {
             this.computeAndUpdateDimension()
+            clearTimeout(timeout);
           } catch (e) {
             console.error(e);
           }
         }, 100);
+        this.toClear.push(timeout)
       });
   }
 
@@ -322,6 +329,14 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
       }
     })
     return style;
+  }
+
+  ngOnDestroy(): void {
+
+    this.toClear.forEach((timeout)=>{
+
+      clearTimeout(timeout)
+    })
   }
 }
 

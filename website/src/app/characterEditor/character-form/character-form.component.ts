@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {DataStorageService} from "../../labyrinth/service/data-storage.service";
 import {CHARACTER_SPACING} from "../../utils/ascii/AsciiConst";
 import {CharacterRenderData, CharacterRenderService} from "../../labyrinth/service/render/character-render.service";
@@ -25,7 +25,8 @@ export class CharacterFormComponent implements OnInit, OnDestroy {
 
 
   constructor(public renderService: CharacterRenderService,
-              private dataStorage: DataStorageService) {
+              private dataStorage: DataStorageService,
+              private _ngZone: NgZone) {
 
   }
 
@@ -42,9 +43,15 @@ export class CharacterFormComponent implements OnInit, OnDestroy {
   private initCharacterRotation() {
 
     let time: number = 0;
-    let direction: string;
-    this.interval = setInterval(() => {
+    this._ngZone.runOutsideAngular(() => {
+      this.interval = setInterval(this.rotate(time), 1000)
+    });
+  }
+
+  public rotate(time: number) {
+    return () => {
       time = (time + 1) % 4;
+      let direction: string
       switch (time) {
         case 0:
           direction = 'LEFT';
@@ -58,9 +65,11 @@ export class CharacterFormComponent implements OnInit, OnDestroy {
         case 3:
           direction = 'TOP';
           break;
+        default:
+          direction = 'LEFT'
       }
       this.render = this.renderService.render(this.data, direction);
-    }, 1000)
+    };
   }
 
   ngOnDestroy(): void {

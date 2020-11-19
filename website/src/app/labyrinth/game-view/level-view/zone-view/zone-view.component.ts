@@ -6,10 +6,10 @@ import {
 } from "../../../service/render/resources/border";
 import {GameplayLabService} from "../../../service/gameplay-lab.service";
 import {FullsizeAsciiRenderService} from "../../../service/render/fullsize-ascii-render.service";
-import {shuffle} from "music-generator/dist/utils";
+import {utils} from "music-generator";
 import {LINE_HEIGHT} from "../../../../utils/ascii/AsciiConst";
 
-let backgroundTemplate = shuffle([' ¨    \n  °',
+let backgroundTemplate = utils.shuffle([' ¨    \n  °',
   ' -      \n       -   \n    -',
   "",
   //'__/___/____\\_\\_\n_/_/_______\\___\n_____/____\\____\n___/____\\______\n_/_______\\___\\_\n',
