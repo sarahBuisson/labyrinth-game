@@ -77,12 +77,12 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:jest",
+          "builder": "@angular-builders/jest:run",
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "jest.config.js",
+            "jestConfig": "jest.config.js",
             "assets": [
               "src/favicon.ico",
               "src/assets"
