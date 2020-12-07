@@ -45,12 +45,6 @@ jobs:
           ng build --base-href /labyrinth-game/
           ls dist
           cp ./dist/website-angular/index.html ./dist/website-angular/404.html
-      - name: extract build version
-        run: |
-          gradle generatePomFileForKotlinMultiplatformPublication
-          echo "::set-env name=BUILD_VERSION::$(mvn help:evaluate -Dexpression=project.version -q -f M3/build/publications/kotlinMultiplatform/pom-default.xml -DforceStdout)"
-          echo "::set-env name=BUILD_ARTIFACT_ID::$(mvn help:evaluate -Dexpression=project.artifactId -q -f M3/build/publications/kotlinMultiplatform/pom-default.xml -DforceStdout)"
-          echo "::set-env name=BUILD_GROUP_ID::$(mvn help:evaluate -Dexpression=project.groupId -q -f M3/build/publications/kotlinMultiplatform/pom-default.xml -DforceStdout)"
       - name: Deploy
         if: success()
         uses: crazy-max/ghaction-github-pages@v1
