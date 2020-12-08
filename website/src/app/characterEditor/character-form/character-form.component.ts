@@ -25,8 +25,8 @@ export class CharacterFormComponent implements OnInit, OnDestroy {
 
 
   constructor(public renderService: CharacterRenderService,
-              private dataStorage: DataStorageService,
-              private _ngZone: NgZone) {
+              public dataStorage: DataStorageService,
+              public ngZone: NgZone) {
 
   }
 
@@ -43,7 +43,7 @@ export class CharacterFormComponent implements OnInit, OnDestroy {
   private initCharacterRotation() {
 
     let time: number = 0;
-    this._ngZone.runOutsideAngular(() => {
+    this.ngZone.runOutsideAngular(() => {
       this.interval = setInterval(this.rotate(time), 1000)
     });
   }

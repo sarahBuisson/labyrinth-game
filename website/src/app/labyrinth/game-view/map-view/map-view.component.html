@@ -1,28 +1,35 @@
-<div ascii-render class="container"
+<div ascii-render class="container decor-ui"
      [borderTemplate]="borderData"
 >
-  <div class="title text">
-    <div>M</div>
-    <div>A</div>
-    <div>P</div>
-  </div>
-  <div class="main asciiArt"
-       [ngStyle]="{'grid-template-columns': 'repeat(auto-fill, '+ currentPartieProxy.level.contentArray[0].length + ')'}">
-    <div class="row" *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
-      <ng-container *ngFor="let levelCaseInput of row; let y = index">
-        <ng-container *ngIf="isCaseShowable(levelCaseInput)">
-          <div class="mapzone" ascii-border
-               xRepeat="1" yRepeat="1"
-               [borderTemplate]="borderRendered(levelCaseInput)"
-          >{{contentRendered(levelCaseInput)}}</div>
+  <div class="row1">
+    <div class="title text decor-ui">
+      <div>M</div>
+      <div>A</div>
+      <div>P</div>
+    </div>
+    <div class="main asciiArt ihm-ui"
+         [ngStyle]="{'grid-template-columns': 'repeat(auto-fill, '+ currentPartieProxy.level.contentArray[0].length + ')'}">
+      <div class="row" *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
+        <ng-container *ngFor="let levelCaseInput of row; let y = index">
+          <ng-container *ngIf="isCaseShowable(levelCaseInput)">
+            <div class="mapzone"
+                 ascii-border
+                 xRepeat="1"
+                 yRepeat="1"
+                 [borderTemplate]="borderRendered(levelCaseInput)"
+            ><span [ngClass]="computeClass(levelCaseInput)">{{contentRendered(levelCaseInput)}}</span>
+            </div>
+          </ng-container>
         </ng-container>
-      </ng-container>
+      </div>
     </div>
   </div>
-  <div class="legend text" ascii-border>
-    legend:
-    <div> ¤ = You are here</div>
-    <div> € = Exit</div>
+
+  <div class="legend text decor-ui" ascii-border>
+    <span class="important-ui">legend:</span>
+    <br/>
+    <div class="important-ui"> ¤ = You are here</div>
+    <div class="important-ui"> € = Exit</div>
     <br/>
     <div> A-Z = Locked door</div>
     <div> a-z = keys</div>

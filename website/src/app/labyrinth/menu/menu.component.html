@@ -53,8 +53,8 @@
   </button>
 </div>
 <app-ascii-modal #highScoreModal (click)="this.highScoreModal.hide()">
-  <div>
-    <div ascii-border
+  <div ascii-render class="container text decor-ui" borderTemplateName="paper">
+  <div ascii-border
          hoverClass="asciiHighlight"
     ><span>Highscore</span>
     </div>
@@ -75,7 +75,9 @@
 </app-ascii-modal>
 <app-ascii-modal #loadingModal (click)="this.loadingModal.hide()">Loading</app-ascii-modal>
 <app-ascii-modal #characterFormModal [closable]="true">
+  <div ascii-render class="container text decor-ui" borderTemplateName="paper">
   <app-character-form></app-character-form>
+  </div>
 </app-ascii-modal>
 
 <audio #player

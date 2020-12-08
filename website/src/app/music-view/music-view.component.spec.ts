@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MusicViewComponent } from './music-view.component';
+import {GameMusiqueService} from "../labyrinth/service/sound/game-musique.service";
+import {SoundService} from "../labyrinth/service/sound/sound.service";
 
 describe('MusicViewComponent', () => {
   let component: MusicViewComponent;
@@ -8,9 +10,13 @@ describe('MusicViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MusicViewComponent ]
+      declarations: [MusicViewComponent],
+      providers: [
+        GameMusiqueService,
+        SoundService,
+        GameMusiqueService]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,4 +1,4 @@
-<h1 ascii-render class="text" >aspect of your character</h1>
+<h1 ascii-render class="text  ihm-ui" >aspect of your character</h1>
 <div class="layout">
   <div *ngFor="let bodyPart of renderService.bodyPartsKey">
     <h2 ascii-render class="text">{{bodyPart}}</h2>
@@ -13,7 +13,7 @@
   <div>  <h2 ascii-render class="text">You</h2>
     <div ascii-render [xRepeat]="6" [yRepeat]="4" class="character-render asciiArt"
          borderTemplateName="double">
-      {{render}}
+     <span class="important-ui">{{render}}</span>
     </div>
   </div>
 </div>

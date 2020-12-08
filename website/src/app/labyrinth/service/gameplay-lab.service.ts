@@ -7,18 +7,21 @@ import {DataStorageService} from "./data-storage.service";
 import findKey from 'lodash/findKey';
 import {SoundService} from "./sound/sound.service";
 
-let gameplay = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat, 0, false);
+// @ts-ignore
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameplayLabService {
   currentParty: any;
+  gameplay: any;
 
   constructor(private serviceLabService: GenerateLabService, private dataStorageService: DataStorageService, private soundService: SoundService) {
     dataStorageService.getCurrentParty().subscribe((party) => {
       this.currentParty = party;
     })
+    this.gameplay = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat, 0, false);
+
   }
 
 
@@ -57,7 +60,7 @@ export class GameplayLabService {
 
   private play(obj): void {
 
-    let newParty = gameplay.playerInteractWithFunction(this.currentParty, obj);
+    let newParty = this.gameplay.playerInteractWithFunction(this.currentParty, obj);
     this.dataStorageService.saveParty(newParty)
     return newParty
 
@@ -95,6 +98,6 @@ export class GameplayLabService {
   }
 
   computePartieScore() {
-    return gameplay.computePartieScoreFunction(this.currentParty)
+    return this.gameplay.computePartieScoreFunction(this.currentParty)
   }
 }

@@ -22,7 +22,7 @@ import {CHARACTER_SPACING, LINE_HEIGHT} from "../../utils/ascii/AsciiConst";
     .container {
       display: grid;
       grid-template-columns: ${CHARACTER_SPACING * 100}px ${CHARACTER_SPACING * 4}px;
-      grid-template-rows: ${LINE_HEIGHT * 40}px ${LINE_HEIGHT * 8}px;
+      grid-template-rows: ${LINE_HEIGHT * 45}px ${LINE_HEIGHT * 8}px;
       grid-template-areas:
     "main sidebar"
     "toolbar toolbar";
@@ -37,6 +37,7 @@ import {CHARACTER_SPACING, LINE_HEIGHT} from "../../utils/ascii/AsciiConst";
         align-items: center;
     }
     .toolbar {
+      z-index: 100;
       grid-area: toolbar;
       display: grid;
       grid-template-columns: ${CHARACTER_SPACING * 100}px ${CHARACTER_SPACING * 6}px 1fr;

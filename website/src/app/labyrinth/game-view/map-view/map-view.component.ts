@@ -15,9 +15,7 @@ let mapBorderData = paperGridTemplate;
       display: inline-flex;
       flex-direction: column;
       width: ${CHARACTER_SPACING * 3}px;
-      padding:${LINE_HEIGHT * 3}px ${CHARACTER_SPACING * 3}px;
-      margin-left: ${CHARACTER_SPACING * 9}px;
-
+      padding:${LINE_HEIGHT * 1}px ${CHARACTER_SPACING * 1}px;
     }
 
     .legend {
@@ -38,7 +36,7 @@ export class MapViewComponent implements OnInit {
   rangeArroundPlayer: number = -1;
 
   borderData = mapBorderData
-  showMap:any;
+  showMap: any;
 
   constructor(public gameplayLabService: GameplayLabService) {
   }
@@ -106,8 +104,16 @@ export class MapViewComponent implements OnInit {
       } else {
         return "+"
       }
-
     }
+  }
 
+  computeClass(levelCaseInput: any) {
+    let content = this.gameplayLabService.levelContent(levelCaseInput);
+    if (content[0]) {
+      if (content[0].name === "player" || content[0].name === "exit") {
+        return "important-ui"
+      }
+    }
+    return "ihm-ui"
   }
 }

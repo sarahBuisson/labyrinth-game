@@ -11,7 +11,8 @@ import * as tone from "tone";
 })
 export class MusicViewComponent implements OnInit {
 
-  constructor(private musiqueService: GameMusiqueService, private soundService: SoundService) {
+  constructor(private musiqueService: GameMusiqueService,
+              private soundService: SoundService) {
   }
 
   currentMusicPartition: any;

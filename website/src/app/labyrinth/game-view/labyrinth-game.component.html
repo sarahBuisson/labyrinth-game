@@ -1,7 +1,6 @@
 <div class="menuBar text" ascii-border borderTemplateName="doubleGridTemplate">
   <span>LAB GENERATOR </span>
   <button ascii-render class="ihm-ui"><a href="./menu" class="interact-ui text">menu</a></button>
-  <button ascii-render class="ihm-ui"><a href="./character" class="interact-ui text">character editor</a></button>
   <button ascii-render class="ihm-ui"><a href="./new" class="interact-ui text">new Labyrinth</a></button>
   <span></span>
 </div>
@@ -21,7 +20,7 @@
     <app-sliding
       [openData]="{position:'absolute',
       transform: 'translateX(-50%)',
-      left:'50%'}"
+      left:'-100%'}"
       [closeData]="{position:'absolute',
            transform: 'translateX(-81px)',
        left:'100%'}"
@@ -43,7 +42,7 @@
       bottom:'0'}"
       [closeData]="{position:'absolute',
            transform: 'translateX(-27px)',
-       left:'100%',
+       left:'-100%',
           bottom:'0'}">
       <div class="inventoryArea">
         <inventory-view
@@ -62,8 +61,8 @@
     </div>
   </div>
   <app-ascii-modal #winModal class="text">
-    <div ascii-border >
-    <h1 ascii-border > YOU WIN !</h1>
+    <div ascii-border  class="background-ui">
+    <h1 ascii-border  class=" text important-ui"> YOU WIN !</h1>
     <span app-ascii>{{fullViewRenderService.renderObj({name: 'exit'})}}</span>
     <span app-ascii>
       {{fullViewRenderService.renderObj(this.currentPartyProxy.player)}}
@@ -79,7 +78,7 @@
       <div></div>
       <div>total score:{{this.score.score}}</div>
     </div>
-    <button ascii-border (click)="nextLevel()">next level</button>
+    <button ascii-border class="important-ui" (click)="nextLevel()">next level</button>
     </div>
   </app-ascii-modal>
 

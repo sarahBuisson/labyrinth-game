@@ -1,7 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {CharacterFormComponent } from './character-form.component';
-import {CharacterRenderData, CharacterRenderService} from "../../labyrinth/service/render/character-render.service";
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {NgZone} from "@angular/core";
+import {CharacterFormComponent} from './character-form.component';
+import {CharacterRenderService} from "../../labyrinth/service/render/character-render.service";
+
 import {DataStorageService} from "../../labyrinth/service/data-storage.service";
 import {
   BrowserDynamicTestingModule,
@@ -10,49 +11,55 @@ import {
 import {CommonModule} from "@angular/common";
 import {AppModule} from "../../app.module";
 
-describe('CharacterFormComponent', async() => {
+
+describe('CharacterFormComponent', async () => {
   let component: CharacterFormComponent;
   let fixture: ComponentFixture<CharacterFormComponent>;
   let mockCharacterRenderService;
   let mockNgZone;
   let mockDataStorage;
 
-  beforeEach((() => {
+  beforeEach((async (callbackBeforeEach) => {
 
-    mockCharacterRenderService = ({
+    mockCharacterRenderService = {
       render: jest.fn()
-    }) as {} as CharacterRenderService;
+    };
 
-    mockNgZone = ({
+    mockNgZone = {
       runOutsideAngular: (callback) => {
         callback();
       }
-    }) as {} as NgZone;
+    };
 
-    mockDataStorage = ({
+    mockDataStorage = {
       runOutsideAngular: (callback) => {
         callback();
       }
-    }) as {} as DataStorageService;
+    };
 
-    TestBed.configureTestingModule({
-      imports: [BrowserDynamicTestingModule, CommonModule, AppModule],
+    await TestBed.configureTestingModule({
+      imports: [AppModule],
       declarations: [CharacterFormComponent],
       providers: [
-        {provide: CharacterRenderService, value: mockCharacterRenderService},
-        {provide: DataStorageService, value: mockDataStorage},
-        {provide: NgZone, value: mockNgZone}]
-    }).compileComponents();
-  }));
+        CharacterRenderService,
+        DataStorageService,
+        NgZone
 
-  beforeEach(() => {
+       ]
+    }).compileComponents();
+
     fixture = TestBed.createComponent(CharacterFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    callbackBeforeEach();
+  }));
+
+  beforeEach(() => {
+
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).not.toBeUndefined();
   });
 
   it('should compute next rotation', () => {
@@ -61,7 +68,7 @@ describe('CharacterFormComponent', async() => {
     component.rotate(1);
 
     //Then
-    //  expect(mockCharacterRenderService.render).toHaveBeenCalledWith(expect.any(CharacterRenderData), 'LEFT')
+    //    expect(mockCharacterRenderService.render).toHaveBeenCalledWith(expect.any(CharacterRenderData), 'LEFT')
 
   });
 
@@ -71,7 +78,7 @@ describe('CharacterFormComponent', async() => {
     component;
 
     //Then
-    // expect(mockCharacterRenderService.render).toHaveBeenCalledWith(expect.any(CharacterRenderData), 'LEFT')
+//     expect(mockCharacterRenderService.render).toHaveBeenCalledWith(expect.any(CharacterRenderData), 'LEFT')
 
   });
 });

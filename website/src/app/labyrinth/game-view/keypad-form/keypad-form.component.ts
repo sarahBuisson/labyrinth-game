@@ -14,7 +14,6 @@ export class KeypadFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  @HostListener('document:keydown', ['$event'])
   move(direction: string) {
     this.gameplayLabService.move(direction);
   }

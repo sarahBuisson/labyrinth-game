@@ -9,9 +9,11 @@
 }
 
 .container {
+  background: white;
+}
+.row1 {
   display: flex;
   flex-direction: row;
-  background: white;
 }
 
 .container > div {

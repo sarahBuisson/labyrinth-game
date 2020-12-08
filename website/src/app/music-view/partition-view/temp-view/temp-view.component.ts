@@ -17,12 +17,12 @@ export class TempViewComponent implements OnInit {
 
   style() {
 
-    return {
+    return this.temp ? {
       minWidth: "" + (rhythmUtils.duration(this.temp.value) * 50) + " px",
       width: "" + (rhythmUtils.duration(this.temp.value) * 50) + " px",
 
       display: "inline-block"
-    }
+    }:{}
   }
 
   constructor() {

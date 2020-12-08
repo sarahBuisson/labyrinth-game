@@ -1,11 +1,11 @@
 <div ascii-render
-              class="container text"
-              borderTemplateName="loadingBorderGridTemplate">
-  <h1 ascii-render> Labyrinth generating ...</h1>
+     class="container text background-ui"
+     borderTemplateName="loadingBorderGridTemplate">
+  <h1 ascii-render class="ihm-ui"> Labyrinth generating ...</h1>
   <br/>
 
 
-  <div class="content" ascii-border>
+  <div class="content ihm-ui" ascii-border>
     <div>Do you know it ? ({{currentLoadingMessage}}/{{maxNumberOfMessage}})</div>
 <br/>
     <ng-container  *ngIf="currentLoadingMessage===0">

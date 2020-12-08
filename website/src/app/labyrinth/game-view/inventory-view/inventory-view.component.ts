@@ -39,4 +39,19 @@ export class InventoryViewComponent implements OnInit {
     return this._renderService.renderObj(obj);
   }
 
+  computeTooltip(obj: any) {
+    if (obj.name == 'start')
+      return 'start flag'
+    if (obj.name == 'exit')
+      return 'the exit'
+    if (obj.key)
+      return 'closed door ' + obj.name
+    if (obj.destination)
+      return 'door'
+    if (obj.inventory)
+      return 'You'
+    return 'key ' + obj.name
+
+  }
+
 }
