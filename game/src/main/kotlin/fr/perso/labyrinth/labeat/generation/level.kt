@@ -9,7 +9,10 @@ import fr.perso.labyrinth.toolbox.algorithm.labyrinth.generation.drawLabByPastin
 import fr.perso.labyrinth.toolbox.model.Board
 import fr.perso.labyrinth.toolbox.model.BoardZone
 import fr.perso.labyrinth.toolbox.model.Point
+import kotlin.js.JsExport
+import kotlin.js.ExperimentalJsExport
 
+@ExperimentalJsExport
 fun generateCompositeMapLabWithKey(size: Int): LevelBoard<CompositeZone> {
     val board = generateEmptyBoard(size)
     //When
@@ -25,6 +28,7 @@ fun generateCompositeMapLabWithKey(size: Int): LevelBoard<CompositeZone> {
     return board
 }
 
+@JsExport
 fun generateEmptyBoard(size: Int): LevelBoard<CompositeZone> {
     val factory = { x: Int, y: Int, b: Board<CompositeZone> ->
         CompositeZone(
@@ -38,6 +42,7 @@ fun generateEmptyBoard(size: Int): LevelBoard<CompositeZone> {
     return board
 }
 
+@JsExport
 fun <T : BoardZone> connectAllZoneOfBoard(board: Board<T>): Board<T> {
     board.toList().forEach { board.getNeigbours(it).forEach { nei -> nei.connectTo(it) } }
 
@@ -45,7 +50,7 @@ fun <T : BoardZone> connectAllZoneOfBoard(board: Board<T>): Board<T> {
 }
 
 
-
+@JsExport
 fun <T> chooseStartExit(board: LevelBoard<T>)
         where T : BoardZone, T : Point {
 

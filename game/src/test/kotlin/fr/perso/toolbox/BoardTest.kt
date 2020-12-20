@@ -4,7 +4,7 @@ import fr.perso.labyrinth.oldlab.*
 import fr.perso.labyrinth.toolbox.model.Board
 import fr.perso.labyrinth.toolbox.model.PointImpl
 import org.jeasy.rules.core.RulesImpl
-import org.junit.Test
+import kotlin.test.Test
 
 class BoardTest {
 

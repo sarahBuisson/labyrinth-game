@@ -3,8 +3,8 @@ package fr.perso.toolbox
 import fr.perso.labyrinth.toolbox.algorithm.*
 import fr.perso.labyrinth.toolbox.algorithm.labyrinth.generation.drawLabByPastingSmallCorridor
 import fr.perso.labyrinth.toolbox.model.*
-import junit.framework.Assert.assertEquals
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class BoardTreeLabTest {
 

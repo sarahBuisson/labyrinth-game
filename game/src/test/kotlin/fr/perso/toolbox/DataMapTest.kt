@@ -8,15 +8,16 @@ import fr.perso.labyrinth.toolbox.algorithm.dataMap.distanceMap
 import fr.perso.labyrinth.toolbox.algorithm.dataMap.corridorGrowingSizeDistanceMap
 import fr.perso.labyrinth.toolbox.algorithm.dataMap.numberOfIntersectionDistanceMap
 import fr.perso.labyrinth.toolbox.model.labyrinthTreeToString
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+
 
 class DataMapTest {
 
     lateinit var board: Board<ZoneOfCoridor>;
 
 
-    @Before
+    @BeforeTest
     fun setup() {
         val factory = { x: Int, y: Int, b: Board<ZoneOfCoridor> ->
             ZoneOfCoridor(

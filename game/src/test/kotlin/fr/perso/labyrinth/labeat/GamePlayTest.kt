@@ -2,9 +2,10 @@ package fr.perso.labyrinth.labeat
 
 import fr.perso.labyrinth.freezone.model.DoorObjectZone
 import fr.perso.labyrinth.labeat.generation.initPartieMapLabWithKey
-import org.junit.Test
+import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
+import kotlin.test.assertTrue
 
 class GamePlayTest {
 
@@ -52,6 +53,6 @@ class GamePlayTest {
 
         assertNotEquals(partie.player.location, startLocation)
         assertFalse(startLocation.content.contains(partie.player))
-        assert(partie.player.location.content.contains(partie.player))
+        assertTrue(partie.player.location.content.contains(partie.player))
     }
 }

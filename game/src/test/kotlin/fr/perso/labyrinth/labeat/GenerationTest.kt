@@ -11,7 +11,8 @@ import fr.perso.labyrinth.toolbox.algorithm.dataMap.corridorSizeDistanceMap
 import fr.perso.labyrinth.toolbox.algorithm.dataMap.distanceMap
 import fr.perso.labyrinth.toolbox.algorithm.labyrinth.generation.drawLabByPastingSmallCorridor
 import fr.perso.labyrinth.toolbox.model.*
-import org.junit.Test
+import kotlin.test.Test
+
 
 class GenerationTest {
 
@@ -43,8 +44,8 @@ class GenerationTest {
 
                 }
         val compositeDoorName: (Direction, CompositeZone) -> Any? = { d, zone ->
-            val door = zone.content.filterIsInstance(DoorObjectZone::class.java)
-                    .filter { it.destination == zone.connections.get(d) }.firstOrNull()
+            val door = zone.content.filterIsInstance<DoorObjectZone>()
+                .filter { it.destination == zone.connections.get(d) }.firstOrNull()
             if (door != null && door.key != null)
                 door.name
             else
@@ -87,7 +88,7 @@ class GenerationTest {
 
                 }
         val compositeDoorName: (Direction, CompositeZone) -> Any? = { d, zone ->
-            val door = zone.content.filterIsInstance(DoorObjectZone::class.java)
+            val door = zone.content.filterIsInstance<DoorObjectZone>()
                     .filter { it.destination == zone.connections.get(d) }.firstOrNull()
             if (door != null && door.key != null)
                 door.name

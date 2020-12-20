@@ -14,7 +14,7 @@ import mu.KotlinLogging
 import org.jeasy.rules.core.RulesImpl
 import org.jeasy.rules.core.DefaultRulesEngine
 import org.jeasy.rules.core.LambdaRule
-
+import kotlin.js.JsExport
 
 
 class Interaction<Qui, Quoi, Comment, Univers>(val qui: Qui, val quoi: Quoi, val comment: Comment, val univers: Univers)
@@ -79,7 +79,7 @@ class TakeObjectRule :
 
 val ruleBook = RulesImpl(setOf(MoveOpenDoorRule(), MoveClosedDoorRule(), TakeObjectRule()))
 
-
+@JsExport
 fun playerInteractWith(partie: Partie<*>, obj: ObjectZone): Partie<*> {
     try {
         DefaultRulesEngine<Interaction<Player, Any, Any, Partie<*>>>().fire(
@@ -93,7 +93,7 @@ fun playerInteractWith(partie: Partie<*>, obj: ObjectZone): Partie<*> {
     return Partie(partie.player, partie.level, partie.status)
 
 }
-
+@JsExport
 fun computePartieScore(partie: Partie<*>): MutableMap<String, Int> {
 
     val datas: MutableMap<String, Int> = HashMap()
