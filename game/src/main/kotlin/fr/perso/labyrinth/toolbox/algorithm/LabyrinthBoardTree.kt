@@ -7,20 +7,20 @@ import fr.perso.labyrinth.toolbox.model.BoardZone
 import fr.perso.labyrinth.toolbox.model.Point
 import org.jeasy.rules.api.Rules
 import org.jeasy.rules.core.DefaultRulesEngine
-import org.jeasy.rules.core.LambdaRule
+import org.jeasy.rules.core.DefaultRule
 
 
 class DrawLabFacts<T : BoardZone>(val board: Board<T>)
 class DrawLabCaseFacts<T : BoardZone>(val zone: BoardZone, val board: Board<T>)
 
 
-fun <T : BoardZone> ruleConnectEndCaseToAFreeNeighboor() = LambdaRule<DrawLabCaseFacts<T>>({ facts ->
+fun <T : BoardZone> ruleConnectEndCaseToAFreeNeighboor() = DefaultRule<DrawLabCaseFacts<T>>(condition={ facts ->
     facts.zone.connections.size == 1
 
 
-}, { facts ->
+}, action = { facts ->
     val freeNeighboors =
-            facts.board.getNeigboursMap(facts.zone).filter { it.value != null }.filter { it.value!!.connections.size == 0 }
+        facts.board.getNeigboursMap(facts.zone).filter { it.value != null }.filter { it.value!!.connections.size == 0 }
     if (freeNeighboors.isNotEmpty()) {
         val nextNei = freeNeighboors.entries.random();
         facts.zone.connectZone(nextNei.value!!, nextNei.key)
@@ -29,7 +29,7 @@ fun <T : BoardZone> ruleConnectEndCaseToAFreeNeighboor() = LambdaRule<DrawLabCas
 });
 
 
-fun <T : BoardZone> ruleAddCrossToAFreeNeighboor() = LambdaRule<DrawLabCaseFacts<T>>({ facts ->
+fun <T : BoardZone> ruleAddCrossToAFreeNeighboor() = DefaultRule<DrawLabCaseFacts<T>>({ facts ->
     true
 
 
@@ -44,7 +44,7 @@ fun <T : BoardZone> ruleAddCrossToAFreeNeighboor() = LambdaRule<DrawLabCaseFacts
 });
 
 
-fun <T : BoardZone> ruleConnectUnconnectedCaseToAnyConnectedNei() = LambdaRule<DrawLabCaseFacts<T>>({ facts ->
+fun <T : BoardZone> ruleConnectUnconnectedCaseToAnyConnectedNei() = DefaultRule<DrawLabCaseFacts<T>>({ facts ->
     facts.zone.connections.size == 0
 
 
@@ -58,11 +58,12 @@ fun <T : BoardZone> ruleConnectUnconnectedCaseToAnyConnectedNei() = LambdaRule<D
 });
 
 
-fun <T : BoardZone> ruleConnectUnconnectedCaseToBestConnectedNei() = LambdaRule<DrawLabCaseFacts<T>>({ facts ->
+fun <T : BoardZone> ruleConnectUnconnectedCaseToBestConnectedNei() = DefaultRule<DrawLabCaseFacts<T>>(condition = { facts ->
     facts.zone.connections.size == 0
 
 
-}, { facts ->
+},
+    action= { facts ->
     val freeNeighboors =
             facts.board.getNeigboursMap(facts.zone).filter { it.value != null }.filter { it.value!!.connections.size > 0 }
     if (freeNeighboors.isNotEmpty()) {

@@ -17,10 +17,10 @@ import kotlin.properties.Delegates
 
 
 open class LabFillerExit<T>(
-        keyToDoorArray: Array<Array<String>> = doorWithKeyDefault,
-        objetDiversArray: Array<String> = objetDiversDefault
+    keyToDoorArray: Array<Array<String>> = doorWithKeyDefault,
+    objetDiversArray: Array<String> = objetDiversDefault
 ) :
-        LabFiller<T>(keyToDoorArray, objetDiversArray)
+    LabFiller<T>(keyToDoorArray, objetDiversArray)
         where T : GeoZone, T : ConnectedZone {
 
     lateinit var pathToExit: List<T>
@@ -44,7 +44,8 @@ open class LabFillerExit<T>(
         for (i in inter) {
             val currentZone = pathToExit[i]!!
             val lockedZone = pathToExit[i - 1]!!
-            val doorToExit = currentZone.content.filterIsInstance<DoorObjectZone>().find { it.destination == lockedZone }
+            val doorToExit =
+                currentZone.content.filterIsInstance<DoorObjectZone>().find { it.destination == lockedZone }
 
 
             if (doorToExit != null) {
@@ -84,8 +85,8 @@ open class LabFiller<TZone>
     var listOfKey: MutableList<String>;
 
     constructor(
-            keyToDoorArray: Array<Array<String>> = doorWithKeyDefault,
-            objetDiversArray: Array<String> = objetDiversDefault
+        keyToDoorArray: Array<Array<String>> = doorWithKeyDefault,
+        objetDiversArray: Array<String> = objetDiversDefault
     ) {
         keyToDoor = keyToDoorArray.map { Pair(it[0], it[1]) }.toMutableList()
         objetDivers = objetDiversArray.toMutableList()
@@ -93,7 +94,13 @@ open class LabFiller<TZone>
     }
 
 
-    open public fun init(zones: List<TZone>, begin: TZone = zones.first(), exit: TZone = zones.last(), numberOfDoor: Int, numberOfExchanges: Int): LabFiller<TZone> {
+    open public fun init(
+        zones: List<TZone>,
+        begin: TZone = zones.first(),
+        exit: TZone = zones.last(),
+        numberOfDoor: Int,
+        numberOfExchanges: Int
+    ): LabFiller<TZone> {
 
         this.begin = begin
         this.exit = exit
@@ -152,24 +159,25 @@ open class LabFiller<TZone>
             lateinit var doorZone: TZone;
             var zonesAfterDoorZone: List<TZone> = listOf();
 
-            var zonesWhoCanHaveADoor= zones.filter { isZoneAvailable(it) }
+            var zonesWhoCanHaveADoor = zones.filter { isZoneAvailable(it) }
             //Select a zone when you can put a door.
             while (zonesAfterDoorZone.isEmpty() && zonesWhoCanHaveADoor.isNotEmpty()) {
                 doorZone = zonesWhoCanHaveADoor.random()
-                zonesWhoCanHaveADoor=zonesWhoCanHaveADoor.minus(doorZone)
+                zonesWhoCanHaveADoor = zonesWhoCanHaveADoor.minus(doorZone)
                 val distanceMax = distanceFromStartMap[doorZone]!!
-                zonesAfterDoorZone = doorZone.connected.filter { distanceFromStartMap[it]!! > distanceMax && isZoneAvailable(it as TZone) } as List<TZone>
+                zonesAfterDoorZone =
+                    doorZone.connected.filter { distanceFromStartMap[it]!! > distanceMax && isZoneAvailable(it as TZone) } as List<TZone>
             }
             if (zonesAfterDoorZone.isNotEmpty()) {
                 val distanceMax = distanceFromStartMap[doorZone]!!;
                 zoneWhoWillBeClosedByDoorAndKey = zonesAfterDoorZone.random()
                 val door =
-                        doorZone
-                                .content
-                                .find { it is DoorObjectZone && it.destination == zoneWhoWillBeClosedByDoorAndKey } as DoorObjectZone
+                    doorZone
+                        .content
+                        .find { it is DoorObjectZone && it.destination == zoneWhoWillBeClosedByDoorAndKey } as DoorObjectZone
 
                 affectKeyToDoor(
-                        door, doorZone, listOfKey
+                    door, doorZone, listOfKey
                 )
             }
         }
@@ -177,9 +185,9 @@ open class LabFiller<TZone>
 
 
     protected fun affectKeyToDoor(
-            door: DoorObjectZone,
-            doorZone: TZone,
-            listOfKey: MutableList<String>
+        door: DoorObjectZone,
+        doorZone: TZone,
+        listOfKey: MutableList<String>
     ) {
         val availableZoneForKey = availableZonesToPutKeyToAccessZone(doorZone)
         if (!availableZoneForKey.isEmpty()) {
@@ -210,8 +218,8 @@ open class LabFiller<TZone>
     }
 
     protected fun affectKeyToDoor(
-            door: DoorObjectZone,
-            key: KeyObjectZone
+        door: DoorObjectZone,
+        key: KeyObjectZone
     ) {
 
         door.key = key
@@ -219,7 +227,8 @@ open class LabFiller<TZone>
     }
 
 
-    private fun generateKey(listOfKey: MutableList<String>
+    private fun generateKey(
+        listOfKey: MutableList<String>
     ): KeyObjectZone {
         val name = listOfKey.random()
         listOfKey.remove(name)

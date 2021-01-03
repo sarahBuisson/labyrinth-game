@@ -83,7 +83,7 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
       left?: number,
       right?: number
     }
-  } = {borderSizePx: {}}
+  } = {borderSizePx: {}, computed: 'none'}
 
   toClear: any[] = [];
   @Input()
@@ -112,7 +112,7 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
   constructor(private readonly _changeDetectorRef: ChangeDetectorRef,
               private hostRef: ElementRef,
               private renderer: Renderer2,
-              private _ngZone: NgZone) {
+              private ngZone: NgZone) {
 
   }
 
@@ -176,7 +176,7 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
   private computeAndUpdateDimension() {
     try {
       if (this.computeBorderDimension()) {
-        this._ngZone.runOutsideAngular(() => {
+        this.ngZone.runOutsideAngular(() => {
           let timeout = setTimeout(() => {
             this._changeDetectorRef.detectChanges();
 
@@ -265,7 +265,7 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
 
   ngAfterContentChecked(): void {
     if (this.computeRenderEachTime || this.haveAlreadyBeComputed)
-      this._ngZone.runOutsideAngular(() => {
+      this.ngZone.runOutsideAngular(() => {
         let timeout=setTimeout(() => {
           try {
             this.computeAndUpdateDimension()

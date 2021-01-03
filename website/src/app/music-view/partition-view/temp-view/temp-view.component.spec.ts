@@ -6,17 +6,15 @@ describe('TempViewComponent', () => {
   let component: TempViewComponent;
   let fixture: ComponentFixture<TempViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ TempViewComponent ]
     })
     .compileComponents();
-  }));
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(TempViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    expect(component).toBeTruthy();
   });
 
   it('should create', () => {

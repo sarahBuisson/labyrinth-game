@@ -95,7 +95,7 @@ export class MapViewComponent implements OnInit {
 
       return this.renderService.renderObj(content[0])
     } else {
-      let nbrOfConnections = levelCaseInput.connectedArray.length;
+      let nbrOfConnections = levelCaseInput.connected.toArray().length;
       if (nbrOfConnections == 1) {
         return " ";
       }

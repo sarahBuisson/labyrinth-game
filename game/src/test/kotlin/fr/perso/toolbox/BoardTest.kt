@@ -3,7 +3,7 @@ package fr.perso.toolbox
 import fr.perso.labyrinth.oldlab.*
 import fr.perso.labyrinth.toolbox.model.Board
 import fr.perso.labyrinth.toolbox.model.PointImpl
-import org.jeasy.rules.core.RulesImpl
+import org.jeasy.rules.api.Rules
 import kotlin.test.Test
 
 class BoardTest {
@@ -26,14 +26,12 @@ class BoardTest {
         val partie =
                 Partie(Cursor(PointImpl(3, 3)), b)
         runBook(
-                partie,
-                RulesImpl(
-                        setOf(
-                                MoveWithoutCross(),
-                                Turn(),
-                                Jump()
-                        )
-                )
+            partie,
+            Rules(
+                MoveWithoutCross(),
+                Turn(),
+                Jump()
+            )
         )
 
         println(b)
@@ -65,7 +63,7 @@ class BoardTest {
                 )
 
         coridor.forEachIndexed { index: Int, ZoneOfCoridor: ZoneOfCoridor -> ZoneOfCoridor.haveBeenVisited = index + 1; }
-        println(b.toString { "" + it.haveBeenVisited })
+        println(b.toFullString { "" + it.haveBeenVisited })
         println(labyrinthToString(b, listOf(coridor)))
     }
 

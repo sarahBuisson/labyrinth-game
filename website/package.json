@@ -25,11 +25,12 @@
     "@angular/router": "~10.1.1",
     "game": "^1.0.3",
     "kotlin": "1.3.72",
+    "lodash": "^4.17.20",
     "music-generator": "https://github.com/sarahBuisson/music-generator.git",
     "routing": "^0.0.2",
     "rxjs": "~6.5.4",
     "standardized-audio-context": "24.1.26",
-    "tone": "^14.7.39",
+    "tone": "14.7.58",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

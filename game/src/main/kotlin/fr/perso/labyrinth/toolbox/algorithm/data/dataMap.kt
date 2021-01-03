@@ -25,7 +25,7 @@ fun <T : BoardZone> distanceMap(start: Point, board: Board<T>): Map<T, Int> {
 
                 currentNei.forEach { entry ->
                     val neigbour = entry.value!!
-                    val nDist = distance.get(board.get(neigbour.x, neigbour.y)!!);
+                    val nDist = distance.get(board.getXY(neigbour.x, neigbour.y)!!);
                     if (nDist == null || (nDist > (1 + dist))) {
                         distance.put(board.get(entry.value)!!, dist + 1);
                     }
@@ -54,7 +54,7 @@ fun <T : BoardZone> numberOfIntersectionDistanceMap(start: Point, board: Board<T
 
                 currentNei.forEach { entry ->
                     val neigbour = entry.value!!
-                    val nDist = distance.get(board.get(neigbour.x, neigbour.y)!!);
+                    val nDist = distance.get(board.getXY(neigbour.x, neigbour.y)!!);
 
                     if (neigbour.connected.size > 2) {
                         if (nDist == null || (nDist > (1 + dist))) {
@@ -87,7 +87,7 @@ public fun <T : BoardZone> complexiteMap(start: Point, board: Board<T>): Map<Boa
                 currentNei.forEach { entry ->
                     val neigbour = entry.value!!
                     val neiDirection = entry.key!!
-                    val neiComplexite = complexite.get(board.get(neigbour.x, neigbour.y)!!);
+                    val neiComplexite = complexite.get(board.getXY(neigbour.x, neigbour.y)!!);
 
 
                     val neiOfNeighbour =

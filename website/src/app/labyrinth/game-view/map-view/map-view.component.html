@@ -8,9 +8,9 @@
       <div>P</div>
     </div>
     <div class="main asciiArt ihm-ui"
-         [ngStyle]="{'grid-template-columns': 'repeat(auto-fill, '+ currentPartieProxy.level.contentArray[0].length + ')'}">
-      <div class="row" *ngFor="let row of currentPartieProxy.level.contentArray; let x = index ">
-        <ng-container *ngFor="let levelCaseInput of row; let y = index">
+         [ngStyle]="{'grid-template-columns': 'repeat(auto-fill, '+ currentPartieProxy.level.content.toArray()[0].length + ')'}">
+      <div class="row" *ngFor="let row of currentPartieProxy.level.content.toArray(); let x = index ">
+        <ng-container *ngFor="let levelCaseInput of row.toArray(); let y = index">
           <ng-container *ngIf="isCaseShowable(levelCaseInput)">
             <div class="mapzone"
                  ascii-border

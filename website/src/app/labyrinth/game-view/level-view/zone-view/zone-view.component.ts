@@ -40,7 +40,8 @@ export class ZoneViewComponent implements OnInit {
   @Input()
   zone: any;
 
-  constructor(public gameplayLabService: GameplayLabService, public renderService: FullsizeAsciiRenderService) {
+  constructor(public gameplayLabService: GameplayLabService,
+              public renderService: FullsizeAsciiRenderService) {
 
   }
 

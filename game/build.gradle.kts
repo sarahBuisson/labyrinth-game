@@ -8,7 +8,6 @@ group = "me.sarahbuisson"
 version = "1.0-SNAPSHOT"
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
@@ -39,7 +38,6 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib"))
                 implementation("io.github.microutils:kotlin-logging:" + extra.properties["kotlin_logging_version"])
-                implementation("org.jeasy:easy-rules-api:" + extra.properties["rules_version"])
                 implementation("org.jeasy:easy-rules-core:" + extra.properties["rules_version"])
             }
         }
@@ -58,7 +56,6 @@ kotlin {
             dependencies {
                 implementation("io.github.microutils:kotlin-logging-jvm:" + extra.properties["kotlin_logging_version"])
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-                implementation("org.jeasy:easy-rules-api-jvm:" + extra.properties["rules_version"])
                 implementation("org.jeasy:easy-rules-core-jvm:" + extra.properties["rules_version"])
             }
         }
@@ -71,7 +68,6 @@ kotlin {
             dependencies {
                 implementation("io.github.microutils:kotlin-logging-js:" + extra.properties["kotlin_logging_version"])
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
-                implementation("org.jeasy:easy-rules-api-js:" + extra.properties["rules_version"])
                 implementation("org.jeasy:easy-rules-core-js:" + extra.properties["rules_version"])
             }
         }

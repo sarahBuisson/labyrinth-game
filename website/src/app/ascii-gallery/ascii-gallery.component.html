@@ -3,7 +3,7 @@
 
 <app-loading></app-loading>
 <div *ngIf="display">
-  <inventory-view [player]="{inventoryArray:defaultZone.contentArray}"></inventory-view>
+  <inventory-view [player]="{inventoryArray:defaultZone.content.toArray()}"></inventory-view>
 
 
   <span ascii-border><span class="text">text</span>

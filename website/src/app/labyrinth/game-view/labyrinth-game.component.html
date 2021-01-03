@@ -4,14 +4,14 @@
   <button ascii-render class="ihm-ui"><a href="./new" class="interact-ui text">new Labyrinth</a></button>
   <span></span>
 </div>
-<div class="noPartyMessage" *ngIf="!currentPartyProxy">
+<div class="noPartyMessage" *ngIf="!currentParty">
   <div ascii-border class="text interact-ui">no game loaded for the moment, please wait or create a new game
     <button class="ihm-ui" ascii-border><a class="text interact-ui" href="./new">new game</a></button>
   </div>
 </div>
-<div class="container" *ngIf="currentPartyProxy">
+<div class="container" *ngIf="currentParty">
   <div class="mainArea">
-    <level-view [currentPartie]="currentPartyProxy"
+    <level-view [currentPartie]="currentParty"
                 [rangeArroundPlayer]="1"
     ></level-view>
   </div>
@@ -24,10 +24,10 @@
       [closeData]="{position:'absolute',
            transform: 'translateX(-81px)',
        left:'100%'}"
-      [onlyOnClick]="true"
+      [slideOnlyOnClick]="true"
       style="background-color:red; overflow: hidden;"
     >
-      <map-view [currentPartieProxy]="currentPartyProxy"
+      <map-view [currentPartieProxy]="currentParty"
                 [renderService]="mapRenderService"
       ></map-view>
 
@@ -35,7 +35,7 @@
     </app-sliding>
 
     <app-sliding
-      onlyOnClick="true"
+      slideOnlyOnClick="true"
       [openData]="{position:'absolute',
       transform: 'translateX(-50%)',
       left:'50%',
@@ -46,7 +46,7 @@
           bottom:'0'}">
       <div class="inventoryArea">
         <inventory-view
-          [player]="this.currentPartyProxy.player"
+          [player]="this.currentParty.player"
         ></inventory-view>
       </div>
     </app-sliding>
@@ -65,7 +65,7 @@
     <h1 ascii-border  class=" text important-ui"> YOU WIN !</h1>
     <span app-ascii>{{fullViewRenderService.renderObj({name: 'exit'})}}</span>
     <span app-ascii>
-      {{fullViewRenderService.renderObj(this.currentPartyProxy.player)}}
+      {{fullViewRenderService.renderObj(this.currentParty.player)}}
     </span>
 
 

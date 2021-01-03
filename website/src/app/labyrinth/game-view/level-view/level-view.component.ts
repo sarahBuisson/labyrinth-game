@@ -40,7 +40,7 @@ export class LevelViewComponent implements OnInit, OnChanges {
 
   public updateFieldOfView() {
     if (this.rangeArroundPlayer === -1) {
-      this.fieldOfView = this.currentPartie.level.contentArray;
+      this.fieldOfView = this.currentPartie.level.content;
     } else {
       this.fieldOfView = new Array();
       let location = this.currentPartie.player.location;
@@ -54,11 +54,15 @@ export class LevelViewComponent implements OnInit, OnChanges {
           let ix = 0 + this.rangeArroundPlayer + dx;
           let iy = 0 + this.rangeArroundPlayer + dy;
 
-          if (this.currentPartie.level.contentArray[y] && this.currentPartie.level.contentArray[y][x]) {
-            this.fieldOfView[iy][ix] = this.currentPartie.level.contentArray[y][x]
+          let zone = this.currentPartie.level.getXY(x, y)
+          if (zone) {
+            this.fieldOfView[iy][ix] = {
+              content: zone.content.toArray(),
+              connections: zone.connections
+            }
           } else {
             this.fieldOfView[iy][ix] = {
-              contentArray: [],
+              content: [],
               connections: {}
             }
           }

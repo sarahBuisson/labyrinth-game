@@ -48,7 +48,7 @@ export const Default = () => ({
   </level-view></div> `,
   props: {
     currentPartieProxy: {
-      level: {contentArray: [[{x: 0, y: 0}, {}, {}], [{}, {}, {}], [{}, {}, {}]]},
+      level: {content: [[{x: 0, y: 0}, {}, {}], [{}, {}, {}], [{}, {}, {}]]},
       player: {location: {x: 1, y: 0}}
     }
   },

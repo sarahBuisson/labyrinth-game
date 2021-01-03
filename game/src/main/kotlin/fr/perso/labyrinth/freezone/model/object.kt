@@ -1,8 +1,9 @@
 package fr.perso.labyrinth.freezone.model
 
 import fr.perso.labyrinth.toolbox.model.ConnectedZone
+import kotlin.js.JsExport
 
-
+@JsExport
 open class ObjectZone(open var name: String, open var type: String?=null) {
     override fun hashCode(): Int {
         return name.hashCode()

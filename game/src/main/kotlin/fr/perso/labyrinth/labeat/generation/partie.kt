@@ -16,3 +16,11 @@ fun initPartieMapLabWithKey(size: Int = 5, playerName: String = "AFGNCAAP" ): Pa
     lab.exit.content.add(ObjectZone("exit"))
     return Partie(player, lab)
 }
+
+@JsExport
+fun initPartieEmpty(size: Int = 5, playerName: String = "AFGNCAAP" ): Partie<LevelBoard<CompositeZone>> {
+    var lab = generateEmptyBoard(size)
+    val player = Player(lab.start)
+    player.location.content.add(player)
+    return Partie(player, lab)
+}

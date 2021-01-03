@@ -1,6 +1,9 @@
-import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
+import {TestBed, async} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {AppComponent} from './app.component';
+import {SoundComponent} from "./utils/ui/atom/sound/sound.component";
+import {AsciiComponent} from "./utils/ascii/component/ascii.component";
+import {ToneService} from "./labyrinth/service/sound/tone.service";
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -9,8 +12,14 @@ describe('AppComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        SoundComponent,
+        AsciiComponent
       ],
+      providers: [{
+        provide: ToneService,
+        useValue: {Synth: jest.fn().mockReturnValue({toDestination: jest.fn(), volume:{value:0}})}
+      }]
     }).compileComponents();
   }));
 

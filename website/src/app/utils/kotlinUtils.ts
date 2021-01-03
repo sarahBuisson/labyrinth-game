@@ -1,7 +1,6 @@
-import get from 'lodash/get';
 
 function standardizeName(oldName) {
-  return oldName.replace(/\_\S*\$/, "").replace(/\_\d/, "");
+  return oldName.replace(/^\_*/, "").replace(/\_\S*\$/, "").replace(/\_\d/, "");
 }
 
 function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod): any {
@@ -9,13 +8,11 @@ function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod): 
   Object.getOwnPropertyNames(kotlinInstance).forEach(
     (oldName: string) => {
       newkotlinInstance[oldName] = kotlinInstance[oldName]
-      let propertyclassName = get(kotlinInstance, oldName + '.__proto__.constructor.name');
+      let propertyclassName = !!kotlinInstance[oldName] && !!kotlinInstance[oldName].__proto__.constructor && kotlinInstance[oldName].__proto__.constructor.name;
       let newName
       if (!isNaN(parseInt(oldName))) {
         newName = oldName;
       } else {
-
-
         newName = standardizeName(oldName);
 
         if (propertyclassName === 'ArrayList' && !Array.isArray(kotlinInstance[oldName])) {
@@ -33,7 +30,7 @@ function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod): 
         //TODO : most of the time it's inner object of stdlib class
         newkotlinInstance[newName] = kotlinInstance[oldName]
       }
-      if (!get(kotlinInstance, '__proto__.' + newName)) {
+      if (!kotlinInstance.__proto__[newName]) {
         try {
           if (maxDeep >= 0) {
             newkotlinInstance[newName] = kotlinProxyToJsView(kotlinInstance[oldName], maxDeep - 1, autoProxyMethod)
@@ -64,7 +61,7 @@ export function kotlinProxyToJsView(kotlinInstance, maxDeep: number = 10000, aut
     })
 
   } else {
-    let className = get(kotlinInstance, '__proto__.constructor.name');
+    let className = kotlinInstance.__proto__.constructor.name
     if (className === "Function") {
 
       return (...args) => {
@@ -76,12 +73,8 @@ export function kotlinProxyToJsView(kotlinInstance, maxDeep: number = 10000, aut
         }
       }
 
-    } else if (className === 'ArrayList') {
-      let arrayName = Object.getOwnPropertyNames(kotlinInstance)
-        .filter((itemArray) => {
-          return itemArray.startsWith("array")
-        })[0];
-      return kotlinInstance[arrayName].map((item) => {
+    } else if (className === 'ArrayList' || className === 'HashSet') {
+      return kotlinInstance.toArray().map((item) => {
         if (maxDeep >= 0) {
           return kotlinProxyToJsView(item, maxDeep - 1, autoProxyMethod)
         } else {
@@ -91,19 +84,18 @@ export function kotlinProxyToJsView(kotlinInstance, maxDeep: number = 10000, aut
       })
     } else if (className === "HashMap" || className == "LinkedHashMap") {
       let newkotlinInstance = {};
-      let protoMap = instanceWithSimplifiedField(kotlinInstance, 0, false);
-      if (protoMap.internalMap) {
-        protoMap = kotlinProxyToJsView(protoMap.internalMap, 0, false)
-        if (protoMap.backingMap) {
-          Object.values(protoMap.backingMap)
-            .forEach((protoEntry: { _value: any, key: any }) => {
+
+     let backingMap= kotlinInstance._internalMap && kotlinInstance._internalMap._backingMap
+      if (backingMap) {
+          Object.values(backingMap)
+            .forEach((protoEntry: { __value: any, _key: any }) => {
               protoEntry = kotlinProxyToJsView(protoEntry, maxDeep, false)
               //keep the $
-              let key: string = protoEntry.key.name$ ? protoEntry.key.name$ : protoEntry.key;
-              newkotlinInstance[key] = protoEntry._value;
+              let key: string = protoEntry._key.name$ ? protoEntry._key.name$ : protoEntry._key;
+              newkotlinInstance[key] = protoEntry.__value;
             })
         }
-      }
+
       return newkotlinInstance
     } else {
 
@@ -136,7 +128,7 @@ export function getFromKotlin(instance, ...path) {
   if (path.length == 0) {
     return instance;
   } else {
-    let propertyclassName = get(instance, '__proto__.constructor.name');
+    let propertyclassName = instance.__proto__.constructor.name;
     if (propertyclassName === 'ArrayList') {
       return getFromKotlin(kotlinProxyToJsView(instance, 0, false), ...path);
     } else if (propertyclassName === "HashMap" || propertyclassName == "LinkedHashMap") {

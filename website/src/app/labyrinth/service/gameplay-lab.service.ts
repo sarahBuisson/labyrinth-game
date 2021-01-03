@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {GenerateLabService} from "./generate-lab.service";
 import {getJsViewFromKotlin, kotlinProxyToJsView} from "../../utils/kotlinUtils";
-// @ts-ignore
-import gameRules from "gameRules";
+import * as gameRules from "gameRules";
 import {DataStorageService} from "./data-storage.service";
 import findKey from 'lodash/findKey';
 import {SoundService} from "./sound/sound.service";
@@ -17,20 +16,21 @@ export class GameplayLabService {
   gameplay: any;
 
   constructor(private serviceLabService: GenerateLabService, private dataStorageService: DataStorageService, private soundService: SoundService) {
-    dataStorageService.getCurrentParty().subscribe((party) => {
+    dataStorageService
+      .getCurrentParty()
+      .subscribe((party) => {
       this.currentParty = party;
     })
-    this.gameplay = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat, 0, false);
+    this.gameplay =gameRules.fr.perso.labyrinth.labeat
 
   }
 
-
   move(direction: string) {
     this.dataStorageService.saveCharacterDirection(direction);
-    let connections = getJsViewFromKotlin(this.currentParty, "player", "location", "connections")
+    let connections = kotlinProxyToJsView(this.currentParty.player.location.connections,1)
     let nextLocation = connections[direction];
     if (nextLocation) {
-      let door = getJsViewFromKotlin(this.currentParty, "player", "location", "content")
+      let door = this.currentParty.player.location.content.toArray()//getJsViewFromKotlin(this.currentParty, "player", "location", "content")
         .find(it => it.destination && it.destination.x === nextLocation.x && it.destination.y === nextLocation.y)
       if (door) {
         this.play(door)
@@ -44,7 +44,7 @@ export class GameplayLabService {
 
   take(objToTake) {
     this.dataStorageService.saveCharacterDirection('LEFT');
-    getJsViewFromKotlin(this.currentParty, "player", "location", "content")
+    this.currentParty.player.location.content//getJsViewFromKotlin(this.currentParty, "player", "location", "content")
       .filter(it => it.name === objToTake.name)
       .forEach((it) => this.play(it))
 
@@ -52,7 +52,7 @@ export class GameplayLabService {
   }
 
   takeAll() {
-    getJsViewFromKotlin(this.currentParty, "player", "location", "content")
+   this.currentParty.player.location.content.toArray()
       .filter(it => it.destination === undefined)
       .forEach((it) => this.play(it))
     this.soundService.playTake()
@@ -60,7 +60,7 @@ export class GameplayLabService {
 
   private play(obj): void {
 
-    let newParty = this.gameplay.playerInteractWithFunction(this.currentParty, obj);
+    let newParty = this.gameplay.playerInteractWith(this.currentParty, obj);
     this.dataStorageService.saveParty(newParty)
     return newParty
 
@@ -68,7 +68,7 @@ export class GameplayLabService {
 
 
   levelContent(levelCase) {
-    return (levelCase ? levelCase.contentArray : []).filter(it => !this.isDoor(it))
+    return (levelCase ? levelCase.content : []).filter(it => !this.isDoor(it))
   }
 
   private isDoor(it) {
@@ -76,15 +76,15 @@ export class GameplayLabService {
   }
 
   doorAt(levelCase, direction: string) {
-    let destination = levelCase.connectionsMap ? levelCase.connectionsMap[direction] : undefined
+    let destination = levelCase.connections ? levelCase.connections[direction] : undefined
     if (destination) {
-      return levelCase.contentArray.filter(it => it.destination && it.destination.x === destination.x && it.destination.y === destination.y)[0]
+      return levelCase.content.toArray().filter(it => it.destination && it.destination.x === destination.x && it.destination.y === destination.y)[0]
     }
   }
 
 
   moveAtCase(levelCase: any) {
-    let connections = getJsViewFromKotlin(this.currentParty, "player", "location", "connections")
+    let connections = this.currentParty.player.location.connections
     let direction = findKey(connections, (it) => {
       return it && it.x === levelCase.x && it.y === levelCase.y
     })
@@ -94,10 +94,10 @@ export class GameplayLabService {
   }
 
   hasPlayer(levelCase: any) {
-    return levelCase.contentArray.find(p => p.type === "player") && true;
+    return levelCase.content.find(p => p.type === "player") && true;
   }
 
   computePartieScore() {
-    return this.gameplay.computePartieScoreFunction(this.currentParty)
+    return this.gameplay.computePartieScore(this.currentParty)
   }
 }

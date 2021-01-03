@@ -1,6 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ZoneViewComponent } from './zone-view.component';
+import {ZoneViewComponent} from './zone-view.component';
+import {AsciiComponent} from "../../../../utils/ascii/component/ascii.component";
+import {AsciiModule} from "../../../../utils/ascii/ascii.module";
+import {Router} from "@angular/router";
+import {GameplayLabService} from "../../../service/gameplay-lab.service";
+import {FullsizeAsciiRenderService} from "../../../service/render/fullsize-ascii-render.service";
 
 describe('ZoneViewComponent', () => {
   let component: ZoneViewComponent;
@@ -8,18 +13,28 @@ describe('ZoneViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ZoneViewComponent ]
+      declarations: [ZoneViewComponent],
+      imports: [AsciiModule],
+      providers: [
+        {
+          provide: GameplayLabService, useValue: {
+            doorAt: jest.fn(),
+            hasPlayer: jest.fn(),
+            levelContent: jest.fn(),
+          }
+        },
+        {provide: FullsizeAsciiRenderService, useValue: {}},
+      ]
     })
-    .compileComponents();
-  });
-
-  beforeEach(() => {
+      .compileComponents();
     fixture = TestBed.createComponent(ZoneViewComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+
   });
 
   it('should create', () => {
+    component.zone = {}
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 });

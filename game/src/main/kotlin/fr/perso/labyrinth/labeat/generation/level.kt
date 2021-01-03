@@ -12,7 +12,7 @@ import fr.perso.labyrinth.toolbox.model.Point
 import kotlin.js.JsExport
 import kotlin.js.ExperimentalJsExport
 
-@ExperimentalJsExport
+@JsExport
 fun generateCompositeMapLabWithKey(size: Int): LevelBoard<CompositeZone> {
     val board = generateEmptyBoard(size)
     //When
@@ -23,7 +23,7 @@ fun generateCompositeMapLabWithKey(size: Int): LevelBoard<CompositeZone> {
 
 
     LabFillerMapLab<CompositeZone>(doorWithKey, board = board)
-            .init(board.toList(), board.start, board.exit, size * 2, 0)
+            .init(board.toList().filter { it.connected.isNotEmpty() }, board.start, board.exit, size * 2, 0)
             .fillLab()
     return board
 }

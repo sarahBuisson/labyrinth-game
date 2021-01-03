@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AsciiModalComponent } from './ascii-modal.component';
+import {AsciiModule} from "../ascii.module";
+import {AsciiBorderComponent} from "../ascii-border/ascii-border.component";
 
 describe('AsciiModalComponent', () => {
   let component: AsciiModalComponent;
@@ -8,7 +10,8 @@ describe('AsciiModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AsciiModalComponent ]
+      declarations: [ AsciiModalComponent, AsciiBorderComponent ],
+      imports:[]
     })
     .compileComponents();
   }));

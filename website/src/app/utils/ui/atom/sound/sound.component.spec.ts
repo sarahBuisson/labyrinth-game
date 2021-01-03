@@ -1,6 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SoundComponent } from './sound.component';
+import {SoundComponent} from './sound.component';
+import {AsciiModule} from "../../../ascii/ascii.module";
+import {SoundService} from "../../../../labyrinth/service/sound/sound.service";
+import {of} from "rxjs";
 
 describe('SoundComponent', () => {
   let component: SoundComponent;
@@ -8,9 +11,14 @@ describe('SoundComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SoundComponent ]
+      declarations: [SoundComponent],
+      imports: [AsciiModule],
+      providers: [{provide: SoundService,
+        useValue: {subscribeSoundOn: jest.fn().mockReturnValue(of({}))}}
+
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

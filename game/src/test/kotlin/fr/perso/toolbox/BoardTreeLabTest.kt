@@ -26,7 +26,7 @@ class BoardTreeLabTest {
         )
         drawLabByPastingSmallCorridor(board)
         println(board)
-        assertEquals(followCorridor(board.get(0,0)!!).size,10)
+        assertEquals(followCorridor(board.getXY(0,0)!!).size,10)
     }
 
 }

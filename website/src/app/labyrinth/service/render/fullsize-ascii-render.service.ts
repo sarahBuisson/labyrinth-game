@@ -103,7 +103,7 @@ export class FullsizeAsciiRenderService extends AsciiRenderService implements On
   }
 
   renderCenter(zone, party): String {
-    return "\n\n" + zone.contentArray.filter(it => it.className !== "DoorObjectZone").map((it) => "[" + it.name + "]");
+    return "\n\n" + zone.content.toArray().filter(it => it.className !== "DoorObjectZone").map((it) => "[" + it.name + "]");
   }
 
 

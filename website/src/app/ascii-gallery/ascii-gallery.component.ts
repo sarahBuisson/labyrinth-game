@@ -11,9 +11,9 @@ import {
   styleUrls: ['./ascii-gallery.component.css']
 })
 export class AsciiGalleryComponent implements OnInit {
-  emptyZone: any = {contentArray: [], connectionsMap: []};
+  emptyZone: any = {content: [], connections: []};
   defaultZone: any = {
-    contentArray: [{name: 'start', type: 'key'}, {name: 'k', type: 'key'},
+    content: [{name: 'start', type: 'key'}, {name: 'k', type: 'key'},
       {name: 'A', destination: {x: 1, y: 1}, key: {name: 'a'}},
       {name: 'B', destination: {x: 2, y: 1}},
       {
@@ -21,7 +21,7 @@ export class AsciiGalleryComponent implements OnInit {
       }
 
     ],
-    connectionsMap: {
+    connections: {
       'TOP': {x: 1, y: 1},
       'BOTTOM': {x: 2, y: 1},
       'LEFT': {x: 3, y: 1},

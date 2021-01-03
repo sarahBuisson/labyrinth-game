@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InventoryViewComponent } from './inventory-view.component';
+import {AsciiBorderComponent} from "../../../utils/ascii/ascii-border/ascii-border.component";
+import {AsciiModule} from "../../../utils/ascii/ascii.module";
+import * as gameRules from 'gameRules'
 
 describe('InventoryComponent', () => {
   let component: InventoryViewComponent;
@@ -8,7 +11,8 @@ describe('InventoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InventoryViewComponent ]
+      declarations: [ InventoryViewComponent],
+      imports: [AsciiModule]
     })
     .compileComponents();
   }));
@@ -16,10 +20,13 @@ describe('InventoryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(InventoryViewComponent);
     component = fixture.componentInstance;
+    // @ts-ignore
+    component.player = new gameRules.fr.perso.labyrinth.labeat.generation.initPartieEmpty(3).player
     fixture.detectChanges();
   });
 
   it('should create', () => {
+
     expect(component).toBeTruthy();
   });
 });
