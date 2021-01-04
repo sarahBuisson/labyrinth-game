@@ -51,12 +51,12 @@ jobs:
           cp ./dist/website-angular/index.html ./dist/website-angular/404.html
           mkdir ./website
           mkdir ./website/${BRANCH_NAME}
-          mv ./dist/website-angular/ ./dist/website/${BRANCH_NAME}
+          mv ./dist/website-angular/ ./website/${BRANCH_NAME}
       - name: Deploy
         if: success()
         uses: crazy-max/ghaction-github-pages@v1
         with:
           target_branch: gh-pages
-          build_dir: website/dist/website
+          build_dir: website
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
