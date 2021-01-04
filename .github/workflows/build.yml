@@ -16,7 +16,7 @@ jobs:
           node-version: 14.15.3
       - name: Build branch
         run: |
-          echo ${{ env.BRANCH_NAME }}
+          echo ${BRANCH_NAME}
       - name: Build back
         run: |
           gradle build --stacktrace
@@ -48,7 +48,7 @@ jobs:
           ng build --base-href /labyrinth-game/
           ls dist
           cp ./dist/website-angular/index.html ./dist/website-angular/404.html
-          mv ./dist/website-angular/ ./dist/website/${{ env.BRANCH_NAME }}
+          mv ./dist/website-angular/ ./dist/website/${BRANCH_NAME}
       - name: Deploy
         if: success()
         uses: crazy-max/ghaction-github-pages@v1
