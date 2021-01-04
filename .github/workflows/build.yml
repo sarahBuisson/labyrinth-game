@@ -45,12 +45,12 @@ jobs:
           ng build --base-href /labyrinth-game/
           ls dist
           cp ./dist/website-angular/index.html ./dist/website-angular/404.html
-          mv ./dist/website-angular/ ./dist/website-angular/${{ env.BRANCH_NAME }}
+          mv ./dist/website-angular/ ./dist/website/${{ env.BRANCH_NAME }}
       - name: Deploy
         if: success()
         uses: crazy-max/ghaction-github-pages@v1
         with:
           target_branch: gh-pages
-          build_dir: website/dist/website-angular
+          build_dir: website/dist/website
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
