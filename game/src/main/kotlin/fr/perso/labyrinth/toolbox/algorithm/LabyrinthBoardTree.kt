@@ -107,7 +107,7 @@ fun <T : BoardZone> complexiteMergeImpasse(board: Board<T>, numberOfCulDeSacToKe
             }
             if (nearestImpasses.size > 0) {
                 val corridors = nearestImpasses.map { impass -> followCorridor(impass) }.filter { it.isNotEmpty() }
-                if (corridors.isNotEmpty()) {
+                if (corridors.size>=2) {
                     val corridorToMerge = corridors.maxBy { it.size }!!
 
                     val unconnect = corridorToMerge.last().connected.find { it.connected.size > 2 }!!

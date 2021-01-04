@@ -118,19 +118,23 @@ class GenerationTest {
                 10, 10, factory
         )
         //When
+        println("draw")
         drawLabByPastingSmallCorridor(board)
+        println("drawed")
         chooseStartExit(board)
+        println("start exit")
         //Then
         println(labyrinthTreeToString(board))
-        println("----")
+        println("----1")
         val distance = distanceMap(board.start, board)
         println(labyrinthTreeToString(board, { distance.get(it) }))
-        println("----")
-        val complexite = complexiteMap(board.start, board)
-        println(labyrinthTreeToString(board, { complexite.get(it) }))
-        println("----")
+        println("----2")
+       // val complexite = complexiteMap(board.start, board)
+       // println(labyrinthTreeToString(board, { complexite.get(it) }))
+        println("----3")
         val coridorSize = corridorSizeDistanceMap( board)
         println(labyrinthTreeToString(board, { coridorSize.get(it) }))
+        println("----4")
     }
 
 

@@ -43,7 +43,6 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
-        mavenLocal()
         gradlePluginPortal()
     }
 }

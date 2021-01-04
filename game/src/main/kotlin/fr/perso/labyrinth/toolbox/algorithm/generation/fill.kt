@@ -74,8 +74,8 @@ open class LabFillerExit<T>(
 open class LabFiller<TZone>
         where TZone : GeoZone, TZone : ConnectedZone {
 
-    lateinit var zones: List<TZone>
-    lateinit var distanceFromStartMap: Map<ConnectedZone, Int>
+    lateinit var zones: Collection<TZone>
+    lateinit var distanceFromStartMap: Map<TZone, Int>
     var numberOfDoor by Delegates.notNull<Int>()
     var numberOfExchanges by Delegates.notNull<Int>()
     lateinit var begin: TZone
@@ -94,7 +94,7 @@ open class LabFiller<TZone>
     }
 
 
-    open public fun init(
+    open fun init(
         zones: List<TZone>,
         begin: TZone = zones.first(),
         exit: TZone = zones.last(),
@@ -105,7 +105,7 @@ open class LabFiller<TZone>
         this.begin = begin
         this.exit = exit
         distanceFromStartMap = distanceToZone(begin);
-        this.zones = zones;
+        this.zones = zones.intersect(distanceFromStartMap.keys)
         this.numberOfDoor = numberOfDoor;
         this.numberOfExchanges = numberOfExchanges;
 
@@ -126,12 +126,12 @@ open class LabFiller<TZone>
 
         //And now the exchanges
 
-        fillLabWithExchanges(numberOfExchanges, zones)
+        fillLabWithExchanges(numberOfExchanges)
 
 
     }
 
-    private fun fillLabWithExchanges(numberOfExchanges: Int, zones: List<TZone>) {
+    private fun fillLabWithExchanges(numberOfExchanges: Int) {
         for (i in 1..numberOfExchanges) {
             val zoneWithKey = zones.filter { it.content.any { it is KeyObjectZone } }.random()
             val keyToExchange = zoneWithKey.content.filter { it is KeyObjectZone }.random()

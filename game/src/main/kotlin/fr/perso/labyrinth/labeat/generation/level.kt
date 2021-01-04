@@ -22,7 +22,7 @@ fun generateCompositeMapLabWithKey(size: Int): LevelBoard<CompositeZone> {
     var doorWithKey = ('A'..'Z').map { arrayOf("" + it, "" + it.toLowerCase()) }.toTypedArray()
 
 
-    LabFillerMapLab<CompositeZone>(doorWithKey, board = board)
+    LabFillerMapLab(doorWithKey, board = board)
             .init(board.toList().filter { it.connected.isNotEmpty() }, board.start, board.exit, size * 2, 0)
             .fillLab()
     return board
@@ -53,12 +53,14 @@ fun <T : BoardZone> connectAllZoneOfBoard(board: Board<T>): Board<T> {
 @JsExport
 fun <T> chooseStartExit(board: LevelBoard<T>)
         where T : BoardZone, T : Point {
-
-    val suitableStart: Collection<T> = filterUntilOnce(board.toList(), { it.connected.any { u -> isAnIntersection(u as T) } }, { !isAnIntersection(it) })
+    val suitableStart: Collection<T> = filterUntilOnce(
+        board.toList(),
+        {it.connected.isNotEmpty()},
+        { it.connected.any { u -> isAnIntersection(u as T) } },
+        { !isAnIntersection(it) })
     board.start = suitableStart.random()
     val mapDistance = distanceMap(board.start, board)
     board.exit = mapDistance.entries.maxBy { it.value }!!.key
     val mapDistanceS = distanceMap(board.exit!!, board)
     board.start = mapDistanceS.entries.filter { suitableStart.contains(it.key) }.maxBy { it.value }!!.key
-
 }

@@ -4,17 +4,17 @@ import fr.perso.labyrinth.toolbox.model.ConnectedZone
 import fr.perso.labyrinth.toolbox.algorithm.followCorridor
 
 
-fun distanceToZone(
-        origin: ConnectedZone,
-        count: MutableMap<ConnectedZone, Int> = mutableMapOf<ConnectedZone, Int>(Pair(origin, 0))
-): MutableMap<ConnectedZone, Int> {
+fun <TZone : ConnectedZone>distanceToZone(
+        origin: TZone,
+        count: MutableMap<TZone, Int> = mutableMapOf(Pair(origin, 0))
+): MutableMap<TZone, Int> {
     if (count[origin] == null) {
         val min: Int = origin.connected.map { count[it] }.filterNotNull().min() ?: 0
         count.put(origin, min + 1)
     }
     origin.connected.forEach { connected ->
         if (!count.containsKey(connected)) {
-            distanceToZone(connected, count)
+            distanceToZone(connected as TZone, count)
         }
     }
     return count;

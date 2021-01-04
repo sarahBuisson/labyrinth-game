@@ -11,6 +11,7 @@ class GamePlayTest {
 
     @Test
     fun shouldPlayLab() {
+        println("init partie")
         val partie = initPartieMapLabWithKey()
         println(partie.level.toList().map { it.toString() + "\n" })
         println("---")
