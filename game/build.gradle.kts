@@ -20,7 +20,7 @@ kotlin {
             useJUnit()
         }
     }
-    js(IR) {
+    js {
         browser {
             binaries.executable()
             testTask {
