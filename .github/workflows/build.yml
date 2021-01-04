@@ -49,6 +49,8 @@ jobs:
           ng build --base-href /labyrinth-game/
           ls dist
           cp ./dist/website-angular/index.html ./dist/website-angular/404.html
+          mkdir ./website
+          mkdir ./website/${BRANCH_NAME}
           mv ./dist/website-angular/ ./dist/website/${BRANCH_NAME}
       - name: Deploy
         if: success()
