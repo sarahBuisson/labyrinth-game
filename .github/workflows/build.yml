@@ -46,7 +46,7 @@ jobs:
       - name: Build front
         run: |
           cd website
-          ng build --base-href /labyrinth-game/
+          ng build --base-href /labyrinth-game/website/${BRANCH_NAME}
           ls dist
           cp ./dist/website-angular/index.html ./dist/website-angular/404.html
           mkdir ./website
