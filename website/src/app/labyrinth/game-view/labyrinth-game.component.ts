@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import {GenerateLabService} from "../service/generate-lab.service";
-import {kotlinProxyToJsView} from "../../utils/kotlinUtils";
+import {parseKotlinToJsView} from "../../utils/kotlinUtils";
 import {MapAsciiRenderService} from "../service/render/map-ascii-render.service";
 import {FullsizeAsciiRenderService} from "../service/render/fullsize-ascii-render.service";
 import {LevelViewComponent} from "./level-view/level-view.component";
@@ -68,17 +68,20 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
     this.subscribeCurrentParty()
     this.soundService.playGameMusic()
   }
 
   subscribeCurrentParty(): any {
     this.subscriptionCurrentParty = this.dataStorageService.getCurrentParty()
-      .subscribe((c) => {
-          this.currentParty = c
-          if (this.currentParty) {
-            this.currentLevel = this.currentParty.level
+      .subscribe((nextParty) => {
 
+          this.currentParty = {...nextParty}
+          if (nextParty) {
+            this.currentLevel = this.currentParty.level
+            console.log(nextParty)
+            console.log("update")
             if (this.currentParty.status.name$ == "WIN") {
               this.winModal.show()
             }

@@ -15,9 +15,10 @@ data class Player(
 ) : ObjectZone("player", "player")
 
 
-class Partie<LevelType>(open val player: Player, open val level: LevelType, open var status: PartieStatus = PartieStatus.IN_PROGRESS) {
-
-
+class Partie<LevelType>(open val player: Player,
+                        open val level: LevelType,
+                        open var status: PartieStatus = PartieStatus.IN_PROGRESS) {
+    val messages = mutableListOf<String>()
 }
 
 fun initLab(size: Int = 5): Partie<*> {

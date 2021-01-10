@@ -11,7 +11,7 @@
 </div>
 <div class="container" *ngIf="currentParty">
   <div class="mainArea">
-    <level-view [currentPartie]="currentParty"
+    <level-view [currentParty]="currentParty"
                 [rangeArroundPlayer]="1"
     ></level-view>
   </div>
@@ -27,7 +27,7 @@
       [slideOnlyOnClick]="true"
       style="background-color:red; overflow: hidden;"
     >
-      <map-view [currentPartieProxy]="currentParty"
+      <map-view [currentParty]="currentParty"
                 [renderService]="mapRenderService"
       ></map-view>
 

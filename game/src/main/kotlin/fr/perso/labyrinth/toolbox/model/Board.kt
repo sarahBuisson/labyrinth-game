@@ -8,21 +8,20 @@ interface BoardZone : ConnectedZone, Point {
     val connections: Map<Direction, out BoardZone>
     fun directionOf(newPosition: BoardZoneImpl): Direction
     fun connectZone(newPosition: BoardZone, direction: Direction)
-
     fun connectionsEntries(): Set<Map.Entry<Direction, BoardZoneImpl>>
 }
 
 @JsExport
 open class BoardZoneImpl(override val x: Int, override val y: Int) : PointImpl(x, y), BoardZone, ConnectedZone {
-    override val connections: Map<Direction, BoardZoneImpl> = HashMap<Direction, BoardZoneImpl>()
+    override val connections: Map<Direction, BoardZoneImpl> = HashMap()
 
-    override val connected: List<BoardZoneImpl> = mutableListOf<BoardZoneImpl>()
+    override val connected: List<BoardZoneImpl> = mutableListOf()
 
 
     override fun connectTo(other: ConnectedZone) {
         other as BoardZoneImpl
         val direction = directionOf(other)
-        connectZone(other as BoardZoneImpl, direction)
+        connectZone(other, direction)
     }
 
     override fun unconnectTo(newPosition: ConnectedZone) {

@@ -9,6 +9,7 @@ import fr.perso.labyrinth.toolbox.algorithm.labyrinth.generation.drawLabByPastin
 import fr.perso.labyrinth.toolbox.model.Board
 import fr.perso.labyrinth.toolbox.model.BoardZone
 import fr.perso.labyrinth.toolbox.model.Point
+import mu.KotlinLogging
 import kotlin.js.JsExport
 import kotlin.js.ExperimentalJsExport
 
@@ -36,7 +37,7 @@ fun generateEmptyBoard(size: Int): LevelBoard<CompositeZone> {
                 y
         )
     }
-    val board = LevelBoard<CompositeZone>(
+    val board = LevelBoard(
             size, size, factory
     )
     return board
@@ -61,6 +62,9 @@ fun <T> chooseStartExit(board: LevelBoard<T>)
     board.start = suitableStart.random()
     val mapDistance = distanceMap(board.start, board)
     board.exit = mapDistance.entries.maxBy { it.value }!!.key
-    val mapDistanceS = distanceMap(board.exit!!, board)
-    board.start = mapDistanceS.entries.filter { suitableStart.contains(it.key) }.maxBy { it.value }!!.key
+    val mapDistanceFromExit= distanceMap(board.exit, board)
+    board.start = mapDistanceFromExit
+        .entries
+        .filter { suitableStart.contains(it.key) && it.key!=board.exit }
+        .maxBy { it.value }!!.key
 }

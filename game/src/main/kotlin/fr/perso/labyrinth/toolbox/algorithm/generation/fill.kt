@@ -111,7 +111,6 @@ open class LabFiller<TZone>
 
         zones.forEach { zone ->
             zone.connected.forEach {
-
                 zone.content.add(DoorObjectZone(it));
             }
         }

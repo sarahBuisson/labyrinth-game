@@ -4,7 +4,7 @@ import {MapViewComponent} from './map-view.component';
 import {AsciiModule} from "../../../utils/ascii/ascii.module";
 import {GameplayLabService} from "../../service/gameplay-lab.service";
 import * as gameRules from 'gameRules'
-import {kotlinProxyToJsView} from "../../../utils/kotlinUtils";
+import {parseKotlinToJsView} from "../../../utils/kotlinUtils";
 
 describe('MapViewComponent', () => {
   let component: MapViewComponent;

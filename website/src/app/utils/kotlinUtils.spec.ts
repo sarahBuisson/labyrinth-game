@@ -1,8 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import * as gameRules from 'gameRules';
-import {getFromKotlin, getJsViewFromKotlin, kotlinProxyToJsView} from './kotlinUtils'
+import {getFromKotlin, parseKotlinPathToJsView, parseKotlinToJsView} from './kotlinUtils'
 
-let labeatGeneration: any = kotlinProxyToJsView(gameRules.fr.perso.labyrinth.labeat);
+let labeatGeneration: any = parseKotlinToJsView(gameRules.fr.perso.labyrinth.labeat);
 describe('test kotlin to JsView', () => {
 
   it("should parse methods of package", () => {
@@ -16,7 +16,7 @@ describe('test kotlin to JsView', () => {
     let level = labeatGeneration.generation.generateEmptyBoardFunction(5);
     let board = labeatGeneration.generation.connectAllZoneOfBoardFunction(level)
 
-    let boardView = kotlinProxyToJsView(board, 4, true)
+    let boardView = parseKotlinToJsView(board, 4, true)
     expect(boardView.contentArray).toBeDefined();
     expect(boardView.contentArray[0][0].connectionsMap).toBeDefined();
     expect(boardView.contentArray[0][0].connectionsMap.BOTTOM).toBeDefined();
@@ -24,7 +24,7 @@ describe('test kotlin to JsView', () => {
 
   it('should parse array, method and map of partie', () => {
     let partie = labeatGeneration.generation.initPartieMapLabWithKeyFunction(3);
-    let partieView = kotlinProxyToJsView(partie, 7, true);
+    let partieView = parseKotlinToJsView(partie, 7, true);
 
     expect(partieView.level.contentArray[0][0].connectionsMap).toBeDefined();
   });
@@ -41,7 +41,7 @@ describe('test kotlin to JsView', () => {
     let partie = labeatGeneration.generation.initPartieEmptyFunction(3, "myname");
 
 
-    let zone2 = getJsViewFromKotlin(partie, "level", "content", 0, 0)
+    let zone2 = parseKotlinPathToJsView(partie, "level", "content", 0, 0)
     expect(zone2).toBeDefined()
     expect(zone2.connectionsMap).toBeDefined()
 

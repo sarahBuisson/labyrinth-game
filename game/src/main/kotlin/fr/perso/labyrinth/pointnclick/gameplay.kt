@@ -8,7 +8,9 @@ import org.jeasy.rules.api.Rules
 import org.jeasy.rules.core.DefaultRule
 import org.jeasy.rules.core.DefaultRulesEngine
 
-class Interaction<Qui, Quoi, Comment, Univers>(val qui: Qui, val quoi: Quoi, val comment: Comment, val univers: Univers)
+class Interaction<Qui, Quoi, Comment, Univers>(val qui: Qui, val quoi: Quoi, val comment: Comment, val univers: Univers){
+
+}
 
 
 abstract class MoveRule(
@@ -33,6 +35,7 @@ abstract class MoveRule(
                     (doorObjectZone.destination as GeoZone).content.add(interaction.qui)
                 }
                 interaction.qui.location = doorObjectZone.destination as GeoZone
+                interaction.univers.messages.add("move to next room")
                 executeL(interaction)
             }
         })

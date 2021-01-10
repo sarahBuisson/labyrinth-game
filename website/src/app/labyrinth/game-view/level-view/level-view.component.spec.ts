@@ -9,7 +9,7 @@ import {GameplayLabService} from "../../service/gameplay-lab.service";
 import {FullsizeAsciiRenderService} from "../../service/render/fullsize-ascii-render.service";
 // @ts-ignore
 import * as gameRules from 'gameRules';
-import {kotlinProxyToJsView} from "../../../utils/kotlinUtils";
+import {parseKotlinToJsView} from "../../../utils/kotlinUtils";
 
 describe('LevelViewComponent', () => {
   let component: LevelViewComponent;
@@ -38,7 +38,7 @@ describe('LevelViewComponent', () => {
   it('should create', () => {
     // @ts-ignore
     let party = gameRules.fr.perso.labyrinth.labeat.generation.initPartieEmpty(3);
-    component.currentPartie=kotlinProxyToJsView(party)
+    component.currentParty=parseKotlinToJsView(party)
     fixture.detectChanges();
     expect(component).toBeTruthy();
   });

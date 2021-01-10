@@ -4,6 +4,8 @@ import fr.perso.labyrinth.freezone.model.DoorObjectZone
 import fr.perso.labyrinth.freezone.model.KeyObjectZone
 import fr.perso.labyrinth.labeat.generation.chooseStartExit
 import fr.perso.labyrinth.labeat.generation.generateCompositeMapLabWithKey
+import fr.perso.labyrinth.labeat.generation.generateEmptyBoard
+import fr.perso.labyrinth.labeat.generation.initPartieEmpty
 import fr.perso.labyrinth.labeat.model.CompositeZone
 import fr.perso.labyrinth.labeat.model.LevelBoard
 import fr.perso.labyrinth.toolbox.algorithm.dataMap.complexiteMap
@@ -12,6 +14,8 @@ import fr.perso.labyrinth.toolbox.algorithm.dataMap.distanceMap
 import fr.perso.labyrinth.toolbox.algorithm.labyrinth.generation.drawLabByPastingSmallCorridor
 import fr.perso.labyrinth.toolbox.model.*
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 
 class GenerationTest {
@@ -135,6 +139,15 @@ class GenerationTest {
         val coridorSize = corridorSizeDistanceMap( board)
         println(labyrinthTreeToString(board, { coridorSize.get(it) }))
         println("----4")
+    }
+
+
+    @Test
+    fun shouldGenerateEmptyLab() {
+
+        val partie = initPartieEmpty(3);
+        assertEquals(2, partie.level.getXY(0, 0)?.connections?.size)
+        assertEquals(2, partie.level.getXY(0, 0)?.connected?.size)
     }
 
 

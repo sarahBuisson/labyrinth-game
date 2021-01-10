@@ -18,6 +18,7 @@ export class GenerateLabService {
   constructor(private router: Router,
               private dataStorageService: DataStorageService,
               private soundService: SoundService) {
+    this.generateSpirale()
   }
 
 
@@ -31,5 +32,10 @@ export class GenerateLabService {
     let party = {level: labeatGeneration.connectAllZoneOfBoard(labeatGeneration.generateEmptyBoard(size))}
     this.dataStorageService.saveParty(party)
     this.router.navigateByUrl('/game');
+  }
+
+  generateSpirale(): void {
+    let party = labeatGeneration.initPartieSpiral()
+    this.dataStorageService.saveParty(party)
   }
 }

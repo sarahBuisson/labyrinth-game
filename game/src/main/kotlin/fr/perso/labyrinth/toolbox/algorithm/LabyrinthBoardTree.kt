@@ -26,7 +26,7 @@ fun <T : BoardZone> ruleConnectEndCaseToAFreeNeighboor() = DefaultRule<DrawLabCa
         facts.zone.connectZone(nextNei.value!!, nextNei.key)
     }
 
-});
+}).apply { name="ruleConnectEndCaseToAFreeNeighboor" };
 
 
 fun <T : BoardZone> ruleAddCrossToAFreeNeighboor() = DefaultRule<DrawLabCaseFacts<T>>({ facts ->
@@ -71,7 +71,7 @@ fun <T : BoardZone> ruleConnectUnconnectedCaseToBestConnectedNei() = DefaultRule
         facts.zone.connectZone(nextNei.value!!, nextNei.key)
     }
 
-});
+}).apply { name="ruleConnectUnconnectedCaseToBestConnectedNei" };
 
 fun <T> runBookD(fact: T, rules: Rules<T>) {
     DefaultRulesEngine<T>().fire(rules, fact)

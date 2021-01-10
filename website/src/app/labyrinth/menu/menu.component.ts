@@ -69,7 +69,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.subscriptionHighscores.unsubscribe()
+    this.subscriptionHighscores && this.subscriptionHighscores.unsubscribe()
   }
 
   ngAfterViewInit(): void {

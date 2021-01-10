@@ -1,5 +1,6 @@
 package fr.perso.labyrinth.labeat.model
 
+import fr.perso.labyrinth.freezone.model.DoorObjectZone
 import fr.perso.labyrinth.freezone.model.ObjectZone
 import fr.perso.labyrinth.toolbox.model.*
 import kotlin.js.ExperimentalJsExport
@@ -9,6 +10,14 @@ import kotlin.js.JsExport
 class CompositeZone(x: Int, y: Int) : GeoZone, ConnectedZone, BoardZone, BoardZoneImpl(x, y) {
 
     override val content: MutableList<ObjectZone> = mutableListOf<ObjectZone>()
+    fun getDoorAt(direction: Direction): DoorObjectZone? {
+        val nextZone = connections.get(direction);
+        return this.content.filterIsInstance<DoorObjectZone>().find { it.destination.equals(nextZone) };
+    }
+
+    override fun toString(): String {
+        return ""+x+" "+y
+    }
 }
 
 @JsExport

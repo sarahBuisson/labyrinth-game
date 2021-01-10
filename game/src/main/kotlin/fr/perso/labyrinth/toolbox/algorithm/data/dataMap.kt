@@ -11,7 +11,7 @@ fun <T : BoardZone> distanceMap(start: Point, board: Board<T>): Map<T, Int> {
     val distance = mutableMapOf<T, Int>()
     distance.put(board.get(start)!!, 0)
     val zones = board.toList().filter { it.connected.isNotEmpty() }
-    var haveChanged = false
+    var haveChanged = true
     while (distance.size < zones.size && haveChanged) {
         haveChanged = false;
         zones.forEach { currentZone ->
