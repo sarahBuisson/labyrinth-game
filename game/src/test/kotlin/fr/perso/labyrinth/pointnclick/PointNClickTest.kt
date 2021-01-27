@@ -1,7 +1,7 @@
 package fr.perso.labyrinth.pointnclick
 
 import fr.perso.labyrinth.pointnclick.initPartieExit
-import org.junit.Test
+import kotlin.test.Test
 
 class PointNClickTest {
 

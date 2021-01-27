@@ -1,105 +1,80 @@
-import groovy.json.*
-import org.gradle.api.tasks.testing.logging.TestLogEvent
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 plugins {
-    id("java") //need for the "from"
-    id("java-library")
+    kotlin("multiplatform")
     id("maven-publish")
-    id("org.jetbrains.kotlin.multiplatform")
-    id("net.akehurst.kotlin.kt2ts") apply(true)
+
 }
 
+group = "me.sarahbuisson"
+version = "1.0-SNAPSHOT"
 
-val extt = extra.properties
+repositories {
+    mavenCentral()
+}
+
 kotlin {
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = "1.8"
+        }
+        testRuns["test"].executionTask.configure {
+            useJUnit()
+        }
+    }
+    js {
+        browser {
+            binaries.executable()
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    webpackConfig.cssSupport.enabled = true
+                }
+            }
+        }
+    }
     sourceSets {
-        commonMain {
+        val commonMain by getting {
             kotlin.srcDir("src/main/kotlin")
             resources.srcDir("src/main/resource")
-            //kotlin.srcDir("src/test/kotlin")//this line will be put in jvm config in order to only have the test running on the jvm
             dependencies {
-                implementation("io.github.microutils:kotlin-logging-common:" + extt["kotlin_logging_version"])
-                implementation("org.jetbrains.kotlin:kotlin-stdlib")
-                implementation("org.jetbrains.kotlin:kotlin-test")
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-                implementation("io.mockk:mockk:" + extt["mockkVersion"])
-
-                implementation("org.jeasy:easy-rules-api:" + extt["rules_version"])
-                implementation("org.jeasy:easy-rules-core:" + extt["rules_version"])
-                /*implementation("org.jeasy:easy-rules-core:"+extt.get("rules_version"))*/
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:" + extt["koltinxSerializationVersion"])
-
-
+                implementation(kotlin("stdlib"))
+                implementation("io.github.microutils:kotlin-logging:" + extra.properties["kotlin_logging_version"])
+                implementation("org.jeasy:easy-rules-core:" + extra.properties["rules_version"])
             }
         }
-
-
-        jvm().compilations["main"].defaultSourceSet {
+        val commonTest by getting {
+            kotlin.srcDir("src/test/kotlin")
+            resources.srcDir("src/test/resource")
             dependencies {
-                implementation("io.github.microutils:kotlin-logging:" + extt["kotlin_logging_version"])
+                implementation("io.github.microutils:kotlin-logging:" + extra.properties["kotlin_logging_version"])
+
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+                implementation("io.mockk:mockk:" + extra.properties["mockkVersion"])
+            }
+        }
+        val jvmMain by getting {
+            dependencies {
+                implementation("io.github.microutils:kotlin-logging-jvm:" + extra.properties["kotlin_logging_version"])
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-                implementation("org.jetbrains.kotlin:kotlin-test-junit")
-                implementation("org.jeasy:easy-rules-api-jvm:" + extt["rules_version"])
-                implementation("org.jeasy:easy-rules-core-jvm:" + extt["rules_version"])
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:" + extt["koltinxSerializationVersion"])
-
+                implementation("org.jeasy:easy-rules-core-jvm:" + extra.properties["rules_version"])
             }
         }
-
-        jvm().compilations["test"].defaultSourceSet {//TODO : commonTest instead of jvmtest, wwhen mockk.js will be better at it
-            kotlin.srcDir("src/test/kotlin")//In order to have only the test run in kotlin we put it here
+        val jvmTest by getting {
             dependencies {
-
-                implementation("org.jetbrains.kotlin:kotlin-test-common")
-                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common")
-                implementation("io.mockk:mockk-common:" + extt["mockkVersion"])
-
+                implementation(kotlin("test-junit"))
             }
         }
-        js().compilations["main"].defaultSourceSet {
+        val jsMain by getting {
             dependencies {
+                implementation("io.github.microutils:kotlin-logging-js:" + extra.properties["kotlin_logging_version"])
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
-                implementation("io.github.microutils:kotlin-logging-js:" + extt["kotlin_logging_version"])
-                implementation("org.jeasy:easy-rules-api-npm:" + extt["rules_version"])
-                implementation("org.jeasy:easy-rules-core-npm:" + extt["rules_version"])
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:" + extt["koltinxSerializationVersion"])
-                //implementation("org.jetbrains.kotlin:kotlin-test-js"
-                //  implementation("io.mockk:mockk:1.7.17"
+                implementation("org.jeasy:easy-rules-core-js:" + extra.properties["rules_version"])
             }
         }
-
-        js().compilations["test"].defaultSourceSet {
+        val jsTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
-                implementation("io.github.microutils:kotlin-logging-js:" + extt["kotlin_logging_version"])
-
-                implementation("org.jetbrains.kotlin:kotlin-test-js")
-
-            }
-        }
-        metadata().compilations["main"].defaultSourceSet {
-            dependencies {
-                implementation("org.jeasy:easy-rules-api-common:" + extt["rules_version"])
-                implementation("org.jeasy:easy-rules-core-common:" + extt["rules_version"])
+                implementation(kotlin("test-js"))
             }
         }
     }
-
-    jvm("jvm") {
-        mavenPublication {
-            artifactId = project.name + "-jvm"
-        }
-    }
-
-    js() {
-        browser()
-        mavenPublication {
-            artifactId = project.name + "-js"
-        }
-    }
-}
-kt2ts {
-    classPatterns.set(listOf(
-            "fr.perso.labyrinth.*"
-    ))
 }

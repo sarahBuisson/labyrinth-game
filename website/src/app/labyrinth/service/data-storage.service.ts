@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable, ReplaySubject, Subject} from "rxjs";
 import {CharacterRenderData} from "./render/character-render.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class DataStorageService  {
+export class DataStorageService {
 
   currentParty$: Subject<any> = new ReplaySubject<any>(1);
+  lastMessage$: Subject<any> = new ReplaySubject<any>(1);
   characterDirection$: Subject<any> = new ReplaySubject<any>(1);
   currentCharaRenderData$: Subject<CharacterRenderData> = new ReplaySubject<CharacterRenderData>(1);
 
@@ -21,10 +22,14 @@ export class DataStorageService  {
     this.currentParty$.next(party)
   }
 
+  saveLastMessages(...messages: string[]) {
+
+    this.lastMessage$.next(messages[messages.length - 1])
+  }
+
   getCurrentParty(): Observable<any> {
     return this.currentParty$
   }
-
 
 
   saveCharacter(chardata: CharacterRenderData) {

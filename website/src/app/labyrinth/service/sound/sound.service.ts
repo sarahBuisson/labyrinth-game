@@ -5,6 +5,7 @@ import {GameMusiqueService} from "./game-musique.service";
 
 import * as tone from "tone";
 import {compositionUtils, rhythmUtils, Note, instrumentUtils} from "music-generator"
+import {ToneService} from "./tone.service";
 
 @Injectable({
   providedIn: 'root'
@@ -48,13 +49,13 @@ export class SoundService implements OnDestroy {
     return this.soundOn$.subscribe(observer)
   }
 
-  constructor(private gameMusiqueService: GameMusiqueService) {
+  constructor(private gameMusiqueService: GameMusiqueService, private toneService:ToneService) {
     // document.body.addEventListener("mousemove", () => this.soundOnSubject$.next(true), {once: true})
 
 
     document.querySelector('body') && document.querySelector('body').addEventListener('click', async () => {
       if (tone && !this.toneHaveBeenInitialized) {
-        tone.start();
+        this.toneService.start();
         //this.currentAmbiance.volume-=10
         console.log('audio is ready');
         this.forceSoundOn()
@@ -69,10 +70,10 @@ export class SoundService implements OnDestroy {
     });
 
 
-    this.menuInstrument = new tone.Synth();
+    this.menuInstrument = toneService.Synth();
 
-    this.gameInstrument = new tone.Synth();
-    this.soundInstrument = new tone.Synth();
+    this.gameInstrument =toneService.Synth();
+    this.soundInstrument = toneService.Synth();
     this.gameInstrument.toDestination();
     this.menuInstrument.toDestination();
     this.soundInstrument.toDestination();

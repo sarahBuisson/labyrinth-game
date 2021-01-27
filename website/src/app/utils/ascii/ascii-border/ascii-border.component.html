@@ -19,7 +19,7 @@
     class="asciiArt border-part top"
     [ngClass]="borderClasses.top||borderClasses.default"
     [ngStyle]="styleOfPart(['top'])"
-    (click)="this.borderClick('TOP')"
+    (click)="this.borderClick('TOP',$event)"
   >{{renders.top}}</div>
 
   <div
@@ -32,7 +32,7 @@
   <div class="asciiArt rightSide"
         [ngClass]="borderClasses.right||borderClasses.default"
         [ngStyle]="styleOfPart(['right'])"
-        (click)="this.borderClick('RIGHT')">{{renders.right}}</div>
+        (click)="this.borderClick('RIGHT',$event)">{{renders.right}}</div>
 
 
 
@@ -41,7 +41,7 @@
      *ngIf="yComputedRepeat>0"
      style="position: absolute;"
      [ngStyle]="styleOfPart(['left'])"
-     (click)="this.borderClick('LEFT')"
+     (click)="this.borderClick('LEFT',$event)"
 >{{renders.left}}</div>
 
 
@@ -54,7 +54,7 @@
       [ngClass]="borderClasses.bottomLeft||borderClasses.default"
     >{{borderTemplate.bottomLeftTemplate}}</div>
   <div
-    (click)="this.borderClick('BOTTOM')"
+    (click)="this.borderClick('BOTTOM',$event)"
     *ngIf="xComputedRepeat>0"
     class="asciiArt border-part bottom"
     [ngClass]="borderClasses.bottom||borderClasses.default"

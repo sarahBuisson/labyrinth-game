@@ -21,16 +21,3 @@ Object.defineProperty(document.body.style, 'transform', {
     };
   }
 });
-
-Object.defineProperty(document, 'AudioBuffer', {
-  value: AudioBuffer
-});
-
-declare var AudioBuffer: {
-  prototype: AudioBuffer;
-  new(options: AudioBufferOptions): AudioBuffer;
-};
-
-Object.defineProperty(document, 'AudioBuffer', {
-  value: AudioBuffer2
-});

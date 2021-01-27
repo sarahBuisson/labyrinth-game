@@ -10,10 +10,14 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 8
-      - name: Use Node.js 13.x
-        uses: actions/setup-node@v1
+      - name: Use Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: 13.x
+          node-version: 14.15.3
+      - uses: nelonoel/branch-name@v1.0.1
+      - name: Build branch
+        run: |
+          echo ${BRANCH_NAME}
       - name: Build back
         run: |
           gradle build --stacktrace
@@ -42,14 +46,18 @@ jobs:
       - name: Build front
         run: |
           cd website
-          ng build --base-href /labyrinth-game/
+          echo  /labyrinth-game/website/${BRANCH_NAME}/website-angular/
+          ng build --base-href /labyrinth-game/website/${BRANCH_NAME}/website-angular/
           ls dist
           cp ./dist/website-angular/index.html ./dist/website-angular/404.html
+          mkdir ./website
+          mkdir ./website/${BRANCH_NAME}
+          mv ./dist/website-angular/ ./website/${BRANCH_NAME}
       - name: Deploy
         if: success()
         uses: crazy-max/ghaction-github-pages@v1
         with:
           target_branch: gh-pages
-          build_dir: website/dist/website-angular
+          build_dir: website
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

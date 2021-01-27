@@ -5,6 +5,7 @@ import {
 import {GameplayLabService} from "../../service/gameplay-lab.service";
 import {FullsizeAsciiRenderService} from "../../service/render/fullsize-ascii-render.service";
 import {CHARACTER_SPACING, LINE_HEIGHT} from "../../../utils/ascii/AsciiConst";
+import {parseKotlinToJsView} from "../../../utils/kotlinUtils";
 
 @Component({
   selector: 'level-view',
@@ -20,7 +21,7 @@ import {CHARACTER_SPACING, LINE_HEIGHT} from "../../../utils/ascii/AsciiConst";
 export class LevelViewComponent implements OnInit, OnChanges {
 
   @Input()
-  currentPartie: any
+  currentParty: any
 
   constructor(public gameplayLabService: GameplayLabService, public renderService: FullsizeAsciiRenderService) {
 
@@ -40,11 +41,10 @@ export class LevelViewComponent implements OnInit, OnChanges {
 
   public updateFieldOfView() {
     if (this.rangeArroundPlayer === -1) {
-      this.fieldOfView = this.currentPartie.level.contentArray;
+      this.fieldOfView = this.currentParty.level.content;
     } else {
       this.fieldOfView = new Array();
-      let location = this.currentPartie.player.location;
-
+      let location = this.currentParty.player.location;
       for (let dy = -this.rangeArroundPlayer; dy <= this.rangeArroundPlayer; dy++) {
         this.fieldOfView[this.rangeArroundPlayer + dy] = new Array();
         for (let dx = -this.rangeArroundPlayer; dx <= this.rangeArroundPlayer; dx++) {
@@ -54,14 +54,8 @@ export class LevelViewComponent implements OnInit, OnChanges {
           let ix = 0 + this.rangeArroundPlayer + dx;
           let iy = 0 + this.rangeArroundPlayer + dy;
 
-          if (this.currentPartie.level.contentArray[y] && this.currentPartie.level.contentArray[y][x]) {
-            this.fieldOfView[iy][ix] = this.currentPartie.level.contentArray[y][x]
-          } else {
-            this.fieldOfView[iy][ix] = {
-              contentArray: [],
-              connections: {}
-            }
-          }
+          let zone = this.currentParty.level.getXY(x, y)
+          this.fieldOfView[iy][ix] = zone
         }
       }
     }
@@ -70,8 +64,8 @@ export class LevelViewComponent implements OnInit, OnChanges {
 
   emptyRendered(x, y) {
 
-    let dx = x + this.currentPartie.player.location.x
-    let dy = y + this.currentPartie.player.location.y
+    let dx = x + this.currentParty.player.location.x
+    let dy = y + this.currentParty.player.location.y
 
     let index = (dx + dy) % viewEmptyZones.length;
     let borderTemplate = viewEmptyZones[index];

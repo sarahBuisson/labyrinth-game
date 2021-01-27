@@ -60,11 +60,11 @@ function generateDefaultParams(dataName) {
 })
 export class SlidingComponent implements OnInit, OnChanges {
   @Input()
-  public openData: any
+  public openData: any = {}
   @Input()
-  public closeData: any
+  public closeData: any = {}
   @Input()
-  public onlyOnClick: any
+  public slideOnlyOnClick = false
 
   public isOpen = false
 
@@ -108,15 +108,15 @@ export class SlidingComponent implements OnInit, OnChanges {
   }
 
   mouseOver() {
-    !this.onlyOnClick && this.open()
+    !this.slideOnlyOnClick && this.open()
   }
 
   mouseLeave() {
-    !this.onlyOnClick && this.close()
+    !this.slideOnlyOnClick && this.close()
   }
 
   click() {
-    if (this.onlyOnClick) {
+    if (this.slideOnlyOnClick) {
       this.toggle();
     } else {
       this.close()

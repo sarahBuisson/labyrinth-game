@@ -28,18 +28,18 @@ export class MapAsciiRenderService extends AsciiRenderService {
   }
 
   renderCenter(zone, party): String {
-    let content = zone.contentArray.filter(it => !it.destination)
+    let content = zone.content.toArray().filter(it => !it.destination)
     if (party.player.location.x === zone.x && party.player.location.y === zone.y)
       return "@";
     else if (zone.x===party.level.exit.x &&zone.y===party.level.exit.y ) {
       return "€"
     }
     else if (content.length > 0) {
-      if (content.filter(it => it.name === "start").length > 0)
+      if (content.toArray().filter(it => it.name === "start").length > 0)
         return "$"
 
       else
-        return content[0].name
+        return content.toArray()[0].name
     } else return "+"
   }
 

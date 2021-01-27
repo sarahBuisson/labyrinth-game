@@ -4,6 +4,8 @@ import fr.perso.labyrinth.freezone.model.DoorObjectZone
 import fr.perso.labyrinth.freezone.model.KeyObjectZone
 import fr.perso.labyrinth.labeat.generation.chooseStartExit
 import fr.perso.labyrinth.labeat.generation.generateCompositeMapLabWithKey
+import fr.perso.labyrinth.labeat.generation.generateEmptyBoard
+import fr.perso.labyrinth.labeat.generation.initPartieEmpty
 import fr.perso.labyrinth.labeat.model.CompositeZone
 import fr.perso.labyrinth.labeat.model.LevelBoard
 import fr.perso.labyrinth.toolbox.algorithm.dataMap.complexiteMap
@@ -11,7 +13,10 @@ import fr.perso.labyrinth.toolbox.algorithm.dataMap.corridorSizeDistanceMap
 import fr.perso.labyrinth.toolbox.algorithm.dataMap.distanceMap
 import fr.perso.labyrinth.toolbox.algorithm.labyrinth.generation.drawLabByPastingSmallCorridor
 import fr.perso.labyrinth.toolbox.model.*
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
+
 
 class GenerationTest {
 
@@ -43,8 +48,8 @@ class GenerationTest {
 
                 }
         val compositeDoorName: (Direction, CompositeZone) -> Any? = { d, zone ->
-            val door = zone.content.filterIsInstance(DoorObjectZone::class.java)
-                    .filter { it.destination == zone.connections.get(d) }.firstOrNull()
+            val door = zone.content.filterIsInstance<DoorObjectZone>()
+                .filter { it.destination == zone.connections.get(d) }.firstOrNull()
             if (door != null && door.key != null)
                 door.name
             else
@@ -87,7 +92,7 @@ class GenerationTest {
 
                 }
         val compositeDoorName: (Direction, CompositeZone) -> Any? = { d, zone ->
-            val door = zone.content.filterIsInstance(DoorObjectZone::class.java)
+            val door = zone.content.filterIsInstance<DoorObjectZone>()
                     .filter { it.destination == zone.connections.get(d) }.firstOrNull()
             if (door != null && door.key != null)
                 door.name
@@ -117,19 +122,32 @@ class GenerationTest {
                 10, 10, factory
         )
         //When
+        println("draw")
         drawLabByPastingSmallCorridor(board)
+        println("drawed")
         chooseStartExit(board)
+        println("start exit")
         //Then
         println(labyrinthTreeToString(board))
-        println("----")
+        println("----1")
         val distance = distanceMap(board.start, board)
         println(labyrinthTreeToString(board, { distance.get(it) }))
-        println("----")
-        val complexite = complexiteMap(board.start, board)
-        println(labyrinthTreeToString(board, { complexite.get(it) }))
-        println("----")
+        println("----2")
+       // val complexite = complexiteMap(board.start, board)
+       // println(labyrinthTreeToString(board, { complexite.get(it) }))
+        println("----3")
         val coridorSize = corridorSizeDistanceMap( board)
         println(labyrinthTreeToString(board, { coridorSize.get(it) }))
+        println("----4")
+    }
+
+
+    @Test
+    fun shouldGenerateEmptyLab() {
+
+        val partie = initPartieEmpty(3);
+        assertEquals(2, partie.level.getXY(0, 0)?.connections?.size)
+        assertEquals(2, partie.level.getXY(0, 0)?.connected?.size)
     }
 
 

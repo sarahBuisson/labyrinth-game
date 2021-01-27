@@ -5,7 +5,7 @@ import fr.perso.labyrinth.toolbox.model.BoardZone
 import fr.perso.labyrinth.toolbox.algorithm.*
 import fr.perso.labyrinth.toolbox.model.labyrinthTreeToString
 import org.jeasy.rules.api.Rule
-import org.jeasy.rules.core.RulesImpl
+import org.jeasy.rules.api.Rules
 
 
 fun <T : BoardZone> drawLabByPastingSmallCorridorToMediumOnes(board: Board<T>): Board<T> {
@@ -20,7 +20,7 @@ fun <T : BoardZone> drawLabByPastingSmallCorridorToMediumOnes(board: Board<T>): 
             ruleConnectEndCaseToAFreeNeighboor(),
             ruleConnectUnconnectedCaseToBestConnectedNei()
     )
-    val rules = RulesImpl(rules1)
+    val rules = Rules<DrawLabCaseFacts<T>>(rules1)
     do {
         for (case in board.toList().shuffled()) {
             val facts = DrawLabCaseFacts(case, board)

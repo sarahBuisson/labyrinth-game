@@ -4,31 +4,15 @@ import {
   mapGridTemplate, paperGridTemplate,
   viewEmptyZoneGridTemplates
 } from "../labyrinth/service/render/resources/border";
-
+import * as gameRules from "gameRules"
 @Component({
   selector: 'app-ascii-gallery',
   templateUrl: './ascii-gallery.component.html',
   styleUrls: ['./ascii-gallery.component.css']
 })
 export class AsciiGalleryComponent implements OnInit {
-  emptyZone: any = {contentArray: [], connectionsMap: []};
-  defaultZone: any = {
-    contentArray: [{name: 'start', type: 'key'}, {name: 'k', type: 'key'},
-      {name: 'A', destination: {x: 1, y: 1}, key: {name: 'a'}},
-      {name: 'B', destination: {x: 2, y: 1}},
-      {
-        name: 'C', destination: {x: 3, y: 1}, key: {name: 'a'}
-      }
-
-    ],
-    connectionsMap: {
-      'TOP': {x: 1, y: 1},
-      'BOTTOM': {x: 2, y: 1},
-      'LEFT': {x: 3, y: 1},
-      'RIGHT': {x: 4, y: 1}
-    }
-  };
-
+  emptyZone: any
+  defaultZone: any
   display = false
   abc: any = abcGridTemplate;
   outsideZone: any = viewEmptyZoneGridTemplates[0];
@@ -38,6 +22,17 @@ export class AsciiGalleryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("ngOnInit")
+    try {
+      let emptyParty = gameRules.fr.perso.labyrinth.labeat.generation.initPartieEmpty(3, "empty");
+      this.emptyZone = emptyParty.level.content.toArray()[0].toArray()[0]
+      this.defaultZone = emptyParty.level.content.toArray()[1].toArray()[1]
+      this.defaultZone = gameRules.fr.perso.labyrinth.labeat.generation.initPartieMapLabWithKey(4, "key").level.content.toArray()[0].toArray()[1]
+    } catch (e) {
+      console.log(e)
+    }
+    console.log(this.emptyZone)
+    console.log(this.defaultZone)
   }
 
   toggle(): void {

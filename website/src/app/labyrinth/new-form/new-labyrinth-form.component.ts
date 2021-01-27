@@ -29,7 +29,9 @@ export class NewLabyrinthFormComponent implements OnInit {
 
   @ViewChild('loadingModal') loadingModal: AsciiModalComponent;
 
-  constructor(private labService: GenerateLabService, private router: Router, private route: ActivatedRoute) {
+  constructor(private labService: GenerateLabService,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {

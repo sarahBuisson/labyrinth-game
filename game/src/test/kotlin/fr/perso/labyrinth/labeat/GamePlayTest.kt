@@ -2,14 +2,18 @@ package fr.perso.labyrinth.labeat
 
 import fr.perso.labyrinth.freezone.model.DoorObjectZone
 import fr.perso.labyrinth.labeat.generation.initPartieMapLabWithKey
-import org.junit.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertNotEquals
+import fr.perso.labyrinth.labeat.generation.initPartieSpiral
+import fr.perso.labyrinth.labeat.model.CompositeZone
+import fr.perso.labyrinth.labeat.model.PartieStatus
+import fr.perso.labyrinth.labeat.model.Player
+import fr.perso.labyrinth.toolbox.model.Direction
+import kotlin.test.*
 
 class GamePlayTest {
 
     @Test
     fun shouldPlayLab() {
+        println("init partie")
         val partie = initPartieMapLabWithKey()
         println(partie.level.toList().map { it.toString() + "\n" })
         println("---")
@@ -40,6 +44,39 @@ class GamePlayTest {
 
 
     @Test
+    fun shouldPlaySpiral() {
+        println("init partie")
+        val partie = initPartieSpiral()
+        println(partie.level.toList().map { it.toString() + "\n" })
+        println("---")
+        var interaction = playerInteractWith(partie, (partie.player.location as CompositeZone).getDoorAt(Direction.BOTTOM)!!)
+        assertEquals(interaction.result, InteractionResult.Success)
+        assertEquals(1, (partie.player.location as CompositeZone).y)
+        val obj = partie.player.location.content.first { it !is DoorObjectZone && it !is Player }
+        playerInteractWith(partie, obj)
+        assertEquals(1, partie.player.inventory.size)
+        playerInteractWith(partie, (partie.player.location as CompositeZone).getDoorAt(Direction.BOTTOM)!!)
+        assertEquals(2, (partie.player.location as CompositeZone).y)
+        playerInteractWith(partie, partie.player.location.content.first { it !is DoorObjectZone && it !is Player })
+        playerInteractWith(partie, partie.player.location.content.first { it !is DoorObjectZone && it !is Player })
+
+        playerInteractWith(partie, (partie.player.location as CompositeZone).getDoorAt(Direction.RIGHT)!!)
+        playerInteractWith(partie, (partie.player.location as CompositeZone).getDoorAt(Direction.RIGHT)!!)
+        playerInteractWith(partie, (partie.player.location as CompositeZone).getDoorAt(Direction.TOP)!!)
+        playerInteractWith(partie, (partie.player.location as CompositeZone).getDoorAt(Direction.TOP)!!)
+        playerInteractWith(partie, (partie.player.location as CompositeZone).getDoorAt(Direction.LEFT)!!)
+        playerInteractWith(partie, (partie.player.location as CompositeZone).getDoorAt(Direction.BOTTOM)!!)
+        assertEquals(1, (partie.player.location as CompositeZone).x)
+        assertEquals(1, (partie.player.location as CompositeZone).y)
+        playerInteractWith(partie, partie.player.location.content.first { it !is DoorObjectZone })
+        assertEquals(PartieStatus.WIN, partie.status)
+    }
+
+
+
+
+
+    @Test
     fun shouldStillBeingAbleToMoveAfterTakingStart() {
         val partie = initPartieMapLabWithKey()
         println(partie.player.location)
@@ -52,6 +89,6 @@ class GamePlayTest {
 
         assertNotEquals(partie.player.location, startLocation)
         assertFalse(startLocation.content.contains(partie.player))
-        assert(partie.player.location.content.contains(partie.player))
+        assertTrue(partie.player.location.content.contains(partie.player))
     }
 }

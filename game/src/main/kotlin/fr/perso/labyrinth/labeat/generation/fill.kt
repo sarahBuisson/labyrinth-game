@@ -9,9 +9,10 @@ import fr.perso.labyrinth.toolbox.algorithm.generation.objetDiversDefault
 import fr.perso.labyrinth.toolbox.model.Board
 import fr.perso.labyrinth.toolbox.model.ConnectedZone
 import fr.perso.labyrinth.toolbox.model.GeoZone
+import kotlin.js.JsExport
 
 
-
+@JsExport
 class LabFillerMapLab<T>(
         keyToDoorArray: Array<Array<String>> = doorWithKeyDefault,
         objetDiversArray: Array<String> = objetDiversDefault, board: Board<T>
@@ -24,7 +25,7 @@ class LabFillerMapLab<T>(
 
         var zoneEmpty = it.content.filterIsInstance<KeyObjectZone>().isEmpty()
                 && it.content.filterIsInstance<DoorObjectZone>().filter { it.key != null }.isEmpty()
-                && this.begin != it
+                && it != this.begin
 
         return zoneEmpty;
     }
@@ -33,7 +34,7 @@ class LabFillerMapLab<T>(
     override fun availableZonesToPutKeyToAccessZone(doorZone: T): Collection<T> {
 
         return filterUntilOnce(super.availableZonesToPutKeyToAccessZone(doorZone)
-                .filter { !doorZone.connected.contains(it) && doorZone != it && begin != it },
+                .filter {!doorZone.connected.contains(it) && doorZone != it && begin as T != it },
                 { it.content.none { obj -> obj is KeyObjectZone } },
                 { !this.pathToExit.contains(it) }
         )

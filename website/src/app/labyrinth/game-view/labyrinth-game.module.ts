@@ -35,7 +35,8 @@ import {LoadingModule} from "../loading/loading.module";
         LevelViewComponent,
         MapViewComponent,
         KeypadFormComponent,
-        InventoryViewComponent, ZoneViewComponent]
+        InventoryViewComponent,
+      ZoneViewComponent]
 })
 export class LabyrinthGameModule {
 }

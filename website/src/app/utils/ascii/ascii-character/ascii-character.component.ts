@@ -8,6 +8,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
+import {CHARACTER_SPACING} from "../AsciiConst";
 
 @Component({
   selector: 'app-ascii-character',
@@ -27,14 +28,15 @@ export class AsciiCharacterComponent implements OnInit, AfterViewInit, AfterView
 
   @ViewChild('contentDiv') contentDiv: ElementRef
 
-  constructor(private readonly _changeDetectorRef: ChangeDetectorRef) {
+  constructor(  private readonly _changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit() {
-    this.xRepeat =  Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().width / 7.82)
+    if((<HTMLElement>this.contentDiv.nativeElement))
+    this.xRepeat =  Math.ceil((<HTMLElement>this.contentDiv.nativeElement).getBoundingClientRect().width / CHARACTER_SPACING)
     this._changeDetectorRef.detectChanges();
   }
 

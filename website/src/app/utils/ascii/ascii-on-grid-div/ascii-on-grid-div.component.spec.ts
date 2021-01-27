@@ -8,7 +8,7 @@ describe('AsciiOnGridDivComponent', () => {
   let fixture: ComponentFixture<AsciiOnGridDivComponent>;
 
   beforeEach((() => {
-    TestBed.configureTestingModule({ new AudioBuffer()
+    TestBed.configureTestingModule({
       declarations: [ AsciiOnGridDivComponent ]
     })
     .compileComponents();

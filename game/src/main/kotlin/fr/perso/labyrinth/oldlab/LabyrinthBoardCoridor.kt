@@ -11,11 +11,11 @@ fun <T : BoardZone> drawDirectCoridorH(board: Board<out T>, begin: PointImpl, en
 
 
     for (x in begin.x..end.x)
-        coridor.add(board.get(x, begin.y)!!)
+        coridor.add(board.getXY(x, begin.y)!!)
 
     coridor.remove(coridor.last())
     for (y in begin.y..end.y)
-        coridor.add(board.get(end.x, y)!!)
+        coridor.add(board.getXY(end.x, y)!!)
 
     return coridor;
 }

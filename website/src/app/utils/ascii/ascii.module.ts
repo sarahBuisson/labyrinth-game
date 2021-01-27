@@ -11,16 +11,16 @@ import {AsciiGridModule} from "./ascii-on-grid-div/ascii-grid.module";
 
 @NgModule({
   declarations: [
-    AsciiCharacterComponent,
     AsciiComponent,
     AsciiBorderComponent,
     AsciiLineComponent,
     AsciiModalComponent,
     AsciiButtonComponent,
+    AsciiCharacterComponent,
   ],
   exports: [
-    AsciiCharacterComponent,
     AsciiComponent,
+    AsciiCharacterComponent,
     AsciiBorderComponent,
     AsciiLineComponent,
     AsciiModalComponent,

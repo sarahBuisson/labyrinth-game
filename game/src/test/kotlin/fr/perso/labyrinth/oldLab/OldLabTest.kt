@@ -3,7 +3,7 @@ package fr.perso.labyrinth.oldLab
 import fr.perso.labyrinth.oldlab.*
 import fr.perso.labyrinth.toolbox.model.Board
 import fr.perso.labyrinth.toolbox.model.PointImpl
-import org.junit.Test
+import kotlin.test.Test
 
 class OldLabTest {
 
@@ -29,7 +29,7 @@ class OldLabTest {
                 )
 
         coridor.forEachIndexed { index: Int, ZoneOfCoridor: ZoneOfCoridor -> ZoneOfCoridor.haveBeenVisited = index + 1 }
-        println(b.toString {
+        println(b.toFullString {
             if (it.haveBeenVisited == 0) {
                 " "
             } else {
@@ -64,12 +64,12 @@ class OldLabTest {
 
 
         coridor.forEachIndexed { index: Int, ZoneOfCoridor: ZoneOfCoridor -> ZoneOfCoridor.haveBeenVisited = index + 1; }
-        println(b.toString { "" + it.haveBeenVisited })
+        println(b.toFullString { "" + it.haveBeenVisited })
 
-        val coridor2 = addComplexityToCoridorAtElement(b, coridor, b.get(9, 2)!!)
+        val coridor2 = addComplexityToCoridorAtElement(b, coridor, b.getXY(9, 2)!!)
 
         coridor2.forEachIndexed { index: Int, ZoneOfCoridor: ZoneOfCoridor -> ZoneOfCoridor.haveBeenVisited = index + 1; }
-        println(b.toString {
+        println(b.toFullString {
             if (it.haveBeenVisited == 0) {
                 " "
             } else {

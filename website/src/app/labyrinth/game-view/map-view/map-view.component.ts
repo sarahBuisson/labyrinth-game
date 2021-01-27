@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {GameplayLabService} from "../../service/gameplay-lab.service";
 import {paperGridTemplate, mapGridTemplate} from "../../service/render/resources/border";
 import {CHARACTER_SPACING, LINE_HEIGHT} from "../../../utils/ascii/AsciiConst";
+import {parseKotlinPathToJsView, parseKotlinToJsView} from "../../../utils/kotlinUtils";
 
 
 let mapBorderData = paperGridTemplate;
@@ -26,7 +27,8 @@ export class MapViewComponent implements OnInit {
 
 
   @Input()
-  currentPartieProxy: any
+  currentParty: any
+  currentPartyProxy: any
 
   @Input()
   renderService: any
@@ -42,36 +44,39 @@ export class MapViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentPartyProxy = parseKotlinPathToJsView(this.currentParty, 7);
   }
 
   isStart(levelCase) {
-    let start = this.currentPartieProxy.level.start;
+    let start = this.currentParty.level.start;
     return start.x === levelCase.x && start.y === levelCase.y
   }
 
   isExit(levelCase) {
-    let exit = this.currentPartieProxy.level.exit;
+    let exit = this.currentParty.level.exit;
     return exit.x === levelCase.x && exit.y === levelCase.y
   }
 
   hasPlayer(levelCase) {
-    let location = this.currentPartieProxy.player.location;
+    let location = this.currentParty.player.location;
     return location.x === levelCase.x && location.y === levelCase.y
   }
 
   isCaseShowable(levelCase) {
     if (this.rangeArroundPlayer < 0)
       return true
-    let location = this.currentPartieProxy.player.location;
+    let location = this.currentParty.player.location;
     return (Math.abs(location.x - levelCase.x) <= this.rangeArroundPlayer
       && Math.abs(location.y - levelCase.y) <= this.rangeArroundPlayer);
   }
 
   borderRendered(levelCase) {
     let borderRendered = {...mapGridTemplate}
-    let directions: Array<String> = ['left', 'right', 'top', 'bottom'];
-    directions.forEach((direction: String) => {
-      let door = this.gameplayLabService.doorAt(levelCase, direction.toUpperCase())
+    let directions: Array<String> = ['LEFT', 'RIGHT', 'TOP', 'BOTTOM'];
+
+    directions.forEach((direction: string) => {
+
+      let door = this.gameplayLabService.doorAt(levelCase, direction)
       borderRendered[direction + "Class"] = "decor-ui"
       if (door) {
         if (door.key) {
@@ -90,12 +95,12 @@ export class MapViewComponent implements OnInit {
 
 
   contentRendered(levelCaseInput: any) {
-    let content = this.gameplayLabService.levelContent(levelCaseInput);
+    let content = this.gameplayLabService.levelContent(parseKotlinToJsView(levelCaseInput,3));
     if (content[0]) {
 
       return this.renderService.renderObj(content[0])
     } else {
-      let nbrOfConnections = levelCaseInput.connectedArray.length;
+      let nbrOfConnections = levelCaseInput.connected.toArray().length;
       if (nbrOfConnections == 1) {
         return " ";
       }
@@ -108,7 +113,7 @@ export class MapViewComponent implements OnInit {
   }
 
   computeClass(levelCaseInput: any) {
-    let content = this.gameplayLabService.levelContent(levelCaseInput);
+    let content = this.gameplayLabService.levelContent(parseKotlinToJsView(levelCaseInput, 3))
     if (content[0]) {
       if (content[0].name === "player" || content[0].name === "exit") {
         return "important-ui"

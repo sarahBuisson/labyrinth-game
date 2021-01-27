@@ -8,6 +8,7 @@ import {GameplayLabService} from "../../../service/gameplay-lab.service";
 import {FullsizeAsciiRenderService} from "../../../service/render/fullsize-ascii-render.service";
 import {utils} from "music-generator";
 import {LINE_HEIGHT} from "../../../../utils/ascii/AsciiConst";
+import {parseKotlinToJsView} from "../../../../utils/kotlinUtils";
 
 let backgroundTemplate = utils.shuffle([' ¨    \n  °',
   ' -      \n       -   \n    -',
@@ -38,33 +39,34 @@ let backgroundTemplate = utils.shuffle([' ¨    \n  °',
 export class ZoneViewComponent implements OnInit {
 
   @Input()
-  zone: any;
+  zone?: any;
+  proxy?: any;
 
-  constructor(public gameplayLabService: GameplayLabService, public renderService: FullsizeAsciiRenderService) {
+  constructor(public gameplayLabService: GameplayLabService,
+              public renderService: FullsizeAsciiRenderService) {
 
   }
 
   ngOnInit(): void {
-
+    if (!this.zone)
+      this.zone = {}
+    this.proxy = parseKotlinToJsView(this.zone, 7)
   }
-
 
   borderRendered() {
     let borderRendered = {...viewWallGridTemplate}
-    let directions: Array<String> = ['left', "right", 'top', 'bottom'];
-    directions.forEach((key: String) => {
-      let door = this.gameplayLabService.doorAt(this.zone, key.toUpperCase())
-      borderRendered[key + "BorderClass"] = 'decor-ui'
-
+    let directions: Array<string> = ['left', "right", 'top', 'bottom'];//should stay lowcase
+    directions.forEach((direction: string) => {
+      let door = this.gameplayLabService.doorAt(this.proxy, direction.toUpperCase())
+      borderRendered[direction + "BorderClass"] = 'decor-ui'
       if (door) {
-        borderRendered[key + "BorderClass"] = 'interact-ui'
+        borderRendered[direction + "BorderClass"] = 'interact-ui'
         if (door.key) {
-          borderRendered[key + "Template"] = viewCloseDoorGridTemplate[key + "Template"].replace("1", door.name)//TODO : use template instead of replace
+          borderRendered[direction + "Template"] = viewCloseDoorGridTemplate[direction + "Template"].replace("1", door.name)//TODO : use template instead of replace
         } else {
-          borderRendered[key + "Template"] = viewOpenDoorGridTemplate[key + "Template"]
-
+          borderRendered[direction + "Template"] = viewOpenDoorGridTemplate[direction + "Template"]
         }
-        borderRendered[key + "Tooltip"] = this.computeTooltip(door)
+        borderRendered[direction + "Tooltip"] = this.computeTooltip(door)
       }
     })
 
@@ -72,18 +74,16 @@ export class ZoneViewComponent implements OnInit {
   }
 
   backgroundRender() {
-
-    return backgroundTemplate[(this.zone.x + this.zone.y*3) % backgroundTemplate.length]
+    return backgroundTemplate[(this.proxy.x + this.proxy.y * 3) % backgroundTemplate.length]
   }
 
-  clickOnBorder: any = () => {
+  clickOnBorder: any = (direction: string, event: Event) => {
     if (this.gameplayLabService.hasPlayer(this.zone)) {
-      return (direction) => {
-        this.gameplayLabService.move(direction)
-      }
+      if (this.gameplayLabService.move(direction)) {
+          event.preventDefault();
+        }
     } else {
-      return () => {
-      }
+     this.clickOnZone(event)
     }
   }
 
@@ -91,7 +91,7 @@ export class ZoneViewComponent implements OnInit {
     this.gameplayLabService.take(obj)
   }
 
-  clickOnZone: any = (e) => {
+  clickOnZone: any = (e: Event) => {
     if (this.gameplayLabService.moveAtCase(this.zone)) {
       e.preventDefault();
     }
@@ -114,5 +114,9 @@ export class ZoneViewComponent implements OnInit {
       return 'You'
     return 'key ' + obj.name
 
+  }
+
+  getLevelContent() {
+    return this.gameplayLabService.levelContent(this.proxy)
   }
 }

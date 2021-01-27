@@ -132,7 +132,7 @@ export const Click = () => ({
   },
 
   template: `<div style="border:solid black 1px"> <app-sliding
- onlyOnClick="true"
+ slideOnlyOnClick="true"
     [openData]="{
   right: '-10px',
   top: '10px',

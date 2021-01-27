@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import {GenerateLabService} from "../service/generate-lab.service";
-import {kotlinProxyToJsView} from "../../utils/kotlinUtils";
+import {parseKotlinToJsView} from "../../utils/kotlinUtils";
 import {MapAsciiRenderService} from "../service/render/map-ascii-render.service";
 import {FullsizeAsciiRenderService} from "../service/render/fullsize-ascii-render.service";
 import {LevelViewComponent} from "./level-view/level-view.component";
@@ -52,7 +52,6 @@ import {CHARACTER_SPACING, LINE_HEIGHT} from "../../utils/ascii/AsciiConst";
 export class LabyrinthGameComponent implements OnInit, OnDestroy {
   currentParty: any
   currentLevel: any
-  currentPartyProxy: any
   @ViewChild('level-view') levelView:LevelViewComponent;
   @ViewChild('winModal') winModal:AsciiModalComponent;
   @ViewChild('loadingModal') loadingModal;
@@ -60,33 +59,33 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
   private subscriptionCurrentParty: Subscription;
 
   constructor(private labService: GenerateLabService,
-              private dataStorageService:DataStorageService,
-              private gameplayLabService:GameplayLabService,
+              private dataStorageService: DataStorageService,
+              private gameplayLabService: GameplayLabService,
               public fullViewRenderService: FullsizeAsciiRenderService,
               public mapRenderService: MapAsciiRenderService,
-              private router:Router, private soundService:SoundService) {
+              private router: Router,
+              private soundService: SoundService) {
   }
 
   ngOnInit(): void {
+
     this.subscribeCurrentParty()
     this.soundService.playGameMusic()
   }
 
   subscribeCurrentParty(): any {
     this.subscriptionCurrentParty = this.dataStorageService.getCurrentParty()
-      .subscribe((c) => {
-          this.currentParty = kotlinProxyToJsView(c, 0)
-          if (this.currentParty) {
-            this.currentLevel = this.currentParty.level
-            this.currentPartyProxy = kotlinProxyToJsView(this.currentParty, 5)
+      .subscribe((nextParty) => {
 
-            if (this.currentPartyProxy.status.name$ == "WIN") {
+          this.currentParty = {...nextParty}
+          if (nextParty) {
+            this.currentLevel = this.currentParty.level
+            console.log(nextParty)
+            console.log("update")
+            if (this.currentParty.status.name$ == "WIN") {
               this.winModal.show()
             }
-
-
-            let kotlinScore = this.gameplayLabService.computePartieScore();
-            this.score = kotlinProxyToJsView(kotlinScore, 3)
+            this.score =  this.gameplayLabService.computePartieScore();
           }
         }
       )
@@ -115,7 +114,7 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
     });
     let generation = new Promise((resolve) => {
       // not taking our time to do the job
-      resolve(this.labService.generate( (parseInt(this.score.size)+1), this.currentPartyProxy.player.name)); // immediately give the result: 123
+      resolve(this.labService.generate( (parseInt(this.score.size)+1), this.currentParty.player.name)); // immediately give the result: 123
 
     });
 

@@ -1,34 +1,48 @@
 package fr.perso.labyrinth.labeat
 
-import fr.perso.labyrinth.toolbox.model.ConnectedZone
-import fr.perso.labyrinth.toolbox.model.GeoZone
-import fr.perso.labyrinth.toolbox.model.Board
-import fr.perso.labyrinth.toolbox.model.BoardZone
 import fr.perso.labyrinth.toolbox.algorithm.dataMap.distanceMap
 import fr.perso.labyrinth.freezone.model.*
-import fr.perso.labyrinth.labeat.model.LevelBoard
-import fr.perso.labyrinth.labeat.model.Partie
-import fr.perso.labyrinth.labeat.model.PartieStatus
-import fr.perso.labyrinth.labeat.model.Player
+import fr.perso.labyrinth.labeat.model.*
+import fr.perso.labyrinth.toolbox.model.*
 import mu.KotlinLogging
-import org.jeasy.rules.core.RulesImpl
+import org.jeasy.rules.api.Action
+import org.jeasy.rules.api.Rules
+import org.jeasy.rules.core.DefaultRule
 import org.jeasy.rules.core.DefaultRulesEngine
-import org.jeasy.rules.core.LambdaRule
+import kotlin.js.JsExport
 
 
+enum class InteractionResult { Success, Failure, NothingHappen }
+class Interaction<Qui, Quoi, Comment, Univers>(
+    val qui: Qui,
+    var quoi: Quoi,
+    val comment: Comment,
+    val univers: Univers
+) {
 
-class Interaction<Qui, Quoi, Comment, Univers>(val qui: Qui, val quoi: Quoi, val comment: Comment, val univers: Univers)
+    val messages: MutableList<String> = mutableListOf();
+    var result: InteractionResult = InteractionResult.NothingHappen;
+}
 
 
-abstract class MoveRule(evaluateL: (Interaction<Player, Any, Any, Partie<*>>) -> kotlin.Boolean, executeL: (Interaction<Player, Any, Any, Partie<*>>) -> kotlin.Unit = {}) :
-        LambdaRule<Interaction<Player, Any, Any, Partie<*>>>(
-                { interaction ->
-                    interaction.quoi is DoorObjectZone
-                            && interaction.qui.location.content.contains(interaction.quoi)
-                            && evaluateL(interaction)
+private fun move(executeL: (Interaction<Player, Any, Any, Partie<*>>) -> Unit) =
+    {
+    }
 
-                },
-                { interaction ->
+abstract class MoveRule(
+    evaluateL: (Interaction<Player, Any, Any, Partie<*>>) -> kotlin.Boolean,
+    executeL: (Interaction<Player, Any, Any, Partie<*>>) -> kotlin.Unit = {}
+) :
+    DefaultRule<Interaction<Player, Any, Any, Partie<*>>>(condition = { interaction ->
+
+        interaction.quoi is DoorObjectZone
+                && interaction.qui.location.content.contains(interaction.quoi)
+                && evaluateL(interaction)
+
+    },
+        actions = listOf<Action<Interaction<Player, Any, Any, Partie<*>>>>(
+            object : Action<Interaction<Player, Any, Any, Partie<*>>> {
+                override fun execute(interaction: Interaction<Player, Any, Any, Partie<*>>) {
                     val doorObjectZone = interaction.quoi as DoorObjectZone
 
                     if (interaction.qui is ObjectZone && interaction.qui.location.content.contains(interaction.qui)) {
@@ -37,63 +51,115 @@ abstract class MoveRule(evaluateL: (Interaction<Player, Any, Any, Partie<*>>) ->
                     }
                     interaction.qui.location = doorObjectZone.destination as GeoZone
                     interaction.qui.numberOfSteps++
+                    interaction.messages.add("move to room")
+                    interaction.result = InteractionResult.Success;
                     executeL(interaction)
-                })
+                }
+            }
+        ))
+
+
+class ChangeDirectionToZoneRule :
+    DefaultRule<Interaction<Player, Any, Any, Partie<*>>>(
+        condition = { interaction ->
+
+            (interaction.quoi is Direction) && (interaction.univers.player.location as CompositeZone).connections.containsKey(
+                interaction.quoi
+            )
+        },
+        action = { interaction ->
+            interaction.quoi =
+                (interaction.univers.player.location as CompositeZone).getDoorAt(interaction.quoi as Direction)!!
+        }) {
+    override var name: String = "ChangeDirectionToZoneRule"
+}
 
 
 class MoveOpenDoorRule :
-        MoveRule(
-                { interaction ->
-                    (interaction.quoi as DoorObjectZone).key == null
-                })
+    MoveRule(
+        { interaction ->
+            interaction.messages.add("want to go in" + (interaction.quoi as DoorObjectZone).destination)
+            (interaction.quoi as DoorObjectZone).key == null
+        }) {
+    override var name: String = "MoveOpenDoorRule"
+}
 
 class MoveClosedDoorRule :
-        MoveRule(
-                { interaction ->
-                    interaction.qui.inventory.contains((interaction.quoi as DoorObjectZone).key)
-                },
-                { interaction ->
-                    val doorObjectZone = interaction.quoi as DoorObjectZone
-                    interaction.qui.inventory.remove(doorObjectZone.key);
-                    doorObjectZone.key = null;
-                })
+    MoveRule(
+        { interaction ->
+            if ((interaction.quoi as DoorObjectZone).key != null)
+                interaction.messages.add("door need" + (interaction.quoi as DoorObjectZone).key)
+            ((interaction.quoi as DoorObjectZone).key != null) && interaction.qui.inventory.contains((interaction.quoi as DoorObjectZone).key)
+        },
+        { interaction ->
+            val doorObjectZone = interaction.quoi as DoorObjectZone
+            interaction.qui.inventory.remove(doorObjectZone.key);
+            doorObjectZone.key = null;
+            interaction.messages.add("open door with key " + doorObjectZone.key?.name ?: "")
+            interaction.result = InteractionResult.Success;
+        }) {
+    override var name: String = "MoveClosedDoorRule"
+}
 
 
 class TakeObjectRule :
-        LambdaRule<Interaction<Player, Any, Any, Partie<*>>>(
-                { interaction ->
-                    interaction.quoi is ObjectZone
-                            && !(interaction.quoi is DoorObjectZone)
-                            && !(interaction.quoi is Player)
-                            && interaction.qui.location.content.contains(interaction.quoi)
-                },
-                { interaction ->
-                    interaction.qui.location.content.remove(interaction.quoi as ObjectZone)
-                    interaction.qui.inventory.add(interaction.quoi)
-                    if ((interaction.quoi).name === "exit") {
+    DefaultRule<Interaction<Player, Any, Any, Partie<*>>>(
+        condition =
+        { interaction ->
+            interaction.quoi is ObjectZone
+                    && !(interaction.quoi is DoorObjectZone)
+                    && !(interaction.quoi is Player)
+                    && interaction.qui.location.content.contains(interaction.quoi)
+        },
+        actions = listOf<Action<Interaction<Player, Any, Any, Partie<*>>>>(
+            object : Action<Interaction<Player, Any, Any, Partie<*>>> {
+                override fun execute(interaction: Interaction<Player, Any, Any, Partie<*>>) {
+                    val obj = interaction.quoi as ObjectZone
+                    interaction.qui.location.content.remove(obj)
+                    interaction.qui.inventory.add(obj)
+                    if (obj.name === "exit") {
                         interaction.univers.status = PartieStatus.WIN
+                        interaction.messages.add("you exited the lab ")
+                        interaction.result = InteractionResult.Success;
+
+                    } else {
+                        interaction.messages.add("you find a " + (obj.type ?: "") + " " + obj.name)
+                        interaction.result = InteractionResult.Success;
                     }
-                })
+                }
+            }
+        )) {
+    override var name: String = "TakeObjectRule"
+}
 
 
+val ruleBook = Rules(
+    ChangeDirectionToZoneRule(),
+    MoveOpenDoorRule(), MoveClosedDoorRule(), TakeObjectRule()
+)
 
-val ruleBook = RulesImpl(setOf(MoveOpenDoorRule(), MoveClosedDoorRule(), TakeObjectRule()))
-
-
-fun playerInteractWith(partie: Partie<*>, obj: ObjectZone): Partie<*> {
+@JsExport
+fun playerInteractWith(partie: Partie<*>, obj: ObjectZone): Interaction<*, *, *, *> {
+    val interaction = Interaction(partie.player, obj as Any, "" as Any, partie)
     try {
-        DefaultRulesEngine<Interaction<Player, Any, Any, Partie<*>>>().fire(
-                ruleBook,
-                Interaction(partie.player, obj as Any, "" as Any, partie)
+
+        val defaultRulesEngine = DefaultRulesEngine<Interaction<Player, Any, Any, Partie<*>>>(
+
         )
+        defaultRulesEngine.fire(
+            ruleBook,
+            interaction
+        )
+        partie.messages.addAll(interaction.messages)
     } catch (e: Exception) {
         println(e)
         println(e.cause)
     }
-    return Partie(partie.player, partie.level, partie.status)
+    return interaction
 
 }
 
+@JsExport
 fun computePartieScore(partie: Partie<*>): MutableMap<String, Int> {
 
     val datas: MutableMap<String, Int> = HashMap()
@@ -104,11 +170,15 @@ fun computePartieScore(partie: Partie<*>): MutableMap<String, Int> {
         val solutionLength = distanceMap(level.start as BoardZone, level as Board<BoardZone>).get(level.exit)!!
         datas.put("solutionLength", solutionLength)
         datas.put("size", level.height)
-        datas.put("numberOfSteps", partie.player.numberOfSteps )
-        datas.put("numberOfRooms", partie.level.width * level.height )
-        datas.put("score", (level.width * level.height * solutionLength * numberOfCulDeSac / (partie.player.numberOfSteps + 1)))
+        datas.put("numberOfSteps", partie.player.numberOfSteps)
+        datas.put("numberOfRooms", partie.level.width * level.height)
+        datas.put(
+            "score",
+            (level.width * level.height * solutionLength * numberOfCulDeSac / (partie.player.numberOfSteps + 1))
+        )
     }
     return datas;
 
 }
+
 private val LOGGER = KotlinLogging.logger {}

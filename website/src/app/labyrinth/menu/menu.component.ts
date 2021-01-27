@@ -37,7 +37,9 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   highscores: Array<any>;
   private subscriptionHighscores: Subscription;
 
-  constructor(private router: Router, private highscoresService: HighscoresService, private soundService:SoundService) {
+  constructor(private router: Router,
+              private highscoresService: HighscoresService,
+              private soundService: SoundService) {
   }
 
   ngOnInit(): void {
@@ -67,7 +69,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.subscriptionHighscores.unsubscribe()
+    this.subscriptionHighscores && this.subscriptionHighscores.unsubscribe()
   }
 
   ngAfterViewInit(): void {
