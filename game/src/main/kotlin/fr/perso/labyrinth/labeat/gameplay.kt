@@ -123,7 +123,7 @@ class TakeObjectRule :
                         interaction.result = InteractionResult.Success;
 
                     } else {
-                        interaction.messages.add("you find a " + obj.type + " " + obj.name)
+                        interaction.messages.add("you find a " + (obj.type ?: "") + " " + obj.name)
                         interaction.result = InteractionResult.Success;
                     }
                 }
