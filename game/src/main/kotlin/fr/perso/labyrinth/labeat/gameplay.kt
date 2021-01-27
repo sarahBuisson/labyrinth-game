@@ -55,10 +55,7 @@ abstract class MoveRule(
                     interaction.result = InteractionResult.Success;
                     executeL(interaction)
                 }
-
             }
-
-
         ))
 
 
@@ -82,7 +79,6 @@ class MoveOpenDoorRule :
     MoveRule(
         { interaction ->
             interaction.messages.add("want to go in" + (interaction.quoi as DoorObjectZone).destination)
-            interaction.messages.add("does need key" + (interaction.quoi as DoorObjectZone).key)
             (interaction.quoi as DoorObjectZone).key == null
         }) {
     override var name: String = "MoveOpenDoorRule"
@@ -91,10 +87,9 @@ class MoveOpenDoorRule :
 class MoveClosedDoorRule :
     MoveRule(
         { interaction ->
-            interaction.messages.add("door need key" + (interaction.quoi as DoorObjectZone).key)
-            interaction.messages.add("door need key" + interaction.qui.inventory.size)
-
-            interaction.qui.inventory.contains((interaction.quoi as DoorObjectZone).key)
+            if ((interaction.quoi as DoorObjectZone).key != null)
+                interaction.messages.add("door need" + (interaction.quoi as DoorObjectZone).key)
+            ((interaction.quoi as DoorObjectZone).key != null) && interaction.qui.inventory.contains((interaction.quoi as DoorObjectZone).key)
         },
         { interaction ->
             val doorObjectZone = interaction.quoi as DoorObjectZone
@@ -111,7 +106,6 @@ class TakeObjectRule :
     DefaultRule<Interaction<Player, Any, Any, Partie<*>>>(
         condition =
         { interaction ->
-            interaction.messages.add("try to take " + interaction.quoi + " " + (interaction.quoi as ObjectZone).name)
             interaction.quoi is ObjectZone
                     && !(interaction.quoi is DoorObjectZone)
                     && !(interaction.quoi is Player)

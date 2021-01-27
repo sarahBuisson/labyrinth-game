@@ -81,10 +81,8 @@ export class GameplayLabService {
 
   private play(obj): any {
     let interactionResult = this.gameplay.playerInteractWith(this.currentParty, obj);
-    console.log("result");
-    console.log(parseKotlinPathToJsView(interactionResult));
-    console.log(parseKotlinPathToJsView(interactionResult, "messages"));
     this.dataStorageService.saveParty(this.currentParty)
+    this.dataStorageService.saveLastMessages(parseKotlinPathToJsView(interactionResult, "messages"))
     return interactionResult;
 
   }
