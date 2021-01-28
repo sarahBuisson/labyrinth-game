@@ -1,7 +1,7 @@
 
 deployed at:
 
-https://sarahbuisson.github.io/labyrinth-game/website-angular/
+https://sarahbuisson.github.io/labyrinth-game/testOtherBranch/website-angular
 
 
 build:
