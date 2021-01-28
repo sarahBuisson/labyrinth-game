@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'asciiArtFont';
+  src: url('./cinecavD-mono.ttf') format("truetype");
+  white-space: pre;
+}
+
+@font-face {
+  font-family: 'asciiTextFont';
+  src: url('./cinecavD-type.ttf') format("truetype");
+
+  white-space: pre;
+}
