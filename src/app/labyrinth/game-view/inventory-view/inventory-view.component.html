@@ -1,0 +1,19 @@
+<div class="inventory container decor-ui"
+     ascii-border
+     borderTemplateName="inventoryBoxGridTemplate"
+     [xRepeat]="15">
+  <div class="title">I N V E N T O R Y</div>
+
+  <div class="content"
+       app-ascii-on-grid-div
+  >
+    <ng-container *ngIf="!!this.player && !!this.player.inventoryArray && this.player.inventoryArray.length==0"> .
+    </ng-container>
+    <ng-container *ngFor="let item of this.player.inventoryArray">
+      <div app-ascii class="important-ui"
+           [tooltip]="computeTooltip(item)"
+           [content]="render(item)"></div>
+    </ng-container>
+  </div>
+
+</div>

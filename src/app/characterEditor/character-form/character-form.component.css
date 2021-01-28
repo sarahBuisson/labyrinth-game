@@ -1,0 +1,25 @@
+
+input:focus {
+  outline: none !important;
+}
+
+span.label {
+  vertical-align: middle;
+  display: flex;
+}
+.layout{
+  display: grid;
+  grid-template-columns: min-content min-content min-content;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.character-render{
+}
+
+.column{
+  display: inline-block;
+}
+.input--border{
+  display: inline-block;
+}

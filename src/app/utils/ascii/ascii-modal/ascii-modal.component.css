@@ -1,0 +1,33 @@
+.modalScreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr min-content 1fr;
+  grid-template-rows: 1fr min-content 1fr;
+  z-index: 100;
+}
+
+.behindModal {
+  background: white;
+  opacity: 0.8;
+  z-index: 10;
+}
+
+
+.backgroundModal {
+  background: white;
+  text-align: center;
+  z-index: 99;
+  position: relative;
+}
+
+.cross {
+  z-index: 100;
+  position: absolute;
+  right: 0;
+  top: 0;
+background: white;
+}

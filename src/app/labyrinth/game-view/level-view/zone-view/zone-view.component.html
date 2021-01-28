@@ -1,0 +1,23 @@
+<div ascii-border class="zone asciiArt decor-ui"
+     [borderTemplate]="borderRendered()"
+     [borderClick]="clickOnBorder"
+
+     [xRepeat]="1"
+     [yRepeat]="1"
+     [name]="'zone'"
+>
+  <div class="zoneContent" (click)="clickOnZone( $event)">
+    <div class="background-ui zoneBackground">{{backgroundRender()}}</div>
+    <div app-ascii-on-grid-div>
+      <span app-ascii
+           *ngFor="let obj of getLevelContent()"
+           class="zoneObject asciiArt interact-ui"
+           (click)="this.takeObj(obj)"
+           [tooltip]="computeTooltip(obj)"
+           [content]="renderObj(obj)"
+      >
+      </span>
+    </div>
+
+  </div>
+</div>

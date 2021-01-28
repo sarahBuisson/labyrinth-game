@@ -1,0 +1,8 @@
+:host {
+  position: relative;
+}
+
+.border-part {
+  display: inline-block;
+  overflow-x: visible;
+}

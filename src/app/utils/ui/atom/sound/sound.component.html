@@ -1,0 +1,4 @@
+<div ascii-border (click)="toogle()" class="asciiArt">
+  <div app-ascii *ngIf="soundOn" tooltip="mute" [content]="on" ></div>
+  <div app-ascii *ngIf="!soundOn" tooltip="music" [content]="off"></div>
+</div>

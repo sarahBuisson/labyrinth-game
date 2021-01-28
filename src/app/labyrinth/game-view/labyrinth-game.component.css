@@ -1,0 +1,25 @@
+
+.mainArea {
+  grid-area: main;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.inventoryArea{
+   bottom: 0;
+}
+
+.mapArea {
+}
+
+.button {
+  display: inline-flex;
+  text-align: center;
+}
+
+

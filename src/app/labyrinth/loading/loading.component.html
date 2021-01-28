@@ -1,0 +1,46 @@
+<div ascii-render
+     class="container text background-ui"
+     borderTemplateName="loadingBorderGridTemplate">
+  <h1 ascii-render class="ihm-ui"> Labyrinth generating ...</h1>
+  <br/>
+
+
+  <div class="content ihm-ui" ascii-border>
+    <div>Do you know it ? ({{currentLoadingMessage}}/{{maxNumberOfMessage}})</div>
+<br/>
+    <ng-container  *ngIf="currentLoadingMessage===0">
+      Find the ladder to the exit to win.
+      <div app-render class="asciiArt">{{fullViewRenderService.renderObj({name: 'exit'})}}</div>
+    </ng-container >
+
+    <ng-container *ngIf="currentLoadingMessage===1">
+      You can move by :
+      <ul>
+        <li>clicking on the room you want to go</li>
+        <li>clicking on the door you want to use</li>
+        <li>using directional key</li>
+        <li>using the pad at the bottom of the screen</li>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="currentLoadingMessage===2">
+      some door are closed and need a key to be open
+    </ng-container>
+    <ng-container *ngIf="currentLoadingMessage===3">
+      You have a map
+    </ng-container>
+
+    <ng-container *ngIf="currentLoadingMessage===4">
+      <div>The lab didn't really take that much time to generate.</div>
+      <div>The dev just wanted a way to give tips to player.</div>
+    </ng-container>
+
+    <ng-container *ngIf="currentLoadingMessage===5">All labyrinths always have a solution
+    </ng-container>
+    <br/>
+    <div>
+      <button ascii-render (click)="clickDuringLoading()">next advice</button>
+    </div>
+  </div>
+
+
+</div>

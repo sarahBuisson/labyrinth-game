@@ -1,0 +1,12 @@
+
+.menuBar {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.repository {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}

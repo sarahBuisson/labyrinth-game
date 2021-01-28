@@ -1,0 +1,100 @@
+/* You can add global styles to this file, and also import other style files */
+/*@font-face {
+  font-family: asciiArtFont;
+  src: url('/Courrier-Prime-Code.ttf') format("truetype");
+
+  white-space: pre;
+}
+
+@font-face {
+  font-family: asciiTextFont;
+  src: url(Courrier-Prime.ttf) format("truetype");
+
+  white-space: pre;
+}
+*/
+body {
+  overflow: hidden;
+  font-size: 12px;
+  font-family: asciiArtFont;
+  margin: 0px;
+}
+
+button, div {
+
+  border-top-width: 14px;
+  border-bottom-width: 14px;
+  border-left-width: 9px;
+  border-right-width: 9px;
+
+}
+
+button {
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+button, h1, h2, input {
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-size: 12px;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+input {
+  font-family: asciiTextFont, "Comic Sans MS";
+}
+ul {
+  list-style-type: "-";
+  padding: 9px;
+}
+
+.asciiArt {
+  font-family: asciiArtFont, "Comic Sans MS";
+  font-size: 12px;
+  white-space: pre;
+}
+
+.text {
+  font-family: asciiTextFont, "Comic Sans MS";
+  font-size: 12px;
+}
+
+.background-ui {
+  color: #BBB;
+}
+
+.decor-ui {
+  color: #999;
+}
+
+.ihm-ui {
+  color: #666;
+}
+
+a.ihm-ui, a.interact-ui {
+  text-decoration: none;
+}
+
+.interact-ui {
+  color: #333;
+}
+
+.important-ui {
+  color: #000;
+}
+
+input, textarea, button {
+  font-family: asciiTextFont, "Comic Sans MS";
+}
+

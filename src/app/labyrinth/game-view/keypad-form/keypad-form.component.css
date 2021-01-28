@@ -1,0 +1,7 @@
+.key{
+  color: black;
+}
+
+:host {
+  color: lightgray
+}

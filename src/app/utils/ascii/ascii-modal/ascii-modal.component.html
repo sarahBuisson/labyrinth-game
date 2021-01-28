@@ -1,0 +1,22 @@
+<div class="modalScreen" *ngIf="_show===true">
+  <div class="behindModal" (click)="hide()"></div>
+  <div class="behindModal" (click)="hide()"></div>
+  <div class="behindModal" (click)="hide()"></div>
+
+  <div class="behindModal" (click)="hide()"></div>
+  <div class="backgroundModal">
+
+    <div ascii-border
+      *ngIf="closable" (click)="hide()"
+      class="cross asciiArt ihm-ui"
+      [borderTemplateName]="'paperExitGridTemplate'">X
+    </div>
+    <ng-content></ng-content>
+
+  </div>
+  <div class="behindModal" (click)="hide()"></div>
+  <div class="behindModal" (click)="hide()"></div>
+  <div class="behindModal" (click)="hide()"></div>
+  <div class="behindModal" (click)="hide()"></div>
+
+</div>

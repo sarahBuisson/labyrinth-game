@@ -1,0 +1,22 @@
+<div app-ascii>
+  <div>&nbsp;&nbsp;&nbsp;&nbsp;+---+   </div>
+  <div>
+    <span>&nbsp;&nbsp;&nbsp;&nbsp;|</span>
+    <span class="key" (click)="move('TOP')">/^\</span>
+    <span>|  </span>
+  </div>
+  <div>+---+---+---+-------+</div>
+  <div>
+    <span>|</span>
+    <span class="key" (click)="move('LEFT')"><<-</span>
+    <span>|</span>
+    <span class="key" (click)="move('BOTTOM')" >\V/</span>
+    <span>|</span>
+    <span class="key" (click)="move('RIGHT')">->></span>
+    <span>|</span>
+    <span class="key" (click)="take()">Prendre</span>
+    <span>|</span>
+  </div>
+  <div>+---+---+---+-------+</div>
+  <div> {{message}}</div>
+  </div>

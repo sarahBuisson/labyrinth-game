@@ -1,0 +1,35 @@
+:host {
+  background: white;
+  text-align: left;
+}
+
+.levelRowRender {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 1.5em);
+}
+
+.container {
+  background: white;
+}
+.row1 {
+  display: flex;
+  flex-direction: row;
+}
+
+.container > div {
+  background: white;
+}
+
+.container > span {
+  background: white;
+}
+
+
+.main {
+  display: inline-block;
+}
+
+.mapzone {
+  display: inline-block
+}
+

@@ -1,0 +1,22 @@
+pre {
+  margin: 0px;
+  display: inline-block;
+  background: white;
+}
+
+/* Tooltip text */
+.withtooltip .tooltiptext {
+  visibility: hidden;
+  background-color: white;
+  text-align: center;
+  background: white;
+  border: thin;
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.withtooltip:hover .tooltiptext {
+  visibility: visible;
+}

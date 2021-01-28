@@ -1,0 +1,19 @@
+<h1 ascii-render class="text  ihm-ui" >aspect of your character</h1>
+<div class="layout">
+  <div *ngFor="let bodyPart of renderService.bodyPartsKey">
+    <h2 ascii-render class="text">{{bodyPart}}</h2>
+
+    <div class="input--border" ascii-render>
+      <input class="interact-ui"
+             [(ngModel)]="data[bodyPart]"
+             (change)="update()"
+             [maxLength]="bodyPart==='hat'?6:1">
+    </div>
+  </div>
+  <div>  <h2 ascii-render class="text">You</h2>
+    <div ascii-render [xRepeat]="6" [yRepeat]="4" class="character-render asciiArt"
+         borderTemplateName="double">
+     <span class="important-ui">{{render}}</span>
+    </div>
+  </div>
+</div>

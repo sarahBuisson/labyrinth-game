@@ -1,0 +1,11 @@
+<div class="slideContainer"
+     (mouseover)="mouseOver()"
+     (mouseout)="mouseLeave()"
+     (mouseleave)="mouseLeave()"
+     (mousedown)="click()"
+     [@openClose]="{value:isOpen?'open':'close', params: this.generateParams()}"
+     (@openClose.start)="onAnimationEvent($event)"
+     (@openClose.done)="onAnimationEvent($event)"
+>
+  <ng-content></ng-content>
+</div>
