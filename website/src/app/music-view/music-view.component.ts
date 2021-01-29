@@ -18,18 +18,15 @@ export class MusicViewComponent implements OnInit {
   currentMusicPartition: any;
   currentPart: any;
   currentInstrument: any;
-  instrument = new tone.Synth().toDestination();
-  instrument2 = new tone.Synth().toDestination();
-
   ngOnInit(): void {
   }
 
   generateMenuMusic() {
-    this.changeMusic(this.musiqueService.menuMusicRandom(), this.instrument)
+    this.changeMusic(this.musiqueService.menuMusicRandom())
   }
 
   generateGameMusic() {
-    this.changeMusic(this.musiqueService.gameMusicRandom(), this.instrument2)
+    this.changeMusic(this.musiqueService.gameMusicRandom())
   }
 
   pause() {
@@ -48,13 +45,16 @@ export class MusicViewComponent implements OnInit {
     }
   }
 
-  changeMusic(newPartition, instrument) {
+  changeMusic(newPartition) {
     console.log("changeMusic")
+    if (this.currentInstrument)
+      this.currentInstrument.clear()
+    this.currentInstrument = this.soundService.createInstrument();
     this.currentMusicPartition = newPartition;
     this.clear();
-    this.currentPart = createLoop(instrument, this.currentMusicPartition);
-    this.currentInstrument=instrument
-    this.currentInstrument.volume=-40;
-    this.soundService.playAmbiantMusic(this.currentPart, instrument);
+    this.currentPart = createLoop(this.currentInstrument, this.currentMusicPartition);
+
+    this.currentInstrument.volume = -40;
+    this.soundService.playAmbiantMusic(this.currentPart, this.currentInstrument);
   }
 }

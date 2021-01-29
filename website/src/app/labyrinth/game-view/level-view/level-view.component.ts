@@ -23,7 +23,8 @@ export class LevelViewComponent implements OnInit, OnChanges {
   @Input()
   currentParty: any
 
-  constructor(public gameplayLabService: GameplayLabService, public renderService: FullsizeAsciiRenderService) {
+  constructor(public gameplayLabService: GameplayLabService,
+              public renderService: FullsizeAsciiRenderService) {
 
   }
 

@@ -124,7 +124,7 @@ export function parseKotlinPathToJsView(instance, ...path) {
   return parseKotlinToJsView(getFromKotlin(instance, ...path), 0, false)
 }
 
-export function getFromKotlin(instance: any, ...path: string[]) {
+export function getFromKotlin(instance: any, ...path: any[]) {
   if (path.length == 0 || !instance) {
     return instance;
   } else {
