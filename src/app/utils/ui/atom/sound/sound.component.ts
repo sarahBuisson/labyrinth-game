@@ -9,7 +9,6 @@ import {Subscription} from "rxjs";
 })
 export class SoundComponent implements OnInit, OnDestroy {
   soundOn: boolean;
-  soundSubscription: Subscription;
   on = '' +
     '           __ \n' +
     ' ((\'c\') < d d \n';
@@ -32,7 +31,6 @@ export class SoundComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.soundSubscription.unsubscribe();
   }
 
   toogle() {

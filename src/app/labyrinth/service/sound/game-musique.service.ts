@@ -155,7 +155,15 @@ export class GameMusiqueService {
     let variation2 = (utils.shuffle(variation1))
 
 
-    let conclusion = compositionUtils.fillWithNotesRespecting(mainThemeNotes, mainRhytmePart2, utils.last(compositionUtils.flatPartition(variation2)).tune, [selector.isConsonnanteOf, selector.isDiffOf]);
+    let conclusion;
+    try {
+      conclusion = compositionUtils.fillWithNotesRespecting(mainThemeNotes,
+        mainRhytmePart2,
+        utils.last(compositionUtils.flatPartition(variation2)).tune,
+        [selector.isConsonnanteOf, selector.isDiffOf]);
+    } catch (e) {
+      console.log(e)
+    }
 
 
     let form = [intro, mainThemePart1, mainThemePart2, mainThemePart1, variation1, mainThemePart1, variation2, mainThemePart1, mainThemePart2, conclusion]

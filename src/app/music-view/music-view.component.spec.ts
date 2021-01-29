@@ -17,10 +17,10 @@ describe('MusicViewComponent', () => {
         TempViewComponent,
         PartitionViewComponent],
       providers: [
-        GameMusiqueService,
+        {provide: GameMusiqueService, useValue: {}},
         {provide: SoundService, useValue: {}},
         {provide: ToneService, useValue: {Synth: jest.fn()}},
-        GameMusiqueService,
+
 
       ]
     })

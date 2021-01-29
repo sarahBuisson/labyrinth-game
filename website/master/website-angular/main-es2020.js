@@ -366,6 +366,9 @@ let SoundService = /** @class */ (() => {
             this.moveSound.dispose();
             this.ambiantInstrument.dispose();
         }
+        createInstrument() {
+            return new tone__WEBPACK_IMPORTED_MODULE_3__["Synth"]().toDestination();
+        }
     }
     SoundService.ɵfac = function SoundService_Factory(t) { return new (t || SoundService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_game_musique_service__WEBPACK_IMPORTED_MODULE_5__["GameMusiqueService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_tone_service__WEBPACK_IMPORTED_MODULE_6__["ToneService"])); };
     SoundService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: SoundService, factory: SoundService.ɵfac, providedIn: 'root' });
@@ -829,16 +832,14 @@ let MusicViewComponent = /** @class */ (() => {
         constructor(musiqueService, soundService) {
             this.musiqueService = musiqueService;
             this.soundService = soundService;
-            this.instrument = new tone__WEBPACK_IMPORTED_MODULE_2__["Synth"]().toDestination();
-            this.instrument2 = new tone__WEBPACK_IMPORTED_MODULE_2__["Synth"]().toDestination();
         }
         ngOnInit() {
         }
         generateMenuMusic() {
-            this.changeMusic(this.musiqueService.menuMusicRandom(), this.instrument);
+            this.changeMusic(this.musiqueService.menuMusicRandom());
         }
         generateGameMusic() {
-            this.changeMusic(this.musiqueService.gameMusicRandom(), this.instrument2);
+            this.changeMusic(this.musiqueService.gameMusicRandom());
         }
         pause() {
             this.currentPart.stop(tone__WEBPACK_IMPORTED_MODULE_2__["now"]());
@@ -852,14 +853,16 @@ let MusicViewComponent = /** @class */ (() => {
                 this.currentPart.stop();
             }
         }
-        changeMusic(newPartition, instrument) {
+        changeMusic(newPartition) {
             console.log("changeMusic");
+            if (this.currentInstrument)
+                this.currentInstrument.clear();
+            this.currentInstrument = this.soundService.createInstrument();
             this.currentMusicPartition = newPartition;
             this.clear();
-            this.currentPart = Object(_labyrinth_service_sound_sound_service__WEBPACK_IMPORTED_MODULE_1__["createLoop"])(instrument, this.currentMusicPartition);
-            this.currentInstrument = instrument;
+            this.currentPart = Object(_labyrinth_service_sound_sound_service__WEBPACK_IMPORTED_MODULE_1__["createLoop"])(this.currentInstrument, this.currentMusicPartition);
             this.currentInstrument.volume = -40;
-            this.soundService.playAmbiantMusic(this.currentPart, instrument);
+            this.soundService.playAmbiantMusic(this.currentPart, this.currentInstrument);
         }
     }
     MusicViewComponent.ɵfac = function MusicViewComponent_Factory(t) { return new (t || MusicViewComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_labyrinth_service_sound_game_musique_service__WEBPACK_IMPORTED_MODULE_3__["GameMusiqueService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_labyrinth_service_sound_sound_service__WEBPACK_IMPORTED_MODULE_1__["SoundService"])); };
@@ -3952,7 +3955,6 @@ let SoundComponent = /** @class */ (() => {
         ngOnInit() {
         }
         ngOnDestroy() {
-            this.soundSubscription.unsubscribe();
         }
         toogle() {
             this.soundService.toogleSound();
@@ -5837,7 +5839,13 @@ let GameMusiqueService = /** @class */ (() => {
             let noteForVariation = music_generator__WEBPACK_IMPORTED_MODULE_1__["harmoniqueUtils"].getSuroundingTunes(music_generator__WEBPACK_IMPORTED_MODULE_1__["utils"].last(mainThemePart1).map(n => n.tune));
             let variation1 = music_generator__WEBPACK_IMPORTED_MODULE_1__["utils"].shuffle(mainThemePart2).map(pattern => music_generator__WEBPACK_IMPORTED_MODULE_1__["compositionUtils"].fillWithRandomNote(music_generator__WEBPACK_IMPORTED_MODULE_1__["compositionUtils"].flatPartition(pattern).map(n => n.value), noteForVariation));
             let variation2 = (music_generator__WEBPACK_IMPORTED_MODULE_1__["utils"].shuffle(variation1));
-            let conclusion = music_generator__WEBPACK_IMPORTED_MODULE_1__["compositionUtils"].fillWithNotesRespecting(mainThemeNotes, mainRhytmePart2, music_generator__WEBPACK_IMPORTED_MODULE_1__["utils"].last(music_generator__WEBPACK_IMPORTED_MODULE_1__["compositionUtils"].flatPartition(variation2)).tune, [music_generator__WEBPACK_IMPORTED_MODULE_1__["selector"].isConsonnanteOf, music_generator__WEBPACK_IMPORTED_MODULE_1__["selector"].isDiffOf]);
+            let conclusion;
+            try {
+                conclusion = music_generator__WEBPACK_IMPORTED_MODULE_1__["compositionUtils"].fillWithNotesRespecting(mainThemeNotes, mainRhytmePart2, music_generator__WEBPACK_IMPORTED_MODULE_1__["utils"].last(music_generator__WEBPACK_IMPORTED_MODULE_1__["compositionUtils"].flatPartition(variation2)).tune, [music_generator__WEBPACK_IMPORTED_MODULE_1__["selector"].isConsonnanteOf, music_generator__WEBPACK_IMPORTED_MODULE_1__["selector"].isDiffOf]);
+            }
+            catch (e) {
+                console.log(e);
+            }
             let form = [intro, mainThemePart1, mainThemePart2, mainThemePart1, variation1, mainThemePart1, variation2, mainThemePart1, mainThemePart2, conclusion];
             return form;
         }

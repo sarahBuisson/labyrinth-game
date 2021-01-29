@@ -685,6 +685,11 @@
               this.moveSound.dispose();
               this.ambiantInstrument.dispose();
             }
+          }, {
+            key: "createInstrument",
+            value: function createInstrument() {
+              return new tone__WEBPACK_IMPORTED_MODULE_3__["Synth"]().toDestination();
+            }
           }]);
 
           return SoundService;
@@ -1535,8 +1540,6 @@
 
             this.musiqueService = musiqueService;
             this.soundService = soundService;
-            this.instrument = new tone__WEBPACK_IMPORTED_MODULE_2__["Synth"]().toDestination();
-            this.instrument2 = new tone__WEBPACK_IMPORTED_MODULE_2__["Synth"]().toDestination();
           }
 
           _createClass(MusicViewComponent, [{
@@ -1545,12 +1548,12 @@
           }, {
             key: "generateMenuMusic",
             value: function generateMenuMusic() {
-              this.changeMusic(this.musiqueService.menuMusicRandom(), this.instrument);
+              this.changeMusic(this.musiqueService.menuMusicRandom());
             }
           }, {
             key: "generateGameMusic",
             value: function generateGameMusic() {
-              this.changeMusic(this.musiqueService.gameMusicRandom(), this.instrument2);
+              this.changeMusic(this.musiqueService.gameMusicRandom());
             }
           }, {
             key: "pause",
@@ -1572,14 +1575,15 @@
             }
           }, {
             key: "changeMusic",
-            value: function changeMusic(newPartition, instrument) {
+            value: function changeMusic(newPartition) {
               console.log("changeMusic");
+              if (this.currentInstrument) this.currentInstrument.clear();
+              this.currentInstrument = this.soundService.createInstrument();
               this.currentMusicPartition = newPartition;
               this.clear();
-              this.currentPart = Object(_labyrinth_service_sound_sound_service__WEBPACK_IMPORTED_MODULE_1__["createLoop"])(instrument, this.currentMusicPartition);
-              this.currentInstrument = instrument;
+              this.currentPart = Object(_labyrinth_service_sound_sound_service__WEBPACK_IMPORTED_MODULE_1__["createLoop"])(this.currentInstrument, this.currentMusicPartition);
               this.currentInstrument.volume = -40;
-              this.soundService.playAmbiantMusic(this.currentPart, instrument);
+              this.soundService.playAmbiantMusic(this.currentPart, this.currentInstrument);
             }
           }]);
 
@@ -6627,9 +6631,7 @@
             value: function ngOnInit() {}
           }, {
             key: "ngOnDestroy",
-            value: function ngOnDestroy() {
-              this.soundSubscription.unsubscribe();
-            }
+            value: function ngOnDestroy() {}
           }, {
             key: "toogle",
             value: function toogle() {
@@ -10166,7 +10168,14 @@
                 }), noteForVariation);
               });
               var variation2 = music_generator__WEBPACK_IMPORTED_MODULE_1__["utils"].shuffle(variation1);
-              var conclusion = music_generator__WEBPACK_IMPORTED_MODULE_1__["compositionUtils"].fillWithNotesRespecting(mainThemeNotes, mainRhytmePart2, music_generator__WEBPACK_IMPORTED_MODULE_1__["utils"].last(music_generator__WEBPACK_IMPORTED_MODULE_1__["compositionUtils"].flatPartition(variation2)).tune, [music_generator__WEBPACK_IMPORTED_MODULE_1__["selector"].isConsonnanteOf, music_generator__WEBPACK_IMPORTED_MODULE_1__["selector"].isDiffOf]);
+              var conclusion;
+
+              try {
+                conclusion = music_generator__WEBPACK_IMPORTED_MODULE_1__["compositionUtils"].fillWithNotesRespecting(mainThemeNotes, mainRhytmePart2, music_generator__WEBPACK_IMPORTED_MODULE_1__["utils"].last(music_generator__WEBPACK_IMPORTED_MODULE_1__["compositionUtils"].flatPartition(variation2)).tune, [music_generator__WEBPACK_IMPORTED_MODULE_1__["selector"].isConsonnanteOf, music_generator__WEBPACK_IMPORTED_MODULE_1__["selector"].isDiffOf]);
+              } catch (e) {
+                console.log(e);
+              }
+
               var form = [intro, mainThemePart1, mainThemePart2, mainThemePart1, variation1, mainThemePart1, variation2, mainThemePart1, mainThemePart2, conclusion];
               return form;
             }

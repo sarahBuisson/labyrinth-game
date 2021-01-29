@@ -171,6 +171,10 @@ export class SoundService implements OnDestroy {
     this.moveSound.dispose()
     this.ambiantInstrument.dispose()
   }
+
+  createInstrument() {
+    return new tone.Synth().toDestination();
+  }
 }
 
 export function createLoop(instrument, partition: Array<any>, tempo = 1): tone.Part {
