@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {GameplayLabService} from "../../service/gameplay-lab.service";
 import {paperGridTemplate, mapGridTemplate} from "../../service/render/resources/border";
 import {CHARACTER_SPACING, LINE_HEIGHT} from "../../../utils/ascii/AsciiConst";
@@ -23,12 +23,12 @@ let mapBorderData = paperGridTemplate;
         min-width: ${CHARACTER_SPACING * 10}px;
     }`]
 })
-export class MapViewComponent implements OnInit {
+export class MapViewComponent implements OnInit, OnChanges {
 
 
   @Input()
   currentParty: any
-  currentPartyProxy: any
+  currentLevelProxy: any
 
   @Input()
   renderService: any
@@ -43,8 +43,21 @@ export class MapViewComponent implements OnInit {
   constructor(public gameplayLabService: GameplayLabService) {
   }
 
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    console.log("update")
+    console.log(this.currentParty)
+    this.updateFieldOfView();
+
+    console.log(this.currentLevelProxy)
+  }
+
+
   ngOnInit(): void {
-    this.currentPartyProxy = parseKotlinPathToJsView(this.currentParty, 7);
+    this.updateFieldOfView();
+  }
+
+  updateFieldOfView(): void {
+    this.currentLevelProxy = parseKotlinToJsView(this.currentParty.level, 4);
   }
 
   isStart(levelCase) {
@@ -72,21 +85,21 @@ export class MapViewComponent implements OnInit {
 
   borderRendered(levelCase) {
     let borderRendered = {...mapGridTemplate}
-    let directions: Array<String> = ['LEFT', 'RIGHT', 'TOP', 'BOTTOM'];
+    let directions: Array<String> = ['left', 'right', 'top', 'bottom'];
 
     directions.forEach((direction: string) => {
-
-      let door = this.gameplayLabService.doorAt(levelCase, direction)
+      let door = this.gameplayLabService.doorAt(levelCase, direction.toUpperCase())
       borderRendered[direction + "Class"] = "decor-ui"
-      if (door) {
+      if (!!door) {
         if (door.key) {
-          borderRendered[direction + "Template"] = door.name
+          borderRendered[direction+ "Template"] = door.name
           borderRendered[direction + "Class"] = "interact-ui"
         } else {
 
         }
 
       } else {
+        console.log("nothing")
         borderRendered[direction + "Template"] = ' '
       }
     })
@@ -95,12 +108,12 @@ export class MapViewComponent implements OnInit {
 
 
   contentRendered(levelCaseInput: any) {
-    let content = this.gameplayLabService.levelContent(parseKotlinToJsView(levelCaseInput,3));
+    let content = this.gameplayLabService.levelContent(levelCaseInput);
     if (content[0]) {
 
       return this.renderService.renderObj(content[0])
     } else {
-      let nbrOfConnections = levelCaseInput.connected.toArray().length;
+      let nbrOfConnections = levelCaseInput.connectedArray.length;
       if (nbrOfConnections == 1) {
         return " ";
       }
