@@ -1,15 +1,15 @@
 <div ascii-render class="container decor-ui"
      [borderTemplate]="borderData"
 >
-  <div class="row1" *ngIf="currentPartyProxy">
+  <div class="row1" *ngIf="currentLevelProxy">
     <div class="title text decor-ui">
       <div>M</div>
       <div>A</div>
       <div>P</div>
-    </div>
+      </div>
     <div class="main asciiArt ihm-ui"
-         [ngStyle]="{'grid-template-columns': 'repeat(auto-fill, '+ currentPartyProxy.level.contentArray[0].length + ')'}">
-      <div class="row" *ngFor="let row of currentPartyProxy.level.contentArray; let x = index ">
+         [ngStyle]="{'grid-template-columns': 'repeat(auto-fill, '+ currentLevelProxy.contentArray[0].length + ')'}">
+      <div class="row" *ngFor="let row of currentLevelProxy.contentArray; let x = index ">
         <ng-container *ngFor="let levelCaseInput of row; let y = index">
           <ng-container *ngIf="isCaseShowable(levelCaseInput)">
             <div class="mapzone"

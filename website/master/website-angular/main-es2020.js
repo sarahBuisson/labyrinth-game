@@ -3028,9 +3028,9 @@ function MapViewComponent_div_1_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](8);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](2, _c0, "repeat(auto-fill, " + ctx_r0.currentPartyProxy.level.contentArray[0].length + ")"));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](2, _c0, "repeat(auto-fill, " + ctx_r0.currentLevelProxy.contentArray[0].length + ")"));
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r0.currentPartyProxy.level.contentArray);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r0.currentLevelProxy.contentArray);
 } }
 let mapBorderData = _service_render_resources_border__WEBPACK_IMPORTED_MODULE_1__["paperGridTemplate"];
 let MapViewComponent = /** @class */ (() => {
@@ -3040,8 +3040,17 @@ let MapViewComponent = /** @class */ (() => {
             this.rangeArroundPlayer = -1;
             this.borderData = mapBorderData;
         }
+        ngOnChanges(changes) {
+            console.log("update");
+            console.log(this.currentParty);
+            this.updateFieldOfView();
+            console.log(this.currentLevelProxy);
+        }
         ngOnInit() {
-            this.currentPartyProxy = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_3__["parseKotlinPathToJsView"])(this.currentParty, 7);
+            this.updateFieldOfView();
+        }
+        updateFieldOfView() {
+            this.currentLevelProxy = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_3__["parseKotlinToJsView"])(this.currentParty.level, 4);
         }
         isStart(levelCase) {
             let start = this.currentParty.level.start;
@@ -3064,11 +3073,11 @@ let MapViewComponent = /** @class */ (() => {
         }
         borderRendered(levelCase) {
             let borderRendered = { ..._service_render_resources_border__WEBPACK_IMPORTED_MODULE_1__["mapGridTemplate"] };
-            let directions = ['LEFT', 'RIGHT', 'TOP', 'BOTTOM'];
+            let directions = ['left', 'right', 'top', 'bottom'];
             directions.forEach((direction) => {
-                let door = this.gameplayLabService.doorAt(levelCase, direction);
+                let door = this.gameplayLabService.doorAt(levelCase, direction.toUpperCase());
                 borderRendered[direction + "Class"] = "decor-ui";
-                if (door) {
+                if (!!door) {
                     if (door.key) {
                         borderRendered[direction + "Template"] = door.name;
                         borderRendered[direction + "Class"] = "interact-ui";
@@ -3077,18 +3086,19 @@ let MapViewComponent = /** @class */ (() => {
                     }
                 }
                 else {
+                    console.log("nothing");
                     borderRendered[direction + "Template"] = ' ';
                 }
             });
             return borderRendered;
         }
         contentRendered(levelCaseInput) {
-            let content = this.gameplayLabService.levelContent(Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_3__["parseKotlinToJsView"])(levelCaseInput, 3));
+            let content = this.gameplayLabService.levelContent(levelCaseInput);
             if (content[0]) {
                 return this.renderService.renderObj(content[0]);
             }
             else {
-                let nbrOfConnections = levelCaseInput.connected.toArray().length;
+                let nbrOfConnections = levelCaseInput.connectedArray.length;
                 if (nbrOfConnections == 1) {
                     return " ";
                 }
@@ -3111,7 +3121,7 @@ let MapViewComponent = /** @class */ (() => {
         }
     }
     MapViewComponent.ɵfac = function MapViewComponent_Factory(t) { return new (t || MapViewComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__["GameplayLabService"])); };
-    MapViewComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: MapViewComponent, selectors: [["map-view"]], inputs: { currentParty: "currentParty", renderService: "renderService", rangeArroundPlayer: "rangeArroundPlayer" }, decls: 20, vars: 2, consts: [["ascii-render", "", 1, "container", "decor-ui", 3, "borderTemplate"], ["class", "row1", 4, "ngIf"], ["ascii-border", "", 1, "legend", "text", "decor-ui"], [1, "important-ui"], [1, "row1"], [1, "title", "text", "decor-ui"], [1, "main", "asciiArt", "ihm-ui", 3, "ngStyle"], ["class", "row", 4, "ngFor", "ngForOf"], [1, "row"], [4, "ngFor", "ngForOf"], [4, "ngIf"], ["ascii-border", "", "xRepeat", "1", "yRepeat", "1", 1, "mapzone", 3, "borderTemplate"], [3, "ngClass"]], template: function MapViewComponent_Template(rf, ctx) { if (rf & 1) {
+    MapViewComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: MapViewComponent, selectors: [["map-view"]], inputs: { currentParty: "currentParty", renderService: "renderService", rangeArroundPlayer: "rangeArroundPlayer" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵNgOnChangesFeature"]], decls: 20, vars: 2, consts: [["ascii-render", "", 1, "container", "decor-ui", 3, "borderTemplate"], ["class", "row1", 4, "ngIf"], ["ascii-border", "", 1, "legend", "text", "decor-ui"], [1, "important-ui"], [1, "row1"], [1, "title", "text", "decor-ui"], [1, "main", "asciiArt", "ihm-ui", 3, "ngStyle"], ["class", "row", 4, "ngFor", "ngForOf"], [1, "row"], [4, "ngFor", "ngForOf"], [4, "ngIf"], ["ascii-border", "", "xRepeat", "1", "yRepeat", "1", 1, "mapzone", 3, "borderTemplate"], [3, "ngClass"]], template: function MapViewComponent_Template(rf, ctx) { if (rf & 1) {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, MapViewComponent_div_1_Template, 10, 4, "div", 1);
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
@@ -3143,7 +3153,7 @@ let MapViewComponent = /** @class */ (() => {
         } if (rf & 2) {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("borderTemplate", ctx.borderData);
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.currentPartyProxy);
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.currentLevelProxy);
         } }, directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_5__["AsciiBorderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgStyle"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgForOf"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgClass"]], styles: ["[_nghost-%COMP%] {\n  background: white;\n  text-align: left;\n}\n\n.levelRowRender[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, 1.5em);\n}\n\n.container[_ngcontent-%COMP%] {\n  background: white;\n}\n\n.row1[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n}\n\n.container[_ngcontent-%COMP%]    > div[_ngcontent-%COMP%] {\n  background: white;\n}\n\n.container[_ngcontent-%COMP%]    > span[_ngcontent-%COMP%] {\n  background: white;\n}\n\n.main[_ngcontent-%COMP%] {\n  display: inline-block;\n}\n\n.mapzone[_ngcontent-%COMP%] {\n  display: inline-block\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1hcC12aWV3LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxpQkFBaUI7RUFDakIsZ0JBQWdCO0FBQ2xCOztBQUVBO0VBQ0UsYUFBYTtFQUNiLCtDQUErQztBQUNqRDs7QUFFQTtFQUNFLGlCQUFpQjtBQUNuQjs7QUFDQTtFQUNFLGFBQWE7RUFDYixtQkFBbUI7QUFDckI7O0FBRUE7RUFDRSxpQkFBaUI7QUFDbkI7O0FBRUE7RUFDRSxpQkFBaUI7QUFDbkI7O0FBR0E7RUFDRSxxQkFBcUI7QUFDdkI7O0FBRUE7RUFDRTtBQUNGIiwiZmlsZSI6Im1hcC12aWV3LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdCB7XG4gIGJhY2tncm91bmQ6IHdoaXRlO1xuICB0ZXh0LWFsaWduOiBsZWZ0O1xufVxuXG4ubGV2ZWxSb3dSZW5kZXIge1xuICBkaXNwbGF5OiBncmlkO1xuICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IHJlcGVhdChhdXRvLWZpbGwsIDEuNWVtKTtcbn1cblxuLmNvbnRhaW5lciB7XG4gIGJhY2tncm91bmQ6IHdoaXRlO1xufVxuLnJvdzEge1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogcm93O1xufVxuXG4uY29udGFpbmVyID4gZGl2IHtcbiAgYmFja2dyb3VuZDogd2hpdGU7XG59XG5cbi5jb250YWluZXIgPiBzcGFuIHtcbiAgYmFja2dyb3VuZDogd2hpdGU7XG59XG5cblxuLm1haW4ge1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG59XG5cbi5tYXB6b25lIHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrXG59XG5cbiJdfQ== */", ".title[_ngcontent-%COMP%] {\n      display: inline-flex;\n      flex-direction: column;\n      width: 27px;\n      padding:14px 9px;\n    }\n\n    .legend[_ngcontent-%COMP%] {\n        min-width: 90px;\n    }"] });
     return MapViewComponent;
 })();
@@ -4985,24 +4995,26 @@ let AsciiCharacterComponent = /** @class */ (() => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LabyrinthGameComponent", function() { return LabyrinthGameComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/ascii/AsciiConst */ "fMyw");
-/* harmony import */ var _service_generate_lab_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../service/generate-lab.service */ "9YXO");
-/* harmony import */ var _service_data_storage_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../service/data-storage.service */ "Pmye");
-/* harmony import */ var _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../service/gameplay-lab.service */ "ty5H");
-/* harmony import */ var _service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../service/render/fullsize-ascii-render.service */ "qOzd");
-/* harmony import */ var _service_render_map_ascii_render_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../service/render/map-ascii-render.service */ "O+Zk");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "tyNb");
-/* harmony import */ var _service_sound_sound_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../service/sound/sound.service */ "/SE3");
-/* harmony import */ var _utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utils/ascii/ascii-border/ascii-border.component */ "XxEr");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ "ofXK");
-/* harmony import */ var _level_view_level_view_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./level-view/level-view.component */ "hZio");
-/* harmony import */ var _utils_ui_atom_sliding_sliding_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../utils/ui/atom/sliding/sliding.component */ "Bds/");
-/* harmony import */ var _map_view_map_view_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./map-view/map-view.component */ "UJlK");
-/* harmony import */ var _inventory_view_inventory_view_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./inventory-view/inventory-view.component */ "JoyB");
-/* harmony import */ var _keypad_form_keypad_form_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./keypad-form/keypad-form.component */ "jVA7");
-/* harmony import */ var _utils_ascii_ascii_modal_ascii_modal_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utils/ascii/ascii-modal/ascii-modal.component */ "K43I");
-/* harmony import */ var _utils_ascii_component_ascii_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/ascii/component/ascii.component */ "LuAq");
-/* harmony import */ var _loading_loading_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../loading/loading.component */ "dyXb");
+/* harmony import */ var _utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/kotlinUtils */ "/6Df");
+/* harmony import */ var _utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/ascii/AsciiConst */ "fMyw");
+/* harmony import */ var _service_generate_lab_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../service/generate-lab.service */ "9YXO");
+/* harmony import */ var _service_data_storage_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../service/data-storage.service */ "Pmye");
+/* harmony import */ var _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../service/gameplay-lab.service */ "ty5H");
+/* harmony import */ var _service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../service/render/fullsize-ascii-render.service */ "qOzd");
+/* harmony import */ var _service_render_map_ascii_render_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../service/render/map-ascii-render.service */ "O+Zk");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _service_sound_sound_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../service/sound/sound.service */ "/SE3");
+/* harmony import */ var _utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../utils/ascii/ascii-border/ascii-border.component */ "XxEr");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _level_view_level_view_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./level-view/level-view.component */ "hZio");
+/* harmony import */ var _utils_ui_atom_sliding_sliding_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../utils/ui/atom/sliding/sliding.component */ "Bds/");
+/* harmony import */ var _map_view_map_view_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./map-view/map-view.component */ "UJlK");
+/* harmony import */ var _inventory_view_inventory_view_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./inventory-view/inventory-view.component */ "JoyB");
+/* harmony import */ var _keypad_form_keypad_form_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./keypad-form/keypad-form.component */ "jVA7");
+/* harmony import */ var _utils_ascii_ascii_modal_ascii_modal_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utils/ascii/ascii-modal/ascii-modal.component */ "K43I");
+/* harmony import */ var _utils_ascii_component_ascii_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utils/ascii/component/ascii.component */ "LuAq");
+/* harmony import */ var _loading_loading_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../loading/loading.component */ "dyXb");
+
 
 
 
@@ -5118,7 +5130,7 @@ function LabyrinthGameComponent_div_11_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("openData", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](20, _c5))("closeData", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](21, _c6));
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("player", ctx_r1.currentParty.player);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("player", ctx_r1.currentPlayerProxy);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](11);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r1.fullViewRenderService.renderObj(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](22, _c7)));
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
@@ -5157,6 +5169,7 @@ let LabyrinthGameComponent = /** @class */ (() => {
                 this.currentParty = { ...nextParty };
                 if (nextParty) {
                     this.currentLevel = this.currentParty.level;
+                    this.currentPlayerProxy = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinToJsView"])(this.currentParty.player, 3);
                     console.log(nextParty);
                     console.log("update");
                     if (this.currentParty.status.name$ == "WIN") {
@@ -5193,7 +5206,7 @@ let LabyrinthGameComponent = /** @class */ (() => {
             });
         }
     }
-    LabyrinthGameComponent.ɵfac = function LabyrinthGameComponent_Factory(t) { return new (t || LabyrinthGameComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_generate_lab_service__WEBPACK_IMPORTED_MODULE_2__["GenerateLabService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_data_storage_service__WEBPACK_IMPORTED_MODULE_3__["DataStorageService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__["GameplayLabService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_5__["FullsizeAsciiRenderService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_render_map_ascii_render_service__WEBPACK_IMPORTED_MODULE_6__["MapAsciiRenderService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_sound_sound_service__WEBPACK_IMPORTED_MODULE_8__["SoundService"])); };
+    LabyrinthGameComponent.ɵfac = function LabyrinthGameComponent_Factory(t) { return new (t || LabyrinthGameComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_generate_lab_service__WEBPACK_IMPORTED_MODULE_3__["GenerateLabService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_data_storage_service__WEBPACK_IMPORTED_MODULE_4__["DataStorageService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_5__["GameplayLabService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_6__["FullsizeAsciiRenderService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_render_map_ascii_render_service__WEBPACK_IMPORTED_MODULE_7__["MapAsciiRenderService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_sound_sound_service__WEBPACK_IMPORTED_MODULE_9__["SoundService"])); };
     LabyrinthGameComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: LabyrinthGameComponent, selectors: [["app-labyrinth-game"]], viewQuery: function LabyrinthGameComponent_Query(rf, ctx) { if (rf & 1) {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵviewQuery"](_c0, true);
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵviewQuery"](_c1, true);
@@ -5227,7 +5240,7 @@ let LabyrinthGameComponent = /** @class */ (() => {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !ctx.currentParty);
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.currentParty);
-        } }, directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_9__["AsciiBorderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_10__["NgIf"], _level_view_level_view_component__WEBPACK_IMPORTED_MODULE_11__["LevelViewComponent"], _utils_ui_atom_sliding_sliding_component__WEBPACK_IMPORTED_MODULE_12__["SlidingComponent"], _map_view_map_view_component__WEBPACK_IMPORTED_MODULE_13__["MapViewComponent"], _inventory_view_inventory_view_component__WEBPACK_IMPORTED_MODULE_14__["InventoryViewComponent"], _keypad_form_keypad_form_component__WEBPACK_IMPORTED_MODULE_15__["KeypadFormComponent"], _utils_ascii_ascii_modal_ascii_modal_component__WEBPACK_IMPORTED_MODULE_16__["AsciiModalComponent"], _utils_ascii_component_ascii_component__WEBPACK_IMPORTED_MODULE_17__["AsciiComponent"], _loading_loading_component__WEBPACK_IMPORTED_MODULE_18__["LoadingComponent"]], styles: [".mainArea[_ngcontent-%COMP%] {\n  grid-area: main;\n}\n\n.sidebar[_ngcontent-%COMP%] {\n  grid-area: sidebar;\n  display: flex;\n  flex-direction: column;\n  position: relative;\n}\n\n.inventoryArea[_ngcontent-%COMP%]{\n   bottom: 0;\n}\n\n.mapArea[_ngcontent-%COMP%] {\n}\n\n.button[_ngcontent-%COMP%] {\n  display: inline-flex;\n  text-align: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxhYnlyaW50aC1nYW1lLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBO0VBQ0UsZUFBZTtBQUNqQjs7QUFFQTtFQUNFLGtCQUFrQjtFQUNsQixhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLGtCQUFrQjtBQUNwQjs7QUFFQTtHQUNHLFNBQVM7QUFDWjs7QUFFQTtBQUNBOztBQUVBO0VBQ0Usb0JBQW9CO0VBQ3BCLGtCQUFrQjtBQUNwQiIsImZpbGUiOiJsYWJ5cmludGgtZ2FtZS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG4ubWFpbkFyZWEge1xuICBncmlkLWFyZWE6IG1haW47XG59XG5cbi5zaWRlYmFyIHtcbiAgZ3JpZC1hcmVhOiBzaWRlYmFyO1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG59XG5cbi5pbnZlbnRvcnlBcmVhe1xuICAgYm90dG9tOiAwO1xufVxuXG4ubWFwQXJlYSB7XG59XG5cbi5idXR0b24ge1xuICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG5cbiJdfQ== */", ".container[_ngcontent-%COMP%] {\n      display: grid;\n      grid-template-columns: 900px 36px;\n      grid-template-rows: 630px 112px;\n      grid-template-areas:\n    \"main sidebar\"\n    \"toolbar toolbar\";\n      margin-left: auto;\n      margin-right: auto;\n      width: 990px;\n      overflow-x: hidden;\n    }\n    .menuBar[_ngcontent-%COMP%] {  display: flex;\n        flex-direction: row;\n        justify-content: space-around;\n        align-items: center;\n    }\n    .toolbar[_ngcontent-%COMP%] {\n      z-index: 100;\n      grid-area: toolbar;\n      display: grid;\n      grid-template-columns: 900px 54px 1fr;\n    }\n\n    .noPartyMessage[_ngcontent-%COMP%] {\n      padding: 14px 9px;\n    }"] });
+        } }, directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_10__["AsciiBorderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_11__["NgIf"], _level_view_level_view_component__WEBPACK_IMPORTED_MODULE_12__["LevelViewComponent"], _utils_ui_atom_sliding_sliding_component__WEBPACK_IMPORTED_MODULE_13__["SlidingComponent"], _map_view_map_view_component__WEBPACK_IMPORTED_MODULE_14__["MapViewComponent"], _inventory_view_inventory_view_component__WEBPACK_IMPORTED_MODULE_15__["InventoryViewComponent"], _keypad_form_keypad_form_component__WEBPACK_IMPORTED_MODULE_16__["KeypadFormComponent"], _utils_ascii_ascii_modal_ascii_modal_component__WEBPACK_IMPORTED_MODULE_17__["AsciiModalComponent"], _utils_ascii_component_ascii_component__WEBPACK_IMPORTED_MODULE_18__["AsciiComponent"], _loading_loading_component__WEBPACK_IMPORTED_MODULE_19__["LoadingComponent"]], styles: [".mainArea[_ngcontent-%COMP%] {\n  grid-area: main;\n}\n\n.sidebar[_ngcontent-%COMP%] {\n  grid-area: sidebar;\n  display: flex;\n  flex-direction: column;\n  position: relative;\n}\n\n.inventoryArea[_ngcontent-%COMP%]{\n   bottom: 0;\n}\n\n.mapArea[_ngcontent-%COMP%] {\n}\n\n.button[_ngcontent-%COMP%] {\n  display: inline-flex;\n  text-align: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxhYnlyaW50aC1nYW1lLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBO0VBQ0UsZUFBZTtBQUNqQjs7QUFFQTtFQUNFLGtCQUFrQjtFQUNsQixhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLGtCQUFrQjtBQUNwQjs7QUFFQTtHQUNHLFNBQVM7QUFDWjs7QUFFQTtBQUNBOztBQUVBO0VBQ0Usb0JBQW9CO0VBQ3BCLGtCQUFrQjtBQUNwQiIsImZpbGUiOiJsYWJ5cmludGgtZ2FtZS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG4ubWFpbkFyZWEge1xuICBncmlkLWFyZWE6IG1haW47XG59XG5cbi5zaWRlYmFyIHtcbiAgZ3JpZC1hcmVhOiBzaWRlYmFyO1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG59XG5cbi5pbnZlbnRvcnlBcmVhe1xuICAgYm90dG9tOiAwO1xufVxuXG4ubWFwQXJlYSB7XG59XG5cbi5idXR0b24ge1xuICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG5cbiJdfQ== */", ".container[_ngcontent-%COMP%] {\n      display: grid;\n      grid-template-columns: 900px 36px;\n      grid-template-rows: 630px 112px;\n      grid-template-areas:\n    \"main sidebar\"\n    \"toolbar toolbar\";\n      margin-left: auto;\n      margin-right: auto;\n      width: 990px;\n      overflow-x: hidden;\n    }\n    .menuBar[_ngcontent-%COMP%] {  display: flex;\n        flex-direction: row;\n        justify-content: space-around;\n        align-items: center;\n    }\n    .toolbar[_ngcontent-%COMP%] {\n      z-index: 100;\n      grid-area: toolbar;\n      display: grid;\n      grid-template-columns: 900px 54px 1fr;\n    }\n\n    .noPartyMessage[_ngcontent-%COMP%] {\n      padding: 14px 9px;\n    }"] });
     return LabyrinthGameComponent;
 })();
 
@@ -5240,14 +5253,14 @@ let LabyrinthGameComponent = /** @class */ (() => {
                 styles: [`
     .container {
       display: grid;
-      grid-template-columns: ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__["CHARACTER_SPACING"] * 100}px ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__["CHARACTER_SPACING"] * 4}px;
-      grid-template-rows: ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__["LINE_HEIGHT"] * 45}px ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__["LINE_HEIGHT"] * 8}px;
+      grid-template-columns: ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_2__["CHARACTER_SPACING"] * 100}px ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_2__["CHARACTER_SPACING"] * 4}px;
+      grid-template-rows: ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_2__["LINE_HEIGHT"] * 45}px ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_2__["LINE_HEIGHT"] * 8}px;
       grid-template-areas:
     "main sidebar"
     "toolbar toolbar";
       margin-left: auto;
       margin-right: auto;
-      width: ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__["CHARACTER_SPACING"] * 110}px;
+      width: ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_2__["CHARACTER_SPACING"] * 110}px;
       overflow-x: hidden;
     }
     .menuBar {  display: flex;
@@ -5259,16 +5272,16 @@ let LabyrinthGameComponent = /** @class */ (() => {
       z-index: 100;
       grid-area: toolbar;
       display: grid;
-      grid-template-columns: ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__["CHARACTER_SPACING"] * 100}px ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__["CHARACTER_SPACING"] * 6}px 1fr;
+      grid-template-columns: ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_2__["CHARACTER_SPACING"] * 100}px ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_2__["CHARACTER_SPACING"] * 6}px 1fr;
     }
 
     .noPartyMessage {
-      padding: ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__["LINE_HEIGHT"] * 1}px ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__["CHARACTER_SPACING"] * 1}px;
+      padding: ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_2__["LINE_HEIGHT"] * 1}px ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_2__["CHARACTER_SPACING"] * 1}px;
     }
 
   `]
             }]
-    }], function () { return [{ type: _service_generate_lab_service__WEBPACK_IMPORTED_MODULE_2__["GenerateLabService"] }, { type: _service_data_storage_service__WEBPACK_IMPORTED_MODULE_3__["DataStorageService"] }, { type: _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__["GameplayLabService"] }, { type: _service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_5__["FullsizeAsciiRenderService"] }, { type: _service_render_map_ascii_render_service__WEBPACK_IMPORTED_MODULE_6__["MapAsciiRenderService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"] }, { type: _service_sound_sound_service__WEBPACK_IMPORTED_MODULE_8__["SoundService"] }]; }, { levelView: [{
+    }], function () { return [{ type: _service_generate_lab_service__WEBPACK_IMPORTED_MODULE_3__["GenerateLabService"] }, { type: _service_data_storage_service__WEBPACK_IMPORTED_MODULE_4__["DataStorageService"] }, { type: _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_5__["GameplayLabService"] }, { type: _service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_6__["FullsizeAsciiRenderService"] }, { type: _service_render_map_ascii_render_service__WEBPACK_IMPORTED_MODULE_7__["MapAsciiRenderService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_8__["Router"] }, { type: _service_sound_sound_service__WEBPACK_IMPORTED_MODULE_9__["SoundService"] }]; }, { levelView: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"],
             args: ['level-view']
         }], winModal: [{

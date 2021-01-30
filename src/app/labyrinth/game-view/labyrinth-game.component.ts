@@ -52,6 +52,7 @@ import {CHARACTER_SPACING, LINE_HEIGHT} from "../../utils/ascii/AsciiConst";
 export class LabyrinthGameComponent implements OnInit, OnDestroy {
   currentParty: any
   currentLevel: any
+  currentPlayerProxy: any
   @ViewChild('level-view') levelView:LevelViewComponent;
   @ViewChild('winModal') winModal:AsciiModalComponent;
   @ViewChild('loadingModal') loadingModal;
@@ -80,6 +81,7 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
           this.currentParty = {...nextParty}
           if (nextParty) {
             this.currentLevel = this.currentParty.level
+            this.currentPlayerProxy = parseKotlinToJsView(this.currentParty.player,3)
             console.log(nextParty)
             console.log("update")
             if (this.currentParty.status.name$ == "WIN") {
