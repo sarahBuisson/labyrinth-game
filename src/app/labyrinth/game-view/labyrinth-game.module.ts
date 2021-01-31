@@ -11,6 +11,8 @@ import { ZoneViewComponent } from './level-view/zone-view/zone-view.component';
 import {BrowserModule} from "@angular/platform-browser";
 import {LoadingComponent} from "../loading/loading.component";
 import {LoadingModule} from "../loading/loading.module";
+import {AppRoutingModule} from "../../app-routing.module";
+
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import {LoadingModule} from "../loading/loading.module";
     CommonModule,
     BrowserModule,
     AsciiModule,
-    LoadingModule
+    LoadingModule,
+    AppRoutingModule
   ],
     exports: [LabyrinthGameComponent,
         SlidingComponent,

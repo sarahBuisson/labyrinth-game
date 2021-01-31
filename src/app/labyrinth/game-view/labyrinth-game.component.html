@@ -1,7 +1,7 @@
 <div class="menuBar text" ascii-border borderTemplateName="doubleGridTemplate">
   <span>LAB GENERATOR </span>
-  <button ascii-render class="ihm-ui"><a href="./menu" class="interact-ui text">menu</a></button>
-  <button ascii-render class="ihm-ui"><a href="./new" class="interact-ui text">new Labyrinth</a></button>
+  <button ascii-render class="ihm-ui"><a [routerLink]="'/menu'" class="interact-ui text">menu</a></button>
+  <button ascii-render class="ihm-ui"><a [routerLink]="'/new'" class="interact-ui text">new Labyrinth</a></button>
   <span></span>
 </div>
 <div class="noPartyMessage" *ngIf="!currentParty">

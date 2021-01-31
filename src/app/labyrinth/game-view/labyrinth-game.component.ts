@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import {GenerateLabService} from "../service/generate-lab.service";
 import {parseKotlinToJsView} from "../../utils/kotlinUtils";
@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {SoundService} from "../service/sound/sound.service";
 import {CHARACTER_SPACING, LINE_HEIGHT} from "../../utils/ascii/AsciiConst";
+import {APP_BASE_HREF} from "@angular/common";
 
 @Component({
   selector: 'app-labyrinth-game',
@@ -65,7 +66,8 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
               public fullViewRenderService: FullsizeAsciiRenderService,
               public mapRenderService: MapAsciiRenderService,
               private router: Router,
-              private soundService: SoundService) {
+              private soundService: SoundService,
+              ) {
   }
 
   ngOnInit(): void {

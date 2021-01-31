@@ -1257,6 +1257,12 @@
       var _loading_loading_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
       /*! ../loading/loading.module */
       "z4sO");
+      /* harmony import */
+
+
+      var _app_routing_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+      /*! ../../app-routing.module */
+      "vY5A");
 
       var LabyrinthGameModule =
       /** @class */
@@ -1272,7 +1278,7 @@
           factory: function LabyrinthGameModule_Factory(t) {
             return new (t || LabyrinthGameModule)();
           },
-          imports: [[_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__["BrowserModule"], _utils_ascii_ascii_module__WEBPACK_IMPORTED_MODULE_5__["AsciiModule"], _loading_loading_module__WEBPACK_IMPORTED_MODULE_11__["LoadingModule"]]]
+          imports: [[_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__["BrowserModule"], _utils_ascii_ascii_module__WEBPACK_IMPORTED_MODULE_5__["AsciiModule"], _loading_loading_module__WEBPACK_IMPORTED_MODULE_11__["LoadingModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_12__["AppRoutingModule"]]]
         });
         return LabyrinthGameModule;
       }();
@@ -1280,7 +1286,7 @@
       (function () {
         (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](LabyrinthGameModule, {
           declarations: [_labyrinth_game_component__WEBPACK_IMPORTED_MODULE_2__["LabyrinthGameComponent"], _utils_ui_atom_sliding_sliding_component__WEBPACK_IMPORTED_MODULE_3__["SlidingComponent"], _keypad_form_keypad_form_component__WEBPACK_IMPORTED_MODULE_4__["KeypadFormComponent"], _level_view_level_view_component__WEBPACK_IMPORTED_MODULE_6__["LevelViewComponent"], _map_view_map_view_component__WEBPACK_IMPORTED_MODULE_7__["MapViewComponent"], _keypad_form_keypad_form_component__WEBPACK_IMPORTED_MODULE_4__["KeypadFormComponent"], _inventory_view_inventory_view_component__WEBPACK_IMPORTED_MODULE_8__["InventoryViewComponent"], _level_view_zone_view_zone_view_component__WEBPACK_IMPORTED_MODULE_9__["ZoneViewComponent"]],
-          imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__["BrowserModule"], _utils_ascii_ascii_module__WEBPACK_IMPORTED_MODULE_5__["AsciiModule"], _loading_loading_module__WEBPACK_IMPORTED_MODULE_11__["LoadingModule"]],
+          imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__["BrowserModule"], _utils_ascii_ascii_module__WEBPACK_IMPORTED_MODULE_5__["AsciiModule"], _loading_loading_module__WEBPACK_IMPORTED_MODULE_11__["LoadingModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_12__["AppRoutingModule"]],
           exports: [_labyrinth_game_component__WEBPACK_IMPORTED_MODULE_2__["LabyrinthGameComponent"], _utils_ui_atom_sliding_sliding_component__WEBPACK_IMPORTED_MODULE_3__["SlidingComponent"], _keypad_form_keypad_form_component__WEBPACK_IMPORTED_MODULE_4__["KeypadFormComponent"], _level_view_level_view_component__WEBPACK_IMPORTED_MODULE_6__["LevelViewComponent"], _map_view_map_view_component__WEBPACK_IMPORTED_MODULE_7__["MapViewComponent"], _keypad_form_keypad_form_component__WEBPACK_IMPORTED_MODULE_4__["KeypadFormComponent"], _inventory_view_inventory_view_component__WEBPACK_IMPORTED_MODULE_8__["InventoryViewComponent"], _level_view_zone_view_zone_view_component__WEBPACK_IMPORTED_MODULE_9__["ZoneViewComponent"]]
         });
       })();
@@ -1292,7 +1298,7 @@
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
           args: [{
             declarations: [_labyrinth_game_component__WEBPACK_IMPORTED_MODULE_2__["LabyrinthGameComponent"], _utils_ui_atom_sliding_sliding_component__WEBPACK_IMPORTED_MODULE_3__["SlidingComponent"], _keypad_form_keypad_form_component__WEBPACK_IMPORTED_MODULE_4__["KeypadFormComponent"], _level_view_level_view_component__WEBPACK_IMPORTED_MODULE_6__["LevelViewComponent"], _map_view_map_view_component__WEBPACK_IMPORTED_MODULE_7__["MapViewComponent"], _keypad_form_keypad_form_component__WEBPACK_IMPORTED_MODULE_4__["KeypadFormComponent"], _inventory_view_inventory_view_component__WEBPACK_IMPORTED_MODULE_8__["InventoryViewComponent"], _level_view_zone_view_zone_view_component__WEBPACK_IMPORTED_MODULE_9__["ZoneViewComponent"]],
-            imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__["BrowserModule"], _utils_ascii_ascii_module__WEBPACK_IMPORTED_MODULE_5__["AsciiModule"], _loading_loading_module__WEBPACK_IMPORTED_MODULE_11__["LoadingModule"]],
+            imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_platform_browser__WEBPACK_IMPORTED_MODULE_10__["BrowserModule"], _utils_ascii_ascii_module__WEBPACK_IMPORTED_MODULE_5__["AsciiModule"], _loading_loading_module__WEBPACK_IMPORTED_MODULE_11__["LoadingModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_12__["AppRoutingModule"]],
             exports: [_labyrinth_game_component__WEBPACK_IMPORTED_MODULE_2__["LabyrinthGameComponent"], _utils_ui_atom_sliding_sliding_component__WEBPACK_IMPORTED_MODULE_3__["SlidingComponent"], _keypad_form_keypad_form_component__WEBPACK_IMPORTED_MODULE_4__["KeypadFormComponent"], _level_view_level_view_component__WEBPACK_IMPORTED_MODULE_6__["LevelViewComponent"], _map_view_map_view_component__WEBPACK_IMPORTED_MODULE_7__["MapViewComponent"], _keypad_form_keypad_form_component__WEBPACK_IMPORTED_MODULE_4__["KeypadFormComponent"], _inventory_view_inventory_view_component__WEBPACK_IMPORTED_MODULE_8__["InventoryViewComponent"], _level_view_zone_view_zone_view_component__WEBPACK_IMPORTED_MODULE_9__["ZoneViewComponent"]]
           }]
         }], null, null);
@@ -8672,15 +8678,15 @@
 
       function LabyrinthGameComponent_div_10_Template(rf, ctx) {
         if (rf & 1) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 6);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 7);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 6);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "no game loaded for the moment, please wait or create a new game ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "button", 8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "button", 7);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "a", 9);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "a", 8);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5, "new game");
 
@@ -8738,27 +8744,27 @@
         if (rf & 1) {
           var _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 10);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 9);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 11);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 10);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](2, "level-view", 12);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 13);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "app-sliding", 14);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](5, "map-view", 15);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](2, "level-view", 11);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "app-sliding", 16);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 12);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "div", 17);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "app-sliding", 13);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](8, "inventory-view", 18);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](5, "map-view", 14);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "app-sliding", 15);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "div", 16);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](8, "inventory-view", 17);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -8766,41 +8772,41 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "div", 19);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "div", 18);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "div", 20);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "div", 19);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](11, "keypad-form");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](12, "div", 17);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](12, "div", 16);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "app-ascii-modal", 21, 22);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "app-ascii-modal", 20, 21);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "div", 23);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "div", 22);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "h1", 24);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "h1", 23);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](17, " YOU WIN !");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](18, "span", 25);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](18, "span", 24);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](19);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](20, "span", 25);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](20, "span", 24);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](21);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](22, "div", 26);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](22, "div", 25);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](23, "div");
 
@@ -8842,7 +8848,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](36, "button", 27);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](36, "button", 26);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function LabyrinthGameComponent_div_11_Template_button_click_36_listener() {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r5);
@@ -8860,7 +8866,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](38, "app-ascii-modal", null, 28);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](38, "app-ascii-modal", null, 27);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](40, "app-loading");
 
@@ -9039,8 +9045,8 @@
             }
           },
           decls: 12,
-          vars: 2,
-          consts: [["ascii-border", "", "borderTemplateName", "doubleGridTemplate", 1, "menuBar", "text"], ["ascii-render", "", 1, "ihm-ui"], ["href", "./menu", 1, "interact-ui", "text"], ["href", "./new", 1, "interact-ui", "text"], ["class", "noPartyMessage", 4, "ngIf"], ["class", "container", 4, "ngIf"], [1, "noPartyMessage"], ["ascii-border", "", 1, "text", "interact-ui"], ["ascii-border", "", 1, "ihm-ui"], ["href", "./new", 1, "text", "interact-ui"], [1, "container"], [1, "mainArea"], [3, "currentParty", "rangeArroundPlayer"], [1, "sidebar"], [2, "background-color", "red", "overflow", "hidden", 3, "openData", "closeData", "slideOnlyOnClick"], [3, "currentParty", "renderService"], ["slideOnlyOnClick", "true", 3, "openData", "closeData"], [1, "inventoryArea"], [3, "player"], [1, "toolbar"], [1, "gameplay"], [1, "text"], ["winModal", ""], ["ascii-border", "", 1, "background-ui"], ["ascii-border", "", 1, "text", "important-ui"], ["app-ascii", ""], ["ascii-border", "", "xRepeat", "40"], ["ascii-border", "", 1, "important-ui", 3, "click"], ["loadingModal", ""]],
+          vars: 4,
+          consts: [["ascii-border", "", "borderTemplateName", "doubleGridTemplate", 1, "menuBar", "text"], ["ascii-render", "", 1, "ihm-ui"], [1, "interact-ui", "text", 3, "routerLink"], ["class", "noPartyMessage", 4, "ngIf"], ["class", "container", 4, "ngIf"], [1, "noPartyMessage"], ["ascii-border", "", 1, "text", "interact-ui"], ["ascii-border", "", 1, "ihm-ui"], ["href", "./new", 1, "text", "interact-ui"], [1, "container"], [1, "mainArea"], [3, "currentParty", "rangeArroundPlayer"], [1, "sidebar"], [2, "background-color", "red", "overflow", "hidden", 3, "openData", "closeData", "slideOnlyOnClick"], [3, "currentParty", "renderService"], ["slideOnlyOnClick", "true", 3, "openData", "closeData"], [1, "inventoryArea"], [3, "player"], [1, "toolbar"], [1, "gameplay"], [1, "text"], ["winModal", ""], ["ascii-border", "", 1, "background-ui"], ["ascii-border", "", 1, "text", "important-ui"], ["app-ascii", ""], ["ascii-border", "", "xRepeat", "40"], ["ascii-border", "", 1, "important-ui", 3, "click"], ["loadingModal", ""]],
           template: function LabyrinthGameComponent_Template(rf, ctx) {
             if (rf & 1) {
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
@@ -9063,7 +9069,7 @@
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "button", 1);
 
-              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "a", 3);
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "a", 2);
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](8, "new Labyrinth");
 
@@ -9075,13 +9081,21 @@
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](10, LabyrinthGameComponent_div_10_Template, 6, 0, "div", 4);
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](10, LabyrinthGameComponent_div_10_Template, 6, 0, "div", 3);
 
-              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, LabyrinthGameComponent_div_11_Template, 41, 23, "div", 5);
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, LabyrinthGameComponent_div_11_Template, 41, 23, "div", 4);
             }
 
             if (rf & 2) {
-              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](10);
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
+
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("routerLink", "/menu");
+
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("routerLink", "/new");
+
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !ctx.currentParty);
 
@@ -9090,7 +9104,7 @@
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.currentParty);
             }
           },
-          directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_10__["AsciiBorderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_11__["NgIf"], _level_view_level_view_component__WEBPACK_IMPORTED_MODULE_12__["LevelViewComponent"], _utils_ui_atom_sliding_sliding_component__WEBPACK_IMPORTED_MODULE_13__["SlidingComponent"], _map_view_map_view_component__WEBPACK_IMPORTED_MODULE_14__["MapViewComponent"], _inventory_view_inventory_view_component__WEBPACK_IMPORTED_MODULE_15__["InventoryViewComponent"], _keypad_form_keypad_form_component__WEBPACK_IMPORTED_MODULE_16__["KeypadFormComponent"], _utils_ascii_ascii_modal_ascii_modal_component__WEBPACK_IMPORTED_MODULE_17__["AsciiModalComponent"], _utils_ascii_component_ascii_component__WEBPACK_IMPORTED_MODULE_18__["AsciiComponent"], _loading_loading_component__WEBPACK_IMPORTED_MODULE_19__["LoadingComponent"]],
+          directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_10__["AsciiBorderComponent"], _angular_router__WEBPACK_IMPORTED_MODULE_8__["RouterLinkWithHref"], _angular_common__WEBPACK_IMPORTED_MODULE_11__["NgIf"], _level_view_level_view_component__WEBPACK_IMPORTED_MODULE_12__["LevelViewComponent"], _utils_ui_atom_sliding_sliding_component__WEBPACK_IMPORTED_MODULE_13__["SlidingComponent"], _map_view_map_view_component__WEBPACK_IMPORTED_MODULE_14__["MapViewComponent"], _inventory_view_inventory_view_component__WEBPACK_IMPORTED_MODULE_15__["InventoryViewComponent"], _keypad_form_keypad_form_component__WEBPACK_IMPORTED_MODULE_16__["KeypadFormComponent"], _utils_ascii_ascii_modal_ascii_modal_component__WEBPACK_IMPORTED_MODULE_17__["AsciiModalComponent"], _utils_ascii_component_ascii_component__WEBPACK_IMPORTED_MODULE_18__["AsciiComponent"], _loading_loading_component__WEBPACK_IMPORTED_MODULE_19__["LoadingComponent"]],
           styles: [".mainArea[_ngcontent-%COMP%] {\n  grid-area: main;\n}\n\n.sidebar[_ngcontent-%COMP%] {\n  grid-area: sidebar;\n  display: flex;\n  flex-direction: column;\n  position: relative;\n}\n\n.inventoryArea[_ngcontent-%COMP%]{\n   bottom: 0;\n}\n\n.mapArea[_ngcontent-%COMP%] {\n}\n\n.button[_ngcontent-%COMP%] {\n  display: inline-flex;\n  text-align: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxhYnlyaW50aC1nYW1lLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBO0VBQ0UsZUFBZTtBQUNqQjs7QUFFQTtFQUNFLGtCQUFrQjtFQUNsQixhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLGtCQUFrQjtBQUNwQjs7QUFFQTtHQUNHLFNBQVM7QUFDWjs7QUFFQTtBQUNBOztBQUVBO0VBQ0Usb0JBQW9CO0VBQ3BCLGtCQUFrQjtBQUNwQiIsImZpbGUiOiJsYWJ5cmludGgtZ2FtZS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG4ubWFpbkFyZWEge1xuICBncmlkLWFyZWE6IG1haW47XG59XG5cbi5zaWRlYmFyIHtcbiAgZ3JpZC1hcmVhOiBzaWRlYmFyO1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG59XG5cbi5pbnZlbnRvcnlBcmVhe1xuICAgYm90dG9tOiAwO1xufVxuXG4ubWFwQXJlYSB7XG59XG5cbi5idXR0b24ge1xuICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG5cbiJdfQ== */", ".container[_ngcontent-%COMP%] {\n      display: grid;\n      grid-template-columns: 900px 36px;\n      grid-template-rows: 630px 112px;\n      grid-template-areas:\n    \"main sidebar\"\n    \"toolbar toolbar\";\n      margin-left: auto;\n      margin-right: auto;\n      width: 990px;\n      overflow-x: hidden;\n    }\n    .menuBar[_ngcontent-%COMP%] {  display: flex;\n        flex-direction: row;\n        justify-content: space-around;\n        align-items: center;\n    }\n    .toolbar[_ngcontent-%COMP%] {\n      z-index: 100;\n      grid-area: toolbar;\n      display: grid;\n      grid-template-columns: 900px 54px 1fr;\n    }\n\n    .noPartyMessage[_ngcontent-%COMP%] {\n      padding: 14px 9px;\n    }"]
         });
         return LabyrinthGameComponent;
