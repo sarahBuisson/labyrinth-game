@@ -25,8 +25,8 @@ export class AsciiGalleryComponent implements OnInit {
     console.log("ngOnInit")
     try {
       let emptyParty = gameRules.fr.perso.labyrinth.labeat.generation.initPartieEmpty(3, "empty");
-      this.emptyZone = emptyParty.level.content.toArray()[0].toArray()[0]
-      this.defaultZone = emptyParty.level.content.toArray()[1].toArray()[1]
+      this.emptyZone = emptyParty.level.content[0][0]
+      this.defaultZone = emptyParty.level.content[1][1]
       this.defaultZone = gameRules.fr.perso.labyrinth.labeat.generation.initPartieMapLabWithKey(4, "key").level.content.toArray()[0].toArray()[1]
     } catch (e) {
       console.log(e)

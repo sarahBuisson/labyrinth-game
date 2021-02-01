@@ -40,7 +40,6 @@ export class ZoneViewComponent implements OnInit {
 
   @Input()
   zone?: any;
-  proxy?: any;
 
   constructor(public gameplayLabService: GameplayLabService,
               public renderService: FullsizeAsciiRenderService) {
@@ -50,14 +49,13 @@ export class ZoneViewComponent implements OnInit {
   ngOnInit(): void {
     if (!this.zone)
       this.zone = {}
-    this.proxy = parseKotlinToJsView(this.zone, 7)
   }
 
   borderRendered() {
     let borderRendered = {...viewWallGridTemplate}
     let directions: Array<string> = ['left', "right", 'top', 'bottom'];//should stay lowcase
     directions.forEach((direction: string) => {
-      let door = this.gameplayLabService.doorAt(this.proxy, direction.toUpperCase())
+      let door = this.gameplayLabService.doorAt(this.zone, direction.toUpperCase())
       borderRendered[direction + "BorderClass"] = 'decor-ui'
       if (door) {
         borderRendered[direction + "BorderClass"] = 'interact-ui'
@@ -74,7 +72,7 @@ export class ZoneViewComponent implements OnInit {
   }
 
   backgroundRender() {
-    return backgroundTemplate[(this.proxy.x + this.proxy.y * 3) % backgroundTemplate.length]
+    return backgroundTemplate[(this.zone.x + this.zone.y * 3) % backgroundTemplate.length]
   }
 
   clickOnBorder: any = (direction: string, event: Event) => {
@@ -117,6 +115,6 @@ export class ZoneViewComponent implements OnInit {
   }
 
   getLevelContent() {
-    return this.gameplayLabService.levelContent(this.proxy)
+    return this.gameplayLabService.levelContent(this.zone)
   }
 }

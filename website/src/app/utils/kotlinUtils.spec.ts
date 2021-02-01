@@ -18,32 +18,32 @@ describe('test kotlin to JsView', () => {
 
     let boardView = parseKotlinToJsView(board, 4, true)
     expect(boardView.contentArray).toBeDefined();
-    expect(boardView.contentArray[0][0].connectionsMap).toBeDefined();
-    expect(boardView.contentArray[0][0].connectionsMap.BOTTOM).toBeDefined();
+    expect(boardView.contentArray[0][0].connections).toBeDefined();
+    expect(boardView.contentArray[0][0].connections.BOTTOM).toBeDefined();
   });
 
   it('should parse array, method and map of partie', () => {
     let partie = labeatGeneration.generation.initPartieMapLabWithKeyFunction(3);
     let partieView = parseKotlinToJsView(partie, 7, true);
 
-    expect(partieView.level.contentArray[0][0].connectionsMap).toBeDefined();
+    expect(partieView.level.contentArray[0][0].connections).toBeDefined();
   });
 
   it('should get array, method and map of partie', () => {
     let partie = labeatGeneration.generation.initPartieEmpty(2);
     let zone = getFromKotlin(partie, "level", "content", 0, 0)
     expect(zone).toBeDefined()
-    expect(zone.connectionsMap).not.toBeDefined()
+    expect(zone.connections).not.toBeDefined()
   });
 
 
   it('should get proxyarray, method and map of partie', () => {
-    let partie = labeatGeneration.generation.initPartieEmptyFunction(3, "myname");
+    let partie = labeatGeneration.generation.initPartieEmpty(3, "myname");
 
 
-    let zone2 = parseKotlinPathToJsView(partie, "level", "content", 0, 0)
+    let zone2 = partie.level.content[0][0]
     expect(zone2).toBeDefined()
-    expect(zone2.connectionsMap).toBeDefined()
+    expect(zone2.connections).toBeDefined()
 
   });
 

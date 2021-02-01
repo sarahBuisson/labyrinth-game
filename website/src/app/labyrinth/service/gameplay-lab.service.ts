@@ -35,22 +35,17 @@ export class GameplayLabService implements OnDestroy{
 
   move(direction: string) {
     this.dataStorageService.saveCharacterDirection(direction);
-    let connectionsMap = this.currentPartyProxy.player.location.connectionsMap
-    let nextLocation = connectionsMap[direction];
-    console.log(nextLocation)
+    let connections = this.currentPartyProxy.player.location.connections
+    let nextLocation = connections[direction];
     if (nextLocation) {
-      console.log("next")
       let door = this.currentParty.player.location.content.toArray()
         .find(it => {
           let proxy = parseKotlinToJsView(it, 2)
           return proxy.destination
           && it.destination.x === nextLocation.x
           && it.destination.y === nextLocation.y})
-
       if (door) {
-        console.log("door")
         let interaction = this.play(door);
-        console.log(interaction)
         if (interaction.result=="Success") {
           this.soundService.playMove()
           return false;
@@ -94,9 +89,7 @@ export class GameplayLabService implements OnDestroy{
 
 
   levelContent(levelCase) {
-    let content = parseKotlinPathToJsView(levelCase,"content");
-
-    return content.filter(it => !this.isDoor(it))
+    return levelCase.content.filter(it => !this.isDoor(it))
   }
 
   private isDoor(it) {
@@ -104,11 +97,11 @@ export class GameplayLabService implements OnDestroy{
   }
 
   doorAt(levelCase, direction: string): any | undefined {
-    let destination = parseKotlinPathToJsView(levelCase, "connections")[direction]
+    let destination = levelCase.connections[direction]
     if (destination) {
-      return parseKotlinPathToJsView(levelCase, "content")
+      return levelCase.content
         .filter(obj => {
-          let doorDestination = parseKotlinPathToJsView(obj, 'destination');
+          let doorDestination = obj.destination;
           return doorDestination && doorDestination.x === destination.x && doorDestination.y === destination.y;
         })[0]
     }
@@ -116,8 +109,8 @@ export class GameplayLabService implements OnDestroy{
 
 
   moveAtCase(levelCase: any):boolean {
-    let connectionsMap = this.currentPartyProxy.player.location.connectionsMap
-    let direction = findKey(connectionsMap, (it) => {
+    let connections = this.currentPartyProxy.player.location.connections
+    let direction = findKey(connections, (it) => {
       return it && it.x === levelCase.x && it.y === levelCase.y
     })
     if (direction) {
@@ -127,7 +120,7 @@ export class GameplayLabService implements OnDestroy{
   }
 
   hasPlayer(levelCase: any) {
-    return parseKotlinPathToJsView(levelCase,"content")
+    return levelCase.content
       .find(p => {
         return p.type === "player"
       });

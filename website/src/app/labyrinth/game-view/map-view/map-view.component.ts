@@ -28,7 +28,6 @@ export class MapViewComponent implements OnInit, OnChanges {
 
   @Input()
   currentParty: any
-  currentLevelProxy: any
 
   @Input()
   renderService: any
@@ -48,7 +47,7 @@ export class MapViewComponent implements OnInit, OnChanges {
     console.log(this.currentParty)
     this.updateFieldOfView();
 
-    console.log(this.currentLevelProxy)
+    console.log(this.currentParty.level)
   }
 
 
@@ -57,7 +56,6 @@ export class MapViewComponent implements OnInit, OnChanges {
   }
 
   updateFieldOfView(): void {
-    this.currentLevelProxy = parseKotlinToJsView(this.currentParty.level, 4);
   }
 
   isStart(levelCase) {
@@ -99,7 +97,6 @@ export class MapViewComponent implements OnInit, OnChanges {
         }
 
       } else {
-        console.log("nothing")
         borderRendered[direction + "Template"] = ' '
       }
     })
@@ -113,7 +110,7 @@ export class MapViewComponent implements OnInit, OnChanges {
 
       return this.renderService.renderObj(content[0])
     } else {
-      let nbrOfConnections = levelCaseInput.connectedArray.length;
+      let nbrOfConnections = levelCaseInput.connected.length;
       if (nbrOfConnections == 1) {
         return " ";
       }
@@ -126,7 +123,7 @@ export class MapViewComponent implements OnInit, OnChanges {
   }
 
   computeClass(levelCaseInput: any) {
-    let content = this.gameplayLabService.levelContent(parseKotlinToJsView(levelCaseInput, 3))
+    let content = this.gameplayLabService.levelContent(levelCaseInput)
     if (content[0]) {
       if (content[0].name === "player" || content[0].name === "exit") {
         return "important-ui"
