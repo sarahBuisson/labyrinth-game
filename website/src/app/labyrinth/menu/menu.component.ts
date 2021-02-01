@@ -12,12 +12,12 @@ import {CHARACTER_SPACING} from "../../utils/ascii/AsciiConst";
   styles: [`.container {
     display: flex;
     flex-direction: column;
-    align-items:center;
+    align-items: center;
     text-align: center;
   }
 
 
-  .title pre{
+  .title pre {
     margin-left: auto;
     margin-right: auto;
     width: ${CHARACTER_SPACING * 60}px;
@@ -36,6 +36,7 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('characterFormModal') characterFormModal: AsciiModalComponent;
   highscores: Array<any>;
   private subscriptionHighscores: Subscription;
+  private subs: Subscription;
 
   constructor(private router: Router,
               private highscoresService: HighscoresService,
@@ -65,11 +66,12 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   saveHighScore() {
-    this.highscoresService.saveScore({name:'test'},Math.random()*100)
+    this.subs = this.highscoresService.saveScore({name: 'test'}, Math.random() * 100)
   }
 
   ngOnDestroy(): void {
     this.subscriptionHighscores && this.subscriptionHighscores.unsubscribe()
+    this.subs && this.subs.unsubscribe();
   }
 
   ngAfterViewInit(): void {

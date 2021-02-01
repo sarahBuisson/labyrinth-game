@@ -1,8 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {GenerateLabService} from "../service/generate-lab.service";
 import {AsciiModalComponent} from "../../utils/ascii/ascii-modal/ascii-modal.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CHARACTER_SPACING} from "../../utils/ascii/AsciiConst";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-labyrinth-form',
@@ -22,12 +23,14 @@ import {CHARACTER_SPACING} from "../../utils/ascii/AsciiConst";
     }
   `]
 })
-export class NewLabyrinthFormComponent implements OnInit {
+export class NewLabyrinthFormComponent implements OnInit, OnDestroy {
 
   size: Number = 5
   playerName: string
 
   @ViewChild('loadingModal') loadingModal: AsciiModalComponent;
+
+  private subscriptions: Subscription;
 
   constructor(private labService: GenerateLabService,
               private router: Router,
@@ -35,7 +38,7 @@ export class NewLabyrinthFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
+    this.subscriptions=this.route.queryParams.subscribe(params => {
       this.size = params['size']?params['size']:5;
     });
   }
@@ -64,5 +67,9 @@ export class NewLabyrinthFormComponent implements OnInit {
 
   emptyBoard(): void {
     this.labService.generateEmpty(this.size);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

@@ -16,10 +16,11 @@ export class SoundComponent implements OnInit, OnDestroy {
   off = '' +
     '            _ \n' +
     ' ((\'x\') ° (d) \n';
+  private subscription: Subscription;
 
   constructor(private soundService: SoundService) {
 
-    this.soundService.subscribeSoundOn((data) => {
+    this.subscription = this.soundService.subscribeSoundOn((data) => {
 
       this.soundOn = data;
     })
@@ -31,9 +32,11 @@ export class SoundComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.subscription.unsubscribe()
   }
 
   toogle() {
     this.soundService.toogleSound();
+
   }
 }
