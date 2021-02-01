@@ -920,7 +920,7 @@
           }, {
             key: "saveHighScore",
             value: function saveHighScore() {
-              this.highscoresService.saveScore({
+              this.subs = this.highscoresService.saveScore({
                 name: 'test'
               }, Math.random() * 100);
             }
@@ -928,6 +928,7 @@
             key: "ngOnDestroy",
             value: function ngOnDestroy() {
               this.subscriptionHighscores && this.subscriptionHighscores.unsubscribe();
+              this.subs && this.subs.unsubscribe();
             }
           }, {
             key: "ngAfterViewInit",
@@ -1120,7 +1121,7 @@
             }
           },
           directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_5__["AsciiBorderComponent"], _utils_ascii_ascii_modal_ascii_modal_component__WEBPACK_IMPORTED_MODULE_6__["AsciiModalComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgForOf"], _new_form_new_labyrinth_form_component__WEBPACK_IMPORTED_MODULE_8__["NewLabyrinthFormComponent"], _characterEditor_character_form_character_form_component__WEBPACK_IMPORTED_MODULE_9__["CharacterFormComponent"]],
-          styles: [".container[_ngcontent-%COMP%] {\n    display: flex;\n    flex-direction: column;\n    align-items:center;\n    text-align: center;\n  }\n\n\n  .title[_ngcontent-%COMP%]   pre[_ngcontent-%COMP%]{\n    margin-left: auto;\n    margin-right: auto;\n    width: 540px;\n  }\n\n  button[_ngcontent-%COMP%] {\n    text-align: center;\n    padding: 0 36px;\n  }"]
+          styles: [".container[_ngcontent-%COMP%] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    text-align: center;\n  }\n\n\n  .title[_ngcontent-%COMP%]   pre[_ngcontent-%COMP%] {\n    margin-left: auto;\n    margin-right: auto;\n    width: 540px;\n  }\n\n  button[_ngcontent-%COMP%] {\n    text-align: center;\n    padding: 0 36px;\n  }"]
         });
         return MenuComponent;
       }();
@@ -1133,7 +1134,7 @@
           args: [{
             selector: 'app-menu',
             templateUrl: './menu.component.html',
-            styles: [".container {\n    display: flex;\n    flex-direction: column;\n    align-items:center;\n    text-align: center;\n  }\n\n\n  .title pre{\n    margin-left: auto;\n    margin-right: auto;\n    width: ".concat(_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__["CHARACTER_SPACING"] * 60, "px;\n  }\n\n  button {\n    text-align: center;\n    padding: 0 ").concat(_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__["CHARACTER_SPACING"] * 4, "px;\n  }\n  ")]
+            styles: [".container {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    text-align: center;\n  }\n\n\n  .title pre {\n    margin-left: auto;\n    margin-right: auto;\n    width: ".concat(_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__["CHARACTER_SPACING"] * 60, "px;\n  }\n\n  button {\n    text-align: center;\n    padding: 0 ").concat(_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__["CHARACTER_SPACING"] * 4, "px;\n  }\n  ")]
           }]
         }], function () {
           return [{
@@ -4685,7 +4686,7 @@
             value: function ngOnInit() {
               var _this11 = this;
 
-              this.route.queryParams.subscribe(function (params) {
+              this.subscriptions = this.route.queryParams.subscribe(function (params) {
                 _this11.size = params['size'] ? params['size'] : 5;
               });
             }
@@ -4717,6 +4718,11 @@
             key: "emptyBoard",
             value: function emptyBoard() {
               this.labService.generateEmpty(this.size);
+            }
+          }, {
+            key: "ngOnDestroy",
+            value: function ngOnDestroy() {
+              this.subscriptions.unsubscribe();
             }
           }]);
 
@@ -6642,7 +6648,7 @@
             this.on = '' + '           __ \n' + ' ((\'c\') < d d \n'; //≮
 
             this.off = '' + '            _ \n' + ' ((\'x\') ° (d) \n';
-            this.soundService.subscribeSoundOn(function (data) {
+            this.subscription = this.soundService.subscribeSoundOn(function (data) {
               _this18.soundOn = data;
             });
           }
@@ -6652,7 +6658,9 @@
             value: function ngOnInit() {}
           }, {
             key: "ngOnDestroy",
-            value: function ngOnDestroy() {}
+            value: function ngOnDestroy() {
+              this.subscription.unsubscribe();
+            }
           }, {
             key: "toogle",
             value: function toogle() {
@@ -9239,7 +9247,7 @@
             this.serviceLabService = serviceLabService;
             this.dataStorageService = dataStorageService;
             this.soundService = soundService;
-            dataStorageService.getCurrentParty().subscribe(function (party) {
+            this.subscriptions = dataStorageService.getCurrentParty().subscribe(function (party) {
               _this23.currentParty = party;
               _this23.currentPartyProxy = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinToJsView"])(party, 7);
             });
@@ -9247,6 +9255,11 @@
           }
 
           _createClass(GameplayLabService, [{
+            key: "ngOnDestroy",
+            value: function ngOnDestroy() {
+              this.subscriptions.unsubscribe();
+            }
+          }, {
             key: "move",
             value: function move(direction) {
               this.dataStorageService.saveCharacterDirection(direction);

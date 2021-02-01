@@ -1,24 +1,25 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {GenerateLabService} from "./generate-lab.service";
 import {getFromKotlin, parseKotlinPathToJsView, parseKotlinToJsView} from "../../utils/kotlinUtils";
 import * as gameRules from "gameRules";
 import {DataStorageService} from "./data-storage.service";
 import findKey from 'lodash/findKey';
 import {SoundService} from "./sound/sound.service";
+import {Subscription} from "rxjs";
 
 // @ts-ignore
 
 @Injectable({
   providedIn: 'root'
 })
-export class GameplayLabService {
+export class GameplayLabService implements OnDestroy{
   currentParty: any;
   currentPartyProxy: any;
   gameplay: any;
-
+  private subscriptions: Subscription;
   constructor(private serviceLabService: GenerateLabService, private dataStorageService: DataStorageService,
               private soundService: SoundService) {
-    dataStorageService
+    this.subscriptions=dataStorageService
       .getCurrentParty()
       .subscribe((party) => {
         this.currentParty = party;
@@ -27,6 +28,10 @@ export class GameplayLabService {
     this.gameplay = gameRules.fr.perso.labyrinth.labeat
 
   }
+
+  ngOnDestroy(): void {
+        this.subscriptions.unsubscribe();
+    }
 
   move(direction: string) {
     this.dataStorageService.saveCharacterDirection(direction);

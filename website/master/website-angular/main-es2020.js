@@ -490,10 +490,11 @@ let MenuComponent = /** @class */ (() => {
             this.characterFormModal.show();
         }
         saveHighScore() {
-            this.highscoresService.saveScore({ name: 'test' }, Math.random() * 100);
+            this.subs = this.highscoresService.saveScore({ name: 'test' }, Math.random() * 100);
         }
         ngOnDestroy() {
             this.subscriptionHighscores && this.subscriptionHighscores.unsubscribe();
+            this.subs && this.subs.unsubscribe();
         }
         ngAfterViewInit() {
             this.soundService.playMenuMusic();
@@ -573,7 +574,7 @@ let MenuComponent = /** @class */ (() => {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("closable", true);
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](6);
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("closable", true);
-        } }, directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_5__["AsciiBorderComponent"], _utils_ascii_ascii_modal_ascii_modal_component__WEBPACK_IMPORTED_MODULE_6__["AsciiModalComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgForOf"], _new_form_new_labyrinth_form_component__WEBPACK_IMPORTED_MODULE_8__["NewLabyrinthFormComponent"], _characterEditor_character_form_character_form_component__WEBPACK_IMPORTED_MODULE_9__["CharacterFormComponent"]], styles: [".container[_ngcontent-%COMP%] {\n    display: flex;\n    flex-direction: column;\n    align-items:center;\n    text-align: center;\n  }\n\n\n  .title[_ngcontent-%COMP%]   pre[_ngcontent-%COMP%]{\n    margin-left: auto;\n    margin-right: auto;\n    width: 540px;\n  }\n\n  button[_ngcontent-%COMP%] {\n    text-align: center;\n    padding: 0 36px;\n  }"] });
+        } }, directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_5__["AsciiBorderComponent"], _utils_ascii_ascii_modal_ascii_modal_component__WEBPACK_IMPORTED_MODULE_6__["AsciiModalComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgForOf"], _new_form_new_labyrinth_form_component__WEBPACK_IMPORTED_MODULE_8__["NewLabyrinthFormComponent"], _characterEditor_character_form_character_form_component__WEBPACK_IMPORTED_MODULE_9__["CharacterFormComponent"]], styles: [".container[_ngcontent-%COMP%] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    text-align: center;\n  }\n\n\n  .title[_ngcontent-%COMP%]   pre[_ngcontent-%COMP%] {\n    margin-left: auto;\n    margin-right: auto;\n    width: 540px;\n  }\n\n  button[_ngcontent-%COMP%] {\n    text-align: center;\n    padding: 0 36px;\n  }"] });
     return MenuComponent;
 })();
 
@@ -585,12 +586,12 @@ let MenuComponent = /** @class */ (() => {
                 styles: [`.container {
     display: flex;
     flex-direction: column;
-    align-items:center;
+    align-items: center;
     text-align: center;
   }
 
 
-  .title pre{
+  .title pre {
     margin-left: auto;
     margin-right: auto;
     width: ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_1__["CHARACTER_SPACING"] * 60}px;
@@ -2814,7 +2815,7 @@ let NewLabyrinthFormComponent = /** @class */ (() => {
             this.size = 5;
         }
         ngOnInit() {
-            this.route.queryParams.subscribe(params => {
+            this.subscriptions = this.route.queryParams.subscribe(params => {
                 this.size = params['size'] ? params['size'] : 5;
             });
         }
@@ -2836,6 +2837,9 @@ let NewLabyrinthFormComponent = /** @class */ (() => {
         }
         emptyBoard() {
             this.labService.generateEmpty(this.size);
+        }
+        ngOnDestroy() {
+            this.subscriptions.unsubscribe();
         }
     }
     NewLabyrinthFormComponent.ɵfac = function NewLabyrinthFormComponent_Factory(t) { return new (t || NewLabyrinthFormComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_generate_lab_service__WEBPACK_IMPORTED_MODULE_2__["GenerateLabService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"])); };
@@ -3963,13 +3967,14 @@ let SoundComponent = /** @class */ (() => {
             this.off = '' +
                 '            _ \n' +
                 ' ((\'x\') ° (d) \n';
-            this.soundService.subscribeSoundOn((data) => {
+            this.subscription = this.soundService.subscribeSoundOn((data) => {
                 this.soundOn = data;
             });
         }
         ngOnInit() {
         }
         ngOnDestroy() {
+            this.subscription.unsubscribe();
         }
         toogle() {
             this.soundService.toogleSound();
@@ -5338,13 +5343,16 @@ let GameplayLabService = /** @class */ (() => {
             this.serviceLabService = serviceLabService;
             this.dataStorageService = dataStorageService;
             this.soundService = soundService;
-            dataStorageService
+            this.subscriptions = dataStorageService
                 .getCurrentParty()
                 .subscribe((party) => {
                 this.currentParty = party;
                 this.currentPartyProxy = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinToJsView"])(party, 7);
             });
             this.gameplay = gameRules__WEBPACK_IMPORTED_MODULE_2__["fr"].perso.labyrinth.labeat;
+        }
+        ngOnDestroy() {
+            this.subscriptions.unsubscribe();
         }
         move(direction) {
             this.dataStorageService.saveCharacterDirection(direction);
