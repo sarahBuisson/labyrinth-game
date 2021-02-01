@@ -17,38 +17,41 @@ function standardizeName(oldName) {
     return oldName.replace(/^\_*/, "").replace(/\_\S*\$/, "").replace(/\_\d/, "");
 }
 function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod) {
-    let newkotlinInstance = {};
+    if (!!kotlinInstance.kotlinOriginalInstance) {
+        return kotlinInstance;
+    }
+    let newkotlinInstance = { kotlinOriginalInstance: kotlinInstance };
     Object.getOwnPropertyNames(kotlinInstance).forEach((oldName) => {
-        newkotlinInstance[oldName] = kotlinInstance[oldName];
-        let propertyclassName = !!kotlinInstance[oldName] && !!kotlinInstance[oldName].__proto__ && !!kotlinInstance[oldName].__proto__.constructor && kotlinInstance[oldName].__proto__.constructor.name;
+        let kotlinInstanceElement = kotlinInstance[oldName];
+        let propertyclassName = !!kotlinInstanceElement && !!kotlinInstanceElement.__proto__ && !!kotlinInstanceElement.__proto__.constructor && kotlinInstanceElement.__proto__.constructor.name;
         let newName;
         if (!isNaN(parseInt(oldName))) {
             newName = oldName;
         }
         else {
             newName = standardizeName(oldName);
-            if (propertyclassName === 'ArrayList' && !Array.isArray(kotlinInstance[oldName])) {
-                newName += "Array";
+            if (propertyclassName === 'ArrayList' && !Array.isArray(kotlinInstanceElement)) {
+                //newName += "Array"
             }
             if (propertyclassName === "HashMap" || propertyclassName == "LinkedHashMap") {
-                newName += "Map";
+                // newName += "Map"
             }
             if (propertyclassName === 'Function') {
-                newName += "Function";
+                //  newName += "Function"
             }
         }
         let isNewNameAlreadyUsed = Object.getOwnPropertyDescriptor(newkotlinInstance, newName);
         if (!kotlinInstance.__proto__) {
             //TODO : most of the time it's inner object of stdlib class
-            newkotlinInstance[newName] = kotlinInstance[oldName];
+            newkotlinInstance[newName] = kotlinInstanceElement;
         }
         if (!kotlinInstance.__proto__[newName]) {
             try {
                 if (maxDeep >= 0) {
-                    newkotlinInstance[newName] = parseKotlinToJsView(kotlinInstance[oldName], maxDeep - 1, autoProxyMethod);
+                    newkotlinInstance[newName] = parseKotlinToJsView(kotlinInstanceElement, maxDeep - 1, autoProxyMethod);
                 }
                 else {
-                    newkotlinInstance[newName] = kotlinInstance[oldName];
+                    newkotlinInstance[newName] = kotlinInstanceElement;
                 }
             }
             catch (e) {
@@ -281,6 +284,8 @@ let SoundService = /** @class */ (() => {
             });
             this.menuInstrument = toneService.Synth();
             this.gameInstrument = toneService.Synth();
+            this.generateGameMusic();
+            this.generateMenuMusic();
             this.soundInstrument = toneService.Synth();
             this.gameInstrument.toDestination();
             this.menuInstrument.toDestination();
@@ -476,7 +481,6 @@ let MenuComponent = /** @class */ (() => {
             this.subscriptionHighscores = this.highscoresService.getScores().subscribe((scores) => {
                 this.highscores = scores;
             });
-            this.soundService.generateMenuMusic();
         }
         clickNew() {
             this.soundService.playMove();
@@ -1170,7 +1174,7 @@ let loadingBorderRaw = "" +
     " '.-._. ";
 let loadingBorderGridTemplate = Object(_border_compute__WEBPACK_IMPORTED_MODULE_0__["asciiStringToGridObject"])(loadingBorderRaw, 2, 4, 1, 2);
 let viewCloseDoorZoneRaw = "" +
-    " .-----------------------.\n" +
+    " .------------------------.\n" +
     " |\\    \\¨¨¨¨¨¨¨¨¨¨¨/    /|\n" +
     " | \\    \\    1    /    / |\n" +
     " |  \\    \\       /    /  |\n" +
@@ -1183,9 +1187,9 @@ let viewCloseDoorZoneRaw = "" +
     " |   /¨¨¨¨/-----\\¨¨¨¨\\   |\n" +
     " |  /    /   1   \\    \\  |\n" +
     " | /    /_ _ _ _ _\\    \\ |\n" +
-    " `-----------------------'";
+    " `------------------------'";
 let viewOpenDoorZoneRaw = "" +
-    " .-----------------------.\n" +
+    " .------------------------.\n" +
     " |\\    \\¨¨|¨¨¨¨¨|¨¨/    /|\n" +
     " | \\    \\ |     | /    / |\n" +
     " |  \\    \\|     |/    /  |\n" +
@@ -1198,9 +1202,9 @@ let viewOpenDoorZoneRaw = "" +
     " |   /¨¨¨¨/     \\¨¨¨¨\\   |\n" +
     " |  /    /|     |\\    \\  |\n" +
     " | /    /_|_ _ _|_\\    \\ |\n" +
-    " `-----------------------'";
+    " `------------------------'";
 let viewWallZoneRaw = "" +
-    " .----------------------.\n" +
+    " .-----------------------.\n" +
     " |\\                     /|\n" +
     " | \\                   / |\n" +
     " |  \\                 /  |\n" +
@@ -1213,7 +1217,7 @@ let viewWallZoneRaw = "" +
     " |   /¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨\\   |\n" +
     " |  /                 \\  |\n" +
     " | /                   \\ |\n" +
-    " `----------------------'";
+    " `-----------------------'";
 let defaultZoneCornerWidth = 6;
 let defaultZoneSideWidth = 15;
 let defaultZoneCornerHeight = 5;
@@ -1590,13 +1594,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var music_generator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! music-generator */ "fIap");
 /* harmony import */ var music_generator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(music_generator__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../utils/ascii/AsciiConst */ "fMyw");
-/* harmony import */ var _utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../utils/kotlinUtils */ "/6Df");
-/* harmony import */ var _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../service/gameplay-lab.service */ "ty5H");
-/* harmony import */ var _service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../service/render/fullsize-ascii-render.service */ "qOzd");
-/* harmony import */ var _utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../utils/ascii/ascii-border/ascii-border.component */ "XxEr");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "ofXK");
-/* harmony import */ var _utils_ascii_component_ascii_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../utils/ascii/component/ascii.component */ "LuAq");
-
+/* harmony import */ var _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../service/gameplay-lab.service */ "ty5H");
+/* harmony import */ var _service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../service/render/fullsize-ascii-render.service */ "qOzd");
+/* harmony import */ var _utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../utils/ascii/ascii-border/ascii-border.component */ "XxEr");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _utils_ascii_component_ascii_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../utils/ascii/component/ascii.component */ "LuAq");
 
 
 
@@ -1657,13 +1659,12 @@ let ZoneViewComponent = /** @class */ (() => {
         ngOnInit() {
             if (!this.zone)
                 this.zone = {};
-            this.proxy = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_4__["parseKotlinToJsView"])(this.zone, 7);
         }
         borderRendered() {
             let borderRendered = { ..._service_render_resources_border__WEBPACK_IMPORTED_MODULE_1__["viewWallGridTemplate"] };
             let directions = ['left', "right", 'top', 'bottom']; //should stay lowcase
             directions.forEach((direction) => {
-                let door = this.gameplayLabService.doorAt(this.proxy, direction.toUpperCase());
+                let door = this.gameplayLabService.doorAt(this.zone, direction.toUpperCase());
                 borderRendered[direction + "BorderClass"] = 'decor-ui';
                 if (door) {
                     borderRendered[direction + "BorderClass"] = 'interact-ui';
@@ -1679,7 +1680,7 @@ let ZoneViewComponent = /** @class */ (() => {
             return borderRendered;
         }
         backgroundRender() {
-            return backgroundTemplate[(this.proxy.x + this.proxy.y * 3) % backgroundTemplate.length];
+            return backgroundTemplate[(this.zone.x + this.zone.y * 3) % backgroundTemplate.length];
         }
         renderObj(obj) {
             return this.renderService.renderObj(obj);
@@ -1698,10 +1699,10 @@ let ZoneViewComponent = /** @class */ (() => {
             return 'key ' + obj.name;
         }
         getLevelContent() {
-            return this.gameplayLabService.levelContent(this.proxy);
+            return this.gameplayLabService.levelContent(this.zone);
         }
     }
-    ZoneViewComponent.ɵfac = function ZoneViewComponent_Factory(t) { return new (t || ZoneViewComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_5__["GameplayLabService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_6__["FullsizeAsciiRenderService"])); };
+    ZoneViewComponent.ɵfac = function ZoneViewComponent_Factory(t) { return new (t || ZoneViewComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__["GameplayLabService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_5__["FullsizeAsciiRenderService"])); };
     ZoneViewComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ZoneViewComponent, selectors: [["app-zone-view"]], inputs: { zone: "zone" }, decls: 6, vars: 7, consts: [["ascii-border", "", 1, "zone", "asciiArt", "decor-ui", 3, "borderTemplate", "borderClick", "xRepeat", "yRepeat", "name"], [1, "zoneContent", 3, "click"], [1, "background-ui", "zoneBackground"], ["app-ascii-on-grid-div", ""], ["app-ascii", "", "class", "zoneObject asciiArt interact-ui", 3, "tooltip", "content", "click", 4, "ngFor", "ngForOf"], ["app-ascii", "", 1, "zoneObject", "asciiArt", "interact-ui", 3, "tooltip", "content", "click"]], template: function ZoneViewComponent_Template(rf, ctx) { if (rf & 1) {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
@@ -1720,7 +1721,7 @@ let ZoneViewComponent = /** @class */ (() => {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.backgroundRender());
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.getLevelContent());
-        } }, directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_7__["AsciiBorderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_8__["NgForOf"], _utils_ascii_component_ascii_component__WEBPACK_IMPORTED_MODULE_9__["AsciiComponent"]], styles: [".zoneBackground[_ngcontent-%COMP%] {\n  position:absolute;\n  right: 0;\n  bottom: 0;\n  display: inline-block;\n  z-index: -100;\n}\n.zoneObject[_ngcontent-%COMP%] {\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInpvbmUtdmlldy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBRUE7RUFDRSxpQkFBaUI7RUFDakIsUUFBUTtFQUNSLFNBQVM7RUFDVCxxQkFBcUI7RUFDckIsYUFBYTtBQUNmO0FBQ0E7QUFDQSIsImZpbGUiOiJ6b25lLXZpZXcuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxuXG4uem9uZUJhY2tncm91bmQge1xuICBwb3NpdGlvbjphYnNvbHV0ZTtcbiAgcmlnaHQ6IDA7XG4gIGJvdHRvbTogMDtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB6LWluZGV4OiAtMTAwO1xufVxuLnpvbmVPYmplY3Qge1xufVxuIl19 */", ".zoneContent[_ngcontent-%COMP%] {\n    position: relative;\n    min-height: 70px;\n  }"] });
+        } }, directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_6__["AsciiBorderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgForOf"], _utils_ascii_component_ascii_component__WEBPACK_IMPORTED_MODULE_8__["AsciiComponent"]], styles: [".zoneBackground[_ngcontent-%COMP%] {\n  position:absolute;\n  right: 0;\n  bottom: 0;\n  display: inline-block;\n  z-index: -100;\n}\n.zoneObject[_ngcontent-%COMP%] {\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInpvbmUtdmlldy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBRUE7RUFDRSxpQkFBaUI7RUFDakIsUUFBUTtFQUNSLFNBQVM7RUFDVCxxQkFBcUI7RUFDckIsYUFBYTtBQUNmO0FBQ0E7QUFDQSIsImZpbGUiOiJ6b25lLXZpZXcuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxuXG4uem9uZUJhY2tncm91bmQge1xuICBwb3NpdGlvbjphYnNvbHV0ZTtcbiAgcmlnaHQ6IDA7XG4gIGJvdHRvbTogMDtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB6LWluZGV4OiAtMTAwO1xufVxuLnpvbmVPYmplY3Qge1xufVxuIl19 */", ".zoneContent[_ngcontent-%COMP%] {\n    position: relative;\n    min-height: 70px;\n  }"] });
     return ZoneViewComponent;
 })();
 
@@ -1735,7 +1736,7 @@ let ZoneViewComponent = /** @class */ (() => {
     min-height: ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_3__["LINE_HEIGHT"] * 5}px;
   }`]
             }]
-    }], function () { return [{ type: _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_5__["GameplayLabService"] }, { type: _service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_6__["FullsizeAsciiRenderService"] }]; }, { zone: [{
+    }], function () { return [{ type: _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__["GameplayLabService"] }, { type: _service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_5__["FullsizeAsciiRenderService"] }]; }, { zone: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }] }); })();
 
@@ -2967,11 +2968,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _service_render_resources_border__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../service/render/resources/border */ "7yLV");
 /* harmony import */ var _utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utils/ascii/AsciiConst */ "fMyw");
-/* harmony import */ var _utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../utils/kotlinUtils */ "/6Df");
-/* harmony import */ var _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../service/gameplay-lab.service */ "ty5H");
-/* harmony import */ var _utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../utils/ascii/ascii-border/ascii-border.component */ "XxEr");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ "ofXK");
-
+/* harmony import */ var _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../service/gameplay-lab.service */ "ty5H");
+/* harmony import */ var _utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../utils/ascii/ascii-border/ascii-border.component */ "XxEr");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ "ofXK");
 
 
 
@@ -3037,9 +3036,9 @@ function MapViewComponent_div_1_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](8);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](2, _c0, "repeat(auto-fill, " + ctx_r0.currentLevelProxy.contentArray[0].length + ")"));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](2, _c0, "repeat(auto-fill, " + ctx_r0.currentParty.level.content[0].length + ")"));
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r0.currentLevelProxy.contentArray);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r0.currentParty.level.content);
 } }
 let mapBorderData = _service_render_resources_border__WEBPACK_IMPORTED_MODULE_1__["paperGridTemplate"];
 let MapViewComponent = /** @class */ (() => {
@@ -3053,13 +3052,12 @@ let MapViewComponent = /** @class */ (() => {
             console.log("update");
             console.log(this.currentParty);
             this.updateFieldOfView();
-            console.log(this.currentLevelProxy);
+            console.log(this.currentParty.level);
         }
         ngOnInit() {
             this.updateFieldOfView();
         }
         updateFieldOfView() {
-            this.currentLevelProxy = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_3__["parseKotlinToJsView"])(this.currentParty.level, 4);
         }
         isStart(levelCase) {
             let start = this.currentParty.level.start;
@@ -3095,7 +3093,6 @@ let MapViewComponent = /** @class */ (() => {
                     }
                 }
                 else {
-                    console.log("nothing");
                     borderRendered[direction + "Template"] = ' ';
                 }
             });
@@ -3107,7 +3104,7 @@ let MapViewComponent = /** @class */ (() => {
                 return this.renderService.renderObj(content[0]);
             }
             else {
-                let nbrOfConnections = levelCaseInput.connectedArray.length;
+                let nbrOfConnections = levelCaseInput.connected.length;
                 if (nbrOfConnections == 1) {
                     return " ";
                 }
@@ -3120,7 +3117,7 @@ let MapViewComponent = /** @class */ (() => {
             }
         }
         computeClass(levelCaseInput) {
-            let content = this.gameplayLabService.levelContent(Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_3__["parseKotlinToJsView"])(levelCaseInput, 3));
+            let content = this.gameplayLabService.levelContent(levelCaseInput);
             if (content[0]) {
                 if (content[0].name === "player" || content[0].name === "exit") {
                     return "important-ui";
@@ -3129,7 +3126,7 @@ let MapViewComponent = /** @class */ (() => {
             return "ihm-ui";
         }
     }
-    MapViewComponent.ɵfac = function MapViewComponent_Factory(t) { return new (t || MapViewComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__["GameplayLabService"])); };
+    MapViewComponent.ɵfac = function MapViewComponent_Factory(t) { return new (t || MapViewComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_3__["GameplayLabService"])); };
     MapViewComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: MapViewComponent, selectors: [["map-view"]], inputs: { currentParty: "currentParty", renderService: "renderService", rangeArroundPlayer: "rangeArroundPlayer" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵNgOnChangesFeature"]], decls: 20, vars: 2, consts: [["ascii-render", "", 1, "container", "decor-ui", 3, "borderTemplate"], ["class", "row1", 4, "ngIf"], ["ascii-border", "", 1, "legend", "text", "decor-ui"], [1, "important-ui"], [1, "row1"], [1, "title", "text", "decor-ui"], [1, "main", "asciiArt", "ihm-ui", 3, "ngStyle"], ["class", "row", 4, "ngFor", "ngForOf"], [1, "row"], [4, "ngFor", "ngForOf"], [4, "ngIf"], ["ascii-border", "", "xRepeat", "1", "yRepeat", "1", 1, "mapzone", 3, "borderTemplate"], [3, "ngClass"]], template: function MapViewComponent_Template(rf, ctx) { if (rf & 1) {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, MapViewComponent_div_1_Template, 10, 4, "div", 1);
@@ -3162,8 +3159,8 @@ let MapViewComponent = /** @class */ (() => {
         } if (rf & 2) {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("borderTemplate", ctx.borderData);
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.currentLevelProxy);
-        } }, directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_5__["AsciiBorderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgStyle"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgForOf"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgClass"]], styles: ["[_nghost-%COMP%] {\n  background: white;\n  text-align: left;\n}\n\n.levelRowRender[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, 1.5em);\n}\n\n.container[_ngcontent-%COMP%] {\n  background: white;\n}\n\n.row1[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n}\n\n.container[_ngcontent-%COMP%]    > div[_ngcontent-%COMP%] {\n  background: white;\n}\n\n.container[_ngcontent-%COMP%]    > span[_ngcontent-%COMP%] {\n  background: white;\n}\n\n.main[_ngcontent-%COMP%] {\n  display: inline-block;\n}\n\n.mapzone[_ngcontent-%COMP%] {\n  display: inline-block\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1hcC12aWV3LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxpQkFBaUI7RUFDakIsZ0JBQWdCO0FBQ2xCOztBQUVBO0VBQ0UsYUFBYTtFQUNiLCtDQUErQztBQUNqRDs7QUFFQTtFQUNFLGlCQUFpQjtBQUNuQjs7QUFDQTtFQUNFLGFBQWE7RUFDYixtQkFBbUI7QUFDckI7O0FBRUE7RUFDRSxpQkFBaUI7QUFDbkI7O0FBRUE7RUFDRSxpQkFBaUI7QUFDbkI7O0FBR0E7RUFDRSxxQkFBcUI7QUFDdkI7O0FBRUE7RUFDRTtBQUNGIiwiZmlsZSI6Im1hcC12aWV3LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdCB7XG4gIGJhY2tncm91bmQ6IHdoaXRlO1xuICB0ZXh0LWFsaWduOiBsZWZ0O1xufVxuXG4ubGV2ZWxSb3dSZW5kZXIge1xuICBkaXNwbGF5OiBncmlkO1xuICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IHJlcGVhdChhdXRvLWZpbGwsIDEuNWVtKTtcbn1cblxuLmNvbnRhaW5lciB7XG4gIGJhY2tncm91bmQ6IHdoaXRlO1xufVxuLnJvdzEge1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogcm93O1xufVxuXG4uY29udGFpbmVyID4gZGl2IHtcbiAgYmFja2dyb3VuZDogd2hpdGU7XG59XG5cbi5jb250YWluZXIgPiBzcGFuIHtcbiAgYmFja2dyb3VuZDogd2hpdGU7XG59XG5cblxuLm1haW4ge1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG59XG5cbi5tYXB6b25lIHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrXG59XG5cbiJdfQ== */", ".title[_ngcontent-%COMP%] {\n      display: inline-flex;\n      flex-direction: column;\n      width: 27px;\n      padding:14px 9px;\n    }\n\n    .legend[_ngcontent-%COMP%] {\n        min-width: 90px;\n    }"] });
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.currentParty);
+        } }, directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_4__["AsciiBorderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgStyle"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgForOf"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgClass"]], styles: ["[_nghost-%COMP%] {\n  background: white;\n  text-align: left;\n}\n\n.levelRowRender[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, 1.5em);\n}\n\n.container[_ngcontent-%COMP%] {\n  background: white;\n}\n\n.row1[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n}\n\n.container[_ngcontent-%COMP%]    > div[_ngcontent-%COMP%] {\n  background: white;\n}\n\n.container[_ngcontent-%COMP%]    > span[_ngcontent-%COMP%] {\n  background: white;\n}\n\n.main[_ngcontent-%COMP%] {\n  display: inline-block;\n}\n\n.mapzone[_ngcontent-%COMP%] {\n  display: inline-block\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1hcC12aWV3LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxpQkFBaUI7RUFDakIsZ0JBQWdCO0FBQ2xCOztBQUVBO0VBQ0UsYUFBYTtFQUNiLCtDQUErQztBQUNqRDs7QUFFQTtFQUNFLGlCQUFpQjtBQUNuQjs7QUFDQTtFQUNFLGFBQWE7RUFDYixtQkFBbUI7QUFDckI7O0FBRUE7RUFDRSxpQkFBaUI7QUFDbkI7O0FBRUE7RUFDRSxpQkFBaUI7QUFDbkI7O0FBR0E7RUFDRSxxQkFBcUI7QUFDdkI7O0FBRUE7RUFDRTtBQUNGIiwiZmlsZSI6Im1hcC12aWV3LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdCB7XG4gIGJhY2tncm91bmQ6IHdoaXRlO1xuICB0ZXh0LWFsaWduOiBsZWZ0O1xufVxuXG4ubGV2ZWxSb3dSZW5kZXIge1xuICBkaXNwbGF5OiBncmlkO1xuICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IHJlcGVhdChhdXRvLWZpbGwsIDEuNWVtKTtcbn1cblxuLmNvbnRhaW5lciB7XG4gIGJhY2tncm91bmQ6IHdoaXRlO1xufVxuLnJvdzEge1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogcm93O1xufVxuXG4uY29udGFpbmVyID4gZGl2IHtcbiAgYmFja2dyb3VuZDogd2hpdGU7XG59XG5cbi5jb250YWluZXIgPiBzcGFuIHtcbiAgYmFja2dyb3VuZDogd2hpdGU7XG59XG5cblxuLm1haW4ge1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG59XG5cbi5tYXB6b25lIHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrXG59XG5cbiJdfQ== */", ".title[_ngcontent-%COMP%] {\n      display: inline-flex;\n      flex-direction: column;\n      width: 27px;\n      padding:14px 9px;\n    }\n\n    .legend[_ngcontent-%COMP%] {\n        min-width: 90px;\n    }"] });
     return MapViewComponent;
 })();
 
@@ -3185,7 +3182,7 @@ let MapViewComponent = /** @class */ (() => {
         min-width: ${_utils_ascii_AsciiConst__WEBPACK_IMPORTED_MODULE_2__["CHARACTER_SPACING"] * 10}px;
     }`]
             }]
-    }], function () { return [{ type: _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__["GameplayLabService"] }]; }, { currentParty: [{
+    }], function () { return [{ type: _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_3__["GameplayLabService"] }]; }, { currentParty: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }], renderService: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
@@ -3344,7 +3341,7 @@ let AsciiBorderComponent = /** @class */ (() => {
             try {
                 this.borderTemplateName = this.borderTemplateName || this.hostRef.nativeElement.nodeName;
                 this.borderTemplate = this.borderTemplate || this.getAsciiBorderForName(this.borderTemplateName);
-                this.computeData();
+                this.computeBorderTemplateData();
                 if (this.computeRenderEachTime == undefined) {
                     this.computeRenderEachTime = true; // this.hostRef.nativeElement.clientWidth ? false : true
                 }
@@ -3356,7 +3353,7 @@ let AsciiBorderComponent = /** @class */ (() => {
                 console.error(e);
             }
         }
-        computeData() {
+        computeBorderTemplateData() {
             if (this.borderTemplate) {
                 this.computedData = {
                     ...this.computedData,
@@ -3404,7 +3401,7 @@ let AsciiBorderComponent = /** @class */ (() => {
         }
         computeBorderDimension() {
             if (!this.computedData.borderSizePx.top)
-                this.computeData();
+                this.computeBorderTemplateData();
             let mainElement = this.hostRef.nativeElement;
             let height, width;
             if (mainElement.clientWidth) {
@@ -4248,7 +4245,7 @@ function LevelViewComponent_div_1_ng_container_1_Template(rf, ctx) { if (rf & 1)
     const levelCaseInput_r4 = ctx.$implicit;
     const _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !!levelCaseInput_r4 && levelCaseInput_r4.content.toArray().length > 0)("ngIfElse", _r7);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !!levelCaseInput_r4)("ngIfElse", _r7);
 } }
 function LevelViewComponent_div_1_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 2);
@@ -4286,8 +4283,9 @@ let LevelViewComponent = /** @class */ (() => {
                         let y = 0 + location.y + dy;
                         let ix = 0 + this.rangeArroundPlayer + dx;
                         let iy = 0 + this.rangeArroundPlayer + dy;
-                        let zone = this.currentParty.level.getXY(x, y);
-                        this.fieldOfView[iy][ix] = zone;
+                        if (x >= 0 && y >= 0)
+                            if (this.currentParty.level.content[y])
+                                this.fieldOfView[iy][ix] = this.currentParty.level.content[y][x];
                     }
                 }
             }
@@ -5140,7 +5138,7 @@ function LabyrinthGameComponent_div_11_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("openData", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](20, _c5))("closeData", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](21, _c6));
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("player", ctx_r1.currentPlayerProxy);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("player", ctx_r1.currentParty.player);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](11);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r1.fullViewRenderService.renderObj(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](22, _c7)));
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
@@ -5176,12 +5174,8 @@ let LabyrinthGameComponent = /** @class */ (() => {
         subscribeCurrentParty() {
             this.subscriptionCurrentParty = this.dataStorageService.getCurrentParty()
                 .subscribe((nextParty) => {
-                this.currentParty = { ...nextParty };
+                this.currentParty = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinToJsView"])(nextParty, 5, true);
                 if (nextParty) {
-                    this.currentLevel = this.currentParty.level;
-                    this.currentPlayerProxy = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinToJsView"])(this.currentParty.player, 3);
-                    console.log(nextParty);
-                    console.log("update");
                     if (this.currentParty.status.name$ == "WIN") {
                         this.winModal.show();
                     }
@@ -5198,13 +5192,14 @@ let LabyrinthGameComponent = /** @class */ (() => {
         }
         ngOnDestroy() {
             this.subscriptionCurrentParty.unsubscribe();
+            this.toClear.forEach((timer) => clearInterval(timer));
         }
         nextLevel() {
             this.loadingModal.show();
             this.winModal.hide();
             let timer = new Promise((resolve) => {
                 // after 1 second signal that the job is finished with an error
-                setTimeout(() => resolve('done'), 5000);
+                this.toClear.push(setTimeout(() => resolve('done'), 5000));
             });
             let generation = new Promise((resolve) => {
                 // not taking our time to do the job
@@ -5356,11 +5351,9 @@ let GameplayLabService = /** @class */ (() => {
         }
         move(direction) {
             this.dataStorageService.saveCharacterDirection(direction);
-            let connectionsMap = this.currentPartyProxy.player.location.connectionsMap;
-            let nextLocation = connectionsMap[direction];
-            console.log(nextLocation);
+            let connections = this.currentPartyProxy.player.location.connections;
+            let nextLocation = connections[direction];
             if (nextLocation) {
-                console.log("next");
                 let door = this.currentParty.player.location.content.toArray()
                     .find(it => {
                     let proxy = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinToJsView"])(it, 2);
@@ -5369,9 +5362,7 @@ let GameplayLabService = /** @class */ (() => {
                         && it.destination.y === nextLocation.y;
                 });
                 if (door) {
-                    console.log("door");
                     let interaction = this.play(door);
-                    console.log(interaction);
                     if (interaction.result == "Success") {
                         this.soundService.playMove();
                         return false;
@@ -5407,25 +5398,24 @@ let GameplayLabService = /** @class */ (() => {
             return interactionResult;
         }
         levelContent(levelCase) {
-            let content = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinPathToJsView"])(levelCase, "content");
-            return content.filter(it => !this.isDoor(it));
+            return levelCase.content.filter(it => !this.isDoor(it));
         }
         isDoor(it) {
             return it.destination !== undefined;
         }
         doorAt(levelCase, direction) {
-            let destination = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinPathToJsView"])(levelCase, "connections")[direction];
+            let destination = levelCase.connections[direction];
             if (destination) {
-                return Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinPathToJsView"])(levelCase, "content")
+                return levelCase.content
                     .filter(obj => {
-                    let doorDestination = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinPathToJsView"])(obj, 'destination');
+                    let doorDestination = obj.destination;
                     return doorDestination && doorDestination.x === destination.x && doorDestination.y === destination.y;
                 })[0];
             }
         }
         moveAtCase(levelCase) {
-            let connectionsMap = this.currentPartyProxy.player.location.connectionsMap;
-            let direction = lodash_findKey__WEBPACK_IMPORTED_MODULE_3___default()(connectionsMap, (it) => {
+            let connections = this.currentPartyProxy.player.location.connections;
+            let direction = lodash_findKey__WEBPACK_IMPORTED_MODULE_3___default()(connections, (it) => {
                 return it && it.x === levelCase.x && it.y === levelCase.y;
             });
             if (direction) {
@@ -5434,7 +5424,7 @@ let GameplayLabService = /** @class */ (() => {
             return false;
         }
         hasPlayer(levelCase) {
-            return Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinPathToJsView"])(levelCase, "content")
+            return levelCase.content
                 .find(p => {
                 return p.type === "player";
             });
@@ -5647,8 +5637,8 @@ let AsciiGalleryComponent = /** @class */ (() => {
             console.log("ngOnInit");
             try {
                 let emptyParty = gameRules__WEBPACK_IMPORTED_MODULE_2__["fr"].perso.labyrinth.labeat.generation.initPartieEmpty(3, "empty");
-                this.emptyZone = emptyParty.level.content.toArray()[0].toArray()[0];
-                this.defaultZone = emptyParty.level.content.toArray()[1].toArray()[1];
+                this.emptyZone = emptyParty.level.content[0][0];
+                this.defaultZone = emptyParty.level.content[1][1];
                 this.defaultZone = gameRules__WEBPACK_IMPORTED_MODULE_2__["fr"].perso.labyrinth.labeat.generation.initPartieMapLabWithKey(4, "key").level.content.toArray()[0].toArray()[1];
             }
             catch (e) {

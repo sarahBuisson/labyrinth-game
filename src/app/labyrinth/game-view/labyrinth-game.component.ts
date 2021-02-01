@@ -53,12 +53,12 @@ import {APP_BASE_HREF} from "@angular/common";
 export class LabyrinthGameComponent implements OnInit, OnDestroy {
   currentParty: any
   currentLevel: any
-  currentPlayerProxy: any
   @ViewChild('level-view') levelView:LevelViewComponent;
   @ViewChild('winModal') winModal:AsciiModalComponent;
   @ViewChild('loadingModal') loadingModal;
   score: any;
   private subscriptionCurrentParty: Subscription;
+  private toClear: any[];
 
   constructor(private labService: GenerateLabService,
               private dataStorageService: DataStorageService,
@@ -80,12 +80,8 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
     this.subscriptionCurrentParty = this.dataStorageService.getCurrentParty()
       .subscribe((nextParty) => {
 
-          this.currentParty = {...nextParty}
-          if (nextParty) {
-            this.currentLevel = this.currentParty.level
-            this.currentPlayerProxy = parseKotlinToJsView(this.currentParty.player,3)
-            console.log(nextParty)
-            console.log("update")
+        this.currentParty = parseKotlinToJsView(nextParty, 5,true);
+        if (nextParty) {
             if (this.currentParty.status.name$ == "WIN") {
               this.winModal.show()
             }
@@ -106,6 +102,7 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptionCurrentParty.unsubscribe();
+    this.toClear.forEach((timer) => clearInterval(timer))
   }
 
   nextLevel(): void {
@@ -114,7 +111,7 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
 
     let timer = new Promise((resolve) => {
       // after 1 second signal that the job is finished with an error
-      setTimeout(() => resolve('done'), 5000);
+      this.toClear.push(setTimeout(() => resolve('done'), 5000));
     });
     let generation = new Promise((resolve) => {
       // not taking our time to do the job

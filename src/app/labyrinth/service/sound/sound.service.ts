@@ -73,6 +73,8 @@ export class SoundService implements OnDestroy {
     this.menuInstrument = toneService.Synth();
 
     this.gameInstrument =toneService.Synth();
+    this.generateGameMusic();
+    this.generateMenuMusic();
     this.soundInstrument = toneService.Synth();
     this.gameInstrument.toDestination();
     this.menuInstrument.toDestination();

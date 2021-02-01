@@ -3,38 +3,41 @@ function standardizeName(oldName) {
 }
 
 function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod): any {
-  let newkotlinInstance = {};
+  if(!!kotlinInstance.kotlinOriginalInstance){
+    return kotlinInstance;
+  }
+  let newkotlinInstance = {kotlinOriginalInstance: kotlinInstance};
   Object.getOwnPropertyNames(kotlinInstance).forEach(
     (oldName: string) => {
-      newkotlinInstance[oldName] = kotlinInstance[oldName]
-      let propertyclassName = !!kotlinInstance[oldName] && !!kotlinInstance[oldName].__proto__ && !!kotlinInstance[oldName].__proto__.constructor && kotlinInstance[oldName].__proto__.constructor.name;
+      let kotlinInstanceElement = kotlinInstance[oldName];
+      let propertyclassName = !!kotlinInstanceElement && !!kotlinInstanceElement.__proto__ && !!kotlinInstanceElement.__proto__.constructor && kotlinInstanceElement.__proto__.constructor.name;
       let newName
       if (!isNaN(parseInt(oldName))) {
         newName = oldName;
       } else {
         newName = standardizeName(oldName);
 
-        if (propertyclassName === 'ArrayList' && !Array.isArray(kotlinInstance[oldName])) {
-          newName += "Array"
+        if (propertyclassName === 'ArrayList' && !Array.isArray(kotlinInstanceElement)) {
+          //newName += "Array"
         }
         if (propertyclassName === "HashMap" || propertyclassName == "LinkedHashMap") {
-          newName += "Map"
+         // newName += "Map"
         }
         if (propertyclassName === 'Function') {
-          newName += "Function"
+        //  newName += "Function"
         }
       }
       let isNewNameAlreadyUsed = Object.getOwnPropertyDescriptor(newkotlinInstance, newName);
       if (!kotlinInstance.__proto__) {
         //TODO : most of the time it's inner object of stdlib class
-        newkotlinInstance[newName] = kotlinInstance[oldName]
+        newkotlinInstance[newName] = kotlinInstanceElement
       }
       if (!kotlinInstance.__proto__[newName]) {
         try {
           if (maxDeep >= 0) {
-            newkotlinInstance[newName] = parseKotlinToJsView(kotlinInstance[oldName], maxDeep - 1, autoProxyMethod)
+            newkotlinInstance[newName] = parseKotlinToJsView(kotlinInstanceElement, maxDeep - 1, autoProxyMethod)
           } else {
-            newkotlinInstance[newName] = kotlinInstance[oldName]
+            newkotlinInstance[newName] = kotlinInstanceElement
           }
         } catch (e) {
           console.error(e)
@@ -120,7 +123,6 @@ export function printProxyModel(obj, indentation = "") {
 }
 
 export function parseKotlinPathToJsView(instance, ...path) {
-
   return parseKotlinToJsView(getFromKotlin(instance, ...path), 0, false)
 }
 

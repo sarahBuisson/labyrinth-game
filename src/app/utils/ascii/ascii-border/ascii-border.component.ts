@@ -120,9 +120,7 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
     try {
       this.borderTemplateName = this.borderTemplateName || this.hostRef.nativeElement.nodeName
       this.borderTemplate = this.borderTemplate || this.getAsciiBorderForName(this.borderTemplateName)
-
-      this.computeData();
-
+      this.computeBorderTemplateData();
 
       if (this.computeRenderEachTime == undefined) {
         this.computeRenderEachTime = true// this.hostRef.nativeElement.clientWidth ? false : true
@@ -136,7 +134,7 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
     }
   }
 
-  computeData() {
+  computeBorderTemplateData() {
     if (this.borderTemplate) {
       this.computedData = {
         ...this.computedData,
@@ -192,7 +190,7 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
 
   private computeBorderDimension(): boolean {
     if (!this.computedData.borderSizePx.top)
-      this.computeData()
+      this.computeBorderTemplateData()
 
 
     let mainElement = <HTMLElement>this.hostRef.nativeElement;

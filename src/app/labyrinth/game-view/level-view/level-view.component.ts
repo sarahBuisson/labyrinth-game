@@ -55,8 +55,9 @@ export class LevelViewComponent implements OnInit, OnChanges {
           let ix = 0 + this.rangeArroundPlayer + dx;
           let iy = 0 + this.rangeArroundPlayer + dy;
 
-          let zone = this.currentParty.level.getXY(x, y)
-          this.fieldOfView[iy][ix] = zone
+          if (x >= 0 && y >= 0)
+            if(this.currentParty.level.content[y])
+            this.fieldOfView[iy][ix] = this.currentParty.level.content[y][x]
         }
       }
     }

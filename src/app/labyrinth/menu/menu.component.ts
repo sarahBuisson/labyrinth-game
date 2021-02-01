@@ -47,7 +47,6 @@ export class MenuComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptionHighscores = this.highscoresService.getScores().subscribe((scores) => {
       this.highscores = scores as Array<any>;
     })
-    this.soundService.generateMenuMusic()
   }
 
   clickNew() {

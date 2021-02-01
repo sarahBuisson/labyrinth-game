@@ -85,10 +85,16 @@
       }
 
       function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod) {
-        var newkotlinInstance = {};
+        if (!!kotlinInstance.kotlinOriginalInstance) {
+          return kotlinInstance;
+        }
+
+        var newkotlinInstance = {
+          kotlinOriginalInstance: kotlinInstance
+        };
         Object.getOwnPropertyNames(kotlinInstance).forEach(function (oldName) {
-          newkotlinInstance[oldName] = kotlinInstance[oldName];
-          var propertyclassName = !!kotlinInstance[oldName] && !!kotlinInstance[oldName].__proto__ && !!kotlinInstance[oldName].__proto__.constructor && kotlinInstance[oldName].__proto__.constructor.name;
+          var kotlinInstanceElement = kotlinInstance[oldName];
+          var propertyclassName = !!kotlinInstanceElement && !!kotlinInstanceElement.__proto__ && !!kotlinInstanceElement.__proto__.constructor && kotlinInstanceElement.__proto__.constructor.name;
           var newName;
 
           if (!isNaN(parseInt(oldName))) {
@@ -96,16 +102,13 @@
           } else {
             newName = standardizeName(oldName);
 
-            if (propertyclassName === 'ArrayList' && !Array.isArray(kotlinInstance[oldName])) {
-              newName += "Array";
+            if (propertyclassName === 'ArrayList' && !Array.isArray(kotlinInstanceElement)) {//newName += "Array"
             }
 
-            if (propertyclassName === "HashMap" || propertyclassName == "LinkedHashMap") {
-              newName += "Map";
+            if (propertyclassName === "HashMap" || propertyclassName == "LinkedHashMap") {// newName += "Map"
             }
 
-            if (propertyclassName === 'Function') {
-              newName += "Function";
+            if (propertyclassName === 'Function') {//  newName += "Function"
             }
           }
 
@@ -113,15 +116,15 @@
 
           if (!kotlinInstance.__proto__) {
             //TODO : most of the time it's inner object of stdlib class
-            newkotlinInstance[newName] = kotlinInstance[oldName];
+            newkotlinInstance[newName] = kotlinInstanceElement;
           }
 
           if (!kotlinInstance.__proto__[newName]) {
             try {
               if (maxDeep >= 0) {
-                newkotlinInstance[newName] = parseKotlinToJsView(kotlinInstance[oldName], maxDeep - 1, autoProxyMethod);
+                newkotlinInstance[newName] = parseKotlinToJsView(kotlinInstanceElement, maxDeep - 1, autoProxyMethod);
               } else {
-                newkotlinInstance[newName] = kotlinInstance[oldName];
+                newkotlinInstance[newName] = kotlinInstanceElement;
               }
             } catch (e) {
               console.error(e);
@@ -484,6 +487,8 @@
             })));
             this.menuInstrument = toneService.Synth();
             this.gameInstrument = toneService.Synth();
+            this.generateGameMusic();
+            this.generateMenuMusic();
             this.soundInstrument = toneService.Synth();
             this.gameInstrument.toDestination();
             this.menuInstrument.toDestination();
@@ -898,7 +903,6 @@
               this.subscriptionHighscores = this.highscoresService.getScores().subscribe(function (scores) {
                 _this4.highscores = scores;
               });
-              this.soundService.generateMenuMusic();
             }
           }, {
             key: "clickNew",
@@ -2202,9 +2206,9 @@
       var defaultTitleBorderTemplate = Object(_border_compute__WEBPACK_IMPORTED_MODULE_0__["asciiStringToGridObject"])(titleBorderRaw, 1, 1, 1, 1);
       var loadingBorderRaw = "" + " _.-._. \n" + "(      )\n" + " )    (\n" + "(      )\n" + " '.-._. ";
       var loadingBorderGridTemplate = Object(_border_compute__WEBPACK_IMPORTED_MODULE_0__["asciiStringToGridObject"])(loadingBorderRaw, 2, 4, 1, 2);
-      var viewCloseDoorZoneRaw = "" + " .-----------------------.\n" + " |\\    \\¨¨¨¨¨¨¨¨¨¨¨/    /|\n" + " | \\    \\    1    /    / |\n" + " |  \\    \\       /    /  |\n" + " |   \\____\\-----/____/   |\n" + " |:\\ |               | /:|\n" + " |: \\|               |/ :|\n" + " |:  '               '  :|\n" + " |: 1|               |1 :|\n" + " |'--,               ,--'|\n" + " |   /¨¨¨¨/-----\\¨¨¨¨\\   |\n" + " |  /    /   1   \\    \\  |\n" + " | /    /_ _ _ _ _\\    \\ |\n" + " `-----------------------'";
-      var viewOpenDoorZoneRaw = "" + " .-----------------------.\n" + " |\\    \\¨¨|¨¨¨¨¨|¨¨/    /|\n" + " | \\    \\ |     | /    / |\n" + " |  \\    \\|     |/    /  |\n" + " |   \\____\\     /____/   |\n" + " |:\\ |               | /:|\n" + " |: \\|               |/ :|\n" + " |:--'               '--:|\n" + " |:                     :|\n" + " |'--,               ,--'|\n" + " |   /¨¨¨¨/     \\¨¨¨¨\\   |\n" + " |  /    /|     |\\    \\  |\n" + " | /    /_|_ _ _|_\\    \\ |\n" + " `-----------------------'";
-      var viewWallZoneRaw = "" + " .----------------------.\n" + " |\\                     /|\n" + " | \\                   / |\n" + " |  \\                 /  |\n" + " |   \\_______________/   |\n" + " |   |               |   |\n" + " |   |               |   |\n" + " |   |               |   |\n" + " |   |               |   |\n" + " |   |               |   |\n" + " |   /¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨\\   |\n" + " |  /                 \\  |\n" + " | /                   \\ |\n" + " `----------------------'";
+      var viewCloseDoorZoneRaw = "" + " .------------------------.\n" + " |\\    \\¨¨¨¨¨¨¨¨¨¨¨/    /|\n" + " | \\    \\    1    /    / |\n" + " |  \\    \\       /    /  |\n" + " |   \\____\\-----/____/   |\n" + " |:\\ |               | /:|\n" + " |: \\|               |/ :|\n" + " |:  '               '  :|\n" + " |: 1|               |1 :|\n" + " |'--,               ,--'|\n" + " |   /¨¨¨¨/-----\\¨¨¨¨\\   |\n" + " |  /    /   1   \\    \\  |\n" + " | /    /_ _ _ _ _\\    \\ |\n" + " `------------------------'";
+      var viewOpenDoorZoneRaw = "" + " .------------------------.\n" + " |\\    \\¨¨|¨¨¨¨¨|¨¨/    /|\n" + " | \\    \\ |     | /    / |\n" + " |  \\    \\|     |/    /  |\n" + " |   \\____\\     /____/   |\n" + " |:\\ |               | /:|\n" + " |: \\|               |/ :|\n" + " |:--'               '--:|\n" + " |:                     :|\n" + " |'--,               ,--'|\n" + " |   /¨¨¨¨/     \\¨¨¨¨\\   |\n" + " |  /    /|     |\\    \\  |\n" + " | /    /_|_ _ _|_\\    \\ |\n" + " `------------------------'";
+      var viewWallZoneRaw = "" + " .-----------------------.\n" + " |\\                     /|\n" + " | \\                   / |\n" + " |  \\                 /  |\n" + " |   \\_______________/   |\n" + " |   |               |   |\n" + " |   |               |   |\n" + " |   |               |   |\n" + " |   |               |   |\n" + " |   |               |   |\n" + " |   /¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨\\   |\n" + " |  /                 \\  |\n" + " | /                   \\ |\n" + " `-----------------------'";
       var defaultZoneCornerWidth = 6;
       var defaultZoneSideWidth = 15;
       var defaultZoneCornerHeight = 5;
@@ -2462,37 +2466,31 @@
       /* harmony import */
 
 
-      var _utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
-      /*! ../../../../utils/kotlinUtils */
-      "/6Df");
-      /* harmony import */
-
-
-      var _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! ../../../service/gameplay-lab.service */
       "ty5H");
       /* harmony import */
 
 
-      var _service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! ../../../service/render/fullsize-ascii-render.service */
       "qOzd");
       /* harmony import */
 
 
-      var _utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+      var _utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
       /*! ../../../../utils/ascii/ascii-border/ascii-border.component */
       "XxEr");
       /* harmony import */
 
 
-      var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @angular/common */
       "ofXK");
       /* harmony import */
 
 
-      var _utils_ascii_component_ascii_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var _utils_ascii_component_ascii_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! ../../../../utils/ascii/component/ascii.component */
       "LuAq");
 
@@ -2566,7 +2564,6 @@
             key: "ngOnInit",
             value: function ngOnInit() {
               if (!this.zone) this.zone = {};
-              this.proxy = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_4__["parseKotlinToJsView"])(this.zone, 7);
             }
           }, {
             key: "borderRendered",
@@ -2578,7 +2575,7 @@
               var directions = ['left', "right", 'top', 'bottom']; //should stay lowcase
 
               directions.forEach(function (direction) {
-                var door = _this6.gameplayLabService.doorAt(_this6.proxy, direction.toUpperCase());
+                var door = _this6.gameplayLabService.doorAt(_this6.zone, direction.toUpperCase());
 
                 borderRendered[direction + "BorderClass"] = 'decor-ui';
 
@@ -2599,7 +2596,7 @@
           }, {
             key: "backgroundRender",
             value: function backgroundRender() {
-              return backgroundTemplate[(this.proxy.x + this.proxy.y * 3) % backgroundTemplate.length];
+              return backgroundTemplate[(this.zone.x + this.zone.y * 3) % backgroundTemplate.length];
             }
           }, {
             key: "renderObj",
@@ -2619,7 +2616,7 @@
           }, {
             key: "getLevelContent",
             value: function getLevelContent() {
-              return this.gameplayLabService.levelContent(this.proxy);
+              return this.gameplayLabService.levelContent(this.zone);
             }
           }]);
 
@@ -2627,7 +2624,7 @@
         }();
 
         ZoneViewComponent.ɵfac = function ZoneViewComponent_Factory(t) {
-          return new (t || ZoneViewComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_5__["GameplayLabService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_6__["FullsizeAsciiRenderService"]));
+          return new (t || ZoneViewComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__["GameplayLabService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_5__["FullsizeAsciiRenderService"]));
         };
 
         ZoneViewComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -2678,7 +2675,7 @@
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.getLevelContent());
             }
           },
-          directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_7__["AsciiBorderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_8__["NgForOf"], _utils_ascii_component_ascii_component__WEBPACK_IMPORTED_MODULE_9__["AsciiComponent"]],
+          directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_6__["AsciiBorderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgForOf"], _utils_ascii_component_ascii_component__WEBPACK_IMPORTED_MODULE_8__["AsciiComponent"]],
           styles: [".zoneBackground[_ngcontent-%COMP%] {\n  position:absolute;\n  right: 0;\n  bottom: 0;\n  display: inline-block;\n  z-index: -100;\n}\n.zoneObject[_ngcontent-%COMP%] {\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInpvbmUtdmlldy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBRUE7RUFDRSxpQkFBaUI7RUFDakIsUUFBUTtFQUNSLFNBQVM7RUFDVCxxQkFBcUI7RUFDckIsYUFBYTtBQUNmO0FBQ0E7QUFDQSIsImZpbGUiOiJ6b25lLXZpZXcuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxuXG4uem9uZUJhY2tncm91bmQge1xuICBwb3NpdGlvbjphYnNvbHV0ZTtcbiAgcmlnaHQ6IDA7XG4gIGJvdHRvbTogMDtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB6LWluZGV4OiAtMTAwO1xufVxuLnpvbmVPYmplY3Qge1xufVxuIl19 */", ".zoneContent[_ngcontent-%COMP%] {\n    position: relative;\n    min-height: 70px;\n  }"]
         });
         return ZoneViewComponent;
@@ -2697,9 +2694,9 @@
           }]
         }], function () {
           return [{
-            type: _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_5__["GameplayLabService"]
+            type: _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__["GameplayLabService"]
           }, {
-            type: _service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_6__["FullsizeAsciiRenderService"]
+            type: _service_render_fullsize_ascii_render_service__WEBPACK_IMPORTED_MODULE_5__["FullsizeAsciiRenderService"]
           }];
         }, {
           zone: [{
@@ -4978,25 +4975,19 @@
       /* harmony import */
 
 
-      var _utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! ../../../utils/kotlinUtils */
-      "/6Df");
-      /* harmony import */
-
-
-      var _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! ../../service/gameplay-lab.service */
       "ty5H");
       /* harmony import */
 
 
-      var _utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      var _utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! ../../../utils/ascii/ascii-border/ascii-border.component */
       "XxEr");
       /* harmony import */
 
 
-      var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! @angular/common */
       "ofXK");
 
@@ -5120,11 +5111,11 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](8);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](2, _c0, "repeat(auto-fill, " + ctx_r0.currentLevelProxy.contentArray[0].length + ")"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](2, _c0, "repeat(auto-fill, " + ctx_r0.currentParty.level.content[0].length + ")"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r0.currentLevelProxy.contentArray);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r0.currentParty.level.content);
         }
       }
 
@@ -5148,7 +5139,7 @@
               console.log("update");
               console.log(this.currentParty);
               this.updateFieldOfView();
-              console.log(this.currentLevelProxy);
+              console.log(this.currentParty.level);
             }
           }, {
             key: "ngOnInit",
@@ -5157,9 +5148,7 @@
             }
           }, {
             key: "updateFieldOfView",
-            value: function updateFieldOfView() {
-              this.currentLevelProxy = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_3__["parseKotlinToJsView"])(this.currentParty.level, 4);
-            }
+            value: function updateFieldOfView() {}
           }, {
             key: "isStart",
             value: function isStart(levelCase) {
@@ -5204,7 +5193,6 @@
                     borderRendered[direction + "Class"] = "interact-ui";
                   } else {}
                 } else {
-                  console.log("nothing");
                   borderRendered[direction + "Template"] = ' ';
                 }
               });
@@ -5218,7 +5206,7 @@
               if (content[0]) {
                 return this.renderService.renderObj(content[0]);
               } else {
-                var nbrOfConnections = levelCaseInput.connectedArray.length;
+                var nbrOfConnections = levelCaseInput.connected.length;
 
                 if (nbrOfConnections == 1) {
                   return " ";
@@ -5234,7 +5222,7 @@
           }, {
             key: "computeClass",
             value: function computeClass(levelCaseInput) {
-              var content = this.gameplayLabService.levelContent(Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_3__["parseKotlinToJsView"])(levelCaseInput, 3));
+              var content = this.gameplayLabService.levelContent(levelCaseInput);
 
               if (content[0]) {
                 if (content[0].name === "player" || content[0].name === "exit") {
@@ -5250,7 +5238,7 @@
         }();
 
         MapViewComponent.ɵfac = function MapViewComponent_Factory(t) {
-          return new (t || MapViewComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__["GameplayLabService"]));
+          return new (t || MapViewComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_3__["GameplayLabService"]));
         };
 
         MapViewComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -5329,10 +5317,10 @@
 
               _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.currentLevelProxy);
+              _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.currentParty);
             }
           },
-          directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_5__["AsciiBorderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgStyle"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgForOf"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgClass"]],
+          directives: [_utils_ascii_ascii_border_ascii_border_component__WEBPACK_IMPORTED_MODULE_4__["AsciiBorderComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgStyle"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgForOf"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgClass"]],
           styles: ["[_nghost-%COMP%] {\n  background: white;\n  text-align: left;\n}\n\n.levelRowRender[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, 1.5em);\n}\n\n.container[_ngcontent-%COMP%] {\n  background: white;\n}\n\n.row1[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n}\n\n.container[_ngcontent-%COMP%]    > div[_ngcontent-%COMP%] {\n  background: white;\n}\n\n.container[_ngcontent-%COMP%]    > span[_ngcontent-%COMP%] {\n  background: white;\n}\n\n.main[_ngcontent-%COMP%] {\n  display: inline-block;\n}\n\n.mapzone[_ngcontent-%COMP%] {\n  display: inline-block\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1hcC12aWV3LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxpQkFBaUI7RUFDakIsZ0JBQWdCO0FBQ2xCOztBQUVBO0VBQ0UsYUFBYTtFQUNiLCtDQUErQztBQUNqRDs7QUFFQTtFQUNFLGlCQUFpQjtBQUNuQjs7QUFDQTtFQUNFLGFBQWE7RUFDYixtQkFBbUI7QUFDckI7O0FBRUE7RUFDRSxpQkFBaUI7QUFDbkI7O0FBRUE7RUFDRSxpQkFBaUI7QUFDbkI7O0FBR0E7RUFDRSxxQkFBcUI7QUFDdkI7O0FBRUE7RUFDRTtBQUNGIiwiZmlsZSI6Im1hcC12aWV3LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdCB7XG4gIGJhY2tncm91bmQ6IHdoaXRlO1xuICB0ZXh0LWFsaWduOiBsZWZ0O1xufVxuXG4ubGV2ZWxSb3dSZW5kZXIge1xuICBkaXNwbGF5OiBncmlkO1xuICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IHJlcGVhdChhdXRvLWZpbGwsIDEuNWVtKTtcbn1cblxuLmNvbnRhaW5lciB7XG4gIGJhY2tncm91bmQ6IHdoaXRlO1xufVxuLnJvdzEge1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogcm93O1xufVxuXG4uY29udGFpbmVyID4gZGl2IHtcbiAgYmFja2dyb3VuZDogd2hpdGU7XG59XG5cbi5jb250YWluZXIgPiBzcGFuIHtcbiAgYmFja2dyb3VuZDogd2hpdGU7XG59XG5cblxuLm1haW4ge1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG59XG5cbi5tYXB6b25lIHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrXG59XG5cbiJdfQ== */", ".title[_ngcontent-%COMP%] {\n      display: inline-flex;\n      flex-direction: column;\n      width: 27px;\n      padding:14px 9px;\n    }\n\n    .legend[_ngcontent-%COMP%] {\n        min-width: 90px;\n    }"]
         });
         return MapViewComponent;
@@ -5351,7 +5339,7 @@
           }]
         }], function () {
           return [{
-            type: _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_4__["GameplayLabService"]
+            type: _service_gameplay_lab_service__WEBPACK_IMPORTED_MODULE_3__["GameplayLabService"]
           }];
         }, {
           currentParty: [{
@@ -5648,7 +5636,7 @@
               try {
                 this.borderTemplateName = this.borderTemplateName || this.hostRef.nativeElement.nodeName;
                 this.borderTemplate = this.borderTemplate || this.getAsciiBorderForName(this.borderTemplateName);
-                this.computeData();
+                this.computeBorderTemplateData();
 
                 if (this.computeRenderEachTime == undefined) {
                   this.computeRenderEachTime = true; // this.hostRef.nativeElement.clientWidth ? false : true
@@ -5662,8 +5650,8 @@
               }
             }
           }, {
-            key: "computeData",
-            value: function computeData() {
+            key: "computeBorderTemplateData",
+            value: function computeBorderTemplateData() {
               if (this.borderTemplate) {
                 this.computedData = _objectSpread(_objectSpread({}, this.computedData), {}, {
                   borderSizePx: {
@@ -5722,7 +5710,7 @@
             value: function computeBorderDimension() {
               var _this15 = this;
 
-              if (!this.computedData.borderSizePx.top) this.computeData();
+              if (!this.computedData.borderSizePx.top) this.computeBorderTemplateData();
               var mainElement = this.hostRef.nativeElement;
               var height, width;
 
@@ -7212,7 +7200,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !!levelCaseInput_r4 && levelCaseInput_r4.content.toArray().length > 0)("ngIfElse", _r7);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !!levelCaseInput_r4)("ngIfElse", _r7);
         }
       }
 
@@ -7273,8 +7261,7 @@
                     var y = 0 + location.y + dy;
                     var ix = 0 + this.rangeArroundPlayer + dx;
                     var iy = 0 + this.rangeArroundPlayer + dy;
-                    var zone = this.currentParty.level.getXY(x, y);
-                    this.fieldOfView[iy][ix] = zone;
+                    if (x >= 0 && y >= 0) if (this.currentParty.level.content[y]) this.fieldOfView[iy][ix] = this.currentParty.level.content[y][x];
                   }
                 }
               }
@@ -8904,7 +8891,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("player", ctx_r1.currentPlayerProxy);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("player", ctx_r1.currentParty.player);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](11);
 
@@ -8968,14 +8955,9 @@
               var _this21 = this;
 
               this.subscriptionCurrentParty = this.dataStorageService.getCurrentParty().subscribe(function (nextParty) {
-                _this21.currentParty = _objectSpread({}, nextParty);
+                _this21.currentParty = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinToJsView"])(nextParty, 5, true);
 
                 if (nextParty) {
-                  _this21.currentLevel = _this21.currentParty.level;
-                  _this21.currentPlayerProxy = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinToJsView"])(_this21.currentParty.player, 3);
-                  console.log(nextParty);
-                  console.log("update");
-
                   if (_this21.currentParty.status.name$ == "WIN") {
                     _this21.winModal.show();
                   }
@@ -8999,6 +8981,9 @@
             key: "ngOnDestroy",
             value: function ngOnDestroy() {
               this.subscriptionCurrentParty.unsubscribe();
+              this.toClear.forEach(function (timer) {
+                return clearInterval(timer);
+              });
             }
           }, {
             key: "nextLevel",
@@ -9009,9 +8994,9 @@
               this.winModal.hide();
               var timer = new Promise(function (resolve) {
                 // after 1 second signal that the job is finished with an error
-                setTimeout(function () {
+                _this22.toClear.push(setTimeout(function () {
                   return resolve('done');
-                }, 5000);
+                }, 5000));
               });
               var generation = new Promise(function (resolve) {
                 // not taking our time to do the job
@@ -9263,21 +9248,17 @@
             key: "move",
             value: function move(direction) {
               this.dataStorageService.saveCharacterDirection(direction);
-              var connectionsMap = this.currentPartyProxy.player.location.connectionsMap;
-              var nextLocation = connectionsMap[direction];
-              console.log(nextLocation);
+              var connections = this.currentPartyProxy.player.location.connections;
+              var nextLocation = connections[direction];
 
               if (nextLocation) {
-                console.log("next");
                 var door = this.currentParty.player.location.content.toArray().find(function (it) {
                   var proxy = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinToJsView"])(it, 2);
                   return proxy.destination && it.destination.x === nextLocation.x && it.destination.y === nextLocation.y;
                 });
 
                 if (door) {
-                  console.log("door");
                   var interaction = this.play(door);
-                  console.log(interaction);
 
                   if (interaction.result == "Success") {
                     this.soundService.playMove();
@@ -9328,8 +9309,7 @@
             value: function levelContent(levelCase) {
               var _this26 = this;
 
-              var content = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinPathToJsView"])(levelCase, "content");
-              return content.filter(function (it) {
+              return levelCase.content.filter(function (it) {
                 return !_this26.isDoor(it);
               });
             }
@@ -9341,11 +9321,11 @@
           }, {
             key: "doorAt",
             value: function doorAt(levelCase, direction) {
-              var destination = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinPathToJsView"])(levelCase, "connections")[direction];
+              var destination = levelCase.connections[direction];
 
               if (destination) {
-                return Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinPathToJsView"])(levelCase, "content").filter(function (obj) {
-                  var doorDestination = Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinPathToJsView"])(obj, 'destination');
+                return levelCase.content.filter(function (obj) {
+                  var doorDestination = obj.destination;
                   return doorDestination && doorDestination.x === destination.x && doorDestination.y === destination.y;
                 })[0];
               }
@@ -9353,8 +9333,8 @@
           }, {
             key: "moveAtCase",
             value: function moveAtCase(levelCase) {
-              var connectionsMap = this.currentPartyProxy.player.location.connectionsMap;
-              var direction = lodash_findKey__WEBPACK_IMPORTED_MODULE_3___default()(connectionsMap, function (it) {
+              var connections = this.currentPartyProxy.player.location.connections;
+              var direction = lodash_findKey__WEBPACK_IMPORTED_MODULE_3___default()(connections, function (it) {
                 return it && it.x === levelCase.x && it.y === levelCase.y;
               });
 
@@ -9367,7 +9347,7 @@
           }, {
             key: "hasPlayer",
             value: function hasPlayer(levelCase) {
-              return Object(_utils_kotlinUtils__WEBPACK_IMPORTED_MODULE_1__["parseKotlinPathToJsView"])(levelCase, "content").find(function (p) {
+              return levelCase.content.find(function (p) {
                 return p.type === "player";
               });
             }
@@ -9811,8 +9791,8 @@
 
               try {
                 var emptyParty = gameRules__WEBPACK_IMPORTED_MODULE_2__["fr"].perso.labyrinth.labeat.generation.initPartieEmpty(3, "empty");
-                this.emptyZone = emptyParty.level.content.toArray()[0].toArray()[0];
-                this.defaultZone = emptyParty.level.content.toArray()[1].toArray()[1];
+                this.emptyZone = emptyParty.level.content[0][0];
+                this.defaultZone = emptyParty.level.content[1][1];
                 this.defaultZone = gameRules__WEBPACK_IMPORTED_MODULE_2__["fr"].perso.labyrinth.labeat.generation.initPartieMapLabWithKey(4, "key").level.content.toArray()[0].toArray()[1];
               } catch (e) {
                 console.log(e);
