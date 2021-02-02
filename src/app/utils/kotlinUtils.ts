@@ -3,10 +3,10 @@ function standardizeName(oldName) {
 }
 
 function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod): any {
-  if(!!kotlinInstance.kotlinOriginalInstance){
+  if(kotlinInstance.isKotlinView){
     return kotlinInstance;
   }
-  let newkotlinInstance = {kotlinOriginalInstance: kotlinInstance};
+  let newkotlinInstance = {isKotlinView: true};
   Object.getOwnPropertyNames(kotlinInstance).forEach(
     (oldName: string) => {
       let kotlinInstanceElement = kotlinInstance[oldName];

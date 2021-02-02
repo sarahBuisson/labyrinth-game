@@ -17,10 +17,10 @@ function standardizeName(oldName) {
     return oldName.replace(/^\_*/, "").replace(/\_\S*\$/, "").replace(/\_\d/, "");
 }
 function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod) {
-    if (!!kotlinInstance.kotlinOriginalInstance) {
+    if (kotlinInstance.isKotlinView) {
         return kotlinInstance;
     }
-    let newkotlinInstance = { kotlinOriginalInstance: kotlinInstance };
+    let newkotlinInstance = { isKotlinView: true };
     Object.getOwnPropertyNames(kotlinInstance).forEach((oldName) => {
         let kotlinInstanceElement = kotlinInstance[oldName];
         let propertyclassName = !!kotlinInstanceElement && !!kotlinInstanceElement.__proto__ && !!kotlinInstanceElement.__proto__.constructor && kotlinInstanceElement.__proto__.constructor.name;

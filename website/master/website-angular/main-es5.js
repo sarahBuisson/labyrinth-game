@@ -85,12 +85,12 @@
       }
 
       function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod) {
-        if (!!kotlinInstance.kotlinOriginalInstance) {
+        if (kotlinInstance.isKotlinView) {
           return kotlinInstance;
         }
 
         var newkotlinInstance = {
-          kotlinOriginalInstance: kotlinInstance
+          isKotlinView: true
         };
         Object.getOwnPropertyNames(kotlinInstance).forEach(function (oldName) {
           var kotlinInstanceElement = kotlinInstance[oldName];
