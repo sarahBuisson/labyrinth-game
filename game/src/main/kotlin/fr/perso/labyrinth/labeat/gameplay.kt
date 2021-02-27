@@ -78,7 +78,6 @@ class ChangeDirectionToZoneRule :
 class MoveOpenDoorRule :
     MoveRule(
         { interaction ->
-            interaction.messages.add("want to go in" + (interaction.quoi as DoorObjectZone).destination)
             (interaction.quoi as DoorObjectZone).key == null
         }) {
     override var name: String = "MoveOpenDoorRule"
