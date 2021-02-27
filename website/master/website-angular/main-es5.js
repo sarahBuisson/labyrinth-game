@@ -9,7 +9,7 @@
 
   function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
   function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
@@ -5631,6 +5631,20 @@
           }
 
           _createClass(AsciiBorderComponent, [{
+            key: "hostStyle",
+            get: function get() {
+              var hostStyle = {
+                border: 'solid transparent',
+                borderTopWidth: this.computedData.borderSizePx.top + 'px',
+                borderBottomWidth: this.computedData.borderSizePx.bottom + 'px',
+                borderRightWidth: this.computedData.borderSizePx.right + 'px',
+                borderLeftWidth: this.computedData.borderSizePx.left + 'px',
+                height: this.yRepeat ? this.yRepeat * this.borderTemplate.leftSideHeight * _AsciiConst__WEBPACK_IMPORTED_MODULE_2__["LINE_HEIGHT"] + 'px' : undefined,
+                width: this.xRepeat ? this.xRepeat * this.borderTemplate.topSideWidth * _AsciiConst__WEBPACK_IMPORTED_MODULE_2__["CHARACTER_SPACING"] + 'px' : undefined
+              };
+              return hostStyle;
+            }
+          }, {
             key: "ngOnInit",
             value: function ngOnInit() {
               try {
@@ -5664,12 +5678,17 @@
               }
             }
           }, {
-            key: "counter",
-
+            key: "compJson",
+            get: function get() {
+              return JSON.stringify(this.computedData);
+            }
             /**
              * return an array of counter
              * @param size
              */
+
+          }, {
+            key: "counter",
             value: function counter(size) {
               var array = new Array();
 
@@ -5876,25 +5895,6 @@
               this.toClear.forEach(function (timeout) {
                 clearTimeout(timeout);
               });
-            }
-          }, {
-            key: "hostStyle",
-            get: function get() {
-              var hostStyle = {
-                border: 'solid transparent',
-                borderTopWidth: this.computedData.borderSizePx.top + 'px',
-                borderBottomWidth: this.computedData.borderSizePx.bottom + 'px',
-                borderRightWidth: this.computedData.borderSizePx.right + 'px',
-                borderLeftWidth: this.computedData.borderSizePx.left + 'px',
-                height: this.yRepeat ? this.yRepeat * this.borderTemplate.leftSideHeight * _AsciiConst__WEBPACK_IMPORTED_MODULE_2__["LINE_HEIGHT"] + 'px' : undefined,
-                width: this.xRepeat ? this.xRepeat * this.borderTemplate.topSideWidth * _AsciiConst__WEBPACK_IMPORTED_MODULE_2__["CHARACTER_SPACING"] + 'px' : undefined
-              };
-              return hostStyle;
-            }
-          }, {
-            key: "compJson",
-            get: function get() {
-              return JSON.stringify(this.computedData);
             }
           }]);
 
