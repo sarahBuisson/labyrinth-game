@@ -123,6 +123,9 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
       this.computeBorderTemplateData();
 
       if (this.computeRenderEachTime == undefined) {
+        if(this.xRepeat&& this.yRepeat){
+          this.computeRenderEachTime = false;
+        }else
         this.computeRenderEachTime = true// this.hostRef.nativeElement.clientWidth ? false : true
       }
 
@@ -189,75 +192,106 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
   }
 
   private computeBorderDimension(): boolean {
-    if (!this.computedData.borderSizePx.top)
-      this.computeBorderTemplateData()
+
+    try {
+      if (!this.computedData.borderSizePx.top)
+        this.computeBorderTemplateData()
 
 
-    let mainElement = <HTMLElement>this.hostRef.nativeElement;
+      let mainElement = <HTMLElement>this.hostRef.nativeElement;
 
-    let height: number, width: number;
-    if (mainElement.clientWidth) {
-      height = mainElement.clientHeight// - this.computedData.borderTopSizePx - this.computedData.borderBottomSizePx
-      width = mainElement.clientWidth
-      this.computedData.computed = 'client'
-    } else if(mainElement.offsetWidth){
-      this.computedData.computed = 'offset' + mainElement.offsetWidth
-      height = mainElement.offsetHeight - this.computedData.borderSizePx.top - this.computedData.borderSizePx.bottom
-      width = mainElement.offsetWidth - this.computedData.borderSizePx.left - this.computedData.borderSizePx.right
-    }else{
-      this.computedData.computed = 'none'
-      return false;
-    }
-    if (isNaN(height) || isNaN(width)) {
-      console.warn("no dimension " + height + " " + width)
-      return false;
-    }
-
-    const hostHaveChanged = this.computedData.widthPx != width || this.computedData.heightPx != height;
-
-    let shouldCompute = (width || this.xRepeat) && (height || this.yRepeat) && hostHaveChanged && (this.computeRenderEachTime || !this.haveAlreadyBeComputed);
-
-    if (shouldCompute) {
-      this.computedData.widthPx = width;
-      this.computedData.heightPx = height;
-      let oldX = this.xComputedRepeat;
-      let oldY = this.yComputedRepeat
-      if (this.yRepeat != undefined) {
-        this.yComputedRepeat = this.yRepeat;
+      let height: number, width: number;
+      if (mainElement.clientWidth) {
+        height = mainElement.clientHeight// - this.computedData.borderTopSizePx - this.computedData.borderBottomSizePx
+        width = mainElement.clientWidth
+        this.computedData.computed = 'client'
+      } else if (mainElement.offsetWidth) {
+        this.computedData.computed = 'offset' + mainElement.offsetWidth
+        height = mainElement.offsetHeight - this.computedData.borderSizePx.top - this.computedData.borderSizePx.bottom
+        width = mainElement.offsetWidth - this.computedData.borderSizePx.left - this.computedData.borderSizePx.right
       } else {
-        this.yComputedRepeat = Math.floor(height / (LINE_HEIGHT * this.borderTemplate.leftSideHeight));
+        this.computedData.computed = 'none'
+        return false;
       }
-      if (this.xRepeat != undefined) {
-        this.xComputedRepeat = this.xRepeat;
-      } else {
-        this.xComputedRepeat = Math.floor(width / (CHARACTER_SPACING * this.borderTemplate.topSideWidth));
+      if (isNaN(height) || isNaN(width)) {
+        console.warn("no dimension " + height + " " + width)
+        return false;
       }
 
-      let allDataPresent = this.xComputedRepeat && this.yComputedRepeat;
-      let computedDataHaveChange = oldX != this.xComputedRepeat || oldY != this.yComputedRepeat;
-      if (allDataPresent && computedDataHaveChange) {
-        try {
+      const hostHaveChangedX = this.computedData.widthPx != width
+      const hostHaveChangedY = this.computedData.heightPx != height;
 
-          let splitTop = this.borderTemplate.topTemplate.split("\n")
-          let splitBottom = this.borderTemplate.bottomTemplate.split("\n")
+      let shouldComputeX = (width || this.xRepeat) && (hostHaveChangedX || this.computeRenderEachTime || !this.haveAlreadyBeComputed);
+      let shouldComputeY = (height || this.yRepeat) && (hostHaveChangedY || this.computeRenderEachTime || !this.haveAlreadyBeComputed);
 
-          let counterX = this.counter(this.xComputedRepeat);
-          let counterY = this.counter(this.yComputedRepeat);
-
-
-          this.renders = {
-            top: splitTop.map((l) => counterX.map((i) => l).join('')).join('\n'),
-            bottom: splitBottom.map((l) => counterX.map((i) => l).join('')).join('\n'),
-            left: counterY.map((i) => this.borderTemplate.leftTemplate).join('\n'),
-            right: counterY.map((i) => this.borderTemplate.rightTemplate).join('\n')
-          }
-          this.haveAlreadyBeComputed = true;
-          return true;
-        } catch (e) {
-          console.error(e);
-          return true;
+      if (shouldComputeX) {
+        this.computedData.widthPx = width;
+        let oldX = this.xComputedRepeat;
+        if (this.xRepeat != undefined) {
+          this.xComputedRepeat = this.xRepeat;
+        } else {
+          this.xComputedRepeat = Math.floor(width / (CHARACTER_SPACING * this.borderTemplate.topSideWidth));
         }
+
+        let allDataPresent = this.xComputedRepeat;
+        let computedDataHaveChange = oldX != this.xComputedRepeat;
+        if (allDataPresent && computedDataHaveChange) {
+          try {
+            let counterX = this.counter(this.xComputedRepeat);
+
+
+            let splitTop = this.borderTemplate.topTemplate.split("\n")
+            let splitBottom = this.borderTemplate.bottomTemplate.split("\n")
+
+
+            this.renders = {
+              ...this.renders,
+              top: splitTop.map((l) => counterX.map((i) => l).join('')).join('\n'),
+              bottom: splitBottom.map((l) => counterX.map((i) => l).join('')).join('\n'),
+
+            }
+            this.haveAlreadyBeComputed = true;
+            return true;
+          } catch (e) {
+            console.error(e);
+            return true;
+          }
+        }
+      } else {
+        console.log("no need to compute x")
       }
+      if (shouldComputeY) {
+        console.log("shouldComputeY"+ this.yRepeat)
+        this.computedData.heightPx = height;
+        let oldY = this.yComputedRepeat
+        if (this.yRepeat != undefined) {
+          this.yComputedRepeat = this.yRepeat;
+        } else {
+          this.yComputedRepeat = Math.floor(height / (LINE_HEIGHT * this.borderTemplate.leftSideHeight));
+        }
+
+        let allDataPresent = this.yComputedRepeat;
+        let computedDataHaveChange = oldY != this.yComputedRepeat;
+        if (allDataPresent && computedDataHaveChange) {
+          try {
+            let counterY = this.counter(this.yComputedRepeat);
+            this.renders = {
+              ...this.renders,
+              left: counterY.map((i) => this.borderTemplate.leftTemplate).join('\n'),
+              right: counterY.map((i) => this.borderTemplate.rightTemplate).join('\n')
+            }
+            this.haveAlreadyBeComputed = true;
+            return true;
+          } catch (e) {
+            console.error(e);
+            return false;
+          }
+        }
+      } else {
+        console.log("no need to compute Y")
+      }
+    } catch (e) {
+      console.log("error during compute")
     }
   }
 
@@ -330,9 +364,7 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
   }
 
   ngOnDestroy(): void {
-
     this.toClear.forEach((timeout)=>{
-
       clearTimeout(timeout)
     })
   }
