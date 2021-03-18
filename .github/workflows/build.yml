@@ -47,7 +47,7 @@ jobs:
         run: |
           cd website
           echo  /labyrinth-game/website/${BRANCH_NAME}/website-angular/
-          ng build --base-href /labyrinth-game/website/${BRANCH_NAME}/website-angular/
+          ng build --prod --base-href /labyrinth-game/website/${BRANCH_NAME}/website-angular/
           ls dist
           cp ./dist/website-angular/index.html ./dist/website-angular/404.html
           mkdir ./website
