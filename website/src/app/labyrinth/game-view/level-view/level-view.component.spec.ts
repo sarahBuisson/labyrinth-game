@@ -40,7 +40,7 @@ describe('LevelViewComponent', () => {
   it('should create', () => {
     // @ts-ignore
     let party = gameRules.fr.perso.labyrinth.labeat.generation.initPartieEmpty(3);
-    component.currentParty = parseKotlinToJsView(party, 4)
+    component.currentParty =  gameRules.fr.perso.labyrinth.labeat.generation.toJson(party)
     //fixture.detectChanges();
     expect(component).toBeTruthy();
   });

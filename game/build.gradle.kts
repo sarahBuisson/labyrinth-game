@@ -1,7 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("maven-publish")
-
+    kotlin("plugin.serialization")
 }
 
 group = "me.sarahbuisson"
@@ -39,6 +39,7 @@ kotlin {
                 implementation(kotlin("stdlib"))
                 implementation("io.github.microutils:kotlin-logging:" + extra.properties["kotlin_logging_version"])
                 implementation("org.jeasy:easy-rules-core:" + extra.properties["rules_version"])
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
             }
         }
         val commonTest by getting {

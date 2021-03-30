@@ -1,6 +1,7 @@
 package fr.perso.labyrinth.toolbox.model
 
 import fr.perso.labyrinth.freezone.model.ObjectZone
+import kotlinx.serialization.Serializable
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 
@@ -20,7 +21,6 @@ interface NamedZone {
     val name: String
 }
 
-@JsExport
 interface GeoZone {
     val content: MutableList<ObjectZone>
 }

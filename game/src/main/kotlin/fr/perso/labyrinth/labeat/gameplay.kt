@@ -10,9 +10,11 @@ import org.jeasy.rules.api.Rules
 import org.jeasy.rules.core.DefaultRule
 import org.jeasy.rules.core.DefaultRulesEngine
 import kotlin.js.JsExport
-
-
+import kotlinx.serialization.*
+@Serializable
 enum class InteractionResult { Success, Failure, NothingHappen }
+
+@Serializable
 class Interaction<Qui, Quoi, Comment, Univers>(
     val qui: Qui,
     var quoi: Quoi,
@@ -23,11 +25,6 @@ class Interaction<Qui, Quoi, Comment, Univers>(
     val messages: MutableList<String> = mutableListOf();
     var result: InteractionResult = InteractionResult.NothingHappen;
 }
-
-
-private fun move(executeL: (Interaction<Player, Any, Any, Partie<*>>) -> Unit) =
-    {
-    }
 
 abstract class MoveRule(
     evaluateL: (Interaction<Player, Any, Any, Partie<*>>) -> kotlin.Boolean,
@@ -49,7 +46,7 @@ abstract class MoveRule(
                         interaction.qui.location.content.remove(interaction.qui)
                         (doorObjectZone.destination as GeoZone).content.add(interaction.qui)
                     }
-                    interaction.qui.location = doorObjectZone.destination as GeoZone
+                    interaction.qui.location = doorObjectZone.destination as CompositeZone
                     interaction.qui.numberOfSteps++
                     interaction.messages.add("move to room")
                     interaction.result = InteractionResult.Success;
@@ -159,6 +156,27 @@ fun playerInteractWith(partie: Partie<*>, obj: ObjectZone): Interaction<*, *, *,
 }
 
 @JsExport
+fun playerInteractWithJson(partie: Partie<*>, obj: String): Interaction<*, *, *, *> {
+    val interaction = Interaction(partie.player, deserialize(obj, partie), "" as Any, partie)
+    try {
+
+        val defaultRulesEngine = DefaultRulesEngine<Interaction<Player, Any, Any, Partie<*>>>(
+
+        )
+        defaultRulesEngine.fire(
+            ruleBook,
+            interaction
+        )
+        partie.messages.addAll(interaction.messages)
+    } catch (e: Exception) {
+        println(e)
+        println(e.cause)
+    }
+    return interaction
+
+}
+
+@JsExport
 fun computePartieScore(partie: Partie<*>): MutableMap<String, Int> {
 
     val datas: MutableMap<String, Int> = HashMap()
@@ -179,5 +197,6 @@ fun computePartieScore(partie: Partie<*>): MutableMap<String, Int> {
     return datas;
 
 }
+
 
 private val LOGGER = KotlinLogging.logger {}

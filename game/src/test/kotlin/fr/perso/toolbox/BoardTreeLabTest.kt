@@ -16,7 +16,7 @@ class BoardTreeLabTest {
     fun should_follow_corridor(){
 
         val factory = { x: Int, y: Int, b: Board<BoardZone> ->
-            BoardZoneImpl(
+            BoardZone(
                     x,
                     y
             )

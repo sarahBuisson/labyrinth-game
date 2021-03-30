@@ -1,46 +1,48 @@
 package fr.perso.labyrinth.toolbox.model
 
+import kotlinx.serialization.*
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.MapSerializer
 import kotlin.js.JsExport
 import kotlin.js.JsName
 
-@JsExport
-interface BoardZone : ConnectedZone, Point {
-    val connections: Map<Direction, out BoardZone>
-    fun directionOf(newPosition: BoardZoneImpl): Direction
-    fun connectZone(newPosition: BoardZone, direction: Direction)
-    fun connectionsEntries(): Set<Map.Entry<Direction, BoardZoneImpl>>
-}
 
-@JsExport
-open class BoardZoneImpl(override val x: Int, override val y: Int) : PointImpl(x, y), BoardZone, ConnectedZone {
-    override val connections: Map<Direction, BoardZoneImpl> = HashMap()
 
-    override val connected: List<BoardZoneImpl> = mutableListOf()
+@Serializable()
+open class BoardZone(
+    @SerialName("xBoard") override val x: Int,
+    @SerialName("yBoard") override val y: Int
+) :PointImpl(x, y), ConnectedZone {
+
+    @Transient
+    val connections: Map<Direction, BoardZone> = HashMap()
+    @Transient
+    override val connected: MutableList<BoardZone> = mutableListOf()
 
 
     override fun connectTo(other: ConnectedZone) {
-        other as BoardZoneImpl
+        other as BoardZone
         val direction = directionOf(other)
         connectZone(other, direction)
     }
 
     override fun unconnectTo(newPosition: ConnectedZone) {
-        newPosition as BoardZoneImpl
+        newPosition as BoardZone
         val direction = directionOf(newPosition)
         (newPosition.connections as MutableMap<Direction, BoardZone>).remove(direction.inv())
         (this.connections as MutableMap<Direction, BoardZone>).remove(direction)
-        (newPosition.connected as MutableList).remove(this)
+        newPosition.connected.remove(this)
         (this.connected as MutableList).remove(newPosition)
     }
 
-    override fun directionOf(newPosition: BoardZoneImpl): Direction {
+    fun directionOf(newPosition: BoardZone): Direction {
         val direction = Direction.of(newPosition.x - this.x, newPosition.y - this.y)!!
 
         return direction
     }
 
 
-    override fun connectZone(
+    fun connectZone(
 
         newPosition: BoardZone,
         direction: Direction
@@ -51,25 +53,32 @@ open class BoardZoneImpl(override val x: Int, override val y: Int) : PointImpl(x
         (newPosition.connected as MutableList<BoardZone>).add(this)
     }
 
-    override fun connectionsEntries() = connections.entries
+    fun connectionsEntries() = connections.entries
 
 }
 
-@JsExport
-open class Board<T : Any>(val width: Int,val height: Int, factory: (x: Int, y: Int, board: Board<T>) -> T) {
+@Serializable
+open class Board<T>(
+    open val width: Int,
+    open val height: Int,
+    open val content: MutableList<MutableList<T>> = mutableListOf()
+) {
 
 
-    val content: MutableList<MutableList<T>> = mutableListOf()
-
-    init {
+    @JsName("factory")
+    constructor(width: Int, height: Int, factory: (x: Int, y: Int, board: Board<T>) -> T) : this(width, height) {
         for (y in 0..height - 1) {
             content.add(mutableListOf())
             for (x in 0..width - 1) {
-
                 content.get(y).add(factory(x, y, this))
 
             }
         }
+    }
+
+    @JsName("fromJson")
+    constructor(content: MutableList<MutableList<T>>) : this(content.first().size, content.size) {
+        this.content.addAll(0, content)
     }
 
     @JsName("getXY")
@@ -100,7 +109,11 @@ interface Point {
     val y: Int
 }
 
-open class PointImpl(override val x: Int, override val y: Int) : Point {
+@Serializable
+open class PointImpl(
+    @SerialName("x") override val x: Int,
+    @SerialName("y") override val y: Int
+) : Point {
 
     fun add(x: Int, y: Int): PointImpl = PointImpl(this.x + x, this.y + y)
     fun add(p2: PointImpl): PointImpl =
@@ -111,7 +124,7 @@ open class PointImpl(override val x: Int, override val y: Int) : Point {
     }
 
 }
-
+@Serializable
 enum class Direction(val x: Int, val y: Int) {
     LEFT(-1, 0),
     TOP(0, -1),

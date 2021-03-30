@@ -6,7 +6,8 @@ val rootGroup = "com.example.my.library"
 val rootVersion = "0.0.5-SNAPSHOT"
 
 plugins {
-    kotlin("multiplatform") version "1.4.21" apply false
+    kotlin("multiplatform") version "1.4.30" apply false
+    kotlin("plugin.serialization") version "1.4.30" apply false
     id("maven-publish")
     jacoco
     id("net.akehurst.kotlin.kt2ts") version("1.6.0") apply(true)
@@ -17,7 +18,7 @@ allprojects {
     this.version = rootVersion
     buildscript {
 
-        extra.set("kotlin_version", "1.4.21")
+        extra.set("kotlin_version", "1.4.30")
         extra.set("kotlin_logging_version", "2.0.4")
         extra.set("coroutines_version", "0.23.3")
         extra.set("koltinxSerializationVersion", "0.20.0")

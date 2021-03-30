@@ -258,7 +258,7 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
           }
         }
       } else {
-        console.log("no need to compute x")
+
       }
       if (shouldComputeY) {
         console.log("shouldComputeY"+ this.yRepeat)
@@ -288,7 +288,6 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
           }
         }
       } else {
-        console.log("no need to compute Y")
       }
     } catch (e) {
       console.log("error during compute")

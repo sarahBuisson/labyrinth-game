@@ -140,7 +140,7 @@ fun <T> insertAfter(iter: List<T>, after: T, vararg data: T): List<T> {
 }
 
 
-class ZoneOfCoridor(x: Int, y: Int) : BoardZoneImpl(x, y) {
+class ZoneOfCoridor(x: Int, y: Int) : BoardZone(x, y) {
     val connectedZoneAndWayToGo = mutableMapOf<BoardZone, Condition<Partie>>()
     var haveBeenVisited: Int = 0
     override fun toString(): String {

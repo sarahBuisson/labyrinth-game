@@ -32,14 +32,10 @@ fun generateCompositeMapLabWithKey(size: Int): LevelBoard<CompositeZone> {
 @JsExport
 fun generateEmptyBoard(size: Int): LevelBoard<CompositeZone> {
     val factory = { x: Int, y: Int, b: Board<CompositeZone> ->
-        CompositeZone(
-                x,
-                y
-        )
+        CompositeZone(x, y)
     }
-    val board = LevelBoard(
-            size, size, factory
-    )
+    val board = LevelBoard<CompositeZone>(size, size)
+    board.fill(factory)
     return board
 }
 

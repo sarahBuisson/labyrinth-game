@@ -1,13 +1,14 @@
 package fr.perso.labyrinth.labeat
 
 import fr.perso.labyrinth.freezone.model.DoorObjectZone
+import fr.perso.labyrinth.freezone.model.KeyObjectZone
+import fr.perso.labyrinth.freezone.model.ObjectZone
 import fr.perso.labyrinth.labeat.generation.initPartieMapLabWithKey
 import fr.perso.labyrinth.labeat.generation.initPartieSpiral
-import fr.perso.labyrinth.labeat.model.CompositeZone
-import fr.perso.labyrinth.labeat.model.PartieStatus
-import fr.perso.labyrinth.labeat.model.Player
+import fr.perso.labyrinth.labeat.model.*
 import fr.perso.labyrinth.toolbox.model.Direction
 import kotlin.test.*
+import kotlinx.serialization.json.*
 
 class GamePlayTest {
 
@@ -90,5 +91,25 @@ class GamePlayTest {
         assertNotEquals(partie.player.location, startLocation)
         assertFalse(startLocation.content.contains(partie.player))
         assertTrue(partie.player.location.content.contains(partie.player))
+    }
+
+
+    @Test
+    fun shouldParseToJson() {
+        val partie = initPartieSpiral()
+        println("rr")
+        println(toJsonInteraction(Interaction(Player(CompositeZone(1,1)),KeyObjectZone(""),"",partie)))
+       // println(Json.encodeToString(ObjectZoneSerializer(), KeyObjectZone("rrr")))
+        println(
+            Json.encodeToString(
+                CompositeZoneSerializer(),
+                CompositeZone(1, 2, mutableListOf(DoorObjectZone(CompositeZone(4,5), KeyObjectZone("ee"))))
+            )
+        )
+
+        println("--")
+        println(Json.encodeToString(PartieSerializer(LevelBoardSerializer(CompositeZone.serializer())), partie))
+
+
     }
 }

@@ -12,41 +12,35 @@ import {Subscription} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class GameplayLabService implements OnDestroy{
+export class GameplayLabService implements OnDestroy {
   currentParty: any;
   currentPartyProxy: any;
   gameplay: any;
   private subscriptions: Subscription;
+
   constructor(private serviceLabService: GenerateLabService, private dataStorageService: DataStorageService,
               private soundService: SoundService) {
-    this.subscriptions=dataStorageService
+    this.gameplay = gameRules.fr.perso.labyrinth.labeat
+    this.subscriptions = dataStorageService
       .getCurrentParty()
       .subscribe((party) => {
         this.currentParty = party;
-        this.currentPartyProxy = parseKotlinToJsView(party,7);
+        this.currentPartyProxy = JSON.parse(this.gameplay.toJson(party));
       })
-    this.gameplay = gameRules.fr.perso.labyrinth.labeat
 
   }
 
   ngOnDestroy(): void {
-        this.subscriptions.unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
+  }
 
   move(direction: string) {
     this.dataStorageService.saveCharacterDirection(direction);
-    let connections = this.currentPartyProxy.player.location.connections
-    let nextLocation = connections[direction];
-    if (nextLocation) {
-      let door = this.currentParty.player.location.content.toArray()
-        .find(it => {
-          let proxy = parseKotlinToJsView(it, 2)
-          return proxy.destination
-          && it.destination.x === nextLocation.x
-          && it.destination.y === nextLocation.y})
-      if (door) {
-        let interaction = this.play(door);
-        if (interaction.result=="Success") {
+    let interactionResult = this.gameplay.playerInteractWithJson(this.currentParty, direction);
+    this.dataStorageService.saveParty(this.currentParty)
+    this.dataStorageService.saveLastMessages(JSON.parse(this.gameplay.toJsonInteraction(interactionResult)).messages)
+
+    if (interactionResult.result == "Success") {
           this.soundService.playMove()
           return false;
         } else {
@@ -54,25 +48,23 @@ export class GameplayLabService implements OnDestroy{
           return true;
         }
 
-      }
 
-    }
+
+
   }
 
   take(objToTake) {
     this.dataStorageService.saveCharacterDirection('LEFT');
-    this.currentParty.player.location.content.toArray()//getJsViewFromKotlin(this.currentParty, "player", "location", "content")
-      .filter(it => it.name === objToTake.name)
-      .forEach((it) => {
-        if(this.play(it).result == "Success"){
-          this.soundService.playTake()}
 
-      })
+        if (this.play(objToTake).result == "Success") {
+          this.soundService.playTake()
+        }
+
 
   }
 
   takeAll() {
-    this.currentParty.player.location.content.toArray()
+    this.currentPartyProxy.player.location.content
       .filter(it => it.type != "door")
       .forEach((it) => {
         this.take(it)
@@ -80,9 +72,9 @@ export class GameplayLabService implements OnDestroy{
   }
 
   private play(obj): any {
-    let interactionResult = this.gameplay.playerInteractWith(this.currentParty, obj);
+    let interactionResult = this.gameplay.playerInteractWithJson(this.currentParty, JSON.stringify(obj));
     this.dataStorageService.saveParty(this.currentParty)
-    this.dataStorageService.saveLastMessages(parseKotlinPathToJsView(interactionResult, "messages"))
+    this.dataStorageService.saveLastMessages(JSON.parse(this.gameplay.toJsonInteraction(interactionResult)).messages)
     return interactionResult;
 
   }
@@ -108,7 +100,7 @@ export class GameplayLabService implements OnDestroy{
   }
 
 
-  moveAtCase(levelCase: any):boolean {
+  moveAtCase(levelCase: any): boolean {
     let connections = this.currentPartyProxy.player.location.connections
     let direction = findKey(connections, (it) => {
       return it && it.x === levelCase.x && it.y === levelCase.y

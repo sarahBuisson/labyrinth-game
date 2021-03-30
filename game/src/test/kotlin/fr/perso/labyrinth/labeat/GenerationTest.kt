@@ -113,14 +113,15 @@ class GenerationTest {
     fun shouldGenerateTreeLab() {
 
         val factory = { x: Int, y: Int, b: Board<BoardZone> ->
-            BoardZoneImpl(
+            BoardZone(
                     x,
                     y
             )
         }
         val board = LevelBoard<BoardZone>(
-                10, 10, factory
+                10, 10
         )
+        board.fill(factory)
         //When
         println("draw")
         drawLabByPastingSmallCorridor(board)
