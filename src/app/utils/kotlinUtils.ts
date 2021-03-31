@@ -1,3 +1,4 @@
+import {kotlin} from "kotlin"
 function standardizeName(oldName) {
   return oldName.replace(/^\_*/, "").replace(/\_\S*\$/, "").replace(/\_\d/, "");
 }
@@ -17,13 +18,13 @@ function instanceWithSimplifiedField(kotlinInstance, maxDeep, autoProxyMethod): 
       } else {
         newName = standardizeName(oldName);
 
-        if (propertyclassName === 'ArrayList' && !Array.isArray(kotlinInstanceElement)) {
+        if (propertyclassName === kotlin.collections.ArrayList.name && !Array.isArray(kotlinInstanceElement)) {
           //newName += "Array"
         }
-        if (propertyclassName === "HashMap" || propertyclassName == "LinkedHashMap") {
+        if (propertyclassName === kotlin.collections.HashMap.name  || propertyclassName == kotlin.collections.LinkedHashMap.name ) {
          // newName += "Map"
         }
-        if (propertyclassName === 'Function') {
+        if (propertyclassName ===  kotlin.Function.name ) {
         //  newName += "Function"
         }
       }
@@ -64,7 +65,7 @@ export function parseKotlinToJsView(kotlinInstance, maxDeep: number = 10000, aut
 
   } else {
     let className = kotlinInstance.__proto__.constructor.name
-    if (className === "Function") {
+    if (className === kotlin.Function.name) {
 
       return (...args) => {
         const retourMethod = kotlinInstance.apply(null, args)
@@ -75,7 +76,7 @@ export function parseKotlinToJsView(kotlinInstance, maxDeep: number = 10000, aut
         }
       }
 
-    } else if (className === 'ArrayList' || className === 'HashSet') {
+    } else if (className === kotlin.collections.ArrayList.name || className === kotlin.collections.HashSet.name) {
       return kotlinInstance.toArray().map((item) => {
         if (maxDeep >= 0) {
           return parseKotlinToJsView(item, maxDeep - 1, autoProxyMethod)
@@ -84,7 +85,7 @@ export function parseKotlinToJsView(kotlinInstance, maxDeep: number = 10000, aut
 
         }
       })
-    } else if (className === "HashMap" || className == "LinkedHashMap") {
+    } else if (className === kotlin.collections.HashMap.name || className == kotlin.collections.LinkedHashMap.name) {
       let newkotlinInstance = {};
       let protoMap = instanceWithSimplifiedField(kotlinInstance, 0, false);
       if (protoMap.internalMap) {
@@ -133,7 +134,7 @@ export function getFromKotlin(instance: any, ...path: any[]) {
     let propertyclassName = instance.__proto__.constructor.name;
     if (instance.toArray) {
       return getFromKotlin(instance.toArray()[path[0]], ...path.slice(1));
-    } else if (propertyclassName === "HashMap" || propertyclassName == "LinkedHashMap") {
+    } else if (propertyclassName === kotlin.collections.HashMap.name || propertyclassName ==  kotlin.collections.LinkedHashMap.name) {
       return getFromKotlin(parseKotlinToJsView(instance, 0, false)[path[0]], ...path.slice(1));
     } else {
       let field: string = Object.keys(instance).find(fieldName => {

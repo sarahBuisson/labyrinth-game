@@ -5,6 +5,7 @@ import {exitTemplate, startTemplate} from "./resources/border";
 import {DataStorageService} from "../data-storage.service";
 import {Subscription} from "rxjs";
 import {CharacterRenderData, CharacterRenderService} from "./character-render.service";
+import * as gameRules from "gameRules";
 
 @Injectable({
   providedIn: 'root'
@@ -103,7 +104,7 @@ export class FullsizeAsciiRenderService extends AsciiRenderService implements On
   }
 
   renderCenter(zone, party): String {
-    return "\n\n" + zone.content.toArray().filter(it => it.className !== "DoorObjectZone").map((it) => "[" + it.name + "]");
+    return "\n\n" + zone.content.filter(it => it.className !== gameRules.fr.perso.labyrinth.freezone.model.DoorObjectZone.name).map((it) => "[" + it.name + "]");
   }
 
 

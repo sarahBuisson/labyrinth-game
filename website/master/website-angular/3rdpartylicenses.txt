@@ -147,6 +147,10 @@ kotlin-logging
 
 kotlin-logging-jsLegacy
 
+kotlinx-serialization-kotlinx-serialization-core-jsLegacy
+
+kotlinx-serialization-kotlinx-serialization-json-jsLegacy
+
 labyrinth-game-game
 
 lodash

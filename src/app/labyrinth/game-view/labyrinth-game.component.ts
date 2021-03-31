@@ -32,11 +32,14 @@ import {APP_BASE_HREF} from "@angular/common";
       width: ${CHARACTER_SPACING * 110}px;
       overflow-x: hidden;
     }
-    .menuBar {  display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
+
+    .menuBar {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
     }
+
     .toolbar {
       z-index: 100;
       grid-area: toolbar;
@@ -53,12 +56,12 @@ import {APP_BASE_HREF} from "@angular/common";
 export class LabyrinthGameComponent implements OnInit, OnDestroy {
   currentParty: any
   currentLevel: any
-  @ViewChild('level-view') levelView:LevelViewComponent;
-  @ViewChild('winModal') winModal:AsciiModalComponent;
+  @ViewChild('level-view') levelView: LevelViewComponent;
+  @ViewChild('winModal') winModal: AsciiModalComponent;
   @ViewChild('loadingModal') loadingModal;
   score: any;
   private subscriptionCurrentParty: Subscription;
-  private toClear: any[];
+  private toClear: any[] = [];
 
   constructor(private labService: GenerateLabService,
               private dataStorageService: DataStorageService,
@@ -67,7 +70,7 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
               public mapRenderService: MapAsciiRenderService,
               private router: Router,
               private soundService: SoundService,
-              ) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -77,15 +80,15 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
   }
 
   subscribeCurrentParty(): any {
-    this.subscriptionCurrentParty = this.dataStorageService.getCurrentParty()
+    this.subscriptionCurrentParty = this.dataStorageService.getCurrentPartyView()
       .subscribe((nextParty) => {
 
-        this.currentParty = parseKotlinToJsView(nextParty, 5,true);
-        if (nextParty) {
-            if (this.currentParty.status.name$ == "WIN") {
+          this.currentParty = nextParty
+          if (nextParty) {
+            if (this.currentParty.status == "WIN") {
               this.winModal.show()
             }
-            this.score =  this.gameplayLabService.computePartieScore();
+            this.score = this.gameplayLabService.computePartieScore();
           }
         }
       )
@@ -115,7 +118,7 @@ export class LabyrinthGameComponent implements OnInit, OnDestroy {
     });
     let generation = new Promise((resolve) => {
       // not taking our time to do the job
-      resolve(this.labService.generate( (parseInt(this.score.size)+1), this.currentParty.player.name)); // immediately give the result: 123
+      resolve(this.labService.generate((parseInt(this.score.size) + 1), this.currentParty.player.name)); // immediately give the result: 123
 
     });
 

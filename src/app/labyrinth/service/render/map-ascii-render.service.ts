@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AsciiRenderService} from "./ascii-render.service";
 import {AsciiGeneratorService} from "../../../utils/ascii/ascii-generator.service";
+import * as gameRules from "gameRules";
 
 @Injectable({
   providedIn: 'root'
@@ -28,18 +29,18 @@ export class MapAsciiRenderService extends AsciiRenderService {
   }
 
   renderCenter(zone, party): String {
-    let content = zone.content.toArray().filter(it => !it.destination)
+    let content = zone.content.filter(it => !it.destination)
     if (party.player.location.x === zone.x && party.player.location.y === zone.y)
       return "@";
     else if (zone.x===party.level.exit.x &&zone.y===party.level.exit.y ) {
       return "€"
     }
     else if (content.length > 0) {
-      if (content.toArray().filter(it => it.name === "start").length > 0)
+      if (content.filter(it => it.name === "start").length > 0)
         return "$"
 
       else
-        return content.toArray()[0].name
+        return content[0].name
     } else return "+"
   }
 
@@ -72,7 +73,7 @@ export class MapAsciiRenderService extends AsciiRenderService {
 
   renderObj(obj: any, characterRenderData: any) {
 
-    if (obj.classname === "KeyObjectZone") {
+    if (obj.classname === gameRules.fr.perso.labyrinth.freezone.model.KeyObjectZone.name) {
       return obj.name;
     } else if (obj.name === "player") {
       return "¤"
