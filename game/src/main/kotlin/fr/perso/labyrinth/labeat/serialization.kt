@@ -31,18 +31,15 @@ fun toJson(data: Partie<LevelBoard<CompositeZone>>): String {
 @JsExport
 @JsName("toJsonInteraction")
 fun toJsonInteraction(data: Interaction<Player, ObjectZone, String, Partie<LevelBoard<CompositeZone>>>): String {
-
     return Json.encodeToString(
         Interaction.serializer(
             Player.serializer(),
             ObjectZoneSerializer(),
             String.serializer(),
-            PartieSerializer(LevelBoardSerializer(CompositeZone.serializer())),
-
+            PartieSerializer(LevelBoardSerializer(CompositeZone.serializer()))
             ), data
     )
 }
-
 
 @Serializer(forClass = Partie::class)
 class PartieSerializer<T : Any>(private val dataSerializer: KSerializer<T>) : KSerializer<Partie<T>> {
@@ -66,17 +63,14 @@ class PartieSerializer<T : Any>(private val dataSerializer: KSerializer<T>) : KS
     }
 }
 
-
 @Serializer(forClass = CompositeZone::class)
 class CompositeZoneSerializer() : KSerializer<CompositeZone> {
-    // TODO removal of explicit type crashes the compiler
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("CompositeZone") {
-        element("x", serialDescriptor<Int>())
-        element("y", serialDescriptor<Int>())
+        element("x", Int.serializer().descriptor)
+        element("y", Int.serializer().descriptor)
         element("content", listSerialDescriptor(ObjectZoneSerializer().descriptor))
         element("connections", mapSerialDescriptor(String.serializer().descriptor, PointImpl.serializer().descriptor))
         element("connected", ListSerializer(PointImpl.serializer()).descriptor)
-
     }
 
     override fun deserialize(decoder: Decoder): CompositeZone {
@@ -116,8 +110,8 @@ class CompositeZoneSerializer() : KSerializer<CompositeZone> {
 class LevelBoardSerializer<T : Any>(private val dataSerializer: KSerializer<T>) : KSerializer<LevelBoard<T>> {
     // TODO removal of explicit type crashes the compiler
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("LevelBoard") {
-        element("width", serialDescriptor<Int>())
-        element("height", serialDescriptor<Int>())
+        element("width", Int.serializer().descriptor)
+        element("height", Int.serializer().descriptor)
         element("content", listSerialDescriptor(dataSerializer.descriptor))
         element("exit", dataSerializer.descriptor)
         element("start", dataSerializer.descriptor)
