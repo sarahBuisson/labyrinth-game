@@ -1,0 +1,88 @@
+/* You can add global styles to this file, and also import other style files */
+/*@font-face {
+  font-family: asciiArtFont;
+  src: url('/Courrier-Prime-Code.ttf') format("truetype");
+
+  white-space: pre;
+}
+
+@font-face {
+  font-family: asciiTextFont;
+  src: url(Courrier-Prime.ttf) format("truetype");
+
+  white-space: pre;
+}
+*/
+body {
+  overflow: hidden;
+  font-size: 12px;
+  font-family: asciiArtFont;
+  margin: 0px;
+}
+button, div {
+
+  border-top-width: 14px;
+  border-bottom-width: 14px;
+  border-left-width: 9px;
+  border-right-width: 9px;
+
+}
+button {
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+button, h1, h2, input {
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-size: 12px;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+input {
+  font-family: asciiTextFont, "Comic Sans MS";
+}
+ul {
+  list-style-type: "-";
+  padding: 9px;
+}
+.asciiArt {
+  font-family: asciiArtFont, "Comic Sans MS";
+  font-size: 12px;
+  white-space: pre;
+}
+.text {
+  font-family: asciiTextFont, "Comic Sans MS";
+  font-size: 12px;
+}
+.background-ui {
+  color: #BBB;
+}
+.decor-ui {
+  color: #999;
+}
+.ihm-ui {
+  color: #666;
+}
+a.ihm-ui, a.interact-ui {
+  text-decoration: none;
+}
+.interact-ui {
+  color: #333;
+}
+.important-ui {
+  color: #000;
+}
+input, textarea, button {
+  font-family: asciiTextFont, "Comic Sans MS";
+}
+
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlcy5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsOEVBQThFO0FBQzlFOzs7Ozs7Ozs7Ozs7O0NBYUM7QUFDRDtFQUNFLGdCQUFnQjtFQUNoQixlQUFlO0VBQ2YseUJBQXlCO0VBQ3pCLFdBQVc7QUFDYjtBQUVBOztFQUVFLHNCQUFzQjtFQUN0Qix5QkFBeUI7RUFDekIsc0JBQXNCO0VBQ3RCLHVCQUF1Qjs7QUFFekI7QUFFQTtFQUNFLGlCQUFpQjtFQUNqQixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLG1CQUFtQjtBQUNyQjtBQUVBO0VBQ0UsWUFBWTtFQUNaLHVCQUF1QjtFQUN2QixrQkFBa0I7RUFDbEIsZUFBZTtFQUNmLG1CQUFtQjtFQUNuQixTQUFTO0VBQ1QsVUFBVTtBQUNaO0FBRUE7RUFDRSxnQkFBZ0I7RUFDaEIsbUJBQW1CO0FBQ3JCO0FBRUE7RUFDRSwyQ0FBMkM7QUFDN0M7QUFDQTtFQUNFLG9CQUFvQjtFQUNwQixZQUFZO0FBQ2Q7QUFFQTtFQUNFLDBDQUEwQztFQUMxQyxlQUFlO0VBQ2YsZ0JBQWdCO0FBQ2xCO0FBRUE7RUFDRSwyQ0FBMkM7RUFDM0MsZUFBZTtBQUNqQjtBQUVBO0VBQ0UsV0FBVztBQUNiO0FBRUE7RUFDRSxXQUFXO0FBQ2I7QUFFQTtFQUNFLFdBQVc7QUFDYjtBQUVBO0VBQ0UscUJBQXFCO0FBQ3ZCO0FBRUE7RUFDRSxXQUFXO0FBQ2I7QUFFQTtFQUNFLFdBQVc7QUFDYjtBQUVBO0VBQ0UsMkNBQTJDO0FBQzdDIiwiZmlsZSI6InN0eWxlcy5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKiBZb3UgY2FuIGFkZCBnbG9iYWwgc3R5bGVzIHRvIHRoaXMgZmlsZSwgYW5kIGFsc28gaW1wb3J0IG90aGVyIHN0eWxlIGZpbGVzICovXG4vKkBmb250LWZhY2Uge1xuICBmb250LWZhbWlseTogYXNjaWlBcnRGb250O1xuICBzcmM6IHVybCgnL0NvdXJyaWVyLVByaW1lLUNvZGUudHRmJykgZm9ybWF0KFwidHJ1ZXR5cGVcIik7XG5cbiAgd2hpdGUtc3BhY2U6IHByZTtcbn1cblxuQGZvbnQtZmFjZSB7XG4gIGZvbnQtZmFtaWx5OiBhc2NpaVRleHRGb250O1xuICBzcmM6IHVybChDb3Vycmllci1QcmltZS50dGYpIGZvcm1hdChcInRydWV0eXBlXCIpO1xuXG4gIHdoaXRlLXNwYWNlOiBwcmU7XG59XG4qL1xuYm9keSB7XG4gIG92ZXJmbG93OiBoaWRkZW47XG4gIGZvbnQtc2l6ZTogMTJweDtcbiAgZm9udC1mYW1pbHk6IGFzY2lpQXJ0Rm9udDtcbiAgbWFyZ2luOiAwcHg7XG59XG5cbmJ1dHRvbiwgZGl2IHtcblxuICBib3JkZXItdG9wLXdpZHRoOiAxNHB4O1xuICBib3JkZXItYm90dG9tLXdpZHRoOiAxNHB4O1xuICBib3JkZXItbGVmdC13aWR0aDogOXB4O1xuICBib3JkZXItcmlnaHQtd2lkdGg6IDlweDtcblxufVxuXG5idXR0b24ge1xuICBwYWRkaW5nLWxlZnQ6IDlweDtcbiAgcGFkZGluZy1yaWdodDogOXB4O1xuICBwYWRkaW5nLXRvcDogMHB4O1xuICBwYWRkaW5nLWJvdHRvbTogMHB4O1xufVxuXG5idXR0b24sIGgxLCBoMiwgaW5wdXQge1xuICBib3JkZXI6IG5vbmU7XG4gIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIGZvbnQtc2l6ZTogMTJweDtcbiAgZm9udC13ZWlnaHQ6IG5vcm1hbDtcbiAgbWFyZ2luOiAwO1xuICBwYWRkaW5nOiAwO1xufVxuXG5oMSB7XG4gIG1hcmdpbi10b3A6IDE0cHg7XG4gIG1hcmdpbi1ib3R0b206IDE0cHg7XG59XG5cbmlucHV0IHtcbiAgZm9udC1mYW1pbHk6IGFzY2lpVGV4dEZvbnQsIFwiQ29taWMgU2FucyBNU1wiO1xufVxudWwge1xuICBsaXN0LXN0eWxlLXR5cGU6IFwiLVwiO1xuICBwYWRkaW5nOiA5cHg7XG59XG5cbi5hc2NpaUFydCB7XG4gIGZvbnQtZmFtaWx5OiBhc2NpaUFydEZvbnQsIFwiQ29taWMgU2FucyBNU1wiO1xuICBmb250LXNpemU6IDEycHg7XG4gIHdoaXRlLXNwYWNlOiBwcmU7XG59XG5cbi50ZXh0IHtcbiAgZm9udC1mYW1pbHk6IGFzY2lpVGV4dEZvbnQsIFwiQ29taWMgU2FucyBNU1wiO1xuICBmb250LXNpemU6IDEycHg7XG59XG5cbi5iYWNrZ3JvdW5kLXVpIHtcbiAgY29sb3I6ICNCQkI7XG59XG5cbi5kZWNvci11aSB7XG4gIGNvbG9yOiAjOTk5O1xufVxuXG4uaWhtLXVpIHtcbiAgY29sb3I6ICM2NjY7XG59XG5cbmEuaWhtLXVpLCBhLmludGVyYWN0LXVpIHtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xufVxuXG4uaW50ZXJhY3QtdWkge1xuICBjb2xvcjogIzMzMztcbn1cblxuLmltcG9ydGFudC11aSB7XG4gIGNvbG9yOiAjMDAwO1xufVxuXG5pbnB1dCwgdGV4dGFyZWEsIGJ1dHRvbiB7XG4gIGZvbnQtZmFtaWx5OiBhc2NpaVRleHRGb250LCBcIkNvbWljIFNhbnMgTVNcIjtcbn1cblxuIl19 */
