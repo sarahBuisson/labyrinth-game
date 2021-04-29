@@ -36,7 +36,6 @@ export class LoadingComponent implements OnInit {
 
   clickDuringLoading() {
     this.currentLoadingMessage = Math.floor( this.maxNumberOfMessage*Math.random())
-    console.log( this.currentLoadingMessage )
   }
 
 }

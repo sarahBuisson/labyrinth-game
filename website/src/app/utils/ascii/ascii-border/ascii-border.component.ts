@@ -261,7 +261,6 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
 
       }
       if (shouldComputeY) {
-        console.log("shouldComputeY"+ this.yRepeat)
         this.computedData.heightPx = height;
         let oldY = this.yComputedRepeat
         if (this.yRepeat != undefined) {
@@ -290,7 +289,7 @@ export class AsciiBorderComponent implements OnInit, AfterViewInit, AfterContent
       } else {
       }
     } catch (e) {
-      console.log("error during compute")
+      console.error("error during compute")
     }
   }
 
