@@ -43,11 +43,7 @@ export class MapViewComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    console.log("update")
-    console.log(this.currentParty)
     this.updateFieldOfView();
-
-    console.log(this.currentParty.level)
   }
 
 

@@ -81,7 +81,6 @@ describe('LabyrinthGameComponent', () => {
   });
 
   it('should create', () => {
-    console.log(labeatGeneration)
     // @ts-ignore
     let party = labeatGeneration.initPartieEmpty(3);
     dataStorageMock.getCurrentParty.mockReturnValue(of(party));

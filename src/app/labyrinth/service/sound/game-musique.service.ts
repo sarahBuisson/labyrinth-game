@@ -162,9 +162,8 @@ export class GameMusiqueService {
         utils.last(compositionUtils.flatPartition(variation2)).tune,
         [selector.isConsonnanteOf, selector.isDiffOf]);
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
-
 
     let form = [intro, mainThemePart1, mainThemePart2, mainThemePart1, variation1, mainThemePart1, variation2, mainThemePart1, mainThemePart2, conclusion]
 

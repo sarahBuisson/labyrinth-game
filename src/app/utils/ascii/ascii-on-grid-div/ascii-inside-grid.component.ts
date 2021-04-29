@@ -16,8 +16,6 @@ export class AsciiInsideGridDivComponent {
   @HostBinding("style")
   get hostStyle(): CSSStyleDeclaration {
     let contentSplited = (this.content ? this.content : this.child ? this.child.textContent : 'x').split('\n');
-    console.log("contentSplited")
-    console.log(contentSplited)
     return {
       gridColumn: 'span ' + contentSplited[0].length,
       gridRow: 'span ' + contentSplited.length

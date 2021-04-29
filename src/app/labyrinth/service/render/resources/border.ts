@@ -409,4 +409,3 @@ let inventoryBox =  "" +
   "`====='"
 export let inventoryBoxGridTemplate = asciiStringToGridObject(inventoryBox, 3, 1, 3, 1)
 
-console.log(bagGridTemplate)

@@ -22,17 +22,14 @@ export class AsciiGalleryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("ngOnInit")
     try {
       let emptyParty = gameRules.fr.perso.labyrinth.labeat.generation.initPartieEmpty(3, "empty");
       this.emptyZone = emptyParty.level.content[0][0]
       this.defaultZone = emptyParty.level.content[1][1]
       this.defaultZone = gameRules.fr.perso.labyrinth.labeat.generation.initPartieMapLabWithKey(4, "key").level.content.toArray()[0].toArray()[1]
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
-    console.log(this.emptyZone)
-    console.log(this.defaultZone)
   }
 
   toggle(): void {
